@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Name the done before you dispatch — Pattern · The Big Picture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-0:#05080a;
+    --soil-1:#080d10;
+    --soil-2:#0c1418;
+    --teal:#3fe0c8;
+    --teal-dim:#1d8d80;
+    --amber:#ffb347;
+    --amber-dim:#a86a1f;
+    --spore:#eafff9;
+    --ink:#cfe6e0;
+    --ink-dim:#6f8a85;
+    --ink-faint:#3b524e;
+    --hairline:rgba(63,224,200,.10);
+    --grey:#5d6a68;
+    --grey-dim:#39423f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--soil-0);
+    font-family:'Spline Sans',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  /* atmospheric soil + light-well — recedes for the long read */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
+      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
+      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+  }
+  /* grain / spore dust */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 64px;}
+
+  /* ============ BREADCRUMB ============ */
+  .crumb{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+    color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
+  }
+  .crumb a{color:var(--teal-dim);text-decoration:none;transition:color .25s}
+  .crumb a:hover{color:var(--teal)}
+  .crumb .here{color:var(--ink)}
+
+  /* ============ PATTERN HEADER (name + essence) ============ */
+  header.pat{padding:30px 0 8px;max-width:900px;}
+  .kicker{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--teal-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .kicker .spore-mark{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 14px 2px rgba(63,224,200,.6);
+    flex:none;
+  }
+  .kicker .pat-no{color:var(--ink-faint)}
+  header.pat h1{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(40px,7vw,68px);line-height:.98;
+    color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
+  }
+  header.pat h1 em{font-style:italic;color:var(--teal);font-weight:400}
+  .principle{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
+  }
+  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .essence{
+    font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:720px;
+  }
+  .essence b{color:var(--spore);font-weight:500}
+
+  /* ============ HERO PICTURE ============ */
+  .hero-frame{
+    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(13,31,32,.5), rgba(5,8,10,.6));
+    position:relative;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.04) inset;
+  }
+  .hero-frame svg{display:block;width:100%;height:auto}
+  .hero-cap{
+    position:absolute;left:18px;bottom:13px;z-index:3;
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
+    color:var(--ink-dim);text-transform:uppercase;
+  }
+  .hero-cap b{color:var(--teal)}
+
+  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
+  .prose{
+    margin-top:34px;max-width:760px;
+  }
+  .prose h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
+    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+  }
+  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .prose h2.amber em{color:var(--amber)}
+  .prose .sec-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+    margin-top:42px;
+  }
+  .prose .sec-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
+  }
+  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .prose p{
+    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
+    letter-spacing:.002em;
+  }
+  .prose p b{color:var(--spore);font-weight:500}
+  .prose p em{font-style:italic;color:var(--ink-dim)}
+  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p .mono{
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
+  }
+  .prose p .mono.amber{color:var(--amber)}
+  .prose .pull{
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+    color:var(--ink);max-width:680px;
+  }
+  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
+
+  /* ============ PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
+  .diagram{
+    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+    background:
+      radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
+      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
+    position:relative;
+    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
+  }
+  .diagram svg{display:block;width:100%;height:auto}
+  .diagram .dcap{
+    padding:12px 20px 16px;border-top:1px solid var(--hairline);
+    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
+    color:var(--ink-dim);letter-spacing:.003em;
+    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  }
+  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
+  .diagram .dcap .num{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
+  }
+
+  /* ============ RECIPE SECTION BEATS ============ */
+  .beat-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  }
+  .beat-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.6);
+  }
+  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+
+  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
+  .plates{
+    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
+  }
+  .plate{
+    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
+    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
+  }
+  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
+  .plate .body b{color:var(--spore);font-weight:500}
+  .plate .body .grey{color:var(--grey)}
+  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
+  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
+
+  /* ============ CORE MOVES ============ */
+  .moves{margin-top:46px}
+  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
+  .moves-head h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
+  .move-rail{
+    margin-top:20px;position:relative;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  }
+  .move-rail .thread{
+    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
+    background:linear-gradient(90deg,
+      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
+      rgba(63,224,200,.7) 50%, rgba(255,179,71,.65) 94%, rgba(255,179,71,0) 100%);
+  }
+  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
+  .step:first-child{padding-left:0}
+  .step .bead{
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
+    margin-bottom:13px;
+  }
+  .step:nth-child(5) .bead{
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
+  }
+  .step h3{
+    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
+  }
+  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
+  .step p b{color:var(--ink);font-weight:500}
+
+  .compound{
+    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
+    padding:18px 22px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.07), transparent 60%),
+      rgba(8,17,18,.55);
+    display:flex;align-items:center;gap:20px;
+  }
+  .compound .loop-ico{flex:none}
+  .compound .ctext{flex:1}
+  .compound .ctext .cyc{
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
+  }
+  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
+  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
+  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+
+  .aside{
+    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
+    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+  }
+  .aside b{color:var(--amber);font-weight:500}
+  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
+
+  /* ============ WHY ============ */
+  .why{
+    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
+    padding:26px 30px 28px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
+      rgba(7,14,15,.6);
+  }
+  .why .beat-label{margin-bottom:14px}
+  .why .principle-block{
+    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
+  }
+  .why .principle-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
+  }
+  .why .principle-line{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
+    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
+  }
+  .why .principle-line em{font-style:italic;color:var(--teal)}
+  .why .quote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--teal);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(63,224,200,.26);max-width:840px;
+  }
+  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
+  .why .gloss b{color:var(--spore);font-weight:500}
+  .why .gloss em{font-style:italic;color:var(--ink-dim)}
+  .why .gloss + .gloss{margin-top:12px}
+  .why .corollary{
+    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
+    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+  }
+  .why .corollary .sd{
+    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+  }
+
+  /* ============ TEST-IN-PRACTICE inline panel ============ */
+  .practice{
+    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
+    padding:22px 26px 24px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
+      rgba(8,15,17,.5);
+  }
+  .practice .beat-label{margin-bottom:12px}
+  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
+  .practice p b{color:var(--spore);font-weight:500}
+  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
+  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ CONNECTS TO ============ */
+  .connects{margin-top:52px}
+  .connects h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .connects .sub{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:5px;
+  }
+  .web{position:relative;margin-top:8px}
+  .web svg{display:block;width:100%;height:auto}
+  .neighbours{position:absolute;inset:0;pointer-events:none}
+  .nb{
+    position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
+    display:flex;align-items:center;gap:9px;
+    padding:8px 14px 9px;border-radius:13px;
+    background:rgba(8,15,17,.82);backdrop-filter:blur(4px);
+    border:1px solid var(--hairline);
+    color:var(--ink);font-size:13px;letter-spacing:.005em;white-space:nowrap;
+    transition:border-color .3s,color .3s,background .3s,transform .3s;
+    cursor:pointer;text-decoration:none;
+  }
+  .nb .recipe-no{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--ink-faint);
+  }
+  .nb .sd{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 12px 2px rgba(63,224,200,.55);
+  }
+  .nb.amber .sd{background:var(--amber);box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 12px 2px rgba(255,179,71,.5)}
+  .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
+  .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
+  .nb:hover .sd{animation:throb 1s ease-in-out infinite}
+  .nb.soon{opacity:.62}
+  .nb.soon::after{
+    content:"soon";
+    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);
+    border:1px solid var(--ink-faint);border-radius:20px;
+    padding:2px 7px 3px;margin-left:4px;
+  }
+  .nb.soon:hover{opacity:1}
+  @keyframes throb{50%{transform:scale(1.5)}}
+  .origin-chip{
+    position:absolute;transform:translate(-50%,-50%);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 24px rgba(63,224,200,.4);white-space:nowrap;text-align:center;
+  }
+  .origin-chip small{
+    display:block;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:8.5px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--teal-dim);margin-top:3px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer.floor{
+    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  footer.floor .door{
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
+    text-shadow:0 0 22px rgba(255,179,71,.3);
+  }
+  footer.floor .meta{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+
+  /* breathing glow on the diagram spore-tips */
+  @keyframes breathe{
+    0%,100%{opacity:.55}
+    50%{opacity:1}
+  }
+  .breathe{animation:breathe 4.2s ease-in-out infinite}
+
+  @media (max-width:860px){
+    .plates{grid-template-columns:1fr 1fr}
+    .plate.use{grid-column:1 / -1}
+  }
+  @media (max-width:780px){
+    .plates{grid-template-columns:1fr}
+    .plate.use{grid-column:1}
+    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
+    .move-rail .thread{display:none}
+    .step{padding:0}
+    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .neighbours .nb{font-size:11px;padding:6px 10px}
+    .prose p{font-size:14.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ BREADCRUMB ============ -->
+  <nav class="crumb">
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Name the done before you dispatch</span>
+  </nav>
+
+  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <header class="pat">
+    <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· software · phase: Intent · the move that makes a long run possible</span></div>
+    <h1>Name the done <em>before you dispatch</em></h1>
+    <p class="principle">The principle: <b>a task is only as dispatchable as its done is checkable</b> — the bottleneck isn't the agent's stamina, it's your willingness to commit a finish line.</p>
+    <p class="essence">
+      Before you send an agent off to run for hours, state a <b>done you can check in one sentence</b>,
+      then decide out loud whether this is a <b>send-off</b> (a checkable finish, packaged enough to run on its own)
+      or a <b>nudge</b> (step-by-step work you'll babysit). The sentence is the deliverable — not the dispatch.
+    </p>
+  </header>
+
+  <!-- ============ HERO PICTURE: nudge (babysat) vs send-off (named done) ============ -->
+  <div class="hero-frame">
+    <svg viewBox="0 0 1080 412" role="img" aria-label="Same task, same agent. On the left, a vague prompt 'modernise the auth module' triggers a dense back-and-forth of human corrections — you became the agent. On the right, one boxed done sentence is named, then a long quiet unattended run with the human chair empty.">
+      <defs>
+        <linearGradient id="h-grey" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#5d6a68" stop-opacity=".7"/>
+          <stop offset="100%" stop-color="#39423f" stop-opacity=".25"/>
+        </linearGradient>
+        <linearGradient id="h-alive" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#1d8d80" stop-opacity=".5"/>
+          <stop offset="55%" stop-color="#3fe0c8" stop-opacity=".95"/>
+          <stop offset="100%" stop-color="#ffce85" stop-opacity=".9"/>
+        </linearGradient>
+        <radialGradient id="h-well" cx="76%" cy="46%" r="60%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".2"/>
+          <stop offset="46%" stop-color="#3fe0c8" stop-opacity=".06"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="h-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="4.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <rect x="0" y="0" width="1080" height="412" fill="url(#h-well)"/>
+
+      <!-- divider -->
+      <line x1="540" y1="40" x2="540" y2="380" stroke="rgba(63,224,200,.12)" stroke-width="1" stroke-dasharray="3 7"/>
+
+      <!-- ===== LEFT: the NUDGE — vague intent, you ride every step ===== -->
+      <g>
+        <text x="44" y="36" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2.4" fill="#5d6a68">NUDGE · NO NAMED DONE</text>
+        <!-- the vague prompt at the top -->
+        <rect x="44" y="56" width="430" height="34" rx="9" fill="rgba(93,106,104,.10)" stroke="rgba(93,106,104,.5)"/>
+        <text x="60" y="78" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#8b9b98" font-style="italic">"modernise the auth module"</text>
+        <text x="478" y="78" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#4b5654" text-anchor="end">↑ a wish, not a done</text>
+
+        <!-- the dense back-and-forth scroll -->
+        <g font-family="'Spline Sans',sans-serif" font-size="11.5">
+          <rect x="200" y="108" width="274" height="26" rx="9" fill="rgba(93,106,104,.10)" stroke="rgba(93,106,104,.4)"/>
+          <text x="214" y="125" fill="#8b9b98">"no, the other file…"</text>
+          <rect x="44" y="146" width="240" height="26" rx="9" fill="rgba(63,224,200,.05)" stroke="rgba(93,106,104,.3)"/>
+          <text x="58" y="163" fill="#6f8a85" font-style="italic">…which provider did you mean?</text>
+          <rect x="200" y="184" width="274" height="26" rx="9" fill="rgba(93,106,104,.10)" stroke="rgba(93,106,104,.4)"/>
+          <text x="214" y="201" fill="#8b9b98">"wait — what about the config?"</text>
+          <rect x="44" y="222" width="220" height="26" rx="9" fill="rgba(63,224,200,.05)" stroke="rgba(93,106,104,.3)"/>
+          <text x="58" y="239" fill="#6f8a85" font-style="italic">…should the tests stay green?</text>
+          <rect x="200" y="260" width="274" height="26" rx="9" fill="rgba(93,106,104,.10)" stroke="rgba(93,106,104,.4)"/>
+          <text x="214" y="277" fill="#8b9b98">"keep going… no, back up…"</text>
+        </g>
+
+        <!-- human glued to the loop -->
+        <circle cx="60" cy="320" r="13" fill="rgba(93,106,104,.18)" stroke="#5d6a68" stroke-width="1"/>
+        <text x="60" y="324" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#8b9b98">U</text>
+        <path d="M75,320 C120,320 150,300 200,290" stroke="url(#h-grey)" stroke-width="1.6" fill="none" opacity=".7"/>
+        <path d="M75,322 C130,330 170,348 220,352" stroke="url(#h-grey)" stroke-width="1.6" fill="none" opacity=".5"/>
+        <text x="92" y="356" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#5d6a68" font-style="italic">you became the agent</text>
+      </g>
+
+      <!-- ===== RIGHT: the SEND-OFF — one named done, then a quiet unattended run ===== -->
+      <g>
+        <text x="566" y="36" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2.4" fill="#3fe0c8">SEND-OFF · ONE NAMED DONE</text>
+
+        <!-- the boxed one-sentence done -->
+        <g filter="url(#h-glow)">
+          <rect x="566" y="54" width="468" height="56" rx="11" fill="rgba(8,17,18,.8)" stroke="#3fe0c8" stroke-width="1.6"/>
+        </g>
+        <text x="582" y="76" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".24em" fill="#1d8d80">DONE =</text>
+        <text x="582" y="96" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#eafff9">auth reads config from the new provider, <tspan fill="#9bffe9">suite stays green</tspan></text>
+
+        <!-- the long quiet unattended run -->
+        <g stroke="url(#h-alive)" fill="none" stroke-width="2.4" filter="url(#h-glow)">
+          <path d="M582,150 C720,148 880,150 1020,152"/>
+        </g>
+        <g stroke="#3fe0c8" stroke-width="1" fill="none" opacity=".35">
+          <path d="M700,150 C740,176 740,188 712,206"/>
+          <path d="M860,150 C900,124 900,112 872,96"/>
+          <path d="M790,150 C820,184 820,196 794,214"/>
+        </g>
+        <g fill="#aeffee">
+          <circle cx="660" cy="150" r="3.4"/><circle cx="760" cy="150" r="3.4"/>
+          <circle cx="860" cy="150" r="3.4"/><circle cx="960" cy="150" r="3.4"/>
+        </g>
+        <circle cx="1020" cy="152" r="6" fill="#ffb347" filter="url(#h-glow)"/>
+        <text x="582" y="184" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#1d8d80">AGENT RUNS · UNATTENDED · HOURS</text>
+
+        <!-- empty chair -->
+        <g transform="translate(610,300)" opacity=".7">
+          <rect x="0" y="-22" width="2" height="30" fill="#3b524e"/>
+          <rect x="0" y="-22" width="22" height="2" fill="#3b524e"/>
+          <rect x="22" y="-22" width="2" height="44" fill="#3b524e"/>
+          <rect x="0" y="8" width="24" height="2" fill="#3b524e"/>
+          <rect x="0" y="8" width="2" height="14" fill="#3b524e"/>
+        </g>
+        <text x="650" y="312" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#3fe0c8" font-style="italic">the chair is empty — and that's the win</text>
+        <text x="566" y="356" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3b524e">YOU READ THE TRACE ON RETURN · AGAINST THE SENTENCE YOU WROTE</text>
+      </g>
+    </svg>
+    <div class="hero-cap">Same task, same agent. <b>The only changed variable is whether a checkable done was named first.</b></div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
+  <!-- ============================================================ -->
+  <section class="prose">
+    <div class="sec-label">The mechanism · why a long run runs at all</div>
+    <h2>The bottleneck isn't the agent. <em>It's the sentence you skipped.</em></h2>
+
+    <p>
+      Here's the unglamorous truth about long-running agent work: the thing that decides whether the next four hours
+      happen <em>with you</em> or <em>without you</em> is not the agent's stamina. It's whether you committed to a finish line
+      before you pressed send. You point a capable agent at a migration, a gnarly refactor, a test-coverage push — and
+      twenty minutes in you're answering questions, correcting paths, re-explaining the goal. You've become the agent.
+      The diagnosis is almost never that the model ran out of road. It's that <b>you dispatched something you never gave a checkable done</b>,
+      so it had nothing of its own to steer toward and you had nothing to check it against.
+    </p>
+
+    <p>
+      Watch the same task split in two depending on one variable. Send <span class="mono">"modernise the auth module"</span>
+      and the agent has no destination — so it asks, and you narrate, and the whole value of an async tool collapses back
+      into synchronous babysitting. Send <span class="mono">"auth reads its config from the new provider, the existing suite stays green"</span>
+      and there's a target the agent points at and a thing you can check on return — without re-reading every line it wrote.
+      Same backlog item. Same agent. The difference is one sentence, written before the dispatch, not after.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 1 — SAME TASK, TWO FUNNELS ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 430" role="img" aria-label="One task entering two funnels. The top funnel, labelled vague intent, fans into a tangle of human-in-the-loop arrows ending in 'you became the agent'. The bottom funnel, labelled one-sentence done, runs as a single straight thread ending in 'ran unattended; you read the trace'. The only difference at the mouth is whether a done was stated.">
+      <defs>
+        <linearGradient id="d1-grey" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5d6a68" stop-opacity=".7"/><stop offset="1" stop-color="#39423f" stop-opacity=".2"/></linearGradient>
+        <linearGradient id="d1-alive" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".5"/><stop offset="60%" stop-color="#3fe0c8" stop-opacity=".95"/><stop offset="1" stop-color="#ffb347" stop-opacity=".85"/></linearGradient>
+        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.4" fill="#3b524e">ONE TASK · TWO MOUTHS · THE DONE IS THE ONLY DIFFERENCE</text>
+
+      <!-- the single task on the left -->
+      <g>
+        <rect x="40" y="186" width="118" height="58" rx="11" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.3)" stroke-width="1.2"/>
+        <text x="99" y="210" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">one backlog</text>
+        <text x="99" y="228" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">item</text>
+        <!-- the fork -->
+        <path d="M158,205 C200,205 210,120 250,120" stroke="rgba(93,106,104,.5)" stroke-width="1.4" fill="none"/>
+        <path d="M158,225 C200,225 210,318 250,318" stroke="rgba(63,224,200,.5)" stroke-width="1.4" fill="none"/>
+      </g>
+
+      <!-- ===== TOP FUNNEL — vague intent → tangle ===== -->
+      <g>
+        <rect x="250" y="92" width="172" height="56" rx="10" fill="rgba(93,106,104,.10)" stroke="rgba(93,106,104,.45)"/>
+        <text x="336" y="116" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".12em" fill="#8b9b98">VAGUE INTENT</text>
+        <text x="336" y="135" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#5d6a68">no checkable done</text>
+
+        <!-- the tangle of human-in-the-loop arrows -->
+        <g stroke="url(#d1-grey)" stroke-width="1.5" fill="none" opacity=".8">
+          <path d="M422,120 C500,90 540,150 620,108"/>
+          <path d="M422,120 C500,150 540,92 620,128"/>
+          <path d="M620,108 C700,90 720,150 800,116"/>
+          <path d="M620,128 C700,160 720,96 800,134"/>
+          <path d="M800,116 C840,138 840,108 800,128"/>
+        </g>
+        <!-- little human-correction dots -->
+        <g fill="#8b9b98">
+          <circle cx="500" cy="100" r="3"/><circle cx="540" cy="120" r="3"/>
+          <circle cx="620" cy="118" r="3"/><circle cx="700" cy="104" r="3"/>
+          <circle cx="720" cy="128" r="3"/><circle cx="800" cy="122" r="3"/>
+        </g>
+        <text x="525" y="172" font-family="'Spline Sans',sans-serif" font-size="11" fill="#5d6a68" font-style="italic">"no, the other file" · "what config?" · "keep going"</text>
+
+        <rect x="830" y="98" width="208" height="46" rx="10" fill="rgba(93,106,104,.08)" stroke="rgba(93,106,104,.4)"/>
+        <text x="934" y="126" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="15" fill="#8b9b98">you became the agent</text>
+      </g>
+
+      <!-- ===== BOTTOM FUNNEL — one-sentence done → single thread ===== -->
+      <g>
+        <rect x="250" y="290" width="172" height="56" rx="10" fill="rgba(63,224,200,.07)" stroke="rgba(63,224,200,.35)"/>
+        <text x="336" y="314" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".12em" fill="#3fe0c8">ONE-SENTENCE DONE</text>
+        <text x="336" y="333" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#1d8d80">a finish line you can check</text>
+
+        <!-- the single straight thread -->
+        <path d="M422,318 C600,316 700,320 830,320" stroke="url(#d1-alive)" stroke-width="2.6" fill="none" filter="url(#d1-glow)"/>
+        <g fill="#aeffee">
+          <circle cx="520" cy="318" r="3.4"/><circle cx="640" cy="319" r="3.4"/><circle cx="760" cy="320" r="3.4"/>
+        </g>
+        <text x="525" y="350" font-family="'Spline Sans',sans-serif" font-size="11" fill="#1d8d80" font-style="italic">no questions · sustained coherence · hours unattended</text>
+
+        <rect x="830" y="298" width="208" height="46" rx="10" fill="rgba(63,224,200,.07)" stroke="rgba(63,224,200,.4)"/>
+        <text x="934" y="320" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#9bffe9">ran unattended;</text>
+        <text x="934" y="337" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#9bffe9">you read the trace</text>
+      </g>
+
+      <text x="40" y="412" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">THE TASK DIDN'T CHANGE.  WHETHER A DONE WAS STATED AT THE MOUTH OF THE FUNNEL DID.</text>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 01</span>Same task, two outcomes. <b>The named done is the hinge</b> between work that needs you and work that doesn't.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 2 — the send-off / nudge cut ============ -->
+  <section class="prose">
+    <p>
+      We resist naming the done because naming it feels like premature commitment — <em>what if the shape changes mid-run?</em>
+      So we dispatch vague intent and tell ourselves we'll "stay close to steer." That instinct is exactly backwards.
+      The done isn't a contract you must hit first try; it's a <b>steering target</b> — the thing the agent points at and the
+      thing you check the trace against. Stay-close-to-steer is how a four-hour async capability quietly becomes a four-hour
+      synchronous chore. Commit the finish line to a sentence and the run gets to happen without you narrating each step.
+    </p>
+
+    <p class="pull">
+      A vague intent doesn't make the agent dumber. <b>It removes the only thing it could have aimed at.</b>
+    </p>
+
+    <div class="sec-label">The deliberate cut · send-off or nudge</div>
+    <h2>Decide the mode out loud — <em>send-off</em>, or <em>nudge</em>.</h2>
+
+    <p>
+      Naming the done buys you a second, sharper move: the <b>send-off / nudge cut</b>. A send-off has a checkable done and
+      enough context to run on its own; a nudge is step-by-step work you'll deliberately sit in for. Both are legitimate —
+      some work genuinely <em>wants</em> your hand on it. The trap is dispatching a nudge <em>as if</em> it were a send-off, then
+      feeling betrayed when it needs babysitting. That's where the resentment comes from. Naming the mode up front sets your
+      own expectation, so a hands-on run feels like a choice rather than a failure.
+    </p>
+
+    <p>
+      The cut has a second axis: <b>size</b>. Reject the typo-fix — the agent crunches it in one shot and you learn nothing about
+      its reach. Reject the quarter-long epic — it won't cohere over a long crunch window, and you'll spend the whole run
+      re-anchoring it. Aim for the slice in between: a real piece of work that genuinely needs <b>sustained coherence,
+      requirement-weaving, and multi-file reasoning</b> — the properties that <em>make</em> something a long-running task rather than
+      a one-shot. Below: the sizing dial, crossed by the checkable-done axis that routes the task to <em class="teal">step away</em> or <em class="amber">sit in</em>.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 2 — THE SIZING DIAL × CHECKABLE-DONE AXIS ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 410" role="img" aria-label="A sizing dial with three zones — typo-fix (too small, crunched, learned nothing), send-off slice (the sweet spot, needs sustained coherence and multi-file reasoning), and epic (too big, won't cohere over a long window). A second axis, checkable done, crosses it: yes routes to dispatch and step away, no routes to nudge and sit in.">
+      <defs>
+        <linearGradient id="d2-band" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#5d6a68" stop-opacity=".5"/>
+          <stop offset="34%" stop-color="#3fe0c8" stop-opacity=".85"/>
+          <stop offset="66%" stop-color="#3fe0c8" stop-opacity=".85"/>
+          <stop offset="100%" stop-color="#a86a1f" stop-opacity=".6"/>
+        </linearGradient>
+        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.4" fill="#3b524e">THE SIZING DIAL × THE CHECKABLE-DONE AXIS</text>
+
+      <!-- the sizing band -->
+      <text x="40" y="68" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#6f8a85">SIZE →</text>
+      <rect x="120" y="58" width="900" height="14" rx="7" fill="url(#d2-band)"/>
+
+      <!-- zone markers -->
+      <g>
+        <!-- typo-fix -->
+        <line x1="240" y1="50" x2="240" y2="92" stroke="#5d6a68" stroke-width="1" stroke-dasharray="3 4"/>
+        <text x="240" y="112" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em" fill="#8b9b98">TYPO-FIX</text>
+        <text x="240" y="130" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="11.5" fill="#5d6a68">too small</text>
+        <text x="240" y="147" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#5d6a68">crunched · learned nothing</text>
+
+        <!-- send-off slice (the sweet spot) -->
+        <rect x="450" y="46" width="240" height="38" rx="9" fill="rgba(63,224,200,.10)" stroke="#3fe0c8" stroke-width="1.4" filter="url(#d2-glow)"/>
+        <text x="570" y="70" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".12em" fill="#3fe0c8">SEND-OFF SLICE</text>
+        <text x="570" y="112" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#9bffe9">the sweet spot</text>
+        <text x="570" y="131" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#6f8a85">needs sustained coherence</text>
+        <text x="570" y="147" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#6f8a85">+ multi-file reasoning</text>
+
+        <!-- epic -->
+        <line x1="900" y1="50" x2="900" y2="92" stroke="#a86a1f" stroke-width="1" stroke-dasharray="3 4"/>
+        <text x="900" y="112" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em" fill="#c98a3a">EPIC</text>
+        <text x="900" y="130" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="11.5" fill="#a86a1f">too big</text>
+        <text x="900" y="147" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#a86a1f">won't cohere over a long window</text>
+      </g>
+
+      <!-- the crossing axis: checkable done? -->
+      <g>
+        <text x="570" y="196" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing=".16em" fill="#cfe6e0">CHECKABLE DONE?</text>
+        <!-- the gate -->
+        <circle cx="570" cy="232" r="7" fill="#eafff9" filter="url(#d2-glow)"/>
+        <!-- YES branch -->
+        <path d="M570,239 C470,280 380,300 300,316" stroke="#3fe0c8" stroke-width="2" fill="none"/>
+        <text x="430" y="288" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".18em" fill="#3fe0c8">YES →</text>
+        <rect x="110" y="304" width="240" height="56" rx="11" fill="rgba(63,224,200,.08)" stroke="#3fe0c8" stroke-width="1.4"/>
+        <text x="230" y="330" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="14" fill="#eafff9">dispatch and</text>
+        <text x="230" y="349" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="16" fill="#3fe0c8">step away</text>
+        <!-- NO branch -->
+        <path d="M570,239 C670,280 760,300 840,316" stroke="#ffb347" stroke-width="2" fill="none"/>
+        <text x="710" y="288" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".18em" fill="#ffb347">NO →</text>
+        <rect x="790" y="304" width="240" height="56" rx="11" fill="rgba(255,179,71,.07)" stroke="#ffb347" stroke-width="1.4"/>
+        <text x="910" y="330" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="14" fill="#fff4e2">nudge and</text>
+        <text x="910" y="349" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="16" fill="#ffb347">sit in</text>
+      </g>
+
+      <text x="40" y="396" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">SIZE PICKS THE SLICE.  THE CHECKABLE DONE PICKS THE MODE.  BOTH ARE DELIBERATE.</text>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 02</span>Size picks the slice; the checkable done picks the mode. <b>Naming both up front is the cut</b> — and it's a decision, not a discovery you make twenty minutes in.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 3 — the experiment frame + compounding intro ============ -->
+  <section class="prose">
+    <p>
+      One reframe unlocks the willingness to dispatch at all: <b>every send-off is an experiment, not a production run you
+      need to get right the first time.</b> The done is the steering target you point the experiment at — not a deliverable
+      you're contractually bound to. Stopping a run when you've seen enough is <em>reading</em>, not <em>failing</em>. That distinction
+      is what lets you press send instead of polishing the prompt forever, waiting for a certainty that never arrives. The
+      first done you write will be the hardest one you ever write, precisely because you're treating it as a contract when
+      it's only a target.
+    </p>
+
+    <div class="sec-label">The compounding loop · the next done gets easier</div>
+    <h2>Each dispatch teaches you what a <em>nameable done</em> feels like.</h2>
+
+    <p>
+      The loop below closes the way good habits do: <em>name the done · dispatch · read the trace against it · the next done
+      gets easier to name.</em> Every dispatched task teaches you what a checkable finish line feels like <b>on your own codebase</b> —
+      which slices cohere over a long window, which dissolve into questions, what a stranger needs in the sentence to check
+      it. Your scoping sharpens run over run. The teams that under-invest here keep re-learning the first lesson on every
+      task; the operators who treat the done as a reusable skill compound it. Boring on day one; a different relationship
+      with your backlog by day thirty.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="A four-beat compounding loop — name the done, dispatch, read the trace against it, the next done gets easier — drawn as a closed thread. Beside it, the done-sentence sharpens across three passes from vague to crisp, with the first pass marked as the hardest.">
+      <defs>
+        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/>
+          <stop offset="1" stop-color="#ffb347" stop-opacity=".6"/>
+        </linearGradient>
+        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%">
+          <stop offset="0" stop-color="#9bffe9"/>
+          <stop offset=".55" stop-color="#3fe0c8"/>
+          <stop offset="1" stop-color="#1d8d80"/>
+        </radialGradient>
+        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">EACH DISPATCH SHARPENS THE NEXT DONE · WHAT CHANGES BETWEEN PASSES</text>
+
+      <!-- ===== LEFT HALF: the loop ===== -->
+      <g transform="translate(40,60)">
+        <circle cx="200" cy="170" r="130" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="540 60" stroke-linecap="round" transform="rotate(-90 200 170)"/>
+        <circle r="3.6" fill="#aeffee">
+          <animateMotion dur="9s" repeatCount="indefinite" path="M200,40 a130,130 0 1,1 -0.1,0"/>
+          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- four beads -->
+        <g>
+          <circle cx="200" cy="40" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="200" y="45" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">1</text>
+          <text x="200" y="20" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Name the done</text>
+        </g>
+        <g>
+          <circle cx="330" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="330" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">2</text>
+          <text x="362" y="173" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Dispatch</text>
+        </g>
+        <g>
+          <circle cx="200" cy="300" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="200" y="305" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">3</text>
+          <text x="200" y="338" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Read the trace against it</text>
+        </g>
+        <g>
+          <circle cx="70" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="70" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">4</text>
+          <text x="38" y="173" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Next done is easier</text>
+        </g>
+
+        <text x="200" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EVERY PASS</text>
+        <text x="200" y="184" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">scopes sharper</text>
+      </g>
+
+      <!-- ===== RIGHT HALF: the done-sentence sharpening across passes ===== -->
+      <g transform="translate(540,68)">
+
+        <!-- pass 1 — vague -->
+        <g>
+          <rect x="0" y="14" width="170" height="92" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(93,106,104,.4)"/>
+          <rect x="0" y="14" width="170" height="20" rx="6" fill="rgba(93,106,104,.12)"/>
+          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#8b9b98">DONE =</text>
+          <text x="130" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">pass 1</text>
+          <text x="12" y="58" font-family="'Fraunces',serif" font-style="italic" font-size="12.5" fill="#8b9b98">"modernise auth"</text>
+          <text x="12" y="80" font-family="'Spline Sans',sans-serif" font-size="10" fill="#5d6a68">— a wish, not a done</text>
+          <text x="85" y="124" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#5d6a68">HARDEST TO WRITE</text>
+        </g>
+
+        <!-- arrow -->
+        <g transform="translate(180,64)">
+          <path d="M0,0 L26,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
+          <polygon points="26,0 18,-5 18,5" fill="#3fe0c8" opacity=".75"/>
+        </g>
+
+        <!-- pass 2 — getting checkable -->
+        <g transform="translate(0,140)">
+          <rect x="0" y="14" width="240" height="84" rx="8" fill="rgba(8,17,18,.78)" stroke="rgba(63,224,200,.35)"/>
+          <rect x="0" y="14" width="240" height="20" rx="6" fill="rgba(63,224,200,.12)"/>
+          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">DONE =</text>
+          <text x="200" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">pass 2</text>
+          <text x="12" y="56" font-family="'Fraunces',serif" font-style="italic" font-size="12.5" fill="#cfe6e0">"auth uses the new provider"</text>
+          <text x="12" y="78" font-family="'Spline Sans',sans-serif" font-size="10" fill="#6f8a85">— closer, but checkable how?</text>
+        </g>
+
+        <!-- arrow -->
+        <g transform="translate(250,182)">
+          <path d="M0,0 L26,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
+          <polygon points="26,0 18,-5 18,5" fill="#3fe0c8" opacity=".75"/>
+        </g>
+
+        <!-- pass 3 — crisp, stranger-checkable -->
+        <g transform="translate(0,280)">
+          <rect x="0" y="0" width="500" height="92" rx="8" fill="rgba(8,17,18,.85)" stroke="url(#d3-ring)" stroke-width="1.5" filter="url(#d3-glow)"/>
+          <rect x="0" y="0" width="500" height="20" rx="6" fill="rgba(255,179,71,.16)"/>
+          <text x="10" y="15" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">DONE =</text>
+          <text x="460" y="15" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">pass 3</text>
+          <text x="12" y="44" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#eafff9">"auth reads config from the new provider,</text>
+          <text x="12" y="64" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#9bffe9">the existing suite stays green"</text>
+          <text x="12" y="84" font-family="'Spline Sans',sans-serif" font-size="10" fill="#3fe0c8">— a stranger could check this. step away.</text>
+        </g>
+
+        <!-- legend -->
+        <g transform="translate(0,392)">
+          <rect x="0" y="-4" width="14" height="3" fill="#ffb347"/>
+          <text x="22" y="-1" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">CHECKABLE BY SOMEONE WHO HASN'T SEEN THE TASK</text>
+        </g>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 03</span><em>The first done is the hardest you'll ever write.</em> Each dispatch teaches you what a nameable done feels like on your codebase — <b>so your scoping sharpens run over run</b>.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 4 — what Test actually means ============ -->
+  <section class="prose">
+    <div class="sec-label amber">What "Test" actually means · in practice</div>
+    <h2 class="amber">The done is named when a <em>stranger</em> can check it.</h2>
+
+    <p>
+      The test for a named done is not <em class="amber">"sounds clear to me"</em> — you wrote it; of course it does. It's the
+      <b>read-back test</b>: hand the one sentence to someone who hasn't seen the task and ask them to state what "finished"
+      looks like. If they come back with <em>"finished by what measure?"</em>, the done isn't named yet — it's still living in
+      your head, not in the sentence. The harder test arrives on return: when the run reports back, can you check it against
+      the done, or only against the agent's own summary? If the only evidence you have is the model's cheerful
+      <em>"shipped most of it, hit a snag on X,"</em> you named a vibe, not a done. RLHF-trained models will frame partial failures
+      as partial successes — so a real done has to be <b>checkable independent of the agent's self-report</b>. And the live
+      tell: if you catch yourself re-explaining the goal mid-run, the done was never named. That's the negative test, and it
+      fires whether you wanted it to or not.
+    </p>
+  </section>
+
+  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
+  <div class="plates">
+    <div class="plate use">
+      <div class="beat-label amber"><b>Use when</b></div>
+      <p class="body">
+        You've got an agent that <b>could run for hours unattended</b>, and a backlog you keep meaning to hand it —
+        but <span class="grey">every attempt turns into you typing every step.</span> The async capability has outrun your scoping habit.
+      </p>
+    </div>
+    <div class="plate build">
+      <div class="beat-label"><b>Build</b></div>
+      <p class="body">
+        A <b>one-sentence done</b> written where the dispatch and your future self can both read it, an explicit
+        <b>send-off-or-nudge call</b>, and a <b>sized slice</b> — neither typo nor epic.
+      </p>
+    </div>
+    <div class="plate test">
+      <div class="beat-label"><b>Test</b></div>
+      <p class="body">
+        A stranger reads the sentence and says <em>"that's what finished looks like."</em><br>
+        Not merely <em class="no">"sounds clear to me."</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ CORE MOVES — actionable heart ============ -->
+  <section class="moves">
+    <div class="beat-label"><b>Core moves</b></div>
+    <div class="moves-head">
+      <h2>The action, in sequence</h2>
+      <span class="lede">A scoping habit you reuse on every backlog item — not a one-off ritual.</span>
+    </div>
+
+    <div class="move-rail">
+      <div class="thread"></div>
+      <div class="step">
+        <div class="bead">1</div>
+        <h3>Name the done in one sentence</h3>
+        <p>State the finish line <b>a stranger could check.</b> Can't say it? It's a wish.</p>
+      </div>
+      <div class="step">
+        <div class="bead">2</div>
+        <h3>Cut send-off from nudge</h3>
+        <p>Decide the mode <b>out loud.</b> Step away, or sit in — not both by accident.</p>
+      </div>
+      <div class="step">
+        <div class="bead">3</div>
+        <h3>Size against both failures</h3>
+        <p>Reject the typo. Reject the epic. <b>Aim for the coherent slice.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">4</div>
+        <h3>Frame it as an experiment</h3>
+        <p>The done is a target, not a contract. <b>Dispatch to learn.</b></p>
+      </div>
+    </div>
+
+    <div class="compound">
+      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
+        </linearGradient></defs>
+        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
+          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
+        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
+        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
+        <circle r="3" fill="#aeffee">
+          <animateMotion dur="5s" repeatCount="indefinite"
+            path="M37,11 a26,26 0 1,1 -0.1,0"/>
+        </circle>
+      </svg>
+      <div class="ctext">
+        <div class="cyc">name the done<span class="arr">→</span>dispatch<span class="arr">→</span>read the trace<span class="arr">→</span>next done is easier</div>
+        <p>Then it's a habit, not a chore: <b>scoping that sharpens run over run.</b> Each dispatched task teaches you what a nameable done feels like on your own codebase — the first one is the hardest you'll ever write.</p>
+      </div>
+    </div>
+
+    <!-- the Monday-move / no-permission aside -->
+    <p class="aside">
+      <b>Monday move: open your backlog.</b> Find one item you've thought "an agent could probably take the first pass" and
+      have been quietly not handing over. Write its done in one sentence a teammate could check, then make the cut out loud —
+      send-off or nudge?
+      <span class="mono">Your own backlog · no platform · no budget · no sign-off · the sentence is the deliverable, not the dispatch.</span>
+      Software engineers do exactly this in the first long-running send-off of Agents 101.
+    </p>
+  </section>
+
+  <!-- ============ WHY — the conviction ============ -->
+  <section class="why">
+    <div class="beat-label"><b>Why</b></div>
+
+    <div class="principle-block">
+      <div class="principle-label">The principle</div>
+      <p class="principle-line">A task is only as dispatchable as its done is <em>checkable</em>.</p>
+    </div>
+
+    <p class="quote">"An agent can run for hours unattended. Whether it does depends on one sentence you write before you start."</p>
+    <p class="gloss">
+      The counterintuitive bit: the bottleneck on long-running agent work is <b>not the agent's capability</b> — it's your
+      willingness to commit to a finish line before you begin. We dodge naming the done because it feels like premature
+      commitment, and that dodge quietly collapses an async agent back into synchronous babysitting. Reframe the done as a
+      <em>steering target</em>, not a contract, and the resistance dissolves: you're not promising an outcome, you're giving the
+      run something to aim at and yourself something to check it against.
+    </p>
+    <p class="gloss">
+      The send-off-vs-nudge cut is the same insight stated as a decision: <b>some work wants your hand on it; the skill is
+      knowing which, and refusing to babysit the work that didn't.</b> Naming the done is the cheapest possible move — one
+      sentence — and it's the one that determines whether the next four hours run with you or without you. Everything
+      downstream assumes it: you can't walk a system against a task you can't state, and you can't package a run whose
+      finish you can't check.
+    </p>
+    <p class="gloss">
+      <b>Where it sits:</b> at the personal layer this is a scoping habit. At the team layer a one-sentence done is the
+      unit a teammate can pick up, check, or hand back without re-deriving intent. At the <b>company layer</b> the named
+      done becomes the interface between human intent and unattended agent runs — how an organisation turns a backlog into
+      <em>dispatchable</em> work. An org's ability to run agents unattended is gated on whether its work is routinely scoped
+      to a checkable done; this card is the precondition the rest of the Intent → Context → Work chain rests on.
+    </p>
+    <div class="corollary"><span class="sd"></span>The agent has the stamina. The sentence is what's missing.</div>
+  </section>
+
+  <!-- ============ CONNECTS TO — neighbour patterns (all three shipped) ============ -->
+  <section class="connects">
+    <h2>Connects to</h2>
+    <div class="sub">Threads leaving this node · the pattern language</div>
+
+    <div class="web">
+      <svg viewBox="0 0 1080 300" aria-hidden="true">
+        <defs>
+          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".6"/></linearGradient>
+          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <circle cx="150" cy="150" r="30" fill="none" stroke="#3fe0c8" stroke-width="1.2" opacity=".5"/>
+        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#wglow)"/>
+        <circle cx="150" cy="150" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
+
+        <path id="th1" d="M150,150 C360,74 540,60 760,64" stroke="url(#t1)" stroke-width="2.2" fill="none"/>
+        <path id="th2" d="M150,150 C380,150 560,150 760,150" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
+        <path id="th3" d="M150,150 C360,226 540,238 760,236" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
+
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+      </svg>
+
+      <div class="neighbours">
+        <div class="origin-chip" style="left:13.8%;top:50%">Name the done before you dispatch<small>software · phase: intent · you are here</small></div>
+        <a class="nb" href="walk-and-fill-before-sendoff.html" style="left:74%;top:21.3%"><span class="sd"></span>Walk the system against the task <span class="recipe-no">the immediate next move</span></a>
+        <a class="nb" href="packaging-the-run.html" style="left:74%;top:50%"><span class="sd"></span>Package before you step away <span class="recipe-no">the downstream</span></a>
+        <a class="nb" href="orient-and-introspect.html" style="left:74%;top:78.7%"><span class="sd"></span>Read the room before you run <span class="recipe-no">the sibling Intent move</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="floor">
+    <span class="door">A door, not a destination — the done is a sentence you write, against your own backlog, before any agent runs. No platform, no permission required.</span>
+    <span class="meta">The Big Picture · Pattern Language</span>
+  </footer>
+
+</div>
+</body>
+</html>

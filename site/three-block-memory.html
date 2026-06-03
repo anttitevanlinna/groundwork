@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Name the three blocks — Pattern · The Big Picture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-0:#05080a;
+    --soil-1:#080d10;
+    --soil-2:#0c1418;
+    --teal:#3fe0c8;
+    --teal-dim:#1d8d80;
+    --amber:#ffb347;
+    --amber-dim:#a86a1f;
+    --spore:#eafff9;
+    --ink:#cfe6e0;
+    --ink-dim:#6f8a85;
+    --ink-faint:#3b524e;
+    --hairline:rgba(63,224,200,.10);
+    --grey:#5d6a68;
+    --grey-dim:#39423f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--soil-0);
+    font-family:'Spline Sans',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  /* atmospheric soil + light-well — recedes for the long read */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
+      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
+      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+  }
+  /* grain / spore dust */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 64px;}
+
+  /* ============ BREADCRUMB ============ */
+  .crumb{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+    color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
+  }
+  .crumb a{color:var(--teal-dim);text-decoration:none;transition:color .25s}
+  .crumb a:hover{color:var(--teal)}
+  .crumb .here{color:var(--ink)}
+
+  /* ============ PATTERN HEADER (name + essence) ============ */
+  header.pat{padding:30px 0 8px;max-width:900px;}
+  .kicker{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--teal-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .kicker .spore-mark{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 14px 2px rgba(63,224,200,.6);
+    flex:none;
+  }
+  .kicker .pat-no{color:var(--ink-faint)}
+  header.pat h1{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(40px,7vw,68px);line-height:.98;
+    color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
+  }
+  header.pat h1 em{font-style:italic;color:var(--teal);font-weight:400}
+  .principle{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
+  }
+  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .essence{
+    font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:720px;
+  }
+  .essence b{color:var(--spore);font-weight:500}
+
+  /* ============ HERO PICTURE ============ */
+  .hero-frame{
+    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(13,31,32,.5), rgba(5,8,10,.6));
+    position:relative;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.04) inset;
+  }
+  .hero-frame svg{display:block;width:100%;height:auto}
+  .hero-cap{
+    position:absolute;left:18px;bottom:13px;z-index:3;
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
+    color:var(--ink-dim);text-transform:uppercase;
+  }
+  .hero-cap b{color:var(--teal)}
+
+  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
+  .prose{
+    margin-top:34px;max-width:760px;
+  }
+  .prose h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
+    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+  }
+  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .prose h2.amber em{color:var(--amber)}
+  .prose .sec-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+    margin-top:42px;
+  }
+  .prose .sec-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
+  }
+  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .prose p{
+    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
+    letter-spacing:.002em;
+  }
+  .prose p b{color:var(--spore);font-weight:500}
+  .prose p em{font-style:italic;color:var(--ink-dim)}
+  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p .mono{
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
+  }
+  .prose p .mono.amber{color:var(--amber)}
+  .prose .pull{
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+    color:var(--ink);max-width:680px;
+  }
+  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
+
+  /* ============ PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
+  .diagram{
+    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+    background:
+      radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
+      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
+    position:relative;
+    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
+  }
+  .diagram svg{display:block;width:100%;height:auto}
+  .diagram .dcap{
+    padding:12px 20px 16px;border-top:1px solid var(--hairline);
+    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
+    color:var(--ink-dim);letter-spacing:.003em;
+    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  }
+  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
+  .diagram .dcap .num{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
+  }
+
+  /* ============ RECIPE SECTION BEATS ============ */
+  .beat-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  }
+  .beat-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.6);
+  }
+  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+
+  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
+  .plates{
+    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
+  }
+  .plate{
+    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
+    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
+  }
+  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
+  .plate .body b{color:var(--spore);font-weight:500}
+  .plate .body .grey{color:var(--grey)}
+  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
+  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
+
+  /* ============ CORE MOVES ============ */
+  .moves{margin-top:46px}
+  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
+  .moves-head h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
+  .move-rail{
+    margin-top:20px;position:relative;
+    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+  }
+  .move-rail .thread{
+    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
+    background:linear-gradient(90deg,
+      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
+      rgba(63,224,200,.7) 50%, rgba(255,179,71,.65) 94%, rgba(255,179,71,0) 100%);
+  }
+  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
+  .step:first-child{padding-left:0}
+  .step .bead{
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
+    margin-bottom:13px;
+  }
+  .step:nth-child(6) .bead{
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
+  }
+  .step h3{
+    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
+  }
+  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
+  .step p b{color:var(--ink);font-weight:500}
+
+  .compound{
+    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
+    padding:18px 22px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.07), transparent 60%),
+      rgba(8,17,18,.55);
+    display:flex;align-items:center;gap:20px;
+  }
+  .compound .loop-ico{flex:none}
+  .compound .ctext{flex:1}
+  .compound .ctext .cyc{
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
+  }
+  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
+  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
+  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+
+  .aside{
+    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
+    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+  }
+  .aside b{color:var(--amber);font-weight:500}
+  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
+
+  /* ============ WHY ============ */
+  .why{
+    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
+    padding:26px 30px 28px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
+      rgba(7,14,15,.6);
+  }
+  .why .beat-label{margin-bottom:14px}
+  .why .principle-block{
+    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
+  }
+  .why .principle-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
+  }
+  .why .principle-line{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
+    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
+  }
+  .why .principle-line em{font-style:italic;color:var(--teal)}
+  .why .quote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--teal);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(63,224,200,.26);max-width:840px;
+  }
+  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
+  .why .gloss b{color:var(--spore);font-weight:500}
+  .why .gloss em{font-style:italic;color:var(--ink-dim)}
+  .why .gloss + .gloss{margin-top:12px}
+  .why .corollary{
+    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
+    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+  }
+  .why .corollary .sd{
+    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+  }
+
+  /* ============ TEST-IN-PRACTICE inline panel ============ */
+  .practice{
+    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
+    padding:22px 26px 24px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
+      rgba(8,15,17,.5);
+  }
+  .practice .beat-label{margin-bottom:12px}
+  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
+  .practice p b{color:var(--spore);font-weight:500}
+  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
+  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ CONNECTS TO ============ */
+  .connects{margin-top:52px}
+  .connects h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .connects .sub{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:5px;
+  }
+  .web{position:relative;margin-top:8px}
+  .web svg{display:block;width:100%;height:auto}
+  .neighbours{position:absolute;inset:0;pointer-events:none}
+  .nb{
+    position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
+    display:flex;align-items:center;gap:9px;
+    padding:8px 14px 9px;border-radius:13px;
+    background:rgba(8,15,17,.82);backdrop-filter:blur(4px);
+    border:1px solid var(--hairline);
+    color:var(--ink);font-size:13px;letter-spacing:.005em;white-space:nowrap;
+    transition:border-color .3s,color .3s,background .3s,transform .3s;
+    cursor:pointer;text-decoration:none;
+  }
+  .nb .recipe-no{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--ink-faint);
+  }
+  .nb .sd{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 12px 2px rgba(63,224,200,.55);
+  }
+  .nb.amber .sd{background:var(--amber);box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 12px 2px rgba(255,179,71,.5)}
+  .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
+  .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
+  .nb:hover .sd{animation:throb 1s ease-in-out infinite}
+  .nb.soon{opacity:.62}
+  .nb.soon::after{
+    content:"soon";
+    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);
+    border:1px solid var(--ink-faint);border-radius:20px;
+    padding:2px 7px 3px;margin-left:4px;
+  }
+  .nb.soon:hover{opacity:1}
+  @keyframes throb{50%{transform:scale(1.5)}}
+  .origin-chip{
+    position:absolute;transform:translate(-50%,-50%);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 24px rgba(63,224,200,.4);white-space:nowrap;text-align:center;
+  }
+  .origin-chip small{
+    display:block;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:8.5px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--teal-dim);margin-top:3px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer.floor{
+    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  footer.floor .door{
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
+    text-shadow:0 0 22px rgba(255,179,71,.3);
+  }
+  footer.floor .meta{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+
+  /* breathing glow on the diagram spore-tips */
+  @keyframes breathe{
+    0%,100%{opacity:.55}
+    50%{opacity:1}
+  }
+  .breathe{animation:breathe 4.2s ease-in-out infinite}
+
+  @media (max-width:860px){
+    .plates{grid-template-columns:1fr 1fr}
+    .plate.use{grid-column:1 / -1}
+  }
+  @media (max-width:780px){
+    .plates{grid-template-columns:1fr}
+    .plate.use{grid-column:1}
+    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
+    .move-rail .thread{display:none}
+    .step{padding:0}
+    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .neighbours .nb{font-size:11px;padding:6px 10px}
+    .prose p{font-size:14.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ BREADCRUMB ============ -->
+  <nav class="crumb">
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Name the three blocks</span>
+  </nav>
+
+  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <header class="pat">
+    <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· software · Intent → Context · a recognition move</span></div>
+    <h1>Name the <em>three blocks</em></h1>
+    <p class="principle">The principle: <b>recognition before naming</b> — a frame is only trustworthy once you've watched it fit your own mess.</p>
+    <p class="essence">
+      Sort the context you already keep — rules, decisions, quality bars — into <b>three named kinds</b>,
+      and let the slot that comes up empty tell you what the agent is missing. You're not authoring;
+      you're auditing a pile you already built.
+    </p>
+  </header>
+
+  <!-- ============ HERO PICTURE: scattered pile → three labelled lanes, empty lane glows ============ -->
+  <div class="hero-frame">
+    <svg viewBox="0 0 1080 408" role="img" aria-label="On the left, a scattered undifferentiated stack of context files. On the right, the same lines pulled into three labelled lanes — Block 1 observation to rule (full), Block 2 decisions plus alternatives (half-full), Block 3 quality criteria (nearly empty and glowing).">
+      <defs>
+        <radialGradient id="hwell" cx="74%" cy="48%" r="64%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".2"/>
+          <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".07"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="b1Grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".5"/><stop offset="1" stop-color="#3fe0c8" stop-opacity=".9"/></linearGradient>
+        <linearGradient id="b2Grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".4"/><stop offset="1" stop-color="#9bffe9" stop-opacity=".8"/></linearGradient>
+        <linearGradient id="b3Grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a86a1f" stop-opacity=".4"/><stop offset="1" stop-color="#ffb347" stop-opacity=".95"/></linearGradient>
+        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect x="0" y="0" width="1080" height="408" fill="url(#hwell)"/>
+
+      <!-- ===== LEFT: the scattered pile ===== -->
+      <text x="48" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#5d6a68">WHAT YOU HAVE · A HEAP</text>
+      <g font-family="'Spline Sans Mono',monospace" font-size="10.5">
+        <g transform="rotate(-7 130 120)"><rect x="60" y="100" width="150" height="40" rx="7" fill="rgba(8,17,18,.7)" stroke="#4b5654" stroke-width="1"/><text x="74" y="125" fill="#8da6a0">CLAUDE.md</text></g>
+        <g transform="rotate(5 250 150)"><rect x="190" y="132" width="160" height="40" rx="7" fill="rgba(8,17,18,.7)" stroke="#4b5654" stroke-width="1"/><text x="204" y="157" fill="#8da6a0">CLAUDE.local.md</text></g>
+        <g transform="rotate(-4 120 210)"><rect x="58" y="192" width="150" height="40" rx="7" fill="rgba(8,17,18,.7)" stroke="#4b5654" stroke-width="1"/><text x="72" y="217" fill="#8da6a0">observations/</text></g>
+        <g transform="rotate(8 270 235)"><rect x="200" y="218" width="140" height="40" rx="7" fill="rgba(8,17,18,.7)" stroke="#4b5654" stroke-width="1"/><text x="214" y="243" fill="#8da6a0">ADR-0003.md</text></g>
+        <g transform="rotate(-3 140 295)"><rect x="78" y="278" width="140" height="40" rx="7" fill="rgba(8,17,18,.7)" stroke="#4b5654" stroke-width="1"/><text x="92" y="303" fill="#8da6a0">SKILL.md</text></g>
+      </g>
+      <text x="48" y="362" font-family="'Spline Sans',sans-serif" font-size="14" fill="#5d6a68" font-style="italic">no shape · gaps invisible · system or heap?</text>
+
+      <!-- the sort arrow -->
+      <g transform="translate(388,200)">
+        <path d="M0,0 L74,0" stroke="#3fe0c8" stroke-width="1.6" fill="none" opacity=".75"/>
+        <polygon points="74,0 62,-7 62,7" fill="#3fe0c8" opacity=".85"/>
+        <text x="38" y="-14" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".26em" fill="#3fe0c8">SORT BY KIND</text>
+        <text x="38" y="24" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#6f8a85">same lines, new slots</text>
+      </g>
+
+      <!-- ===== RIGHT: three labelled lanes ===== -->
+      <text x="520" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#3fe0c8">WHAT YOU SEE · THREE NAMED KINDS</text>
+
+      <!-- Block 1 lane — full -->
+      <g>
+        <text x="520" y="86" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".18em" fill="#3fe0c8">BLOCK 1 · OBSERVATION → RULE</text>
+        <g stroke="url(#b1Grad)" stroke-width="3.4" stroke-linecap="round">
+          <line x1="520" y1="100" x2="1010" y2="100"/>
+          <line x1="520" y1="112" x2="980" y2="112"/>
+          <line x1="520" y1="124" x2="1000" y2="124"/>
+          <line x1="520" y1="136" x2="952" y2="136"/>
+        </g>
+        <text x="1018" y="120" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#1d8d80">FULL</text>
+      </g>
+
+      <!-- Block 2 lane — half-full -->
+      <g>
+        <text x="520" y="182" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".18em" fill="#9bffe9">BLOCK 2 · DECISIONS + ALTERNATIVES</text>
+        <g stroke="url(#b2Grad)" stroke-width="3.4" stroke-linecap="round">
+          <line x1="520" y1="196" x2="900" y2="196"/>
+          <line x1="520" y1="208" x2="760" y2="208"/>
+        </g>
+        <!-- the missing-alternative ghosts -->
+        <g stroke="#39423f" stroke-width="2" stroke-dasharray="3 7" stroke-linecap="round">
+          <line x1="520" y1="220" x2="840" y2="220"/>
+          <line x1="520" y1="232" x2="700" y2="232"/>
+        </g>
+        <text x="1018" y="214" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#1d8d80">HALF · MISSING ALTS</text>
+      </g>
+
+      <!-- Block 3 lane — nearly empty, glowing -->
+      <g>
+        <text x="520" y="278" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".18em" fill="#ffb347">BLOCK 3 · QUALITY CRITERIA</text>
+        <rect x="514" y="286" width="504" height="62" rx="10" fill="rgba(255,179,71,.05)" stroke="rgba(255,179,71,.4)" stroke-width="1.2" filter="url(#hglow)"/>
+        <line x1="528" y1="312" x2="720" y2="312" stroke="url(#b3Grad)" stroke-width="3.4" stroke-linecap="round"/>
+        <circle cx="740" cy="312" r="3.6" fill="#ffce85" class="breathe"/>
+        <text x="528" y="338" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#ffb347">one lonely line — the lane is the finding</text>
+      </g>
+    </svg>
+    <div class="hero-cap">The lines didn't change. <b>The empty lane did</b> — and an empty lane is what the agent never inherited.</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
+  <!-- ============================================================ -->
+  <section class="prose">
+    <div class="sec-label">The mechanism · why a sort changes nothing and reveals everything</div>
+    <h2>The lines don't change. <em>The slots do.</em></h2>
+
+    <p>
+      You have a <span class="mono">CLAUDE.md</span>, probably a <span class="mono">CLAUDE.local.md</span>, a few observations
+      jotted down, an ADR or two, a skill you wrote last week. Each was written in the moment, for its own reason,
+      and nobody ever stepped back to ask what <em>kind</em> of thing each one is. So when a real task lands and you go to
+      walk your material against it, you're reading <b>a flat list with no shape</b> — and a flat list is exactly the
+      surface that hides its own holes. Presence is easy to see; absence is invisible. You can stare at twenty good lines
+      and feel well-prepared, because the missing twenty-first leaves no mark on the page.
+    </p>
+
+    <p>
+      The move is borrowed, and it travels with its source attached: <b>Huryn's three-block memory — a frame for naming
+      what you've built, not a template to fill in.</b> Sort every line of context into one of three kinds. Block 1 is
+      observation → rule: the conditioned reflexes you've encoded — <em class="teal">we use Postgres, not Mongo; webhook
+      signatures get validated before dispatch.</em> Block 2 is decisions plus the alternatives you rejected — the choice,
+      the road not taken, the constraint that forced it. Block 3 is quality criteria — what "done" looks like, what you'd
+      reject the output for. Same lines, three labelled slots. Below: the identical pile, before and after the sort.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 1 — SAME PILE, DIFFERENT VISIBILITY ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 470" role="img" aria-label="Top: a flat list of eight context lines with no shape, gaps invisible. Bottom: the identical eight lines sorted into three named blocks, with Block 3 now a visible empty slot.">
+      <defs>
+        <linearGradient id="d1-b1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".5"/><stop offset="1" stop-color="#3fe0c8" stop-opacity=".9"/></linearGradient>
+        <linearGradient id="d1-b2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".4"/><stop offset="1" stop-color="#9bffe9" stop-opacity=".8"/></linearGradient>
+        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME EIGHT LINES · NO STRUCTURE vs THREE SLOTS · THE GAP BECOMES VISIBLE</text>
+
+      <!-- ===== TOP: flat list, no shape ===== -->
+      <text x="48" y="70" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#5d6a68">FLAT LIST · ONE KIND OF GREY</text>
+      <g font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#9da9a6">
+        <g><circle cx="60" cy="92" r="2.6" fill="#5d6a68"/><text x="76" y="96">Postgres, not Mongo — decided after the migration scare</text></g>
+        <g><circle cx="60" cy="116" r="2.6" fill="#5d6a68"/><text x="76" y="120">validate webhook signatures before dispatch</text></g>
+        <g><circle cx="60" cy="140" r="2.6" fill="#5d6a68"/><text x="76" y="144">chose REST over gRPC for the public API</text></g>
+        <g><circle cx="60" cy="164" r="2.6" fill="#5d6a68"/><text x="76" y="168">no secrets in logs, ever</text></g>
+        <g><circle cx="600" cy="92" r="2.6" fill="#5d6a68"/><text x="616" y="96">queue retries cap at five, then dead-letter</text></g>
+        <g><circle cx="600" cy="116" r="2.6" fill="#5d6a68"/><text x="616" y="120">picked feature flags over long-lived branches</text></g>
+        <g><circle cx="600" cy="140" r="2.6" fill="#5d6a68"/><text x="616" y="144">error copy: plain, no stack traces to the user</text></g>
+        <g><circle cx="600" cy="164" r="2.6" fill="#5d6a68"/><text x="616" y="168">monorepo — settled, don't relitigate</text></g>
+      </g>
+      <text x="48" y="200" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#5d6a68">All look alike. What's missing? You can't tell — nothing here can be missing from a list with no slots.</text>
+
+      <line x1="40" y1="224" x2="1040" y2="224" stroke="rgba(63,224,200,.12)" stroke-width="1"/>
+
+      <!-- ===== BOTTOM: three named slots ===== -->
+      <text x="48" y="258" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#3fe0c8">SORTED · THREE NAMED SLOTS</text>
+
+      <!-- Block 1 slot -->
+      <g>
+        <rect x="40" y="274" width="320" height="170" rx="11" fill="rgba(63,224,200,.04)" stroke="rgba(63,224,200,.22)"/>
+        <text x="58" y="298" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".14em" fill="#3fe0c8">BLOCK 1 · OBSERVATION → RULE</text>
+        <g stroke="url(#d1-b1)" stroke-width="3" stroke-linecap="round">
+          <line x1="58" y1="322" x2="320" y2="322"/>
+          <line x1="58" y1="342" x2="300" y2="342"/>
+          <line x1="58" y1="362" x2="318" y2="362"/>
+          <line x1="58" y1="382" x2="276" y2="382"/>
+        </g>
+        <text x="58" y="424" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12" fill="#1d8d80">the encoded reflexes — full</text>
+      </g>
+
+      <!-- Block 2 slot -->
+      <g>
+        <rect x="380" y="274" width="320" height="170" rx="11" fill="rgba(63,224,200,.04)" stroke="rgba(63,224,200,.22)"/>
+        <text x="398" y="298" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".14em" fill="#9bffe9">BLOCK 2 · DECISIONS + ALTERNATIVES</text>
+        <g stroke="url(#d1-b2)" stroke-width="3" stroke-linecap="round">
+          <line x1="398" y1="322" x2="640" y2="322"/>
+          <line x1="398" y1="342" x2="600" y2="342"/>
+        </g>
+        <g stroke="#39423f" stroke-width="2.2" stroke-dasharray="3 7" stroke-linecap="round">
+          <line x1="398" y1="362" x2="560" y2="362"/>
+          <line x1="398" y1="382" x2="520" y2="382"/>
+        </g>
+        <text x="398" y="424" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12" fill="#1d8d80">decisions kept, alternatives lost</text>
+      </g>
+
+      <!-- Block 3 slot — empty, glowing -->
+      <g>
+        <rect x="720" y="274" width="320" height="170" rx="11" fill="rgba(255,179,71,.05)" stroke="rgba(255,179,71,.45)" stroke-width="1.3" filter="url(#d1-glow)"/>
+        <text x="738" y="298" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".14em" fill="#ffb347">BLOCK 3 · QUALITY CRITERIA</text>
+        <text x="880" y="372" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="22" fill="#ffb347">empty</text>
+        <circle cx="880" cy="332" r="4" fill="#ffce85" class="breathe"/>
+        <text x="738" y="424" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12" fill="#a86a1f">no taste encoded — the loud one</text>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 01</span>The lines didn't change — <b>the slots did, and an empty slot is a finding</b>. Not new content; new legibility.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 2 — the empty block is the point ============ -->
+  <section class="prose">
+    <p>
+      Here's the counterintuitive part, and it's the whole reason the move is worth five minutes: <b>the value isn't in
+      the rules you've written — it's in the category that's empty.</b> A sort doesn't add a single line. What it adds is a
+      structure with named slots, so that one slot sitting bare becomes impossible to un-see. That's the cognitive trick the
+      frame plays — it converts an <em>absence</em> (no quality criteria) into a <em>presence</em> (an empty Block 3 staring
+      back at you). The bare lane is louder than every full one. You can argue with a rule; you can't argue with a slot that
+      has nothing in it.
+    </p>
+
+    <p class="pull">
+      A flat list flatters the pile. <b>The empty block tells you the truth.</b>
+    </p>
+
+    <p>
+      Two slots tend to come up short, and each absence costs the agent something specific. A thin Block 2 means decisions
+      were made and then forgotten — the agent inherits the <em>what</em> but not the <em>why</em>, so it cheerfully proposes
+      the alternative you already rejected for a reason it never learned. A decision recorded with no rejected alternative is
+      itself a finding: a Block 2 entry missing half its content. And Block 3 is, in practice, the emptiest of the three —
+      not because it's a measured rate, but because <b>most engineers carry their quality bar in their head and never wrote it
+      down</b>, so the agent never inherits the taste that would let it reject its own bad output. The sort doesn't fix this.
+      It just makes the hole stop hiding.
+    </p>
+
+    <div class="sec-label">The upgrade move · template-filled → recognition-audited</div>
+    <h2>Point the lens at <em>your own mess</em>, never a blank template.</h2>
+
+    <p>
+      There are two ways to arrive at a three-block memory, and only one survives contact with a task. The tempting path
+      starts from a blank template: open three empty headings and dutifully author rules until each block looks full. It
+      produces a tidy, complete-looking system that was <em>never tested against real work</em> — context that reads well and
+      means nothing, because you wrote what you imagined your standards were, not what your repo has actually been enforcing.
+      The honest path runs backwards: point the frame at the material you already wrote and classify what's there. Recognition,
+      not authoring. The frame earns its name <b>after</b> you've matched a real line to a block — never before. Below: both
+      paths, and the one that holds.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 2 — UPGRADE MOVE (template vs recognition) ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 380" role="img" aria-label="Two paths to a three-block memory. Path A starts from a blank template and authors rules to fill each block — a full-looking system, marked brittle. Path B points the frame at material you already wrote and classifies it — an honest map with real gaps showing, marked load-bearing.">
+      <defs>
+        <linearGradient id="d2-brittle" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5d6a68" stop-opacity=".2"/><stop offset="1" stop-color="#5d6a68" stop-opacity=".7"/></linearGradient>
+        <linearGradient id="d2-load" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".4"/><stop offset="1" stop-color="#3fe0c8" stop-opacity=".9"/></linearGradient>
+        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">TWO PATHS TO THE SAME FRAME · ONLY ONE SURVIVES A TASK</text>
+
+      <!-- ===== PATH A — blank template ===== -->
+      <g>
+        <text x="60" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#5d6a68">PATH A · START FROM A BLANK TEMPLATE</text>
+        <!-- empty template -->
+        <rect x="60" y="92" width="150" height="120" rx="9" fill="rgba(8,17,18,.6)" stroke="#4b5654" stroke-dasharray="5 5"/>
+        <text x="74" y="112" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#5d6a68">Block 1</text>
+        <text x="74" y="146" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#5d6a68">Block 2</text>
+        <text x="74" y="180" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#5d6a68">Block 3</text>
+        <!-- arrow -->
+        <g transform="translate(220,152)"><path d="M0,0 L44,0" stroke="#5d6a68" stroke-width="1.2" fill="none" opacity=".6"/><polygon points="44,0 35,-5 35,5" fill="#5d6a68" opacity=".7"/><text x="22" y="-10" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#5d6a68">AUTHOR</text></g>
+        <!-- full-looking result -->
+        <rect x="284" y="92" width="160" height="120" rx="9" fill="rgba(8,17,18,.7)" stroke="#5d6a68"/>
+        <g stroke="url(#d2-brittle)" stroke-width="2.4" stroke-linecap="round">
+          <line x1="298" y1="110" x2="424" y2="110"/><line x1="298" y1="124" x2="408" y2="124"/>
+          <line x1="298" y1="146" x2="430" y2="146"/><line x1="298" y1="160" x2="400" y2="160"/>
+          <line x1="298" y1="182" x2="420" y2="182"/><line x1="298" y1="196" x2="396" y2="196"/>
+        </g>
+        <text x="364" y="236" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#5d6a68">full-looking · never tested</text>
+        <g transform="translate(284,252)">
+          <rect x="0" y="0" width="160" height="26" rx="13" fill="none" stroke="#5d6a68" stroke-dasharray="4 4"/>
+          <text x="80" y="17" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".16em" fill="#8da6a0">BRITTLE</text>
+        </g>
+      </g>
+
+      <!-- divider -->
+      <line x1="540" y1="64" x2="540" y2="316" stroke="rgba(63,224,200,.1)" stroke-width="1"/>
+
+      <!-- ===== PATH B — recognition ===== -->
+      <g>
+        <text x="600" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#3fe0c8">PATH B · POINT IT AT WHAT YOU ALREADY WROTE</text>
+        <!-- the existing pile -->
+        <g font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#8da6a0">
+          <g transform="rotate(-6 640 120)"><rect x="600" y="100" width="86" height="22" rx="5" fill="rgba(8,17,18,.7)" stroke="#4b5654"/><text x="610" y="115">CLAUDE.md</text></g>
+          <g transform="rotate(5 660 160)"><rect x="610" y="148" width="92" height="22" rx="5" fill="rgba(8,17,18,.7)" stroke="#4b5654"/><text x="620" y="163">ADR-0003</text></g>
+          <g transform="rotate(-3 640 198)"><rect x="600" y="188" width="80" height="22" rx="5" fill="rgba(8,17,18,.7)" stroke="#4b5654"/><text x="610" y="203">SKILL.md</text></g>
+        </g>
+        <!-- arrow -->
+        <g transform="translate(712,152)"><path d="M0,0 L44,0" stroke="#3fe0c8" stroke-width="1.4" fill="none" opacity=".75"/><polygon points="44,0 35,-5 35,5" fill="#3fe0c8" opacity=".85"/><text x="22" y="-10" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#3fe0c8">CLASSIFY</text></g>
+        <!-- honest result with a real gap -->
+        <rect x="776" y="92" width="160" height="120" rx="9" fill="rgba(8,17,18,.78)" stroke="url(#d2-load)" stroke-width="1.4" filter="url(#d2-glow)"/>
+        <g stroke="url(#d2-load)" stroke-width="2.4" stroke-linecap="round">
+          <line x1="790" y1="110" x2="916" y2="110"/><line x1="790" y1="124" x2="894" y2="124"/>
+          <line x1="790" y1="146" x2="900" y2="146"/>
+        </g>
+        <!-- the visible empty band -->
+        <g stroke="#a86a1f" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round">
+          <line x1="790" y1="182" x2="848" y2="182"/>
+        </g>
+        <circle cx="868" cy="182" r="3.2" fill="#ffce85" class="breathe"/>
+        <text x="856" y="236" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#3fe0c8">honest map · gap showing</text>
+        <g transform="translate(776,252)">
+          <rect x="0" y="0" width="160" height="26" rx="13" fill="rgba(63,224,200,.08)" stroke="#3fe0c8"/>
+          <text x="80" y="17" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".16em" fill="#3fe0c8">LOAD-BEARING</text>
+        </g>
+      </g>
+
+      <text x="540" y="350" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">RECOGNITION BEATS AUTHORING — YOU ONLY TRUST A STRUCTURE YOU'VE SEEN FIT YOUR OWN MESS.</text>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 02</span>Authoring from a blank template yields tidy context never tested against work. <b>Recognising the blocks in lived material yields an honest audit</b> — gaps and all.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 3 — the compounding intro ============ -->
+  <section class="prose">
+    <p>
+      The frame is permanent; the contents compound. The first sort is a snapshot — it tells you which kind of context is
+      load-bearing today and which is missing. But the real return comes from running the loop: a task lands, you sort,
+      the thinnest block surfaces, you fill the worst gap by routing it to its proper home, you send the work off, and the
+      return sharpens the blocks for the next pass. <b>The three lanes are fixed; the lines inside them grow.</b> Each lap the
+      bare lane carries one more line, and the next task starts against a richer map than the last. Boring on the first lap;
+      decisive by the tenth.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="A closed loop — task lands, sort into three blocks, empty block surfaces, fill the worst gap by routing it home, send off, return sharpens the blocks — with the three lanes visibly carrying more lines across passes one, two and three.">
+      <defs>
+        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/><stop offset="1" stop-color="#ffb347" stop-opacity=".6"/></linearGradient>
+        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#9bffe9"/><stop offset=".55" stop-color="#3fe0c8"/><stop offset="1" stop-color="#1d8d80"/></radialGradient>
+        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE FRAME IS PERMANENT · THE CONTENTS COMPOUND</text>
+
+      <!-- ===== LEFT HALF: the loop ===== -->
+      <g transform="translate(40,60)">
+        <circle cx="200" cy="170" r="130" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="540 60" stroke-linecap="round" transform="rotate(-90 200 170)"/>
+        <circle r="3.6" fill="#aeffee">
+          <animateMotion dur="9s" repeatCount="indefinite" path="M200,40 a130,130 0 1,1 -0.1,0"/>
+          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- five beads -->
+        <g>
+          <circle cx="200" cy="40" r="21" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="200" y="45" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">1</text>
+          <text x="200" y="20" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Task lands</text>
+        </g>
+        <g>
+          <circle cx="324" cy="116" r="21" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="324" y="121" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">2</text>
+          <text x="352" y="106" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Sort into 3</text>
+          <text x="352" y="122" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">blocks</text>
+        </g>
+        <g>
+          <circle cx="278" cy="276" r="21" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="278" y="281" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">3</text>
+          <text x="278" y="316" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#ffce85">Empty block surfaces</text>
+        </g>
+        <g>
+          <circle cx="122" cy="276" r="21" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="122" y="281" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">4</text>
+          <text x="122" y="332" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Fill the worst gap</text>
+        </g>
+        <g>
+          <circle cx="76" cy="116" r="21" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="76" y="121" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">5</text>
+          <text x="48" y="106" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Send off →</text>
+          <text x="48" y="122" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">return sharpens</text>
+        </g>
+
+        <text x="200" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EVERY PASS</text>
+        <text x="200" y="184" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">a richer map</text>
+      </g>
+
+      <!-- ===== RIGHT HALF: the lanes densifying across passes ===== -->
+      <g transform="translate(540,68)">
+
+        <!-- pass 1 — thin, Block 3 empty -->
+        <g>
+          <rect x="0" y="14" width="150" height="220" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.22)"/>
+          <text x="10" y="34" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#3fe0c8">PASS 1</text>
+          <!-- b1 -->
+          <g stroke="#3fe0c8" stroke-width="2" opacity=".7"><line x1="12" y1="58" x2="120" y2="58"/><line x1="12" y1="72" x2="96" y2="72"/></g>
+          <!-- b2 -->
+          <g stroke="#9bffe9" stroke-width="2" opacity=".5"><line x1="12" y1="108" x2="100" y2="108"/></g>
+          <!-- b3 empty -->
+          <rect x="10" y="150" width="130" height="62" rx="6" fill="rgba(255,179,71,.05)" stroke="rgba(255,179,71,.35)" stroke-dasharray="4 4"/>
+          <text x="75" y="186" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#ffb347">empty</text>
+          <text x="75" y="252" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".16em" fill="#5d6a68">3 EMPTY</text>
+        </g>
+
+        <!-- arrow -->
+        <g transform="translate(158,124)"><path d="M0,0 L24,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/><polygon points="24,0 16,-5 16,5" fill="#3fe0c8" opacity=".75"/></g>
+
+        <!-- pass 2 — Block 3 gets a line -->
+        <g transform="translate(186,0)">
+          <rect x="0" y="14" width="150" height="220" rx="8" fill="rgba(8,17,18,.78)" stroke="rgba(63,224,200,.32)"/>
+          <text x="10" y="34" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#3fe0c8">PASS 2</text>
+          <g stroke="#3fe0c8" stroke-width="2" opacity=".8"><line x1="12" y1="58" x2="128" y2="58"/><line x1="12" y1="72" x2="104" y2="72"/></g>
+          <g stroke="#9bffe9" stroke-width="2" opacity=".7"><line x1="12" y1="108" x2="116" y2="108"/><line x1="12" y1="122" x2="92" y2="122"/></g>
+          <rect x="10" y="150" width="130" height="62" rx="6" fill="rgba(255,179,71,.06)" stroke="rgba(255,179,71,.5)"/>
+          <g stroke="#ffb347" stroke-width="2.2"><line x1="20" y1="178" x2="120" y2="178"/></g>
+          <text x="75" y="252" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".16em" fill="#9bffe9">3 FILLING</text>
+        </g>
+
+        <!-- arrow -->
+        <g transform="translate(344,124)"><path d="M0,0 L24,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/><polygon points="24,0 16,-5 16,5" fill="#3fe0c8" opacity=".75"/></g>
+
+        <!-- pass 3 — all three carrying -->
+        <g transform="translate(372,0)">
+          <rect x="0" y="6" width="150" height="236" rx="8" fill="rgba(8,17,18,.85)" stroke="url(#d3-ring)" stroke-width="1.5" filter="url(#d3-glow)"/>
+          <text x="10" y="26" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#ffb347">PASS 3</text>
+          <g stroke="#3fe0c8" stroke-width="2" opacity=".85"><line x1="12" y1="48" x2="134" y2="48"/><line x1="12" y1="62" x2="110" y2="62"/><line x1="12" y1="76" x2="126" y2="76"/></g>
+          <g stroke="#9bffe9" stroke-width="2" opacity=".8"><line x1="12" y1="106" x2="120" y2="106"/><line x1="12" y1="120" x2="100" y2="120"/><line x1="12" y1="134" x2="114" y2="134"/></g>
+          <rect x="10" y="158" width="130" height="62" rx="6" fill="rgba(255,179,71,.08)" stroke="rgba(255,179,71,.6)"/>
+          <g stroke="#ffb347" stroke-width="2.4"><line x1="20" y1="180" x2="126" y2="180"/><line x1="20" y1="196" x2="104" y2="196"/></g>
+          <text x="75" y="258" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".16em" fill="#ffb347">ALL THREE CARRY</text>
+        </g>
+
+        <!-- legend -->
+        <g transform="translate(0,290)">
+          <rect x="0" y="0" width="14" height="3" fill="#ffb347"/>
+          <text x="22" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">QUALITY CRITERIA · THE LANE THAT WAS BARE</text>
+          <rect x="0" y="14" width="14" height="3" fill="#3fe0c8"/>
+          <text x="22" y="18" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">RULES + DECISIONS · GROWING EACH LAP</text>
+        </g>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 03</span><em>The frame is permanent; the contents compound.</em> Each lap the bare lane carries one more line, and <b>the next task starts against a richer map</b>.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 4 — what Test actually means ============ -->
+  <section class="prose">
+    <div class="sec-label amber">What "Test" actually means · in practice</div>
+    <h2 class="amber">The frame has to fit <em>your own ADR</em> — not a textbook example.</h2>
+
+    <p>
+      The sort worked if you can point at any line in your context and say which block it is without hesitating. A line
+      that resists classification isn't a mystery third category — it's either redundant, or it's quietly doing two jobs and
+      should be split. The harder test is the honest one: <b>at least one block should come up thin or empty, and you should
+      be able to name what that absence costs the agent on the very next task.</b> A sort where all three lanes look full means
+      one of two things — you have unusually mature context, or you're flattering the pile. When in doubt, re-check Block 3;
+      it's the easiest to fool yourself about. And the negative test that catches the most common failure: if you could only
+      illustrate the blocks with invented examples and not one line of your own, the sort hasn't happened. You've learned a
+      vocabulary, not audited a system. The proof is recognising your <em>last real ADR</em> as a Block 2 entry, not nodding
+      along to a clean definition.
+    </p>
+  </section>
+
+  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
+  <div class="plates">
+    <div class="plate use">
+      <div class="beat-label amber"><b>Use when</b></div>
+      <p class="body">
+        You've accumulated <span class="grey">rules, memory, ADRs and skills</span> and you can't tell whether you've built
+        <b>a system or a heap</b> — typically right before you send a real slice off to an agent and want to know the context
+        is load-bearing.
+      </p>
+    </div>
+    <div class="plate build">
+      <div class="beat-label"><b>Build</b></div>
+      <p class="body">
+        Not a new file — <b>an index over the files you already keep</b>: each line tagged Block 1 / 2 / 3, with the thin or
+        empty block named as a gap to fill before send-off.
+      </p>
+    </div>
+    <div class="plate test">
+      <div class="beat-label"><b>Test</b></div>
+      <p class="body">
+        The frame fit <em>your own material.</em><br>
+        Not <em class="no">a textbook example.</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ CORE MOVES — actionable heart ============ -->
+  <section class="moves">
+    <div class="beat-label"><b>Core moves</b></div>
+    <div class="moves-head">
+      <h2>The action, in sequence</h2>
+      <span class="lede">Recognition, not authoring — five minutes, no new writing until the end.</span>
+    </div>
+
+    <div class="move-rail">
+      <div class="thread"></div>
+      <div class="step">
+        <div class="bead">1</div>
+        <h3>Point the lens at real material</h3>
+        <p>Open your actual files. <b>Never a blank template.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">2</div>
+        <h3>Sort into Block 1</h3>
+        <p>Observation → rule. The <b>encoded reflexes.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">3</div>
+        <h3>Sort into Block 2</h3>
+        <p>Decisions + the <b>alternatives you rejected.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">4</div>
+        <h3>Sort into Block 3</h3>
+        <p>Quality criteria. What <b>"done" looks like.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">5</div>
+        <h3>Read the empty block</h3>
+        <p>The bare lane <b>names the gap for you.</b></p>
+      </div>
+    </div>
+
+    <div class="compound">
+      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
+        </linearGradient></defs>
+        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
+          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
+        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
+        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
+        <circle r="3" fill="#aeffee">
+          <animateMotion dur="5s" repeatCount="indefinite"
+            path="M37,11 a26,26 0 1,1 -0.1,0"/>
+        </circle>
+      </svg>
+      <div class="ctext">
+        <div class="cyc">sort<span class="arr">→</span>read the empty block<span class="arr">→</span>fill the worst gap<span class="arr">→</span>send off<span class="arr">→</span>return sharpens<span class="arr">→</span>repeat</div>
+        <p>The frame is permanent; <b>the contents compound.</b> Each lap the bare lane carries one more line — the same lens that audits your files will, later, read a team's and a company's.</p>
+      </div>
+    </div>
+
+    <!-- the Monday-move / no-permission aside -->
+    <p class="aside">
+      <b>Monday move:</b> before your next real send-off, open <span class="mono">CLAUDE.md</span> and <span class="mono">CLAUDE.local.md</span> side by side. Tag each line 1, 2 or 3. Notice which block is empty. Write <em>one</em> line in it before you dispatch.
+      <span class="mono">Vanilla Claude Code · your own files · no platform · no budget · no sign-off · ~5 min.</span>
+      This is the recognition move from the first experiment in Agentic Engineering 101 — the sort that turns a pile into an audited system.
+    </p>
+  </section>
+
+  <!-- ============ WHY — the conviction ============ -->
+  <section class="why">
+    <div class="beat-label"><b>Why</b></div>
+
+    <div class="principle-block">
+      <div class="principle-label">The principle</div>
+      <p class="principle-line">Recognition before <em>naming</em>. A frame is only worth trusting once you've watched it fit your own mess.</p>
+    </div>
+
+    <p class="quote">"The empty block is the one telling you the truth."</p>
+    <p class="gloss">
+      A flat list of rules hides its own holes; a list sorted by kind makes the holes shout. The value isn't in the rules
+      you've written — it's in <b>the category that's empty</b>. That's the cognitive trick the frame plays: it converts an
+      absence (no quality criteria) into a presence (an empty Block 3 staring back at you). Authoring from a blank template
+      produces tidy context that was never tested against a real task; <b>recognising the blocks in lived material produces an
+      honest audit</b>, gaps and all.
+    </p>
+    <p class="gloss">
+      Carried correctly, the move travels with its source: <em>Huryn's three-block memory — a frame for naming what you've
+      built, not a template to fill in.</em> And the claim that the value lives in the empty block is a teaching frame, not a
+      measured law — there's no "empty blocks cause N% of failures." It's a lens for seeing absence, and that's exactly enough:
+      you can only trust a structure you've seen fit your own pile.
+    </p>
+    <div class="corollary"><span class="sd"></span>Presence is easy to see. Absence is the finding.</div>
+  </section>
+
+  <!-- ============ CONNECTS TO — neighbour patterns ============ -->
+  <section class="connects">
+    <h2>Connects to</h2>
+    <div class="sub">Threads leaving this node · the pattern language</div>
+
+    <div class="web">
+      <svg viewBox="0 0 1080 300" aria-hidden="true">
+        <defs>
+          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#6f8a85" stop-opacity=".5"/></linearGradient>
+          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <circle cx="150" cy="150" r="30" fill="none" stroke="#3fe0c8" stroke-width="1.2" opacity=".5"/>
+        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#wglow)"/>
+        <circle cx="150" cy="150" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
+
+        <path id="th1" d="M150,150 C360,70 540,52 760,56" stroke="url(#t1)" stroke-width="2.2" fill="none"/>
+        <path id="th2" d="M150,150 C380,118 560,116 760,118" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
+        <path id="th3" d="M150,150 C380,186 560,188 760,188" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
+        <path id="th4" d="M150,150 C360,232 540,250 760,250" stroke="url(#t4)" stroke-width="1.6" fill="none"/>
+
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+      </svg>
+
+      <div class="neighbours">
+        <div class="origin-chip" style="left:13.8%;top:50%">Name the three blocks<small>recipe · you are here</small></div>
+        <a class="nb"            href="adr-under-pressure.html" style="left:74%;top:18.7%"><span class="sd"></span>Decide under pressure (ADR) <span class="recipe-no">→ Block 2</span></a>
+        <a class="nb"            href="compound-from-evidence.html" style="left:74%;top:39.3%"><span class="sd"></span>Compound from evidence <span class="recipe-no">← Block 1 feeds</span></a>
+        <a class="nb amber"      href="gap-route-and-encode.html" style="left:74%;top:62.7%"><span class="sd"></span>Route the gap and encode it <span class="recipe-no">downstream</span></a>
+        <a class="nb"            href="plan-rule-extract.html" style="left:74%;top:83.3%"><span class="sd"></span>Extract rules from a plan <span class="recipe-no">sibling · Block 1</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="floor">
+    <span class="door">Name the kinds once and the lens scales — the same audit reads a team's shared context, then the company's memory layer, and shows which kind of organisational knowledge is missing.</span>
+    <span class="meta">The Big Picture · Pattern Language</span>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Read the room before you run — Pattern · The Big Picture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-0:#05080a;
+    --soil-1:#080d10;
+    --soil-2:#0c1418;
+    --teal:#3fe0c8;
+    --teal-dim:#1d8d80;
+    --amber:#ffb347;
+    --amber-dim:#a86a1f;
+    --spore:#eafff9;
+    --ink:#cfe6e0;
+    --ink-dim:#6f8a85;
+    --ink-faint:#3b524e;
+    --hairline:rgba(63,224,200,.10);
+    --grey:#5d6a68;
+    --grey-dim:#39423f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--soil-0);
+    font-family:'Spline Sans',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  /* atmospheric soil + light-well — recedes for the long read */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
+      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
+      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+  }
+  /* grain / spore dust */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 64px;}
+
+  /* ============ BREADCRUMB ============ */
+  .crumb{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+    color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
+  }
+  .crumb a{color:var(--teal-dim);text-decoration:none;transition:color .25s}
+  .crumb a:hover{color:var(--teal)}
+  .crumb .here{color:var(--ink)}
+
+  /* ============ PATTERN HEADER (name + essence) ============ */
+  header.pat{padding:30px 0 8px;max-width:900px;}
+  .kicker{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--teal-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .kicker .spore-mark{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 14px 2px rgba(63,224,200,.6);
+    flex:none;
+  }
+  .kicker .pat-no{color:var(--ink-faint)}
+  header.pat h1{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(40px,7vw,68px);line-height:.98;
+    color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
+  }
+  header.pat h1 em{font-style:italic;color:var(--teal);font-weight:400}
+  .principle{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
+  }
+  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .essence{
+    font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:720px;
+  }
+  .essence b{color:var(--spore);font-weight:500}
+  .essence .sys{color:var(--amber);font-weight:500}
+
+  /* ============ HERO PICTURE ============ */
+  .hero-frame{
+    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(13,31,32,.5), rgba(5,8,10,.6));
+    position:relative;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.04) inset;
+  }
+  .hero-frame svg{display:block;width:100%;height:auto}
+  .hero-cap{
+    position:absolute;left:18px;bottom:13px;z-index:3;
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
+    color:var(--ink-dim);text-transform:uppercase;
+  }
+  .hero-cap b{color:var(--teal)}
+
+  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
+  .prose{
+    margin-top:34px;max-width:760px;
+  }
+  .prose h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
+    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+  }
+  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .prose h2.amber em{color:var(--amber)}
+  .prose .sec-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+    margin-top:42px;
+  }
+  .prose .sec-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
+  }
+  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .prose p{
+    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
+    letter-spacing:.002em;
+  }
+  .prose p b{color:var(--spore);font-weight:500}
+  .prose p em{font-style:italic;color:var(--ink-dim)}
+  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p .mono{
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
+  }
+  .prose p .mono.amber{color:var(--amber)}
+  .prose .pull{
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+    color:var(--ink);max-width:680px;
+  }
+  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
+
+  /* ============ PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
+  .diagram{
+    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+    background:
+      radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
+      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
+    position:relative;
+    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
+  }
+  .diagram svg{display:block;width:100%;height:auto}
+  .diagram .dcap{
+    padding:12px 20px 16px;border-top:1px solid var(--hairline);
+    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
+    color:var(--ink-dim);letter-spacing:.003em;
+    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  }
+  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
+  .diagram .dcap .num{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
+  }
+
+  /* ============ RECIPE SECTION BEATS ============ */
+  .beat-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  }
+  .beat-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.6);
+  }
+  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+
+  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
+  .plates{
+    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
+  }
+  .plate{
+    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
+    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
+  }
+  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
+  .plate .body b{color:var(--spore);font-weight:500}
+  .plate .body .grey{color:var(--grey)}
+  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
+  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
+
+  /* ============ CORE MOVES ============ */
+  .moves{margin-top:46px}
+  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
+  .moves-head h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
+  .move-rail{
+    margin-top:20px;position:relative;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  }
+  .move-rail .thread{
+    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
+    background:linear-gradient(90deg,
+      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
+      rgba(63,224,200,.7) 50%, rgba(255,179,71,.65) 94%, rgba(255,179,71,0) 100%);
+  }
+  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
+  .step:first-child{padding-left:0}
+  .step .bead{
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
+    margin-bottom:13px;
+  }
+  .step:nth-child(5) .bead{
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
+  }
+  .step h3{
+    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
+  }
+  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
+  .step p b{color:var(--ink);font-weight:500}
+
+  .compound{
+    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
+    padding:18px 22px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.07), transparent 60%),
+      rgba(8,17,18,.55);
+    display:flex;align-items:center;gap:20px;
+  }
+  .compound .loop-ico{flex:none}
+  .compound .ctext{flex:1}
+  .compound .ctext .cyc{
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
+  }
+  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
+  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
+  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+
+  .aside{
+    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
+    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+  }
+  .aside b{color:var(--amber);font-weight:500}
+  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
+
+  /* ============ WHY ============ */
+  .why{
+    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
+    padding:26px 30px 28px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
+      rgba(7,14,15,.6);
+  }
+  .why .beat-label{margin-bottom:14px}
+  .why .principle-block{
+    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
+  }
+  .why .principle-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
+  }
+  .why .principle-line{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
+    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
+  }
+  .why .principle-line em{font-style:italic;color:var(--teal)}
+  .why .quote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--teal);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(63,224,200,.26);max-width:840px;
+  }
+  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
+  .why .gloss b{color:var(--spore);font-weight:500}
+  .why .gloss em{font-style:italic;color:var(--ink-dim)}
+  .why .gloss + .gloss{margin-top:12px}
+  .why .corollary{
+    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
+    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+  }
+  .why .corollary .sd{
+    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+  }
+
+  /* ============ TEST-IN-PRACTICE inline panel ============ */
+  .practice{
+    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
+    padding:22px 26px 24px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
+      rgba(8,15,17,.5);
+  }
+  .practice .beat-label{margin-bottom:12px}
+  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
+  .practice p b{color:var(--spore);font-weight:500}
+  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
+  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ ILLUSTRATIVE / HEURISTIC LABEL STRIP (carries real epistemic content) ============ */
+  .caveat{
+    margin-top:22px;border:1px dashed var(--amber-dim);border-radius:12px;
+    padding:14px 18px 15px;background:rgba(255,179,71,.04);max-width:760px;
+    display:flex;gap:13px;align-items:flex-start;
+  }
+  .caveat .tag{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--amber);border:1px solid var(--amber-dim);border-radius:20px;padding:4px 9px 5px;flex:none;
+    margin-top:2px;
+  }
+  .caveat p{font-size:13px;line-height:1.55;color:var(--ink-dim);margin:0}
+  .caveat p b{color:var(--amber);font-weight:500}
+
+  /* ============ CONNECTS TO ============ */
+  .connects{margin-top:52px}
+  .connects h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .connects .sub{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:5px;
+  }
+  .web{position:relative;margin-top:8px}
+  .web svg{display:block;width:100%;height:auto}
+  .neighbours{position:absolute;inset:0;pointer-events:none}
+  .nb{
+    position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
+    display:flex;align-items:center;gap:9px;
+    padding:8px 14px 9px;border-radius:13px;
+    background:rgba(8,15,17,.82);backdrop-filter:blur(4px);
+    border:1px solid var(--hairline);
+    color:var(--ink);font-size:13px;letter-spacing:.005em;white-space:nowrap;
+    transition:border-color .3s,color .3s,background .3s,transform .3s;
+    cursor:pointer;text-decoration:none;
+  }
+  .nb .recipe-no{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--ink-faint);
+  }
+  .nb .sd{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 12px 2px rgba(63,224,200,.55);
+  }
+  .nb.amber .sd{background:var(--amber);box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 12px 2px rgba(255,179,71,.5)}
+  .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
+  .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
+  .nb:hover .sd{animation:throb 1s ease-in-out infinite}
+  .nb.soon{opacity:.62}
+  .nb.soon::after{
+    content:"soon";
+    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);
+    border:1px solid var(--ink-faint);border-radius:20px;
+    padding:2px 7px 3px;margin-left:4px;
+  }
+  .nb.soon:hover{opacity:1}
+  @keyframes throb{50%{transform:scale(1.5)}}
+  .origin-chip{
+    position:absolute;transform:translate(-50%,-50%);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 24px rgba(63,224,200,.4);white-space:nowrap;text-align:center;
+  }
+  .origin-chip small{
+    display:block;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:8.5px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--teal-dim);margin-top:3px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer.floor{
+    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  footer.floor .door{
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
+    text-shadow:0 0 22px rgba(255,179,71,.3);
+  }
+  footer.floor .meta{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+
+  /* breathing glow on the diagram spore-tips */
+  @keyframes breathe{
+    0%,100%{opacity:.55}
+    50%{opacity:1}
+  }
+  .breathe{animation:breathe 4.2s ease-in-out infinite}
+
+  @media (max-width:860px){
+    .plates{grid-template-columns:1fr 1fr}
+    .plate.use{grid-column:1 / -1}
+  }
+  @media (max-width:780px){
+    .plates{grid-template-columns:1fr}
+    .plate.use{grid-column:1}
+    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
+    .move-rail .thread{display:none}
+    .step{padding:0}
+    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .neighbours .nb{font-size:11px;padding:6px 10px}
+    .prose p{font-size:14.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ BREADCRUMB ============ -->
+  <nav class="crumb">
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Read the room before you run</span>
+  </nav>
+
+  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <header class="pat">
+    <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· software · phase: Intent · the first move of every session</span></div>
+    <h1>Read the room <em>before you run</em></h1>
+    <p class="principle">The principle: <b>Context is King</b> — and an unexamined window quietly biases every move after it.</p>
+    <p class="essence">
+      Before you paste the task, make the agent's read of the repo <b>an inspected fact, not a fluent assumption</b>:
+      ask for a deliberate read, interrogate what it skipped, quote one file back, and check the budget you have left.
+      <span class="sys">A checked read is the precondition for evidence worth compounding into the shared kit — the whole org's learning loop inherits the quality of its orientation habit.</span>
+    </p>
+  </header>
+
+  <!-- ============ HERO PICTURE: confident summary vs inspected reality ============ -->
+  <div class="hero-frame">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="One repo, two views: the agent's confident summary on the left, and the same session after introspection on the right — a skipped load-bearing file circled, one confabulated claim caught, and the context gauge showing the unread slice.">
+      <defs>
+        <radialGradient id="hwell" cx="78%" cy="50%" r="62%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".18"/>
+          <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".07"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="greyGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#39423f" stop-opacity=".2"/>
+          <stop offset="100%" stop-color="#5d6a68" stop-opacity=".85"/>
+        </linearGradient>
+        <radialGradient id="checkCore" cx="40%" cy="35%" r="70%">
+          <stop offset="0%" stop-color="#eafff9"/>
+          <stop offset="45%" stop-color="#3fe0c8"/>
+          <stop offset="100%" stop-color="#0c2b2a"/>
+        </radialGradient>
+        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <rect x="0" y="0" width="1080" height="420" fill="url(#hwell)"/>
+
+      <!-- divider -->
+      <line x1="540" y1="58" x2="540" y2="392" stroke="rgba(63,224,200,.16)" stroke-width="1" stroke-dasharray="3 7"/>
+
+      <!-- ===== LEFT: the confident summary you nod at ===== -->
+      <text x="46" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#5d6a68">THE SUMMARY · FLUENT · ACCEPTED</text>
+      <g>
+        <rect x="46" y="64" width="448" height="300" rx="13" fill="rgba(8,17,18,.5)" stroke="rgba(93,106,104,.4)" stroke-width="1"/>
+        <!-- prose lines, smooth and reassuring -->
+        <g stroke="url(#greyGrad)" stroke-width="3.4" stroke-linecap="round" opacity=".9">
+          <line x1="74" y1="104" x2="430" y2="104"/>
+          <line x1="74" y1="132" x2="450" y2="132"/>
+          <line x1="74" y1="160" x2="404" y2="160"/>
+          <line x1="74" y1="188" x2="446" y2="188"/>
+          <line x1="74" y1="216" x2="388" y2="216"/>
+          <line x1="74" y1="244" x2="438" y2="244"/>
+          <line x1="74" y1="272" x2="410" y2="272"/>
+        </g>
+        <text x="74" y="316" font-family="'Spline Sans',sans-serif" font-size="14" fill="#6f8a85" font-style="italic">"I've reviewed the codebase…"</text>
+        <text x="74" y="344" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".2em" fill="#4b5654">CONFIDENT · SPECIFIC · UNCHECKED</text>
+      </g>
+
+      <!-- ===== RIGHT: the inspected reality ===== -->
+      <text x="566" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#3fe0c8">THE INSPECTED READ · SAME SESSION</text>
+      <g>
+        <rect x="566" y="64" width="468" height="300" rx="13" fill="rgba(8,17,18,.62)" stroke="rgba(63,224,200,.28)" stroke-width="1.2"/>
+
+        <!-- read lines, but two annotated -->
+        <g stroke="#3fe0c8" stroke-width="3.4" stroke-linecap="round" opacity=".85">
+          <line x1="594" y1="104" x2="900" y2="104"/>
+          <line x1="594" y1="160" x2="930" y2="160"/>
+          <line x1="594" y1="216" x2="880" y2="216"/>
+        </g>
+
+        <!-- a skipped load-bearing file, circled in amber -->
+        <line x1="594" y1="132" x2="820" y2="132" stroke="#a86a1f" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="5 7" opacity=".7"/>
+        <ellipse cx="730" cy="132" rx="150" ry="20" fill="none" stroke="#ffb347" stroke-width="1.6"/>
+        <text x="892" y="136" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#ffb347" letter-spacing=".06em">SKIPPED · LOAD-BEARING</text>
+
+        <!-- a confabulated claim, struck through -->
+        <line x1="594" y1="188" x2="860" y2="188" stroke="#5d6a68" stroke-width="3.4" stroke-linecap="round"/>
+        <line x1="588" y1="188" x2="866" y2="188" stroke="#ffb347" stroke-width="1.4"/>
+        <text x="872" y="192" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#ffb347" letter-spacing=".06em">CLAIM ✗ CAUGHT</text>
+
+        <!-- the /context gauge -->
+        <g transform="translate(594,250)">
+          <text x="0" y="-4" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".14em" fill="#6f8a85">/context</text>
+          <rect x="0" y="6" width="412" height="20" rx="6" fill="rgba(5,8,10,.7)" stroke="rgba(63,224,200,.22)"/>
+          <!-- filled portion -->
+          <rect x="0" y="6" width="250" height="20" rx="6" fill="rgba(63,224,200,.32)"/>
+          <line x1="250" y1="6" x2="250" y2="26" stroke="#3fe0c8" stroke-width="1.4"/>
+          <!-- unread wedge -->
+          <rect x="252" y="6" width="160" height="20" rx="6" fill="rgba(255,179,71,.10)"/>
+          <text x="125" y="20" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">IN THE WINDOW</text>
+          <text x="332" y="20" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#a86a1f">UNREAD SLICE</text>
+          <circle cx="250" cy="16" r="3.4" fill="#aeffee" class="breathe"/>
+        </g>
+        <text x="594" y="316" font-family="'Spline Sans',sans-serif" font-size="14" fill="#3fe0c8" font-style="italic">you can't steer what you can't see.</text>
+        <text x="594" y="344" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".2em" fill="#1d8d80">CHECKED · BUDGETED · STEERABLE</text>
+      </g>
+    </svg>
+    <div class="hero-cap">The summary sounded oriented. <b>Orientation is what you checked</b> — the skip list, one quote-back, and the budget.</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
+  <!-- ============================================================ -->
+  <section class="prose">
+    <div class="sec-label">The mechanism · why fluency fools you</div>
+    <h2>The agent's confidence tracks its <em>prose</em>, not its accuracy.</h2>
+
+    <p>
+      Here is the trap, and it is a good one. When you open a session and ask the agent to look at the repo, it
+      reports back fluently, specifically, reassuringly — and it does this <b>whether or not it read the right files</b>.
+      The prose is calibrated; the read may not be. That is the design, not a bug: you prime it, the LLM scales whatever
+      you primed. A vague prime — <em class="teal">"have a look at the repo"</em> — gets scaled into a vague, shallow,
+      partly-reconstructed read, delivered with the same poise as a careful one. Fluency is not evidence. The cost of
+      mistaking one for the other doesn't show up now; it shows up three steps later as a fix aimed at the wrong file.
+    </p>
+
+    <p>
+      The fork is the prime, and the diagram below draws it. Send the agent in vague and it scales your vagueness:
+      it names what it happened to glance at and stops. Send it in deliberate — <em class="teal">"read what's
+      load-bearing, skip what isn't worth it, then tell me what you skipped and why"</em> — and you get an inspected
+      read with its own seams showing. Same repo, same model, two completely different substrates for everything
+      downstream. The whole operating model rides on whichever one you produced in the first five minutes.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 1 — SAME PRIME, DIFFERENT READ ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 440" role="img" aria-label="Two sessions on the same repo: a vague prime scales to a shallow, partly-confabulated read; a deliberate prime scales to an inspected one. At the fork: you prime, the LLM scales — including your vagueness.">
+      <defs>
+        <linearGradient id="d1-vague" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5d6a68" stop-opacity=".7"/><stop offset="1" stop-color="#39423f" stop-opacity=".3"/></linearGradient>
+        <linearGradient id="d1-sharp" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".85"/><stop offset="1" stop-color="#1d8d80" stop-opacity=".4"/></linearGradient>
+        <radialGradient id="d1-core" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#eafff9"/><stop offset=".5" stop-color="#3fe0c8"/><stop offset="1" stop-color="#0c2b2a"/></radialGradient>
+        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">ONE REPO · ONE MODEL · TWO PRIMES · TWO READS</text>
+
+      <!-- the repo node on the left -->
+      <circle cx="120" cy="220" r="26" fill="url(#d1-core)" filter="url(#d1-glow)"/>
+      <text x="120" y="225" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#05080a">REPO</text>
+      <text x="120" y="270" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#6f8a85">SAME SUBSTRATE</text>
+
+      <!-- the fork label -->
+      <text x="300" y="214" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="15" fill="#3fe0c8">you prime,</text>
+      <text x="300" y="234" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="15" fill="#3fe0c8">the LLM scales —</text>
+      <text x="300" y="256" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#a86a1f">INCLUDING YOUR VAGUENESS</text>
+
+      <!-- ===== TOP BRANCH — vague prime ===== -->
+      <path d="M146,206 C260,150 320,120 400,118" stroke="url(#d1-vague)" stroke-width="2" fill="none"/>
+      <g>
+        <rect x="400" y="74" width="290" height="44" rx="10" fill="rgba(93,106,104,.10)" stroke="rgba(93,106,104,.4)"/>
+        <text x="416" y="100" font-family="'Spline Sans',sans-serif" font-size="13" fill="#9aa6a4" font-style="italic">"have a look at the repo"</text>
+        <text x="700" y="100" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">VAGUE PRIME</text>
+      </g>
+      <!-- shallow output -->
+      <g>
+        <rect x="740" y="60" width="300" height="120" rx="11" fill="rgba(8,17,18,.5)" stroke="rgba(93,106,104,.35)"/>
+        <g stroke="url(#d1-vague)" stroke-width="3" stroke-linecap="round" opacity=".8">
+          <line x1="762" y1="92" x2="1010" y2="92"/>
+          <line x1="762" y1="114" x2="980" y2="114"/>
+          <line x1="762" y1="136" x2="1000" y2="136"/>
+        </g>
+        <text x="762" y="166" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#5d6a68">SHALLOW · PARTLY&#8209;CONFABULATED · NO SKIP LIST</text>
+      </g>
+
+      <!-- ===== BOTTOM BRANCH — deliberate prime ===== -->
+      <path d="M146,234 C260,300 320,330 400,338" stroke="url(#d1-sharp)" stroke-width="2.4" fill="none" filter="url(#d1-glow)"/>
+      <g>
+        <rect x="400" y="300" width="320" height="62" rx="10" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.3)"/>
+        <text x="416" y="324" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0" font-style="italic">"read what's load-bearing,</text>
+        <text x="416" y="344" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0" font-style="italic">skip the rest — tell me what you skipped"</text>
+        <text x="416" y="294" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#3fe0c8">DELIBERATE PRIME</text>
+      </g>
+      <!-- inspected output -->
+      <g>
+        <rect x="740" y="284" width="300" height="132" rx="11" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.3)"/>
+        <g stroke="url(#d1-sharp)" stroke-width="3" stroke-linecap="round" opacity=".9">
+          <line x1="762" y1="316" x2="1010" y2="316"/>
+          <line x1="762" y1="340" x2="980" y2="340"/>
+        </g>
+        <!-- the seam: a marked skip line -->
+        <line x1="762" y1="364" x2="940" y2="364" stroke="#ffb347" stroke-width="3" stroke-linecap="round" stroke-dasharray="5 6" opacity=".8"/>
+        <text x="950" y="368" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#ffb347">SKIP, w/ reason</text>
+        <text x="762" y="398" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#3fe0c8">INSPECTED · SEAMS SHOWING · STEERABLE</text>
+      </g>
+
+      <!-- pulse along the deliberate branch -->
+      <circle r="3.4" fill="#aeffee">
+        <animateMotion dur="4.6s" repeatCount="indefinite" path="M146,234 C260,300 320,330 400,338"/>
+        <animate attributeName="opacity" values="0;1;1;0" dur="4.6s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 01</span>Same repo, same model. <b>The prime is the fork</b> — a vague look scales to a shallow read; a deliberate one scales to an inspected read with its own skip list showing.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 2 — interrogate the read ============ -->
+  <section class="prose">
+    <p>
+      The deliberate prime gets you a better read — but a better read is still a <b>claim</b>, not ground truth.
+      The agent's account of what it read and why is a reconstruction, and reconstructions confabulate: it will
+      sometimes give you a tidy reason for a file it never actually opened. So the second move is to stop nodding
+      and start interrogating. Ask the one question almost nobody asks — <em class="teal">"what did you skip, and
+      why?"</em> The skip list is where the risk lives, and the agent rarely volunteers it. Then spot-check: quote
+      one specific file or function back and ask what's actually in it. <b>Claims aren't evidence until you've checked one.</b>
+    </p>
+
+    <p class="pull">
+      The agent's self-report is a hypothesis, not ground truth. <b>Treat it like one.</b>
+    </p>
+
+    <div class="sec-label">The upgrade · from summary you nod at to read you checked</div>
+    <h2>Turn the read from a <em>one-way summary</em> into a checked artefact.</h2>
+
+    <p>
+      The upgrade is cheap and it changes the epistemics entirely. A one-way summary asks for your trust; a checked
+      read earns it. You surface the read-vs-skipped split, you quote-check one claim against the actual file, and you
+      run <span class="mono">/context</span> to see the budget — the number and the breakdown across system prompt,
+      messages, memory and skills. The slice the agent didn't load is the bounded-window reality you're now steering
+      inside. Below: the summary on the left that you'd otherwise nod at, and the same read on the right after the
+      arrow tagged <em class="amber">"fluency → evidence."</em>
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 2 — SUMMARY ACCEPTED → SELF-REPORT INTERROGATED ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 380" role="img" aria-label="A one-way summary you nod at becomes a checked artefact: read-vs-skipped surfaced, one claim quote-checked against the file, the context budget read. Arrow tagged fluency to evidence — assume some misrepresentation until you check one.">
+      <defs>
+        <linearGradient id="d2-nod" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5d6a68" stop-opacity=".7"/><stop offset="1" stop-color="#5d6a68" stop-opacity="0"/></linearGradient>
+        <linearGradient id="d2-checked" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".4"/><stop offset="1" stop-color="#ffb347" stop-opacity=".3"/></linearGradient>
+        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME READ · DIFFERENT EPISTEMICS</text>
+
+      <!-- LEFT: summary you nod at -->
+      <g>
+        <text x="80" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#5d6a68">ONE-WAY SUMMARY · NODDED AT</text>
+        <rect x="80" y="92" width="300" height="180" rx="12" fill="rgba(8,17,18,.5)" stroke="rgba(93,106,104,.4)"/>
+        <g stroke="url(#d2-nod)" stroke-width="3.2" stroke-linecap="round" opacity=".8">
+          <line x1="104" y1="124" x2="350" y2="124"/>
+          <line x1="104" y1="150" x2="334" y2="150"/>
+          <line x1="104" y1="176" x2="350" y2="176"/>
+          <line x1="104" y1="202" x2="320" y2="202"/>
+          <line x1="104" y1="228" x2="344" y2="228"/>
+        </g>
+        <text x="104" y="258" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#6f8a85">"looks right" → straight to the fix</text>
+        <!-- nod icon -->
+        <circle cx="62" cy="116" r="11" fill="rgba(93,106,104,.18)" stroke="#5d6a68" stroke-width=".8"/>
+        <text x="62" y="120" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#9aa6a4">U</text>
+      </g>
+
+      <!-- arrow / transformation -->
+      <g transform="translate(412,180)">
+        <path d="M0,0 L84,0" stroke="#3fe0c8" stroke-width="1.4" fill="none" opacity=".7"/>
+        <polygon points="84,0 74,-6 74,6" fill="#3fe0c8" opacity=".8"/>
+        <text x="42" y="-14" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#3fe0c8">FLUENCY → EVIDENCE</text>
+        <text x="42" y="24" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="11.5" fill="#a86a1f">check one claim</text>
+      </g>
+
+      <!-- RIGHT: checked artefact -->
+      <g>
+        <text x="540" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#3fe0c8">CHECKED ARTEFACT · INSPECTED</text>
+        <g filter="url(#d2-glow)">
+          <rect x="540" y="92" width="460" height="200" rx="12" fill="rgba(8,17,18,.78)" stroke="url(#d2-checked)" stroke-width="1.6"/>
+        </g>
+
+        <!-- row 1: read vs skipped -->
+        <text x="560" y="124" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".06em" fill="#3fe0c8">READ ✓</text>
+        <g stroke="#3fe0c8" stroke-width="3" stroke-linecap="round" opacity=".85">
+          <line x1="640" y1="120" x2="840" y2="120"/>
+        </g>
+        <text x="560" y="152" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".06em" fill="#ffb347">SKIPPED, w/ reason</text>
+        <line x1="700" y1="148" x2="900" y2="148" stroke="#ffb347" stroke-width="3" stroke-linecap="round" stroke-dasharray="5 6" opacity=".8"/>
+
+        <!-- row 2: quote-check -->
+        <text x="560" y="186" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".04em" fill="#9bffe9">"you said you read auth.go —</text>
+        <text x="560" y="204" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".04em" fill="#9bffe9">what's actually in it?"</text>
+        <text x="860" y="196" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#3fe0c8">→ HELD / CAUGHT</text>
+
+        <!-- row 3: /context gauge -->
+        <text x="560" y="240" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".1em" fill="#6f8a85">/context</text>
+        <rect x="640" y="228" width="340" height="18" rx="6" fill="rgba(5,8,10,.7)" stroke="rgba(63,224,200,.22)"/>
+        <rect x="640" y="228" width="206" height="18" rx="6" fill="rgba(63,224,200,.3)"/>
+        <line x1="846" y1="228" x2="846" y2="246" stroke="#3fe0c8" stroke-width="1.4"/>
+        <rect x="848" y="228" width="132" height="18" rx="6" fill="rgba(255,179,71,.10)"/>
+        <text x="912" y="241" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#a86a1f">UNREAD</text>
+        <circle cx="846" cy="237" r="3.2" fill="#aeffee" class="breathe"/>
+
+        <text x="560" y="276" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#1d8d80">THREE CHECKS · NOW IT'S EVIDENCE</text>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 02</span><em>Fluency → evidence.</em> The read becomes a checked artefact — skip list surfaced, one claim quote-checked, the budget read. <b>Assume a working ~10% of what the agent says is misrepresentation until you've checked one</b> — a curriculum heuristic, could be more or less; the point is to check, not to trust the number.</div>
+  </div>
+
+  <!-- ============ ILLUSTRATIVE CAVEAT STRIP (carries real epistemic content) ============ -->
+  <div class="caveat">
+    <span class="tag">Working heuristic</span>
+    <p>
+      The <b>"~10% misrepresentation"</b> figure is a curriculum-stated working assumption, not a measured rate —
+      <b>could be more, could be less.</b> Its job is to make you spot-check one claim, not to be reasoned from as if
+      it were a finding. Wherever the number appears on this page, that caveat travels with it.
+    </p>
+  </div>
+
+  <!-- ============ PROSE BLOCK 3 — the compounding intro ============ -->
+  <section class="prose">
+    <p>
+      Orientation isn't a one-shot ritual you perform at session start and forget. It's a loop, and it tightens.
+      Each pass you orient, you ask what got skipped, you quote-check a claim, you read <span class="mono">/context</span> —
+      and then you spend the next round's bytes more deliberately because you now know which ones were wasted last time.
+      The unread slice shrinks toward the part that genuinely doesn't matter. The session that produces a clean,
+      checked read is also the one whose evidence the downstream compound step can actually trust and encode. Garbage
+      orientation in, garbage to compound from. <b>A checked read out, something worth keeping.</b>
+    </p>
+
+    <div class="sec-label">The compounding loop · what changes between passes</div>
+    <h2>Each pass, the unread slice <em>shrinks</em> toward what doesn't matter.</h2>
+
+    <p>
+      The picture below draws the four beats with the window's unread wedge getting visibly thinner across passes.
+      Notice it never closes to zero — orientation isn't about reading everything, which would just burn the budget you
+      came to protect. It's about driving the unread slice down to the part you've consciously decided is safe to leave
+      out. That conscious leaving-out is the skill. By the third pass you're not reading more; you're reading <b>righter</b>,
+      and you can say exactly what's not in the window and why that's fine.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP (unread slice shrinks) ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="Four-beat orientation loop — orient, introspect what was skipped, spot-check a claim, read context — with the unread wedge of the context window shrinking across passes one, two and three.">
+      <defs>
+        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/>
+          <stop offset="1" stop-color="#ffb347" stop-opacity=".6"/>
+        </linearGradient>
+        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%">
+          <stop offset="0" stop-color="#9bffe9"/>
+          <stop offset=".55" stop-color="#3fe0c8"/>
+          <stop offset="1" stop-color="#1d8d80"/>
+        </radialGradient>
+        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE ORIENTATION LOOP · WHAT CHANGES BETWEEN PASSES</text>
+
+      <!-- ===== LEFT HALF: the loop ===== -->
+      <g transform="translate(40,60)">
+        <!-- the ring -->
+        <circle cx="200" cy="170" r="130" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="540 60" stroke-linecap="round" transform="rotate(-90 200 170)"/>
+        <!-- breathing pulse on the ring -->
+        <circle r="3.6" fill="#aeffee">
+          <animateMotion dur="9s" repeatCount="indefinite" path="M200,40 a130,130 0 1,1 -0.1,0"/>
+          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- four beads -->
+        <g>
+          <circle cx="200" cy="40" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="200" y="45" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">1</text>
+          <text x="200" y="20" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Orient</text>
+        </g>
+        <g>
+          <circle cx="330" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="330" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">2</text>
+          <text x="362" y="173" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Introspect: what was skipped?</text>
+        </g>
+        <g>
+          <circle cx="200" cy="300" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="200" y="305" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">3</text>
+          <text x="200" y="338" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Spot-check a claim</text>
+        </g>
+        <g>
+          <circle cx="70" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="70" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">4</text>
+          <text x="38" y="173" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Read /context</text>
+        </g>
+
+        <!-- centre label -->
+        <text x="200" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EVERY PASS</text>
+        <text x="200" y="184" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">steers righter</text>
+      </g>
+
+      <!-- ===== RIGHT HALF: the unread wedge shrinking across passes ===== -->
+      <g transform="translate(540,68)">
+
+        <!-- pass 1 — big unread wedge -->
+        <g>
+          <text x="80" y="10" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".06em" fill="#5d6a68">/context · pass 1</text>
+          <rect x="0" y="22" width="160" height="22" rx="7" fill="rgba(5,8,10,.7)" stroke="rgba(63,224,200,.22)"/>
+          <rect x="0" y="22" width="64" height="22" rx="7" fill="rgba(63,224,200,.3)"/>
+          <rect x="66" y="22" width="94" height="22" rx="7" fill="rgba(255,179,71,.12)"/>
+          <text x="113" y="37" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#a86a1f">UNREAD · WIDE</text>
+          <text x="80" y="64" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">STEERING BLIND-ISH</text>
+        </g>
+
+        <!-- arrow -->
+        <g transform="translate(170,33)">
+          <path d="M0,0 L26,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
+          <polygon points="26,0 18,-5 18,5" fill="#3fe0c8" opacity=".75"/>
+        </g>
+
+        <!-- pass 2 — narrower wedge -->
+        <g transform="translate(0,90)">
+          <text x="80" y="10" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".06em" fill="#9bffe9">/context · pass 2</text>
+          <rect x="0" y="22" width="160" height="22" rx="7" fill="rgba(5,8,10,.7)" stroke="rgba(63,224,200,.3)"/>
+          <rect x="0" y="22" width="104" height="22" rx="7" fill="rgba(63,224,200,.32)"/>
+          <rect x="106" y="22" width="54" height="22" rx="7" fill="rgba(255,179,71,.12)"/>
+          <text x="133" y="37" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#a86a1f">NARROWER</text>
+          <text x="80" y="64" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#9bffe9">SPENT ON PURPOSE</text>
+        </g>
+
+        <!-- arrow -->
+        <g transform="translate(170,123)">
+          <path d="M0,0 L26,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
+          <polygon points="26,0 18,-5 18,5" fill="#3fe0c8" opacity=".75"/>
+        </g>
+
+        <!-- pass 3 — thin wedge, the deliberate residue -->
+        <g transform="translate(0,180)">
+          <text x="80" y="10" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".06em" fill="#ffb347">/context · pass 3</text>
+          <g filter="url(#d3-glow)">
+            <rect x="0" y="22" width="160" height="22" rx="7" fill="rgba(5,8,10,.78)" stroke="url(#d3-ring)" stroke-width="1.4"/>
+          </g>
+          <rect x="0" y="22" width="136" height="22" rx="7" fill="rgba(63,224,200,.34)"/>
+          <rect x="138" y="22" width="22" height="22" rx="7" fill="rgba(255,179,71,.14)"/>
+          <text x="68" y="37" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3fe0c8">DELIBERATE</text>
+          <text x="80" y="64" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#ffb347">UNREAD = SAFE TO LEAVE</text>
+          <circle cx="138" cy="33" r="3.4" fill="#aeffee" class="breathe"/>
+        </g>
+
+        <!-- legend -->
+        <g transform="translate(0,300)">
+          <rect x="0" y="0" width="14" height="10" rx="2" fill="rgba(63,224,200,.34)"/>
+          <text x="22" y="9" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#1d8d80">DELIBERATELY IN THE WINDOW</text>
+          <rect x="0" y="16" width="14" height="10" rx="2" fill="rgba(255,179,71,.14)"/>
+          <text x="22" y="25" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#a86a1f">UNREAD SLICE · SHRINKING TO WHAT DOESN'T MATTER</text>
+        </g>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 03</span><em>The unread slice shrinks, but never to zero.</em> Each pass you read righter, not more — <b>and you can say exactly what's not in the window and why that's fine</b>.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 4 — what Test actually means ============ -->
+  <section class="prose">
+    <div class="sec-label amber">What "Test" actually means · in practice</div>
+    <h2 class="amber">You're not testing the summary. You're testing <em>whether you checked</em>.</h2>
+
+    <p>
+      The honest test is uncomfortable, because it indicts the most natural thing to do. If you read the agent's
+      summary, nodded, and moved straight to the fix — you skipped the move, however oriented the summary sounded.
+      So the test is falsifiable and it lives in the scrollback: can you name <b>one file the agent chose not to read</b>,
+      and say whether that matches what you'd have expected? Did you <b>quote one file back</b> and watch the claim
+      hold — or catch it where it didn't? Can you point at the <span class="mono">/context</span> percentage and say
+      which slice of the repo is <em>not</em> in the window right now? Three yeses and you oriented. Any no and you're
+      steering blind in fluent prose. That last one — <b>catching the fluent-but-wrong</b> — is the foundation skill
+      everything downstream leans on: the plan you'll pressure-test, the test you'll write first, the evidence you'll
+      compound. Skip orientation and all of it inherits an unchecked map.
+    </p>
+  </section>
+
+  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
+  <div class="plates">
+    <div class="plate use">
+      <div class="beat-label amber"><b>Use when</b></div>
+      <p class="body">
+        You're about to set an agent loose in a repo and <span class="grey">you haven't checked what it can actually
+        see</span> — every session start, every switch of repo or feature, and every time a session goes sideways and
+        you realise <b>it was working from a map you never checked</b>.
+      </p>
+    </div>
+    <div class="plate build">
+      <div class="beat-label"><b>Build</b></div>
+      <p class="body">
+        A <b>checked orientation</b> — not a document you keep, a state you reach: the read, its read-vs-skipped
+        account, one confirmed quote-back, and a <b>/context</b> reading. The map is inspected, not assumed.
+      </p>
+    </div>
+    <div class="plate test">
+      <div class="beat-label"><b>Test</b></div>
+      <p class="body">
+        You can name one file it <em>didn't</em> read, one claim you quote-checked, and the unread slice.<br>
+        Not merely <em class="no">"the summary read well."</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ CORE MOVES — actionable heart ============ -->
+  <section class="moves">
+    <div class="beat-label"><b>Core moves</b></div>
+    <div class="moves-head">
+      <h2>The action, in sequence</h2>
+      <span class="lede">Three messages and one slash command — before any code moves.</span>
+    </div>
+
+    <div class="move-rail">
+      <div class="thread"></div>
+      <div class="step">
+        <div class="bead">1</div>
+        <h3>Ask for a deliberate read</h3>
+        <p>Shape, load-bearing, stale — <b>and skip what isn't worth it</b>. Recruit its judgment, not completeness.</p>
+      </div>
+      <div class="step">
+        <div class="bead">2</div>
+        <h3>Interrogate the skip list</h3>
+        <p>"What did you skip, and why?" <b>The risk hides where it didn't look.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">3</div>
+        <h3>Quote one file back</h3>
+        <p>"You said you read X — what's in it?" <b>Treat the report as a hypothesis.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">4</div>
+        <h3>Read the budget left</h3>
+        <p>Run <b>/context</b>. The unread slice is the reality you steer inside.</p>
+      </div>
+    </div>
+
+    <div class="compound">
+      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
+        </linearGradient></defs>
+        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
+          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
+        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
+        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
+        <circle r="3" fill="#aeffee">
+          <animateMotion dur="5s" repeatCount="indefinite"
+            path="M37,11 a26,26 0 1,1 -0.1,0"/>
+        </circle>
+      </svg>
+      <div class="ctext">
+        <div class="cyc">orient<span class="arr">→</span>introspect<span class="arr">→</span>spot-check<span class="arr">→</span>read /context<span class="arr">→</span>steer the next bytes</div>
+        <p>Then it's a reflex, not a ritual: <b>the unread slice shrinks every pass.</b> The same first move you make before every session, on every repo, forever — and the precondition for every checked artefact downstream.</p>
+      </div>
+    </div>
+
+    <!-- the Monday-move / no-permission aside -->
+    <p class="aside">
+      <b>Monday move: before you paste the task, slow down for five minutes.</b> Ask for a deliberate read, then
+      <b>"what did you skip, and why?"</b>, quote one file back, run /context, look at the number.
+      <span class="mono">A repo you already have open · /context is built in · no platform · no budget · no sign-off · before a line of code moves.</span>
+      It costs only the reflex to slow down now instead of paying for it three steps later.
+    </p>
+  </section>
+
+  <!-- ============ WHY — the conviction ============ -->
+  <section class="why">
+    <div class="beat-label"><b>Why</b></div>
+
+    <div class="principle-block">
+      <div class="principle-label">The principle</div>
+      <p class="principle-line">Context is <em>King</em>. You prime, the LLM scales — including your vagueness.</p>
+    </div>
+
+    <p class="quote">"The agent's self-report is a hypothesis, not ground truth."</p>
+    <p class="gloss">
+      The counterintuitive part is that the agent's confidence is calibrated to its prose, not its accuracy. It
+      flatters, it progresses, it mirrors your stance — reporting the repo fluently <b>whether or not it read the
+      right files.</b> Two mechanisms ride underneath. First, <b>context is whatever you tell it</b>: the window
+      colours everything downstream, so an unexamined window quietly biases every later move — the wrong feature
+      read becomes the wrong fix, three steps on. Second, <b>the window has a ceiling</b>: every byte spent on noise
+      is a byte not available for the work, so seeing the budget is what lets you spend it on purpose.
+    </p>
+    <p class="gloss">
+      Orientation is how you make the prime deliberate — and how you check the right context actually loaded. Skipping
+      it doesn't save time; it <em>moves the cost downstream</em>, where it's more expensive to find. A checked read is
+      the substrate the plan, the failing test, and the compounded evidence all ride on. Skip this and the rest is
+      built on a map you never looked at.
+    </p>
+    <div class="corollary"><span class="sd"></span>You can't steer what you can't see.</div>
+  </section>
+
+  <!-- ============ TEST IN PRACTICE inline panel ============ -->
+  <div class="practice">
+    <div class="beat-label amber"><b>Test · the negative case</b></div>
+    <p>
+      The fastest tell you skipped the move: the scrollback shows no <span style="font-family:'Spline Sans Mono',monospace;color:#3fe0c8">/context</span>
+      in the first ten minutes, no introspection prompt after the read, and no quote-back when something felt off.
+      A clean orientation leaves all three as deliberate moves in the transcript — <em>"you said you read X, what's in it?"</em>
+      lands before the first edit, not after the wrong one.
+    </p>
+  </div>
+
+  <!-- ============ CONNECTS TO — neighbour patterns ============ -->
+  <section class="connects">
+    <h2>Connects to</h2>
+    <div class="sub">Threads leaving this node · the pattern language</div>
+
+    <div class="web">
+      <svg viewBox="0 0 1080 300" aria-hidden="true">
+        <defs>
+          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <circle cx="150" cy="150" r="30" fill="none" stroke="#3fe0c8" stroke-width="1.2" opacity=".5"/>
+        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#wglow)"/>
+        <circle cx="150" cy="150" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
+
+        <path id="th1" d="M150,150 C360,78 540,66 760,70" stroke="url(#t1)" stroke-width="2.2" fill="none"/>
+        <path id="th2" d="M150,150 C380,150 560,150 760,150" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
+        <path id="th3" d="M150,150 C360,222 540,234 760,232" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
+
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+      </svg>
+
+      <div class="neighbours">
+        <div class="origin-chip" style="left:13.8%;top:50%">Read the room before you run<small>software · phase: intent · you are here</small></div>
+        <a class="nb" href="tests-first-ground-truth.html" style="left:74%;top:23.3%"><span class="sd"></span>Tests first, as ground truth <span class="recipe-no">the fix that rides inside</span></a>
+        <a class="nb" href="compound-from-evidence.html" style="left:74%;top:50%"><span class="sd"></span>Compound from evidence <span class="recipe-no">the downstream</span></a>
+        <a class="nb" href="plan-read-two-passes.html" style="left:74%;top:77.7%"><span class="sd"></span>Read the plan in two passes <span class="recipe-no">the M2 escalation</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="floor">
+    <span class="door">A door, not a destination — orientation is a reflex you own. No platform, no vendor, no permission required.</span>
+    <span class="meta">The Big Picture · Pattern Language</span>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promote the personal win to the team — Pattern · The Big Picture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-0:#05080a;
+    --soil-1:#080d10;
+    --soil-2:#0c1418;
+    --teal:#3fe0c8;
+    --teal-dim:#1d8d80;
+    --amber:#ffb347;
+    --amber-dim:#a86a1f;
+    --spore:#eafff9;
+    --ink:#cfe6e0;
+    --ink-dim:#6f8a85;
+    --ink-faint:#3b524e;
+    --hairline:rgba(63,224,200,.10);
+    --grey:#5d6a68;
+    --grey-dim:#39423f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--soil-0);
+    font-family:'Spline Sans',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.08) 0%, transparent 46%),
+      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.06) 0%, transparent 44%),
+      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+  }
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 64px;}
+
+  /* ============ BREADCRUMB ============ */
+  .crumb{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+    color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
+  }
+  .crumb a{color:var(--teal-dim);text-decoration:none;transition:color .25s}
+  .crumb a:hover{color:var(--teal)}
+  .crumb .here{color:var(--ink)}
+
+  /* ============ PATTERN HEADER ============ */
+  header.pat{padding:30px 0 8px;max-width:900px;}
+  .kicker{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--teal-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .kicker .spore-mark{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 14px 2px rgba(63,224,200,.6);
+    flex:none;
+  }
+  .kicker .pat-no{color:var(--ink-faint)}
+  header.pat h1{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(36px,6.2vw,62px);line-height:.98;
+    color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
+  }
+  header.pat h1 em{font-style:italic;color:var(--teal);font-weight:400}
+  .principle{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
+  }
+  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .essence{
+    font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:720px;
+  }
+  .essence b{color:var(--spore);font-weight:500}
+
+  /* ============ HERO PICTURE ============ */
+  .hero-frame{
+    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(13,31,32,.5), rgba(5,8,10,.6));
+    position:relative;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.04) inset;
+  }
+  .hero-frame svg{display:block;width:100%;height:auto}
+  .hero-cap{
+    position:absolute;left:18px;bottom:13px;z-index:3;
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
+    color:var(--ink-dim);text-transform:uppercase;
+  }
+  .hero-cap b{color:var(--teal)}
+
+  /* ============ READING PROSE ============ */
+  .prose{
+    margin-top:34px;max-width:760px;
+  }
+  .prose h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
+    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+  }
+  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .prose h2.amber em{color:var(--amber)}
+  .prose .sec-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+    margin-top:42px;
+  }
+  .prose .sec-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
+  }
+  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .prose p{
+    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
+    letter-spacing:.002em;
+  }
+  .prose p b{color:var(--spore);font-weight:500}
+  .prose p em{font-style:italic;color:var(--ink-dim)}
+  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p .mono{
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
+  }
+  .prose p .mono.amber{color:var(--amber)}
+  .prose .pull{
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+    color:var(--ink);max-width:680px;
+  }
+  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
+
+  /* ============ PROCESS DIAGRAMS ============ */
+  .diagram{
+    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+    background:
+      radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
+      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
+    position:relative;
+    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
+  }
+  .diagram svg{display:block;width:100%;height:auto}
+  .diagram .dcap{
+    padding:12px 20px 16px;border-top:1px solid var(--hairline);
+    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
+    color:var(--ink-dim);letter-spacing:.003em;
+    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  }
+  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
+  .diagram .dcap .num{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
+  }
+
+  /* ============ RECIPE BEATS ============ */
+  .beat-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  }
+  .beat-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.6);
+  }
+  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+
+  /* USE WHEN · BUILD · TEST plates */
+  .plates{
+    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
+  }
+  .plate{
+    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
+    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
+  }
+  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
+  .plate .body b{color:var(--spore);font-weight:500}
+  .plate .body .grey{color:var(--grey)}
+  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
+  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ CORE MOVES ============ */
+  .moves{margin-top:46px}
+  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
+  .moves-head h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
+  .move-rail{
+    margin-top:20px;position:relative;
+    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+  }
+  .move-rail .thread{
+    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
+    background:linear-gradient(90deg,
+      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
+      rgba(63,224,200,.7) 50%, rgba(255,179,71,.65) 94%, rgba(255,179,71,0) 100%);
+  }
+  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
+  .step:first-child{padding-left:0}
+  .step .bead{
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
+    margin-bottom:13px;
+  }
+  .step:nth-child(5) .bead,.step:nth-child(6) .bead{
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
+  }
+  .step h3{
+    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
+  }
+  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
+  .step p b{color:var(--ink);font-weight:500}
+
+  .compound{
+    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
+    padding:18px 22px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.07), transparent 60%),
+      rgba(8,17,18,.55);
+    display:flex;align-items:center;gap:20px;
+  }
+  .compound .loop-ico{flex:none}
+  .compound .ctext{flex:1}
+  .compound .ctext .cyc{
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
+  }
+  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
+  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
+  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+
+  .aside{
+    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
+    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+  }
+  .aside b{color:var(--amber);font-weight:500}
+  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
+
+  /* ============ WHY ============ */
+  .why{
+    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
+    padding:26px 30px 28px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
+      rgba(7,14,15,.6);
+  }
+  .why .beat-label{margin-bottom:14px}
+  .why .principle-block{
+    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
+  }
+  .why .principle-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
+  }
+  .why .principle-line{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
+    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
+  }
+  .why .principle-line em{font-style:italic;color:var(--teal)}
+  .why .quote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(20px,2.8vw,27px);line-height:1.24;color:var(--teal);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(63,224,200,.26);max-width:840px;
+  }
+  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
+  .why .gloss b{color:var(--spore);font-weight:500}
+  .why .gloss em{font-style:italic;color:var(--ink-dim)}
+  .why .gloss + .gloss{margin-top:12px}
+  .why .corollary{
+    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
+    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+  }
+  .why .corollary .sd{
+    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+  }
+
+  /* ============ TEST-IN-PRACTICE ============ */
+  .practice{
+    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
+    padding:22px 26px 24px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
+      rgba(8,15,17,.5);
+  }
+  .practice .beat-label{margin-bottom:12px}
+  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
+  .practice p b{color:var(--spore);font-weight:500}
+  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
+  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ CONNECTS TO ============ */
+  .connects{margin-top:52px}
+  .connects h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .connects .sub{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:5px;
+  }
+  .web{position:relative;margin-top:8px}
+  .web svg{display:block;width:100%;height:auto}
+  .neighbours{position:absolute;inset:0;pointer-events:none}
+  .nb{
+    position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
+    display:flex;align-items:center;gap:9px;
+    padding:8px 14px 9px;border-radius:13px;
+    background:rgba(8,15,17,.82);backdrop-filter:blur(4px);
+    border:1px solid var(--hairline);
+    color:var(--ink);font-size:13px;letter-spacing:.005em;white-space:nowrap;
+    transition:border-color .3s,color .3s,background .3s,transform .3s;
+    cursor:pointer;text-decoration:none;
+  }
+  .nb .recipe-no{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--ink-faint);
+  }
+  .nb .sd{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 12px 2px rgba(63,224,200,.55);
+  }
+  .nb.amber .sd{background:var(--amber);box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 12px 2px rgba(255,179,71,.5)}
+  .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
+  .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
+  .nb:hover .sd{animation:throb 1s ease-in-out infinite}
+  .nb.soon{opacity:.62}
+  .nb.soon::after{
+    content:"soon";
+    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);
+    border:1px solid var(--ink-faint);border-radius:20px;
+    padding:2px 7px 3px;margin-left:4px;
+  }
+  .nb.soon:hover{opacity:1}
+  .origin-chip{
+    position:absolute;transform:translate(-50%,-50%);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 24px rgba(63,224,200,.4);white-space:nowrap;text-align:center;
+  }
+  .origin-chip small{
+    display:block;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:8.5px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--teal-dim);margin-top:3px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer.floor{
+    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  footer.floor .door{
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
+    text-shadow:0 0 22px rgba(255,179,71,.3);
+  }
+  footer.floor .meta{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+
+  @keyframes breathe{
+    0%,100%{opacity:.55}
+    50%{opacity:1}
+  }
+  .breathe{animation:breathe 4.2s ease-in-out infinite}
+  @keyframes throb{50%{transform:scale(1.5)}}
+
+  @media (max-width:860px){
+    .plates{grid-template-columns:1fr 1fr}
+    .plate.use{grid-column:1 / -1}
+  }
+  @media (max-width:780px){
+    .plates{grid-template-columns:1fr}
+    .plate.use{grid-column:1}
+    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
+    .move-rail .thread{display:none}
+    .step{padding:0}
+    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .neighbours .nb{font-size:11px;padding:6px 10px}
+    .prose p{font-size:14.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ BREADCRUMB ============ -->
+  <nav class="crumb">
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Promote the personal win to the team</span>
+  </nav>
+
+  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <header class="pat">
+    <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· the wall-crossing pattern · personal → team / company</span></div>
+    <h1>Promote the personal win <em>to the team</em></h1>
+    <p class="principle">The principle: <b>Accretion beats adoption</b> — each addition arrives with evidence; wholesale roll-out arrives with a policy doc nobody asked for.</p>
+    <p class="essence">
+      Move a <b>skill or rule that is already doing work</b> from your personal kit into the team's shared surface —
+      one conversation, one PR, carried by evidence from real sessions.
+    </p>
+  </header>
+
+  <!-- ============ HERO PICTURE ============ -->
+  <div class="hero-frame">
+    <svg viewBox="0 0 1080 400" role="img" aria-label="Left: a test-strategy skill file in a personal ~/.claude/skills/ directory, untouched by teammates. Right: the same file committed to the repo's .claude/skills/ directory, with a green CI check and a second author in the git log — evidence it crossed.">
+      <defs>
+        <radialGradient id="h-well" cx="70%" cy="50%" r="65%">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".08"/>
+          <stop offset="45%" stop-color="#ffb347" stop-opacity=".05"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="h-teal" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".6"/>
+          <stop offset="100%" stop-color="#1d8d80" stop-opacity=".2"/>
+        </linearGradient>
+        <linearGradient id="h-amber" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffb347" stop-opacity=".8"/>
+          <stop offset="100%" stop-color="#a86a1f" stop-opacity=".2"/>
+        </linearGradient>
+        <filter id="h-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <linearGradient id="h-cross" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".3"/>
+          <stop offset="50%" stop-color="#9bffe9" stop-opacity=".9"/>
+          <stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/>
+        </linearGradient>
+      </defs>
+
+      <rect x="0" y="0" width="1080" height="400" fill="url(#h-well)"/>
+
+      <!-- LEFT PANEL — personal scope -->
+      <g>
+        <text x="60" y="36" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.2" fill="#5d6a68">~/.claude/skills/ · PERSONAL · ONE ENGINEER</text>
+
+        <!-- terminal frame -->
+        <rect x="44" y="52" width="420" height="290" rx="12" fill="rgba(8,17,18,.75)" stroke="rgba(63,224,200,.2)" stroke-width="1.2"/>
+        <!-- dot bar -->
+        <circle cx="68" cy="70" r="4.5" fill="#39423f"/>
+        <circle cx="86" cy="70" r="4.5" fill="#39423f"/>
+        <circle cx="104" cy="70" r="4.5" fill="#3fe0c8" opacity=".5"/>
+
+        <!-- file tree -->
+        <text x="68" y="104" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#6f8a85">~/.claude/skills/</text>
+        <text x="80" y="126" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#9bffe9">└── test-strategy/</text>
+        <text x="96" y="148" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#3fe0c8">    └── SKILL.md</text>
+
+        <!-- skill file preview -->
+        <rect x="68" y="166" width="372" height="142" rx="8" fill="rgba(5,8,10,.5)" stroke="rgba(63,224,200,.14)"/>
+        <text x="84" y="188" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#3fe0c8">SKILL.md</text>
+        <text x="84" y="210" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#cfe6e0"># Test strategy</text>
+        <text x="84" y="230" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#6f8a85">trigger: test-strategy</text>
+        <text x="84" y="250" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#6f8a85">## Conventions</text>
+        <text x="84" y="270" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#9bffe9">- ADR-12: no mocks at service boundary</text>
+        <text x="84" y="290" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#9bffe9">- integration beats unit for auth flows</text>
+
+        <!-- "unshared" label -->
+        <text x="260" y="358" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#5d6a68" font-style="italic">works · unshared · teammate re-discovers the hard way</text>
+      </g>
+
+      <!-- CROSSING ARROW -->
+      <g transform="translate(484,196)">
+        <path d="M0,0 L112,0" stroke="url(#h-cross)" stroke-width="2.4" fill="none"/>
+        <polygon points="112,0 100,-7 100,7" fill="#ffb347" filter="url(#h-glow)"/>
+        <text x="56" y="-14" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3fe0c8">THE CONVERSATION</text>
+        <text x="56" y="20" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="11" fill="#6f8a85">evidence mediates</text>
+        <!-- spore pulse on the arrow -->
+        <circle r="3" fill="#aeffee">
+          <animateMotion dur="2.4s" repeatCount="indefinite" path="M0,0 L112,0"/>
+          <animate attributeName="opacity" values="0;1;0" dur="2.4s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+
+      <!-- RIGHT PANEL — team scope -->
+      <g>
+        <text x="620" y="36" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.2" fill="#3fe0c8">.claude/skills/ · REPO · TEAM</text>
+
+        <!-- terminal frame -->
+        <rect x="616" y="52" width="420" height="290" rx="12" fill="rgba(8,17,18,.78)" stroke="rgba(255,179,71,.28)" stroke-width="1.4"/>
+        <circle cx="640" cy="70" r="4.5" fill="#39423f"/>
+        <circle cx="658" cy="70" r="4.5" fill="#39423f"/>
+        <circle cx="676" cy="70" r="4.5" fill="#ffb347" filter="url(#h-glow)" opacity=".8"/>
+
+        <!-- file tree with CI check -->
+        <text x="640" y="104" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#6f8a85">.claude/skills/</text>
+        <text x="652" y="126" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#9bffe9">└── test-strategy/</text>
+        <text x="668" y="148" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#3fe0c8">    └── SKILL.md</text>
+        <!-- green CI check -->
+        <circle cx="1002" cy="144" r="10" fill="rgba(63,224,200,.15)" stroke="#3fe0c8" stroke-width="1.2"/>
+        <path d="M996,144 L1000,148 L1008,140" stroke="#3fe0c8" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <!-- git log snippet -->
+        <rect x="640" y="166" width="372" height="142" rx="8" fill="rgba(5,8,10,.5)" stroke="rgba(255,179,71,.16)"/>
+        <text x="656" y="188" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#a86a1f">git log --oneline .claude/skills/test-strategy/</text>
+        <text x="656" y="210" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#ffb347">a3f92c1</text>
+        <text x="710" y="210" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#cfe6e0">sharpen: no-mock rule for service boundary</text>
+        <text x="656" y="232" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#5d6a68">author: teammate (unprompted invocation)</text>
+        <text x="656" y="258" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#6f8a85">8b1dc44</text>
+        <text x="710" y="258" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#9bffe9">promote test-strategy skill to team kit</text>
+        <text x="656" y="280" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#5d6a68">author: you (carried evidence, opened conv)</text>
+        <text x="656" y="306" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#3b524e">↳ CI fires on every PR. Catches before merge.</text>
+
+        <!-- "crossed" label -->
+        <text x="828" y="358" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#3fe0c8" font-style="italic">crossed · a second author sharpened it unprompted</text>
+      </g>
+    </svg>
+    <div class="hero-cap">The wall crossed when <b>a teammate sharpened the skill from their own evidence</b> — not when you announced it at standup.</div>
+  </div>
+
+  <!-- ============ PROSE 1 — THE MECHANISM ============ -->
+  <section class="prose">
+    <div class="sec-label">The mechanism · why personal-first is the only safe order</div>
+    <h2>The wall exists because <em>adoption</em> is hard. Accretion is not.</h2>
+
+    <p>
+      There is a skill in your <span class="mono">~/.claude/skills/</span> directory — probably more than one —
+      that has already caught a real thing, on real code, in your actual codebase. It encodes a convention your
+      team has argued over in two retros, then promptly failed to apply in the next sprint. You know it works
+      because you've watched it work. <b>Your teammate doesn't have it, and has no particular reason to know it exists.</b>
+      This is the wall. Not political. Not a process problem. Just the ordinary gap between a working personal
+      tool and the shared surface where it could fire on every PR.
+    </p>
+
+    <p>
+      The instinct is to announce it in standup, or write a policy doc, or (the ambitious move) a full team roll-out
+      with a wiki page and a training session. Each of these asks your teammates to adopt a system they didn't build
+      and haven't tested on anything they own. <em>The evidence isn't theirs yet.</em> Adoption fatigue is what
+      makes most good practices vanish between the standup mention and the next sprint. The mechanism that actually
+      works is quieter and slower: one conversation, one PR, one person arrives at the skill the same way you did —
+      through a real problem, not a policy doc.
+    </p>
+
+    <p class="pull">
+      A skill proven on one feature arrives with more authority than a policy doc written from principles — <b>the evidence is the persuasion.</b>
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 1 — THE MECHANISM: evidence mediates each crossing ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 320" role="img" aria-label="A single arrow: personal skill file, then a conversation node labelled 'evidence mediates', then team PR into AGENTS.md plus CI check. Each hop labelled with what fires it.">
+      <defs>
+        <linearGradient id="m-flow" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".8"/>
+          <stop offset="60%" stop-color="#9bffe9" stop-opacity=".9"/>
+          <stop offset="100%" stop-color="#ffb347" stop-opacity=".85"/>
+        </linearGradient>
+        <filter id="m-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="4" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="m-bead" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#9bffe9"/>
+          <stop offset="55%" stop-color="#3fe0c8"/>
+          <stop offset="100%" stop-color="#1d8d80"/>
+        </radialGradient>
+        <radialGradient id="m-amber-bead" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#ffe0a8"/>
+          <stop offset="55%" stop-color="#ffb347"/>
+          <stop offset="100%" stop-color="#a86a1f"/>
+        </radialGradient>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE CROSSING MOVE · EVIDENCE MEDIATES EACH HOP</text>
+
+      <!-- Node 1: personal skill -->
+      <g transform="translate(60,100)">
+        <circle cx="0" cy="60" r="28" fill="url(#m-bead)" filter="url(#m-glow)"/>
+        <text x="0" y="65" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#05080a">SKILL</text>
+        <text x="0" y="114" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#6f8a85">~/.claude/</text>
+        <text x="0" y="132" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#6f8a85">skills/</text>
+        <text x="0" y="158" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#9bffe9" font-style="italic">proven on your</text>
+        <text x="0" y="174" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#9bffe9" font-style="italic">own codebase</text>
+      </g>
+
+      <!-- Arrow 1 with trigger label -->
+      <g transform="translate(120,155)">
+        <path d="M8,5 L150,5" stroke="url(#m-flow)" stroke-width="2" fill="none"/>
+        <polygon points="158,5 148,-1 148,11" fill="#3fe0c8" opacity=".85"/>
+        <text x="84" y="-10" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#3fe0c8">FIRES ON JUDGMENT</text>
+        <circle r="2.8" fill="#aeffee">
+          <animateMotion dur="2s" repeatCount="indefinite" path="M8,5 L150,5"/>
+          <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+
+      <!-- Node 2: conversation -->
+      <g transform="translate(300,100)">
+        <rect x="-54" y="24" width="108" height="72" rx="14" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.35)" stroke-width="1.4"/>
+        <text x="0" y="53" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#3fe0c8">CONVERSATION</text>
+        <text x="0" y="72" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#eafff9">what it caught</text>
+        <text x="0" y="88" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#eafff9">+ where it lives</text>
+        <text x="0" y="132" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#9bffe9" font-style="italic">evidence mediates</text>
+        <text x="0" y="148" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#9bffe9" font-style="italic">the crossing</text>
+      </g>
+
+      <!-- Arrow 2 -->
+      <g transform="translate(368,155)">
+        <path d="M8,5 L150,5" stroke="url(#m-flow)" stroke-width="2" fill="none"/>
+        <polygon points="158,5 148,-1 148,11" fill="#9bffe9" opacity=".85"/>
+        <text x="84" y="-10" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#9bffe9">TEAM CONVERSATION</text>
+        <circle r="2.8" fill="#9bffe9">
+          <animateMotion dur="2s" begin=".6s" repeatCount="indefinite" path="M8,5 L150,5"/>
+          <animate attributeName="opacity" values="0;1;0" dur="2s" begin=".6s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+
+      <!-- Node 3: team kit PR -->
+      <g transform="translate(550,100)">
+        <circle cx="0" cy="60" r="28" fill="url(#m-amber-bead)" filter="url(#m-glow)"/>
+        <text x="0" y="65" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#05080a">KIT PR</text>
+        <text x="0" y="114" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#6f8a85">.claude/</text>
+        <text x="0" y="132" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#6f8a85">skills/</text>
+        <text x="0" y="158" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#ffce85" font-style="italic">normal code PR</text>
+        <text x="0" y="174" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#ffce85" font-style="italic">no sign-off needed</text>
+      </g>
+
+      <!-- Arrow 3 -->
+      <g transform="translate(618,155)">
+        <path d="M8,5 L150,5" stroke="url(#m-flow)" stroke-width="2" fill="none"/>
+        <polygon points="158,5 148,-1 148,11" fill="#ffb347" opacity=".85"/>
+        <text x="84" y="-10" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#ffb347">ONCE PROVEN</text>
+        <circle r="2.8" fill="#ffce85">
+          <animateMotion dur="2s" begin="1.2s" repeatCount="indefinite" path="M8,5 L150,5"/>
+          <animate attributeName="opacity" values="0;1;0" dur="2s" begin="1.2s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+
+      <!-- Node 4: CI / AGENTS.md -->
+      <g transform="translate(800,100)">
+        <circle cx="0" cy="60" r="28" fill="url(#m-amber-bead)" filter="url(#m-glow)" opacity=".9"/>
+        <text x="0" y="59" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="7.5" fill="#05080a">AGENTS.md</text>
+        <text x="0" y="71" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="7.5" fill="#05080a">+ CI</text>
+        <text x="0" y="114" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#a86a1f">ALWAYS</text>
+        <text x="0" y="132" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#a86a1f">FIRES</text>
+        <text x="0" y="158" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#ffce85" font-style="italic">every contributor</text>
+        <text x="0" y="174" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#ffce85" font-style="italic">every PR</text>
+      </g>
+
+      <!-- Optional permission note -->
+      <text x="920" y="280" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#a86a1f">← needs permission</text>
+      <text x="920" y="296" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#a86a1f">everything else: no</text>
+
+      <text x="40" y="296" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">JUDGMENT → CONVERSATION → SHARED KIT → DETERMINISTIC GATE. EACH HOP REQUIRES THE PREVIOUS.</text>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 01</span>The move is not a push — it is a sequence. <b>Evidence from real sessions</b> is what makes the conversation easy and the CI gate inevitable.</div>
+  </div>
+
+  <!-- ============ PROSE 2 — personal-first always ============ -->
+  <section class="prose">
+    <div class="sec-label">The scope decision · before you ship anything</div>
+    <h2>Not every skill earns a <em>team PR</em>.</h2>
+
+    <p>
+      The first question at authoring time — before you write a line — is also the easiest one to skip:
+      is this skill encoding a <b>codebase-specific convention</b> (your auth pattern, your ADR convention,
+      your named integration verifier), or is it a personal working-style preference (your taste on function
+      naming, your preference for test verbosity)? The distinction matters more than it looks. Over-aggressive
+      promotion turns the team kit into a collection of one person's opinions. Over-timid leaves real
+      codebase knowledge locked in a personal file forever, re-discovered the hard way by everyone else.
+    </p>
+
+    <p>
+      The rule is simple and it never changes: <em class="teal">personal first, always.</em> The skill goes to
+      <span class="mono">~/.claude/skills/&lt;name&gt;/SKILL.md</span> first — not as a staging area, but as the
+      principle. You test it on your own code. You watch what it catches. You build the evidence. Then,
+      when you walk into the team conversation, you're not pitching an idea — <b>you're reporting a finding.</b>
+      The conversation is easy because the proof is already in the scrollback.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 2 — CONCENTRIC RINGS: personal → team → company ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 460" role="img" aria-label="Three concentric rings showing the upgrade path. Inner ring: personal ~/.claude/skills/, fires on judgment. Middle ring: repo .claude/skills/, fires via conversation and PR. Outer ring: AGENTS.md plus pre-commit plus CI, fires always on every contributor's PR.">
+      <defs>
+        <radialGradient id="r-core" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".18"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="r-mid" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#9bffe9" stop-opacity=".08"/>
+          <stop offset="100%" stop-color="#9bffe9" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="r-outer" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffb347" stop-opacity=".06"/>
+          <stop offset="100%" stop-color="#ffb347" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="r-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="r-bead" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#9bffe9"/>
+          <stop offset="55%" stop-color="#3fe0c8"/>
+          <stop offset="100%" stop-color="#1d8d80"/>
+        </radialGradient>
+      </defs>
+
+      <text x="40" y="36" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE UPGRADE · SAME SKILL · WIDER TRIGGER</text>
+
+      <!-- left: rings diagram -->
+      <g transform="translate(300,230)">
+        <!-- outer ring glow fill -->
+        <circle cx="0" cy="0" r="195" fill="url(#r-outer)"/>
+        <circle cx="0" cy="0" r="130" fill="url(#r-mid)"/>
+        <circle cx="0" cy="0" r="72" fill="url(#r-core)"/>
+
+        <!-- outer ring -->
+        <circle cx="0" cy="0" r="195" fill="none" stroke="rgba(255,179,71,.30)" stroke-width="1.5" stroke-dasharray="8 5"/>
+        <!-- middle ring -->
+        <circle cx="0" cy="0" r="130" fill="none" stroke="rgba(63,224,200,.38)" stroke-width="1.5"/>
+        <!-- inner ring -->
+        <circle cx="0" cy="0" r="72" fill="none" stroke="rgba(155,255,233,.55)" stroke-width="1.8"/>
+
+        <!-- breathing spore in centre -->
+        <circle cx="0" cy="0" r="16" fill="rgba(63,224,200,.15)" stroke="#3fe0c8" stroke-width="1.2"/>
+        <circle cx="0" cy="0" r="7" fill="#3fe0c8" filter="url(#r-glow)" class="breathe"/>
+
+        <!-- Ring labels -->
+        <!-- Inner -->
+        <text x="0" y="-46" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".18em" fill="#9bffe9">~/.claude/skills/</text>
+        <text x="0" y="-32" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85" font-style="italic">one session · your judgment</text>
+
+        <!-- Middle — text on both sides for readability -->
+        <text x="0" y="-102" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".18em" fill="#3fe0c8">.claude/skills/ · AGENTS.md</text>
+        <text x="0" y="-88" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85" font-style="italic">team repo · fires via conversation</text>
+
+        <!-- Outer -->
+        <text x="0" y="-164" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".18em" fill="#ffb347">pre-commit · CI check</text>
+        <text x="0" y="-150" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#a86a1f" font-style="italic">every contributor · every PR · always fires</text>
+
+        <!-- radial thread annotations -->
+        <path d="M0,0 L0,-72" stroke="#9bffe9" stroke-width="1" opacity=".3" stroke-dasharray="3 4"/>
+        <path d="M0,-72 L0,-130" stroke="#3fe0c8" stroke-width="1" opacity=".3" stroke-dasharray="3 4"/>
+        <path d="M0,-130 L0,-195" stroke="#ffb347" stroke-width="1" opacity=".3" stroke-dasharray="3 4"/>
+
+        <!-- trigger labels on side -->
+        <text x="78" y="6" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#9bffe9">JUDGMENT</text>
+        <text x="136" y="6" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#3fe0c8">CONVERSATION</text>
+        <text x="200" y="6" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#ffb347">ALWAYS-FIRES</text>
+
+        <!-- horizontal tick lines -->
+        <line x1="72" y1="0" x2="80" y2="0" stroke="#9bffe9" stroke-width="1.2"/>
+        <line x1="130" y1="0" x2="138" y2="0" stroke="#3fe0c8" stroke-width="1.2"/>
+        <line x1="195" y1="0" x2="203" y2="0" stroke="#ffb347" stroke-width="1.2"/>
+      </g>
+
+      <!-- right: the upgrade path annotation -->
+      <g transform="translate(660,80)">
+        <text x="0" y="0" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".26em" fill="#9bffe9">RING 1 — PERSONAL</text>
+        <rect x="0" y="14" width="340" height="70" rx="9" fill="rgba(8,17,18,.6)" stroke="rgba(155,255,233,.22)"/>
+        <text x="14" y="36" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#9bffe9">~/.claude/skills/test-strategy/SKILL.md</text>
+        <text x="14" y="56" font-family="'Spline Sans',sans-serif" font-size="12" fill="#6f8a85" font-style="italic">proven on your own feature · fires on your judgment only</text>
+        <text x="14" y="76" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#3b524e">no teammates see it · no PR needed · no permission</text>
+
+        <text x="0" y="108" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".26em" fill="#3fe0c8">RING 2 — TEAM KIT</text>
+        <rect x="0" y="122" width="340" height="80" rx="9" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.28)"/>
+        <text x="14" y="144" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#3fe0c8">.claude/skills/test-strategy/SKILL.md</text>
+        <text x="14" y="162" font-family="'Spline Sans',sans-serif" font-size="12" fill="#6f8a85" font-style="italic">normal code PR · auto-discovered in team sessions</text>
+        <text x="14" y="180" font-family="'Spline Sans',sans-serif" font-size="12" fill="#6f8a85" font-style="italic">fires when a teammate invokes it · by choice</text>
+        <text x="14" y="196" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#3b524e">trigger: team conv + evidence → PR → merged</text>
+
+        <text x="0" y="228" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".26em" fill="#ffb347">RING 3 — CI SURFACE</text>
+        <rect x="0" y="242" width="340" height="90" rx="9" fill="rgba(8,17,18,.6)" stroke="rgba(255,179,71,.30)"/>
+        <text x="14" y="264" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#ffb347">AGENTS.md + pre-commit hook + CI check</text>
+        <text x="14" y="282" font-family="'Spline Sans',sans-serif" font-size="12" fill="#a86a1f" font-style="italic">every contributor · every PR · cannot be skipped</text>
+        <text x="14" y="300" font-family="'Spline Sans',sans-serif" font-size="12" fill="#a86a1f" font-style="italic">skill → rule converts a personal win to a guarantee</text>
+        <text x="14" y="318" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#a86a1f">needs permission · arrive with a catch-rate number</text>
+
+        <!-- arrows connecting the rings -->
+        <text x="16" y="104" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3b524e">↓ conversation + evidence</text>
+        <text x="16" y="224" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3b524e">↓ once proven at ring 2</text>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 02</span>Three rings, one skill. What changes is <b>who it fires for and what triggers it</b> — from your own judgment, to a teammate's choice, to a deterministic gate on every PR.</div>
+  </div>
+
+  <!-- ============ PROSE 3 — CI surface and the gap feedback loop ============ -->
+  <section class="prose">
+    <div class="sec-label">The CI surface · where skill becomes guarantee</div>
+    <h2>A skill fires on judgment. A rule fires on <em>every PR</em>.</h2>
+
+    <p>
+      The highest-value target isn't the team conversation — it's the CI surface. Once a skill has proven
+      itself across a few sessions and a second author has sharpened it, the question shifts from
+      <em>"do people know about this?"</em> to <b>"does this fire without anyone having to remember it exists?"</b>
+      A pre-commit hook invoking the check converts a personal win into a team guarantee. The convention
+      that got argued over in two retros now fires silently before every merge, for every contributor,
+      including the one who joined last month and never heard the argument.
+    </p>
+
+    <p>
+      The loop runs in the other direction too. Every CI red build on agent-drafted code is diagnostic:
+      if it caught a real mistake, ask what rule in <span class="mono">CLAUDE.local.md</span> would have
+      caught it upstream. If none exists, write it. <b>Rules grow from real failures, not prophylactic policy.</b>
+      The team kit's commit history, if you're doing this right, should read like an archaeology of your actual
+      production mistakes — each commit a lesson that didn't need to be learned twice.
+    </p>
+
+    <p class="pull">
+      The path from personal skill to team-enforced check is shorter than it looks — <b>the skill is already proving itself; the only missing step is the conversation.</b>
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 3 — COMPOUNDING LOOP ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="A closed compounding loop: Task runs, gap surfaces, skill encodes the pattern, kit grows. Arrow loops back to Task runs, labelled: next agent reads the updated kit on cold start.">
+      <defs>
+        <linearGradient id="cl-ring" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".8"/>
+          <stop offset="100%" stop-color="#ffb347" stop-opacity=".6"/>
+        </linearGradient>
+        <radialGradient id="cl-bead" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#9bffe9"/>
+          <stop offset="55%" stop-color="#3fe0c8"/>
+          <stop offset="100%" stop-color="#1d8d80"/>
+        </radialGradient>
+        <radialGradient id="cl-amber-bead" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#ffe0a8"/>
+          <stop offset="55%" stop-color="#ffb347"/>
+          <stop offset="100%" stop-color="#a86a1f"/>
+        </radialGradient>
+        <filter id="cl-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <text x="40" y="36" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">COMPOUNDING LOOP · NEXT AGENT READS THE UPDATED KIT ON COLD START</text>
+
+      <!-- the loop — left half: bead ring -->
+      <g transform="translate(68,70)">
+        <!-- ring arc, not a full circle — mycelial not geometric -->
+        <circle cx="200" cy="172" r="130" fill="none" stroke="url(#cl-ring)" stroke-width="2.2" stroke-dasharray="560 60" stroke-linecap="round" transform="rotate(-100 200 172)"/>
+
+        <!-- pulse on ring -->
+        <circle r="3.8" fill="#aeffee">
+          <animateMotion dur="8s" repeatCount="indefinite" path="M200,42 a130,130 0 1,1 -0.1,0"/>
+          <animate attributeName="opacity" values=".2;1;1;.2" dur="8s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- bead 1 — task runs -->
+        <g>
+          <circle cx="200" cy="42" r="24" fill="url(#cl-bead)" filter="url(#cl-glow)"/>
+          <text x="200" y="47" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="10" fill="#05080a" font-weight="600">Task</text>
+          <text x="200" y="22" text-anchor="middle" font-family="'Fraunces',serif" font-size="13" fill="#eafff9" font-style="italic">runs</text>
+        </g>
+        <!-- bead 2 — gap surfaces -->
+        <g>
+          <circle cx="330" cy="172" r="24" fill="url(#cl-bead)" filter="url(#cl-glow)"/>
+          <text x="330" y="177" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="10" fill="#05080a" font-weight="600">Gap</text>
+          <text x="368" y="175" font-family="'Fraunces',serif" font-size="13" fill="#eafff9" font-style="italic">surfaces</text>
+        </g>
+        <!-- bead 3 — skill encodes -->
+        <g>
+          <circle cx="200" cy="302" r="24" fill="url(#cl-bead)" filter="url(#cl-glow)"/>
+          <text x="200" y="307" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="10" fill="#05080a" font-weight="600">Skill</text>
+          <text x="200" y="342" text-anchor="middle" font-family="'Fraunces',serif" font-size="13" fill="#eafff9" font-style="italic">encodes</text>
+        </g>
+        <!-- bead 4 — kit grows -->
+        <g>
+          <circle cx="70" cy="172" r="24" fill="url(#cl-amber-bead)" filter="url(#cl-glow)"/>
+          <text x="70" y="177" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="10" fill="#05080a" font-weight="600">Kit</text>
+          <text x="34" y="175" text-anchor="end" font-family="'Fraunces',serif" font-size="13" fill="#ffce85" font-style="italic">grows</text>
+        </g>
+
+        <!-- centre -->
+        <text x="200" y="168" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#3b524e">EVERY SPRINT</text>
+        <text x="200" y="186" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">costs less</text>
+      </g>
+
+      <!-- right: the "cold start reads updated kit" annotation -->
+      <g transform="translate(570,80)">
+        <!-- kit file, growing across 3 versions -->
+        <text x="0" y="0" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".26em" fill="#3b524e">THE KIT AFTER 3 SPRINTS</text>
+
+        <!-- sprint 1 kit -->
+        <g>
+          <rect x="0" y="16" width="130" height="180" rx="8" fill="rgba(8,17,18,.72)" stroke="rgba(63,224,200,.22)"/>
+          <rect x="0" y="16" width="130" height="18" rx="5" fill="rgba(63,224,200,.10)"/>
+          <text x="8" y="29" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#3fe0c8">CLAUDE.md v1</text>
+          <g stroke="#6f8a85" stroke-width="1.8" opacity=".5">
+            <line x1="10" y1="54" x2="90" y2="54"/>
+            <line x1="10" y1="72" x2="118" y2="72"/>
+            <line x1="10" y1="90" x2="70" y2="90"/>
+          </g>
+          <text x="65" y="215" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#5d6a68">SPRINT 1</text>
+        </g>
+
+        <!-- arrow -->
+        <g transform="translate(140,105)">
+          <path d="M0,0 L24,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
+          <polygon points="24,0 16,-4 16,4" fill="#3fe0c8" opacity=".7"/>
+        </g>
+
+        <!-- sprint 2 kit — denser -->
+        <g transform="translate(170,0)">
+          <rect x="0" y="16" width="130" height="200" rx="8" fill="rgba(8,17,18,.78)" stroke="rgba(63,224,200,.38)"/>
+          <rect x="0" y="16" width="130" height="18" rx="5" fill="rgba(63,224,200,.14)"/>
+          <text x="8" y="29" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#3fe0c8">CLAUDE.md v2</text>
+          <g stroke="#9bffe9" stroke-width="1.8" opacity=".7">
+            <line x1="10" y1="54" x2="110" y2="54"/>
+            <line x1="10" y1="72" x2="118" y2="72"/>
+            <line x1="10" y1="90" x2="88" y2="90"/>
+            <line x1="10" y1="108" x2="118" y2="108"/>
+            <line x1="10" y1="126" x2="96" y2="126"/>
+          </g>
+          <g stroke="#ffb347" stroke-width="1.8" opacity=".7">
+            <line x1="10" y1="144" x2="112" y2="144"/>
+            <line x1="10" y1="162" x2="78" y2="162"/>
+          </g>
+          <text x="65" y="232" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#9bffe9">SPRINT 2</text>
+        </g>
+
+        <!-- arrow -->
+        <g transform="translate(310,115)">
+          <path d="M0,0 L24,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
+          <polygon points="24,0 16,-4 16,4" fill="#ffb347" opacity=".7"/>
+        </g>
+
+        <!-- sprint 3 kit — load-bearing -->
+        <g transform="translate(340,0)">
+          <rect x="0" y="0" width="130" height="240" rx="8" fill="rgba(8,17,18,.88)" stroke="url(#cl-ring)" stroke-width="1.6" filter="url(#cl-glow)"/>
+          <rect x="0" y="0" width="130" height="18" rx="5" fill="rgba(255,179,71,.16)"/>
+          <text x="8" y="13" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#ffb347">CLAUDE.md v3</text>
+          <g stroke="#ffb347" stroke-width="2.2">
+            <line x1="10" y1="36" x2="120" y2="36"/>
+            <line x1="10" y1="54" x2="108" y2="54"/>
+          </g>
+          <g stroke="#9bffe9" stroke-width="1.8" opacity=".8">
+            <line x1="10" y1="74" x2="118" y2="74"/>
+            <line x1="10" y1="92" x2="104" y2="92"/>
+            <line x1="10" y1="110" x2="122" y2="110"/>
+            <line x1="10" y1="128" x2="96" y2="128"/>
+            <line x1="10" y1="146" x2="116" y2="146"/>
+            <line x1="10" y1="164" x2="100" y2="164"/>
+            <line x1="10" y1="182" x2="122" y2="182"/>
+            <line x1="10" y1="200" x2="90" y2="200"/>
+          </g>
+          <text x="65" y="260" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#ffb347">SPRINT 3 · LOAD-BEARING</text>
+        </g>
+
+        <!-- cold start label -->
+        <text x="235" y="296" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#3fe0c8">next agent cold-starts with the updated kit</text>
+        <text x="235" y="314" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3b524e">the compounding surface is the shared kit</text>
+
+        <!-- legend -->
+        <g transform="translate(0,330)">
+          <rect x="0" y="0" width="14" height="3" fill="#ffb347"/>
+          <text x="20" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">RULES THAT EARNED THEIR KEEP</text>
+          <rect x="0" y="14" width="14" height="3" fill="#9bffe9"/>
+          <text x="20" y="18" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">SCAFFOLDING · STILL USEFUL</text>
+        </g>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 03</span><em>The rate of compounding is set by how reliably personal wins cross the wall.</em> Each sprint, <b>the kit grows from a real gap</b> — not from policy planning.</div>
+  </div>
+
+  <!-- ============ PROSE 4 — the test that matters ============ -->
+  <section class="prose">
+    <div class="sec-label amber">What "test" actually means · the falsifiable version</div>
+    <h2 class="amber">The promotion stalled at <em>announcement</em>.</h2>
+
+    <p>
+      There's a very specific failure mode for this pattern, and it hides well because it looks like success.
+      You mention the skill in standup. A couple of people say "oh nice." Someone adds it to the team wiki
+      under "Useful tools." <em>The skill never fires in anyone else's session.</em> The announcement felt like
+      the crossing; it was just noise.
+    </p>
+
+    <p>
+      The test that tells you the pattern actually crossed is harder to fake: a teammate invokes the skill
+      <b>unprompted</b>, in their own session, on a PR you didn't write. If you have to mention it at standup
+      for it to get used, the habit didn't cross — only the announcement did. Better still: a teammate
+      proposes a sharpening from their own invocation evidence. At that point they're in the encode loop,
+      not just consumption. <b>That's the wall behind the wall, and clearing it is the whole point.</b>
+    </p>
+  </section>
+
+  <!-- ============ USE WHEN · BUILD · TEST plates ============ -->
+  <div class="plates">
+    <div class="plate use">
+      <div class="beat-label amber"><b>Use when</b></div>
+      <p class="body">
+        A rule or skill that works for you is already doing work <b>your teammates re-discover the hard way.</b>
+        Especially after: a sprint where someone encoded a real rule; a CI red build the loop should have caught;
+        a <span class="grey">kit-consolidation point</span> where <span class="mono">CLAUDE.md</span> still reflects defaults, not accumulated wisdom.
+      </p>
+    </div>
+    <div class="plate build">
+      <div class="beat-label"><b>Build</b></div>
+      <p class="body">
+        A PR adding <span class="mono">SKILL.md</span> to <b>.claude/skills/ in the repo</b> · a commit adding the convention to <span class="mono">AGENTS.md</span> · a pre-commit hook or CI step invoking the check on every PR · the kit's commit history showing accretion from >1 author.
+      </p>
+    </div>
+    <div class="plate test">
+      <div class="beat-label"><b>Test</b></div>
+      <p class="body">
+        A teammate invokes the skill <em>unprompted</em> — it fired in their session.<br>
+        CI catches what it was designed to catch <em>on a PR you didn't write.</em><br>
+        <em class="no">Only invoked when you mention it at standup.</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ CORE MOVES ============ -->
+  <section class="moves">
+    <div class="beat-label"><b>Core moves</b></div>
+    <div class="moves-head">
+      <h2>The crossing, in sequence</h2>
+      <span class="lede">What changes = who benefits + what fires automatically.</span>
+    </div>
+
+    <div class="move-rail">
+      <div class="thread"></div>
+      <div class="step">
+        <div class="bead">1</div>
+        <h3>Name what it is before you ship</h3>
+        <p>Codebase-specific convention (team-worthy) or personal working-style preference (not)? <b>The distinction prevents both failure modes.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">2</div>
+        <h3>Personal first, always</h3>
+        <p>Lands in <span style="font-family:'Spline Sans Mono',monospace;font-size:11px;color:#3fe0c8">~/.claude/skills/</span> regardless. Not a staging area — <b>the principle.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">3</div>
+        <h3>Carry evidence to the conversation</h3>
+        <p>What it caught. The convention it encodes. Where it lives. <b>Evidence is the persuasion.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">4</div>
+        <h3>PR to the team kit</h3>
+        <p>Normal code PR to <span style="font-family:'Spline Sans Mono',monospace;font-size:11px;color:#3fe0c8">.claude/skills/</span> or <span style="font-family:'Spline Sans Mono',monospace;font-size:11px;color:#ffb347">AGENTS.md</span>. <b>No platform, no budget, no sign-off.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">5</div>
+        <h3>Promote to CI surface</h3>
+        <p>Pre-commit hook or CI step. <b>Skill→hook converts a win into a guarantee.</b> Bring a catch-rate number.</p>
+      </div>
+    </div>
+
+    <div class="compound">
+      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+        <defs><linearGradient id="lgi" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
+        </linearGradient></defs>
+        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lgi)" stroke-width="2.4"
+          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
+        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
+        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
+        <circle r="3" fill="#aeffee">
+          <animateMotion dur="5s" repeatCount="indefinite" path="M37,11 a26,26 0 1,1 -0.1,0"/>
+        </circle>
+      </svg>
+      <div class="ctext">
+        <div class="cyc">task runs<span class="arr">→</span>gap surfaces<span class="arr">→</span>skill encodes<span class="arr">→</span>kit grows<span class="arr">→</span>repeat</div>
+        <p>The compounding surface is the shared kit. <b>The rate is set by how reliably personal wins cross the wall.</b> Most stall because the author never treats the team conversation as a required step.</p>
+      </div>
+    </div>
+
+    <!-- Monday move + no-permission aside -->
+    <p class="aside">
+      <b>Monday move:</b> Open <span class="mono">~/.claude/skills/</span>. Find one skill invoked ≥twice this week. Codebase-specific or personal preference? If codebase-specific, draft a two-sentence team-conversation opener: what it catches + where it lives in the kit. Send it to one teammate before end of day. That's the whole move. No platform, no budget, no sign-off — <b>everything up to and including the conversation needs nothing but the evidence.</b> A mandatory CI gate is the only step that needs permission — and that conversation is easier when you arrive with a cycle-time number and a demonstrated catch rate.
+    </p>
+  </section>
+
+  <!-- ============ WHY ============ -->
+  <section class="why">
+    <div class="beat-label"><b>Why</b></div>
+
+    <div class="principle-block">
+      <div class="principle-label">The principle</div>
+      <p class="principle-line">Compound engineering — <em>each unit of work makes the next cheaper</em>; the mechanism is the artefact the next agent reads.</p>
+    </div>
+
+    <p class="quote">"The path from personal skill to team-enforced check is shorter than it looks — the skill is already proving itself; the only missing step is the conversation."</p>
+
+    <p class="gloss">
+      Wholesale promotion fails because it asks people to adopt a system they didn't build.
+      Nobody rejects it outright — they just don't use it, and the wiki page goes stale, and
+      the next sprint the same gap resurfaces. <b>Accretion works because each addition arrives with evidence.</b>
+      A skill proven on one feature, authored through conversation with the codebase, arrives with more
+      authority than a policy doc written from first principles. The evidence is the persuasion —
+      not because people are irrational, but because they're busy and their prior for "this new process
+      will save me time" is deservedly low.
+    </p>
+
+    <p class="gloss">
+      At team scale, the compounding surface is the shared kit and the rate is set by how reliably
+      personal wins cross the wall. Most stall because the author never treats the team conversation
+      as a required step — it feels optional, a nice-to-have. It isn't.
+      <b>The conversation is the mechanism.</b> Without it, every engineer is perpetually re-discovering
+      the same gaps, and your kit's commit history shows one author's name.
+    </p>
+
+    <div class="corollary"><span class="sd"></span>The promotion stall is usually not political — it's structural. Build the crossing move in.</div>
+  </section>
+
+  <!-- ============ CONNECTS TO ============ -->
+  <section class="connects">
+    <h2>Connects to</h2>
+    <div class="sub">Threads leaving this node · the pattern language</div>
+
+    <div class="web">
+      <svg viewBox="0 0 1080 300" aria-hidden="true">
+        <defs>
+          <linearGradient id="ct1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="ct2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="ct3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#9bffe9" stop-opacity=".65"/></linearGradient>
+          <linearGradient id="ct4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".65"/></linearGradient>
+          <linearGradient id="ct5" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#6f8a85" stop-opacity=".5"/></linearGradient>
+          <filter id="cwglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <!-- this node -->
+        <circle cx="150" cy="150" r="30" fill="none" stroke="#3fe0c8" stroke-width="1.2" opacity=".5"/>
+        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#cwglow)"/>
+        <circle cx="150" cy="150" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
+
+        <!-- threads to neighbours -->
+        <path id="cth1" d="M150,150 C340,60 520,42 760,46" stroke="url(#ct1)" stroke-width="2.2" fill="none"/>
+        <path id="cth2" d="M150,150 C360,100 560,98 760,96" stroke="url(#ct2)" stroke-width="2.2" fill="none"/>
+        <path id="cth3" d="M150,150 C370,150 560,152 760,150" stroke="url(#ct3)" stroke-width="2.2" fill="none"/>
+        <path id="cth4" d="M150,150 C360,200 560,208 760,210" stroke="url(#ct4)" stroke-width="2" fill="none"/>
+        <path id="cth5" d="M150,150 C350,248 540,260 760,264" stroke="url(#ct5)" stroke-width="1.6" stroke-dasharray="4 6" fill="none"/>
+
+        <!-- pulses -->
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#cth1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".7s" repeatCount="indefinite"><mpath href="#cth2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".7s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#9bffe9"><animateMotion dur="5.8s" begin="1.2s" repeatCount="indefinite"><mpath href="#cth3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.2s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="6.2s" begin="1.8s" repeatCount="indefinite"><mpath href="#cth4"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="6.2s" begin="1.8s" repeatCount="indefinite"/></circle>
+      </svg>
+
+      <div class="neighbours">
+        <div class="origin-chip" style="left:13.8%;top:50%">Promote the personal win<small>team-kit-promotion · you are here</small></div>
+        <a class="nb" href="skill-authored-personal-first.html" style="left:74%;top:15.3%"><span class="sd"></span>Skill authored personal-first</a>
+        <a class="nb" href="session-shaper-authoring.html" style="left:74%;top:32%"><span class="sd"></span>Session-shaper authoring</a>
+        <a class="nb" href="compound-from-evidence.html" style="left:74%;top:50%"><span class="sd"></span>Compound from evidence</a>
+        <a class="nb amber" href="gap-route-and-encode.html" style="left:74%;top:70%"><span class="sd"></span>Gap route and encode</a>
+        <a class="nb" href="share-a-slice.html" style="left:74%;top:88%"><span class="sd"></span>Share a slice</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="floor">
+    <span class="door">The skill is already proving itself — the only missing step is the conversation.</span>
+    <span class="meta">The Big Picture · Pattern Language</span>
+  </footer>
+
+</div>
+</body>
+</html>

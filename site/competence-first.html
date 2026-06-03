@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Train before you buy — Pattern · The Big Picture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-0:#05080a;
+    --soil-1:#080d10;
+    --soil-2:#0c1418;
+    --teal:#3fe0c8;
+    --teal-dim:#1d8d80;
+    --amber:#ffb347;
+    --amber-dim:#a86a1f;
+    --spore:#eafff9;
+    --ink:#cfe6e0;
+    --ink-dim:#6f8a85;
+    --ink-faint:#3b524e;
+    --hairline:rgba(63,224,200,.10);
+    --grey:#5d6a68;
+    --grey-dim:#39423f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--soil-0);
+    font-family:'Spline Sans',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  /* atmospheric soil + light-well — recedes for the long read. Business lane: amber leads. */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.10) 0%, transparent 46%),
+      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.06) 0%, transparent 44%),
+      linear-gradient(180deg, #2a1a05 0%, #14100a 10%, #05080a 42%, #04060a 100%);
+  }
+  /* grain / spore dust */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 64px;}
+
+  /* ============ BREADCRUMB ============ */
+  .crumb{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+    color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
+  }
+  .crumb a{color:var(--amber-dim);text-decoration:none;transition:color .25s}
+  .crumb a:hover{color:var(--amber)}
+  .crumb .here{color:var(--ink)}
+
+  /* ============ PATTERN HEADER (name + essence) ============ */
+  header.pat{padding:30px 0 8px;max-width:920px;}
+  .kicker{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--amber-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .kicker .spore-mark{
+    width:8px;height:8px;border-radius:50%;background:var(--amber);
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 14px 2px rgba(255,179,71,.6);
+    flex:none;
+  }
+  .kicker .pat-no{color:var(--ink-faint)}
+  header.pat h1{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(40px,7vw,68px);line-height:.98;
+    color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
+  }
+  header.pat h1 em{font-style:italic;color:var(--amber);font-weight:400}
+  .principle{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
+  }
+  .principle b{color:var(--amber);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .essence{
+    font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:740px;
+  }
+  .essence b{color:var(--spore);font-weight:500}
+  .essence .seq{
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.01em;
+  }
+  .essence .seq .last{color:var(--amber)}
+
+  /* ============ HERO PICTURE ============ */
+  .hero-frame{
+    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(31,24,13,.5), rgba(5,8,10,.6));
+    position:relative;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(255,179,71,.04) inset;
+  }
+  .hero-frame svg{display:block;width:100%;height:auto}
+  .hero-cap{
+    position:absolute;left:18px;bottom:13px;z-index:3;
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
+    color:var(--ink-dim);text-transform:uppercase;max-width:78%;
+  }
+  .hero-cap b{color:var(--amber)}
+
+  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
+  .prose{
+    margin-top:34px;max-width:760px;
+  }
+  .prose h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
+    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+  }
+  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .prose h2.amber em{color:var(--amber)}
+  .prose .sec-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+    margin-top:42px;
+  }
+  .prose .sec-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);
+    box-shadow:0 0 9px rgba(255,179,71,.55);flex:none;
+  }
+  .prose .sec-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
+  .prose p{
+    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
+    letter-spacing:.002em;
+  }
+  .prose p b{color:var(--spore);font-weight:500}
+  .prose p em{font-style:italic;color:var(--ink-dim)}
+  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p .mono{
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
+  }
+  .prose p .mono.amber{color:var(--amber)}
+  .prose .pull{
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--amber-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+    color:var(--ink);max-width:680px;
+  }
+  .prose .pull b{color:var(--amber);font-weight:500;font-style:normal}
+
+  /* ============ CITED-EVIDENCE rows — number + travelling caveat ============ */
+  .evidence{
+    margin-top:22px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(63,224,200,.04), transparent 55%),
+      rgba(8,15,17,.5);
+  }
+  .evidence .ehead{
+    padding:13px 20px;border-bottom:1px solid var(--hairline);
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  }
+  .evidence .ehead::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
+  }
+  .erow{
+    display:grid;grid-template-columns:96px 1fr;gap:0 18px;align-items:start;
+    padding:15px 20px;border-top:1px solid rgba(63,224,200,.05);
+  }
+  .erow:first-of-type{border-top:none}
+  .erow .stat{
+    font-family:'Fraunces',serif;font-size:26px;line-height:1;color:var(--teal);font-weight:500;
+    letter-spacing:-.01em;
+  }
+  .erow.warn .stat{color:var(--amber)}
+  .erow .claim{font-size:13.5px;line-height:1.5;color:var(--ink)}
+  .erow .claim b{color:var(--spore);font-weight:500}
+  .erow .cav{
+    display:block;margin-top:6px;font-size:11.5px;line-height:1.45;color:var(--ink-dim);
+    font-style:italic;font-family:'Fraunces',serif;
+  }
+  .erow .cav .src{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:10px;letter-spacing:.06em;
+    color:var(--amber-dim);
+  }
+
+  /* ============ PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
+  .diagram{
+    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+    background:
+      radial-gradient(110% 130% at 92% 8%, rgba(255,179,71,.05), transparent 55%),
+      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
+    position:relative;
+    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(255,179,71,.03) inset;
+  }
+  .diagram svg{display:block;width:100%;height:auto}
+  .diagram .dcap{
+    padding:12px 20px 16px;border-top:1px solid var(--hairline);
+    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
+    color:var(--ink-dim);letter-spacing:.003em;
+    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  }
+  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
+  .diagram .dcap .num{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--amber-dim);margin-right:10px;
+  }
+
+  /* ============ RECIPE SECTION BEATS ============ */
+  .beat-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  }
+  .beat-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);flex:none;
+    box-shadow:0 0 9px rgba(255,179,71,.55);
+  }
+  .beat-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
+  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+
+  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
+  .plates{
+    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
+  }
+  .plate{
+    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
+    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
+  }
+  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
+  .plate .body b{color:var(--spore);font-weight:500}
+  .plate .body .grey{color:var(--grey)}
+  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
+  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
+
+  /* ============ CORE MOVES ============ */
+  .moves{margin-top:46px}
+  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px;flex-wrap:wrap}
+  .moves-head h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
+  .move-rail{
+    margin-top:20px;position:relative;
+    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+  }
+  .move-rail .thread{
+    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
+    background:linear-gradient(90deg,
+      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
+      rgba(63,224,200,.7) 45%, rgba(255,179,71,.7) 92%, rgba(255,179,71,0) 100%);
+  }
+  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
+  .step:first-child{padding-left:0}
+  .step .bead{
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
+    margin-bottom:13px;
+  }
+  /* last move — platform choice — is the amber terminus */
+  .step:nth-child(6) .bead{
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
+  }
+  .step h3{
+    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
+  }
+  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
+  .step p b{color:var(--ink);font-weight:500}
+
+  .compound{
+    margin-top:26px;border:1px solid rgba(255,179,71,.18);border-radius:14px;
+    padding:18px 22px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(255,179,71,.07), transparent 60%),
+      rgba(8,17,18,.55);
+    display:flex;align-items:center;gap:20px;
+  }
+  .compound .loop-ico{flex:none}
+  .compound .ctext{flex:1}
+  .compound .ctext .cyc{
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
+  }
+  .compound .ctext .cyc .last{color:var(--amber)}
+  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
+  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
+  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+
+  .aside{
+    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
+    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+  }
+  .aside b{color:var(--amber);font-weight:500}
+  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
+
+  /* ============ WHY ============ */
+  .why{
+    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
+    padding:26px 30px 28px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 90% 0%, rgba(255,179,71,.08), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(63,224,200,.05), transparent 55%),
+      rgba(7,14,15,.6);
+  }
+  .why .beat-label{margin-bottom:14px}
+  .why .principle-block{
+    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
+  }
+  .why .principle-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
+  }
+  .why .principle-line{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
+    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
+  }
+  .why .principle-line em{font-style:italic;color:var(--amber)}
+  .why .quote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(21px,3vw,29px);line-height:1.22;color:var(--amber);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(255,179,71,.24);max-width:860px;
+  }
+  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
+  .why .gloss b{color:var(--spore);font-weight:500}
+  .why .gloss em{font-style:italic;color:var(--ink-dim)}
+  .why .gloss + .gloss{margin-top:12px}
+  .why .corollary{
+    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--teal);
+    border:1px dashed var(--teal-dim);border-radius:30px;padding:8px 16px 9px;
+  }
+  .why .corollary .sd{
+    width:7px;height:7px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 11px 2px rgba(63,224,200,.5);
+  }
+
+  /* ============ TEST-IN-PRACTICE inline panel ============ */
+  .practice{
+    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
+    padding:22px 26px 24px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
+      rgba(8,15,17,.5);
+  }
+  .practice .beat-label{margin-bottom:12px}
+  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
+  .practice p b{color:var(--spore);font-weight:500}
+  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
+  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ CONNECTS TO ============ */
+  .connects{margin-top:52px}
+  .connects h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .connects .sub{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:5px;
+  }
+  .web{position:relative;margin-top:8px}
+  .web svg{display:block;width:100%;height:auto}
+  .neighbours{position:absolute;inset:0;pointer-events:none}
+  .nb{
+    position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
+    display:flex;align-items:center;gap:9px;
+    padding:8px 14px 9px;border-radius:13px;
+    background:rgba(8,15,17,.82);backdrop-filter:blur(4px);
+    border:1px solid var(--hairline);
+    color:var(--ink);font-size:13px;letter-spacing:.005em;white-space:nowrap;
+    transition:border-color .3s,color .3s,background .3s,transform .3s;
+    cursor:pointer;text-decoration:none;
+  }
+  .nb .recipe-no{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--ink-faint);
+  }
+  .nb .sd{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 12px 2px rgba(63,224,200,.55);
+  }
+  .nb.amber .sd{background:var(--amber);box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 12px 2px rgba(255,179,71,.5)}
+  .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
+  .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
+  .nb:hover .sd{animation:throb 1s ease-in-out infinite}
+  .nb.soon{opacity:.62}
+  .nb.soon::after{
+    content:"soon";
+    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);
+    border:1px solid var(--ink-faint);border-radius:20px;
+    padding:2px 7px 3px;margin-left:4px;
+  }
+  .nb.soon:hover{opacity:1}
+  @keyframes throb{50%{transform:scale(1.5)}}
+  .origin-chip{
+    position:absolute;transform:translate(-50%,-50%);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 24px rgba(255,179,71,.4);white-space:nowrap;text-align:center;
+  }
+  .origin-chip small{
+    display:block;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:8.5px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--amber-dim);margin-top:3px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer.floor{
+    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  footer.floor .door{
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
+    text-shadow:0 0 22px rgba(255,179,71,.3);max-width:78%;
+  }
+  footer.floor .meta{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+
+  /* breathing glow on the diagram spore-tips */
+  @keyframes breathe{
+    0%,100%{opacity:.55}
+    50%{opacity:1}
+  }
+  .breathe{animation:breathe 4.2s ease-in-out infinite}
+
+  @media (max-width:860px){
+    .plates{grid-template-columns:1fr 1fr}
+    .plate.use{grid-column:1 / -1}
+  }
+  @media (max-width:780px){
+    .plates{grid-template-columns:1fr}
+    .plate.use{grid-column:1}
+    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
+    .move-rail .thread{display:none}
+    .step{padding:0}
+    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .neighbours .nb{font-size:11px;padding:6px 10px}
+    .prose p{font-size:14.5px}
+    .erow{grid-template-columns:1fr}
+    .erow .stat{margin-bottom:4px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ BREADCRUMB ============ -->
+  <nav class="crumb">
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Train before you buy</span>
+  </nav>
+
+  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <header class="pat">
+    <div class="kicker"><span class="spore-mark"></span>Pattern · business lane · phase: Intent <span class="pat-no">· the foundation node of the business mat</span></div>
+    <h1>Train <em>before</em> you buy</h1>
+    <p class="principle">The principle: <b>clarity is the ceiling, not capability</b> — you cannot design an organisation for a capability nobody in it understands.</p>
+    <p class="essence">
+      Put the platform decision <b>last</b>, not first. Build a little competence inside the building before any vendor is in your calendar, and the unanswerable board question — <em>"which platform?"</em> — decomposes into three small, reversible ones. The repo's strategic frame, in order:
+      <span class="seq">competence → discovery → context → <span class="last">platform</span></span>.
+    </p>
+  </header>
+
+  <!-- ============ HERO PICTURE: the fork — dead procurement path vs living competence path ============ -->
+  <div class="hero-frame">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="A CTO at a vendor demo facing two forking paths. The grey upper path goes assess, buy platform, six-month pilot, ending at a locked door. The living lower path goes train one person, they build, the pull spreads, three small scoped questions surface, and only then a small reversible platform choice — the platform node is first on the dead path and last on the living one.">
+      <defs>
+        <radialGradient id="hwell" cx="22%" cy="50%" r="70%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".20"/>
+          <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".06"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="deadGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#5d6a68" stop-opacity=".7"/>
+          <stop offset="100%" stop-color="#39423f" stop-opacity=".25"/>
+        </linearGradient>
+        <linearGradient id="liveGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#1d8d80" stop-opacity=".5"/>
+          <stop offset="55%" stop-color="#3fe0c8" stop-opacity=".9"/>
+          <stop offset="100%" stop-color="#ffce85" stop-opacity=".95"/>
+        </linearGradient>
+        <radialGradient id="ctoCore" cx="40%" cy="35%" r="70%">
+          <stop offset="0%" stop-color="#fff4e2"/>
+          <stop offset="45%" stop-color="#ffb347"/>
+          <stop offset="100%" stop-color="#2a1a05"/>
+        </radialGradient>
+        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <rect x="0" y="0" width="1080" height="420" fill="url(#hwell)"/>
+
+      <!-- the CTO at the fork -->
+      <circle cx="120" cy="210" r="24" fill="url(#ctoCore)" filter="url(#hglow)"/>
+      <circle cx="120" cy="210" r="24" fill="none" stroke="#ffe0a8" stroke-width="1" opacity=".6"/>
+      <text x="120" y="256" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#a86a1f">CTO · BOARD WANTS A PICK</text>
+      <text x="120" y="178" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#6f8a85">"which platform?"</text>
+
+      <!-- ========== DEAD PATH (upper, grey) — platform is the FIRST node ========== -->
+      <g>
+        <text x="320" y="44" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2" fill="#5d6a68">PROCUREMENT-FIRST · PLATFORM AT THE START</text>
+        <path d="M144,196 C220,150 270,96 330,90" stroke="url(#deadGrad)" stroke-width="2.4" fill="none"/>
+        <path d="M330,90 L980,90" stroke="url(#deadGrad)" stroke-width="2.4" fill="none" stroke-dasharray="2 7"/>
+        <!-- nodes along the dead path -->
+        <g font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#6f8a85">
+          <circle cx="360" cy="90" r="6" fill="#4b5654"/><text x="360" y="76" text-anchor="middle">assess</text>
+          <circle cx="520" cy="90" r="7.5" fill="#5d6a68"/><text x="520" y="74" text-anchor="middle" fill="#8a9794" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em">BUY PLATFORM</text>
+          <circle cx="690" cy="90" r="6" fill="#4b5654"/><text x="690" y="76" text-anchor="middle">6-month pilot</text>
+          <circle cx="840" cy="90" r="6" fill="#4b5654"/><text x="840" y="76" text-anchor="middle">maybe rollout</text>
+        </g>
+        <!-- the locked door terminus -->
+        <g transform="translate(958,66)">
+          <rect x="0" y="0" width="44" height="56" rx="4" fill="rgba(57,66,63,.5)" stroke="#5d6a68" stroke-width="1.4"/>
+          <rect x="13" y="22" width="18" height="16" rx="3" fill="none" stroke="#8a9794" stroke-width="1.6"/>
+          <path d="M17,22 v-5 a5,5 0 0 1 10,0 v5" fill="none" stroke="#8a9794" stroke-width="1.6"/>
+        </g>
+        <text x="980" y="138" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12" fill="#5d6a68">a PowerPoint + a locked door</text>
+      </g>
+
+      <!-- ========== LIVING PATH (lower, alive) — platform is the LAST node ========== -->
+      <g>
+        <text x="320" y="300" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2" fill="#3fe0c8">COMPETENCE-FIRST · PLATFORM AT THE END</text>
+        <path d="M144,224 C230,270 280,320 340,326 C470,338 600,330 700,330" stroke="url(#liveGrad)" stroke-width="2.6" fill="none" filter="url(#hglow)"/>
+        <!-- shoots coming up from the living thread -->
+        <g stroke="#3fe0c8" stroke-width="1" fill="none" opacity=".5">
+          <path d="M400,326 C404,306 392,298 398,284"/>
+          <path d="M500,328 C504,308 492,300 498,286"/>
+          <path d="M600,330 C604,310 592,302 598,288"/>
+        </g>
+        <g fill="#9bffe9">
+          <circle cx="398" cy="284" r="2.6"/><circle cx="498" cy="286" r="2.6"/><circle cx="598" cy="288" r="2.6"/>
+        </g>
+        <!-- nodes along the living path -->
+        <g font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfe6e0">
+          <circle cx="360" cy="326" r="7" fill="#3fe0c8" filter="url(#hglow)"/><text x="360" y="352" text-anchor="middle">train one person</text>
+          <circle cx="500" cy="328" r="6.5" fill="#3fe0c8"/><text x="500" y="354" text-anchor="middle">they build</text>
+          <circle cx="640" cy="330" r="6.5" fill="#3fe0c8"/><text x="640" y="356" text-anchor="middle">the pull spreads</text>
+        </g>
+        <!-- the three scoped questions surfacing as a small cluster -->
+        <g transform="translate(720,330)">
+          <text x="0" y="-44" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">3 SMALL SCOPED QUESTIONS</text>
+          <g font-family="'Spline Sans Mono',monospace" font-size="10" fill="#9bffe9">
+            <circle cx="6" cy="-22" r="3" fill="#3fe0c8"/><text x="18" y="-18">data access?</text>
+            <circle cx="6" cy="-2" r="3" fill="#3fe0c8"/><text x="18" y="2">where do apps run?</text>
+            <circle cx="6" cy="18" r="3" fill="#3fe0c8"/><text x="18" y="22">how do colleagues find them?</text>
+          </g>
+        </g>
+        <!-- platform choice LAST — amber, small, a two-way door -->
+        <path d="M700,330 C880,328 920,326 952,326" stroke="url(#liveGrad)" stroke-width="2.2" fill="none"/>
+        <g transform="translate(958,308)">
+          <rect x="0" y="0" width="44" height="40" rx="5" fill="rgba(255,179,71,.12)" stroke="#ffb347" stroke-width="1.4"/>
+          <path d="M14,8 v24 M30,8 v24" stroke="#ffb347" stroke-width="1.4"/>
+          <path d="M14,20 h-7 M30,20 h7" stroke="#ffce85" stroke-width="1.2"/>
+        </g>
+        <text x="980" y="372" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12" fill="#ffb347">a small, reversible choice</text>
+        <circle cx="980" cy="328" r="3.4" fill="#ffce85" class="breathe"/>
+      </g>
+
+      <!-- travelling nutrient pulse on the living path -->
+      <circle r="3.4" fill="#aeffee">
+        <animateMotion dur="6s" repeatCount="indefinite" path="M144,224 C230,270 280,320 340,326 C470,338 600,330 700,330"/>
+        <animate attributeName="opacity" values="0;1;1;0" dur="6s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+    <div class="hero-cap">Same fork, two orders. On the dead path the platform is the <b>first</b> node; on the living one it's the <b>last</b>.</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
+  <!-- ============================================================ -->
+  <section class="prose">
+    <div class="sec-label">The mechanism · why the question is unanswerable first</div>
+    <h2>Same board question, <em>different answer</em> — once competence exists.</h2>
+
+    <p>
+      Picture the room. Four horizontal platforms, five-plus vertical SaaS vendors, an open-source framework someone keeps championing, and roughly two hundred internal processes that might one day be agents. The board wants a recommendation by quarter-end. Every demo looks plausible; every evaluation is quietly shaped by whichever vendor presented last. The honest trouble isn't <em>which platform</em> — it's that <b>nobody in the room can yet formulate the right question</b>, because the right question only arrives once someone has actually built. The mental model is the missing input, and no slide supplies it.
+    </p>
+
+    <p>
+      This is structurally new. Past transformations — digital, agile, cloud — could be vision-led because the concepts were reachable by analogy: a CEO never wrote code, yet could picture a digital company. Agents break that. Say <em class="teal">"an agent that processes invoices across three systems with human escalation at decision points"</em> to someone who's never built or used one, and they hear <em>"automation"</em> and quietly file it under RPA. The gap isn't knowledge — it's experience, and you cannot brief your way across it. So the first move isn't a decision at all. It's a refusal: <b>don't choose the platform yet.</b>
+    </p>
+
+    <p class="pull">
+      The hardest problem isn't choosing a platform — it's <b>knowing what questions to ask.</b> Skip to platform selection and you're choosing between vendor narratives.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 1 — THE MECHANISM: unanswerable question → three two-way doors ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 440" role="img" aria-label="Left: a CTO with no internal competence faces one big question — which platform — and every arrow bends toward whichever vendor presented last, so the question is unanswerable. Right: the same CTO after competence exists; the one big question has decomposed into three small named questions, each a two-way door.">
+      <defs>
+        <linearGradient id="d1-grey" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5d6a68" stop-opacity=".7"/><stop offset="1" stop-color="#39423f" stop-opacity=".2"/></linearGradient>
+        <linearGradient id="d1-teal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/><stop offset="1" stop-color="#1d8d80" stop-opacity=".3"/></linearGradient>
+        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME CTO · SAME LANDSCAPE · THE COMPETENCE IS THE ONLY VARIABLE THAT CHANGED</text>
+
+      <!-- ===== LEFT: no competence — one unanswerable question ===== -->
+      <g>
+        <rect x="40" y="58" width="470" height="350" rx="14" fill="rgba(8,17,18,.55)" stroke="rgba(93,106,104,.25)" stroke-width="1"/>
+        <text x="62" y="86" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing="2.4" fill="#5d6a68">BEFORE · NO INTERNAL COMPETENCE</text>
+
+        <!-- the one big question -->
+        <rect x="160" y="108" width="230" height="48" rx="12" fill="rgba(57,66,63,.3)" stroke="#5d6a68" stroke-width="1.4"/>
+        <text x="275" y="130" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="16" fill="#cfe6e0">Which platform</text>
+        <text x="275" y="148" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="16" fill="#cfe6e0">should we standardise on?</text>
+
+        <!-- arrows bending toward vendors (last-presenter wins) -->
+        <g stroke="url(#d1-grey)" stroke-width="2" fill="none" opacity=".85">
+          <path d="M275,156 C220,210 150,250 120,330"/>
+          <path d="M275,156 C260,220 235,270 210,346"/>
+          <path d="M275,156 C300,220 320,270 345,346"/>
+          <path d="M275,156 C340,210 410,250 440,330"/>
+        </g>
+        <g font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85" text-anchor="middle">
+          <circle cx="118" cy="338" r="5" fill="#4b5654"/><text x="118" y="362">Vendor A</text>
+          <circle cx="208" cy="352" r="5" fill="#4b5654"/><text x="208" y="376">Vendor B</text>
+          <circle cx="347" cy="352" r="5" fill="#4b5654"/><text x="347" y="376">Vendor C</text>
+          <circle cx="442" cy="338" r="5" fill="#4b5654"/><text x="442" y="362">framework</text>
+        </g>
+        <text x="275" y="402" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#5d6a68">EVERY ARROW BENDS TO WHOEVER PRESENTED LAST</text>
+      </g>
+
+      <!-- transformation arrow -->
+      <g transform="translate(516,230)">
+        <path d="M0,0 L46,0" stroke="#3fe0c8" stroke-width="1.4" fill="none" opacity=".7"/>
+        <polygon points="46,0 36,-6 36,6" fill="#3fe0c8" opacity=".8"/>
+        <text x="24" y="-14" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#3fe0c8">COMPETENCE</text>
+        <text x="24" y="24" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="11" fill="#6f8a85">decomposes it</text>
+      </g>
+
+      <!-- ===== RIGHT: competence exists — three two-way doors ===== -->
+      <g>
+        <rect x="588" y="58" width="452" height="350" rx="14" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.2)" stroke-width="1"/>
+        <text x="610" y="86" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing="2.4" fill="#3fe0c8">AFTER · BUILDERS IN THE BUILDING</text>
+
+        <!-- three small named questions, each a two-way door -->
+        <g>
+          <rect x="612" y="112" width="404" height="56" rx="11" fill="rgba(63,224,200,.06)" stroke="url(#d1-teal)" stroke-width="1.3"/>
+          <text x="630" y="138" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#eafff9">Do we need an MCP for Snowflake &amp; Salesforce?</text>
+          <text x="630" y="158" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#1d8d80">DATA ACCESS · TWO-WAY DOOR</text>
+          <circle cx="998" cy="140" r="4" fill="#9bffe9" class="breathe"/>
+        </g>
+        <g>
+          <rect x="612" y="184" width="404" height="56" rx="11" fill="rgba(63,224,200,.06)" stroke="url(#d1-teal)" stroke-width="1.3"/>
+          <text x="630" y="210" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#eafff9">Where does the thing they built actually run?</text>
+          <text x="630" y="230" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#1d8d80">RUNTIME · TWO-WAY DOOR</text>
+          <circle cx="998" cy="212" r="4" fill="#9bffe9" class="breathe"/>
+        </g>
+        <g>
+          <rect x="612" y="256" width="404" height="56" rx="11" fill="rgba(63,224,200,.06)" stroke="url(#d1-teal)" stroke-width="1.3"/>
+          <text x="630" y="282" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#eafff9">How does a colleague find &amp; reuse it?</text>
+          <text x="630" y="302" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#1d8d80">DISCOVERABILITY · TWO-WAY DOOR</text>
+          <circle cx="998" cy="284" r="4" fill="#9bffe9" class="breathe"/>
+        </g>
+        <text x="814" y="356" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">scoped · practical · reversible</text>
+        <text x="814" y="392" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#1d8d80">PLATFORM CHOICE NOW SHRINKS FROM BOARD DECISION TO PROCUREMENT DETAIL</text>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 01</span>The big unanswerable question doesn't get <em>answered</em> — it gets <b>decomposed</b>. Competence is the only input that changed.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 2 — the inversion ============ -->
+  <section class="prose">
+    <p>
+      The traditional sequence runs <span class="mono">assess → select platform → big procurement → 6-month pilot → maybe rollout.</span> It feels responsible. It produces PowerPoints and vendor lock-in. The competence-first sequence inverts it: <b>train people to build agents first</b>, start with coding agents — the cheap, low-risk meta-platform — and let competence create the pull. People then discover their <em>own</em> high-value processes, and the infrastructure questions arrive scoped and answerable instead of abstract and board-sized. The consultancy default (assess → identify → build → train) is exactly backwards; competence-first flips it to <span class="mono">train → identify → build → assess.</span>
+    </p>
+
+    <p>
+      Notice the order has no shortcut around step one. <b>One person builds something for themselves and gets the mental model.</b> Personal use is the floor, not a warm-up — skip it and nothing above holds: no shared vision, no organisational learning, just a tidy procurement plan resting on an abstraction. And the people who've built are also your best surveyors. Builders find the gaps faster and more accurately than any consultancy assessment, and the gaps are predictable: three walls, every time — <span class="mono">data access</span>, somewhere to <span class="mono">run</span> what they build, and <span class="mono">discoverability</span> so others can find and reuse it. Those three <em>are</em> the real questions. Each is a lightweight two-way door.
+    </p>
+
+    <div class="sec-label">The upgrade move · vendor narrative → builder evidence</div>
+    <h2>From a <em>procurement funnel</em> to a pull engine.</h2>
+
+    <p>
+      The diagram below redraws the funnel as an engine. Same components, reversed wiring. The old funnel pours effort in at the top — assess, select, procure, pilot — and the platform decision sits at the very front, made by people who have watched demos. The pull engine starts with a tiny rep (train → build), lets discovery do the surveying, and defers the platform call to the very end, where it's now small, reversible, and run against <em>your</em> use cases rather than the vendor's reel. The person who's built one agent walks into the procurement meeting with evidence; everyone else walks in with narratives.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 2 — THE UPGRADE: funnel inverted to pull engine ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 400" role="img" aria-label="Top: the procurement funnel — assess, select platform, procure, pilot — labelled produces PowerPoints and lock-in, with the platform decision at the front. Bottom: the same stages rewired as a pull engine — train, build, discover, scope, choose-last — labelled produces scoped reversible questions, with the platform decision at the end.">
+      <defs>
+        <linearGradient id="d2-grey" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5d6a68" stop-opacity=".6"/><stop offset="1" stop-color="#39423f" stop-opacity=".4"/></linearGradient>
+        <linearGradient id="d2-live" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".5"/><stop offset="55%" stop-color="#3fe0c8" stop-opacity=".9"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".85"/></linearGradient>
+        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <!-- ===== TOP: the procurement funnel (platform FIRST) ===== -->
+      <g>
+        <text x="40" y="40" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.4" fill="#5d6a68">PROCUREMENT FUNNEL · CONSULTANCY DEFAULT</text>
+        <line x1="60" y1="92" x2="900" y2="92" stroke="url(#d2-grey)" stroke-width="2"/>
+        <g font-family="'Spline Sans',sans-serif" font-size="12" fill="#8a9794" text-anchor="middle">
+          <circle cx="120" cy="92" r="9" fill="#5d6a68"/><text x="120" y="76">assess</text>
+          <rect x="246" y="80" width="124" height="24" rx="6" fill="rgba(93,106,104,.35)" stroke="#8a9794"/><text x="308" y="96" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".08em" fill="#cfe6e0">SELECT PLATFORM</text>
+          <circle cx="500" cy="92" r="7" fill="#5d6a68"/><text x="500" y="76">procure</text>
+          <circle cx="660" cy="92" r="7" fill="#5d6a68"/><text x="660" y="76">6-mo pilot</text>
+          <circle cx="820" cy="92" r="7" fill="#5d6a68"/><text x="820" y="76">maybe rollout</text>
+        </g>
+        <text x="940" y="96" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#5d6a68">→ PowerPoints + lock-in</text>
+        <text x="308" y="128" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#5d6a68">PLATFORM DECIDED FIRST · BY DEMO-WATCHERS</text>
+      </g>
+
+      <!-- the inversion mark -->
+      <g transform="translate(540,196)">
+        <path d="M-30,-12 C-10,-2 10,2 30,12" stroke="#3fe0c8" stroke-width="1.3" fill="none" opacity=".6"/>
+        <polygon points="30,12 19,9 24,1" fill="#3fe0c8" opacity=".75"/>
+        <text x="0" y="-22" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3fe0c8">INVERT THE ORDER</text>
+      </g>
+
+      <!-- ===== BOTTOM: the pull engine (platform LAST) ===== -->
+      <g>
+        <text x="40" y="276" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.4" fill="#3fe0c8">PULL ENGINE · COMPETENCE-FIRST</text>
+        <path d="M60,320 H900" stroke="url(#d2-live)" stroke-width="2.4" fill="none" filter="url(#d2-glow)"/>
+        <g font-family="'Spline Sans',sans-serif" font-size="12" fill="#cfe6e0" text-anchor="middle">
+          <circle cx="120" cy="320" r="9" fill="#3fe0c8" filter="url(#d2-glow)"/><text x="120" y="304">train</text>
+          <circle cx="300" cy="320" r="8" fill="#3fe0c8"/><text x="300" y="304">build</text>
+          <circle cx="480" cy="320" r="8" fill="#3fe0c8"/><text x="480" y="304">discover</text>
+          <circle cx="660" cy="320" r="8" fill="#3fe0c8"/><text x="660" y="304">scope the 3 walls</text>
+          <!-- platform LAST, amber, small -->
+          <rect x="788" y="308" width="124" height="24" rx="6" fill="rgba(255,179,71,.12)" stroke="#ffb347"/><text x="850" y="324" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".08em" fill="#ffce85">CHOOSE LAST</text>
+        </g>
+        <circle cx="850" cy="320" r="3.4" fill="#ffce85" class="breathe"/>
+        <text x="945" y="324" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#ffb347">→ scoped, reversible questions</text>
+        <text x="390" y="356" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#1d8d80">PLATFORM DECIDED LAST · BY PEOPLE WHO HAVE BUILT</text>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 02</span>Same five stages, reversed wiring. Move the platform node from the <b>front</b> to the <b>back</b> and PowerPoints become questions worth answering.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 3 — the compounding chain ============ -->
+  <section class="prose">
+    <p>
+      Here's the part that makes it a foundation rather than a tactic. Competence doesn't just answer the platform question — it starts a chain. <b>Competence creates mental models → mental models create shared vision → shared vision connects experiments → connected experiments become organisational learning → which pulls more people in to build.</b> Each pass, the soil gets richer: a common language emerges, isolated wins start referencing each other, and the organisation can finally hold a coherent picture of what it's building toward. Skip the first link and the chain never forms — you get the HBR <em>experimentation trap</em>: hundreds of pilots that never connect, never scale, never compound.
+    </p>
+
+    <p class="pull">
+      You cannot design an organisation for a capability nobody in it understands. <b>Build competence and the platform question shrinks</b> from a board decision to a two-way door.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP (soil gets richer each pass) ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="A loop threading through soil — one person builds, gets a mental model, the pull spreads, a common language emerges, vision connects experiments, organisational learning grows, more people build — with the soil visibly richer across three passes. The entry node is labelled personal use, skip it and nothing above holds.">
+      <defs>
+        <linearGradient id="d3-thread" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".85"/><stop offset="1" stop-color="#ffb347" stop-opacity=".6"/></linearGradient>
+        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#9bffe9"/><stop offset=".55" stop-color="#3fe0c8"/><stop offset="1" stop-color="#1d8d80"/></radialGradient>
+        <radialGradient id="d3-seed" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#fff4e2"/><stop offset=".55" stop-color="#ffb347"/><stop offset="1" stop-color="#a86a1f"/></radialGradient>
+        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE CHAIN THAT COMPOUNDS · SOIL VISIBLY RICHER EACH PASS · THE LOOP CLOSES WITHOUT BEING A RING</text>
+
+      <!-- soil bands deepening left → right -->
+      <g opacity=".5">
+        <rect x="40" y="330" width="320" height="60" fill="rgba(63,224,200,.03)"/>
+        <rect x="380" y="330" width="320" height="60" fill="rgba(63,224,200,.06)"/>
+        <rect x="720" y="330" width="320" height="60" fill="rgba(255,179,71,.07)"/>
+        <text x="200" y="382" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#3b524e">PASS 1 · THIN SOIL</text>
+        <text x="540" y="382" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#1d8d80">PASS 2 · A COMMON LANGUAGE</text>
+        <text x="880" y="382" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#a86a1f">PASS 3 · ORG LEARNS</text>
+      </g>
+
+      <!-- the anastomosing thread (loop that isn't a ring) -->
+      <path d="M120,300 C200,180 240,120 360,116 C520,110 560,210 690,206 C860,200 880,120 980,150 C880,250 760,300 600,302 C440,304 300,300 200,310 C160,314 130,310 120,300 Z"
+            fill="none" stroke="url(#d3-thread)" stroke-width="2.2" opacity=".9"/>
+
+      <!-- shoots rising from the thread -->
+      <g stroke="#3fe0c8" stroke-width="1" fill="none" opacity=".4">
+        <path d="M360,116 C366,92 352,84 360,64"/>
+        <path d="M690,206 C696,182 682,174 690,154"/>
+        <path d="M980,150 C986,128 972,118 982,98"/>
+      </g>
+      <g fill="#9bffe9"><circle cx="360" cy="64" r="2.6"/><circle cx="690" cy="154" r="2.6"/><circle cx="982" cy="98" r="2.6"/></g>
+
+      <!-- the chain nodes -->
+      <g font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#eafff9" text-anchor="middle">
+        <!-- entry node: personal use (amber seed — the skip-it-and-nothing-holds node) -->
+        <circle cx="120" cy="300" r="16" fill="url(#d3-seed)" filter="url(#d3-glow)"/>
+        <text x="120" y="304" text-anchor="middle" font-family="'Fraunces',serif" font-size="13" fill="#2a1a05" font-weight="500">1</text>
+        <text x="120" y="338" fill="#ffce85" font-style="italic" font-family="'Fraunces',serif" font-size="12.5">personal use</text>
+
+        <circle cx="360" cy="116" r="13" fill="url(#d3-bead)" filter="url(#d3-glow)"/><text x="360" y="100">mental model</text>
+        <circle cx="540" cy="150" r="11" fill="url(#d3-bead)"/><text x="540" y="134">the pull spreads</text>
+        <circle cx="690" cy="206" r="13" fill="url(#d3-bead)" filter="url(#d3-glow)"/><text x="690" y="234">shared vision</text>
+        <circle cx="540" cy="262" r="11" fill="url(#d3-bead)"/><text x="540" y="290">experiments connect</text>
+        <circle cx="980" cy="150" r="13" fill="url(#d3-bead)" filter="url(#d3-glow)"/><text x="980" y="134">org learning</text>
+      </g>
+
+      <!-- the skip-warning callout, tied to the entry node -->
+      <g>
+        <path d="M120,316 C90,340 70,348 56,350" stroke="#a86a1f" stroke-width="1" fill="none" stroke-dasharray="3 4" opacity=".7"/>
+        <text x="50" y="366" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".12em" fill="#a86a1f">SKIP THIS NODE →</text>
+        <text x="50" y="380" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".12em" fill="#a86a1f">NOTHING ABOVE HOLDS</text>
+      </g>
+
+      <!-- travelling nutrient pulse closing the loop -->
+      <circle r="3.4" fill="#aeffee">
+        <animateMotion dur="11s" repeatCount="indefinite" path="M120,300 C200,180 240,120 360,116 C520,110 560,210 690,206 C860,200 880,120 980,150 C880,250 760,300 600,302 C440,304 300,300 200,310 C160,314 130,310 120,300 Z"/>
+        <animate attributeName="opacity" values=".3;1;1;.3" dur="11s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 03</span>The loop closes without being a ring. <b>Skip the entry node — personal use — and the whole chain above never forms.</b></div>
+  </div>
+
+  <!-- ============ THE EVIDENCE — L3 convergence, every number with its travelling caveat ============ -->
+  <section class="prose">
+    <div class="sec-label teal">The evidence · convergence, not proof</div>
+    <h2>What the research <em>actually</em> says — caveats attached.</h2>
+
+    <p>
+      This is a convergence read, not a law. Several independent signals point the same way; each carries a caveat that must travel with it, because a number stripped of its genre is just a louder opinion. Read them as <b>directional pressure</b>, not measurement. The qualitative spine — the sequence, the mechanism, the field observation — is sturdier than any single statistic.
+    </p>
+  </section>
+
+  <div class="evidence">
+    <div class="ehead">Cited evidence · directional · each line keeps its source genre</div>
+    <div class="erow warn">
+      <div class="stat">95%</div>
+      <div class="claim">
+        of custom / task-specific GenAI tools reported <b>no measurable P&amp;L impact.</b>
+        <span class="cav"><span class="src">MIT NANDA, Jul 2025</span> — N=52 interviews, a narrow P&amp;L-impact definition, authors call it "directionally accurate"; NANDA also builds agent infrastructure (structural conflict of interest). Use directionally, never as "95% of AI projects fail."</span>
+      </div>
+    </div>
+    <div class="erow">
+      <div class="stat">8.6%</div>
+      <div class="claim">
+        of companies have agents <b>in production</b>; 63.7% have no formalised AI initiative; 82% of early-maturity orgs have no talent strategy.
+        <span class="cav"><span class="src">Joget analyst aggregation</span> — one analyst's roll-up of maturity data. Cite the source genre; don't launder these into established fact.</span>
+      </div>
+    </div>
+    <div class="erow">
+      <div class="stat">4%</div>
+      <div class="claim">
+        of Nordic companies achieve <b>strong AI returns</b>; 58% expect 3+ years for significant ROI vs 37% in the rest of Europe.
+        <span class="cav"><span class="src">BCG Nordic 2026 / Deloitte Nordic Dec 2025</span> — two independent <em>surveys</em> (Level 3). The Nordic caution gap is the competence gap; do not call survey data "field evidence."</span>
+      </div>
+    </div>
+    <div class="erow">
+      <div class="stat">2–3x</div>
+      <div class="claim">
+        productivity for individuals who build competence — yet orgs capture only <b>10–20%.</b> The gap is shared mental models.
+        <span class="cav"><span class="src">Mollick / Wharton</span> — research, directional. It's the mental-model-gap mechanism, not a guaranteed multiplier for any given org.</span>
+      </div>
+    </div>
+    <div class="erow warn">
+      <div class="stat">0</div>
+      <div class="claim">
+        named companies found that succeeded with <b>"buy platform first, train later"</b> — across 63 research cycles and 18,500 Agentforce customers.
+        <span class="cav"><span class="src">repo OODA cycles · "What We Did Not Find"</span> — a cited research <em>absence</em>: across 63 cycles we found none. Absence of evidence, stated as such — not a law that platform-first <em>cannot</em> work.</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="prose">
+    <p>
+      One more search worth naming, because it's the honest counter-test: a systematic sweep across five "design-first" communities turned up <b>no Level-2-or-better evidence</b> of a company that redesigned its org for AI <em>first</em> and then saw AI work better. That doesn't mean "never redesign." It refines the thesis: the redesign should be <em>informed</em> by competence, not run ahead of it. <span class="src" style="font-family:'Spline Sans Mono',monospace;font-size:11px;color:var(--amber-dim);letter-spacing:.05em;">(repo counter-evidence search — a null result, reported as one.)</span>
+    </p>
+  </section>
+
+  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
+  <div class="plates">
+    <div class="plate use">
+      <div class="beat-label"><b>Use when</b></div>
+      <p class="body">
+        A <span class="grey">vendor is in your calendar before anyone in the building has built an agent</span> — a procurement cycle opening on zero internal competence, leadership "excited about AI," or an isolated experiment that <b>"worked"</b> with nothing connecting it to the next one.
+      </p>
+    </div>
+    <div class="plate build">
+      <div class="beat-label teal"><b>Build</b></div>
+      <p class="body">
+        Not a platform pick. A <b>competence base</b> plus a scoped, evidence-backed shortlist of the three real infrastructure questions — produced by people who've built, not watched demos.
+      </p>
+    </div>
+    <div class="plate test">
+      <div class="beat-label teal"><b>Test</b></div>
+      <p class="body">
+        Domain experts name the candidates and <em>"people build unprompted."</em><br>
+        Not <em class="no">"we signed a platform contract."</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ CORE MOVES — actionable heart ============ -->
+  <section class="moves">
+    <div class="beat-label"><b>Core moves</b></div>
+    <div class="moves-head">
+      <h2>The sequence, in order</h2>
+      <span class="lede">An org disposition — the platform node is deliberately last.</span>
+    </div>
+
+    <div class="move-rail">
+      <div class="thread"></div>
+      <div class="step">
+        <div class="bead">1</div>
+        <h3>Refuse procurement-first</h3>
+        <p>Name the default out loud — <b>before the eval grid gets built.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">2</div>
+        <h3>Train one person to build</h3>
+        <p>Start on a coding agent. <b>The cheap meta-platform.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">3</div>
+        <h3>Let the pull spread</h3>
+        <p>Competence finds its own <b>high-value processes.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">4</div>
+        <h3>Let builders find the walls</h3>
+        <p>Data access · runtime · discoverability. <b>Don't pre-assess.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">5</div>
+        <h3>Choose the platform last</h3>
+        <p>Small, scoped, <b>two-way door</b> — against your cases.</p>
+      </div>
+    </div>
+
+    <div class="compound">
+      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
+        </linearGradient></defs>
+        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
+          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
+        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
+        <circle cx="37" cy="37" r="6" fill="#ffb347" opacity=".25"/>
+        <circle r="3" fill="#aeffee">
+          <animateMotion dur="5s" repeatCount="indefinite"
+            path="M37,11 a26,26 0 1,1 -0.1,0"/>
+        </circle>
+      </svg>
+      <div class="ctext">
+        <div class="cyc">competence<span class="arr">→</span>discovery<span class="arr">→</span>context<span class="arr">→</span><span class="last">platform</span></div>
+        <p>The repo's strategic frame, and the order is load-bearing: <b>tools commoditise; the organisational learning rate is the ceiling.</b> Each pass leaves the next decision smaller and more reversible.</p>
+      </div>
+    </div>
+
+    <!-- the Monday-move / no-permission aside -->
+    <p class="aside">
+      <b>Fastest way to feel it: do step one yourself.</b> Spin up a coding agent and have it build you one small thing you'd actually use.
+      <span class="mono">Claude Code or Codex · ~$20/mo · no board sign-off · no procurement · ~1 hour, before dinner.</span>
+      The moment the abstraction turns concrete is the whole thesis in miniature — and the next platform demo sounds different.
+    </p>
+  </section>
+
+  <!-- ============ WHY — the conviction ============ -->
+  <section class="why">
+    <div class="beat-label"><b>Why</b></div>
+
+    <div class="principle-block">
+      <div class="principle-label">The principle</div>
+      <p class="principle-line">Clarity is the <em>ceiling</em>, not capability. The bottleneck is organisational, not technical.</p>
+    </div>
+
+    <p class="quote">"You cannot design an organisation for a capability nobody in it understands."</p>
+    <p class="gloss">
+      Without competence there is no vision — only governance of an abstraction. The chain is plain:
+      <b>competence → mental models → shared vision → connected experiments → organisational learning.</b>
+      Skip the first link and the chain never forms; you get the HBR <em>experimentation trap</em> — hundreds of isolated pilots that never scale. The whole point of training before buying is that the first link is the only one you can't import, brief, or procure.
+    </p>
+    <p class="gloss">
+      And the timing argument is just as sharp: <b>nobody should be making non-two-way-door decisions on the agent landscape right now</b> — the space is pre-chasm and every platform is immature. Competence-first defers exactly the expensive, irreversible calls and pulls forward the cheap, reversible ones. The person who's built one agent walks into the procurement meeting with evidence. Everyone else walks in with vendor narratives.
+    </p>
+    <div class="corollary"><span class="sd"></span>Train before you buy — the platform question shrinks to a two-way door.</div>
+  </section>
+
+  <!-- ============ TEST-IN-PRACTICE inline panel ============ -->
+  <section class="practice">
+    <div class="beat-label teal"><b>How you know it's real</b></div>
+    <p>
+      The tell isn't a signed contract — it's behaviour. <b>People build unprompted:</b> nobody was assigned "build an agent for X," the competence itself created the pull. <span class="src" style="font-family:'Spline Sans Mono',monospace;font-size:11px;color:var(--amber-dim);letter-spacing:.05em;">(a Nordic security-software org field observation, March 2026 — practitioner-direct, Level 2: after two modules of training, pretty much everyone started building dashboards, agents, applications.)</span>
+    </p>
+    <p>
+      The questions get <b>smaller and more specific</b> — from <em class="no">"which platform should we standardise on?"</em> to <em>"where does this app live, and how does my colleague find it?"</em> Vague-and-vendor-shaped giving way to scoped-and-reversible is the signal. And the candidates get named by domain experts, not consultants — who are right more often, because they know the work. The negative test: if the only "competence" in the building is a signed contract and a training plan <em>to follow it</em>, the sequence ran backwards.
+    </p>
+  </section>
+
+  <!-- ============ CONNECTS TO — neighbour patterns ============ -->
+  <section class="connects">
+    <h2>Connects to</h2>
+    <div class="sub">Threads leaving this node · the business-mat Intent cluster</div>
+
+    <div class="web">
+      <svg viewBox="0 0 1080 240" aria-hidden="true">
+        <defs>
+          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <circle cx="150" cy="120" r="30" fill="none" stroke="#ffb347" stroke-width="1.2" opacity=".5"/>
+        <circle cx="150" cy="120" r="11" fill="#ffb347" filter="url(#wglow)"/>
+        <circle cx="150" cy="120" r="46" fill="none" stroke="#ffb347" stroke-width=".7" opacity=".25"/>
+
+        <path id="th1" d="M150,120 C380,72 560,70 760,72" stroke="url(#t1)" stroke-width="2.2" fill="none"/>
+        <path id="th2" d="M150,120 C380,168 560,170 760,172" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
+
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5.6s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.6s" begin=".6s" repeatCount="indefinite"/></circle>
+      </svg>
+
+      <div class="neighbours">
+        <div class="origin-chip" style="left:13.8%;top:50%">Train before you buy<small>business · Intent · you are here</small></div>
+        <a class="nb amber" href="experience-first.html" style="left:70.4%;top:30%"><span class="sd"></span>Lead with the WOW dose <span class="recipe-no">experience-first</span></a>
+        <a class="nb amber" href="make-output-yours.html" style="left:70.4%;top:71.7%"><span class="sd"></span>Make output yours <span class="recipe-no">R1 · the first rep</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="floor">
+    <span class="door">The foundation node of the business mat — the first build is personal, but the shared mental models it installs are what let vision, strategy, and platform choice become possible at the company scale at all. No platform, no budget, no permission required to start.</span>
+    <span class="meta">The Big Picture · Pattern Language</span>
+  </footer>
+
+</div>
+</body>
+</html>

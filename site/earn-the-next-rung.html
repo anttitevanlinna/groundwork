@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earn the next rung — Pattern · The Big Picture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-0:#05080a;
+    --soil-1:#080d10;
+    --soil-2:#0c1418;
+    --teal:#3fe0c8;
+    --teal-dim:#1d8d80;
+    --amber:#ffb347;
+    --amber-dim:#a86a1f;
+    --spore:#eafff9;
+    --ink:#cfe6e0;
+    --ink-dim:#6f8a85;
+    --ink-faint:#3b524e;
+    --hairline:rgba(63,224,200,.10);
+    --grey:#5d6a68;
+    --grey-dim:#39423f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--soil-0);
+    font-family:'Spline Sans',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.08) 0%, transparent 46%),
+      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.06) 0%, transparent 44%),
+      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+  }
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 64px;}
+
+  /* ============ BREADCRUMB ============ */
+  .crumb{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+    color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
+  }
+  .crumb a{color:var(--teal-dim);text-decoration:none;transition:color .25s}
+  .crumb a:hover{color:var(--teal)}
+  .crumb .here{color:var(--ink)}
+
+  /* ============ PATTERN HEADER ============ */
+  header.pat{padding:30px 0 8px;max-width:900px;}
+  .kicker{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--teal-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .kicker .spore-mark{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 14px 2px rgba(63,224,200,.6);
+    flex:none;
+  }
+  .kicker .pat-no{color:var(--ink-faint)}
+  header.pat h1{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(40px,7vw,68px);line-height:.98;
+    color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
+  }
+  header.pat h1 em{font-style:italic;color:var(--teal);font-weight:400}
+  .principle{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
+  }
+  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .essence{
+    font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:720px;
+  }
+  .essence b{color:var(--spore);font-weight:500}
+
+  /* ============ HERO FRAME ============ */
+  .hero-frame{
+    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(13,31,32,.5), rgba(5,8,10,.6));
+    position:relative;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.04) inset;
+  }
+  .hero-frame svg{display:block;width:100%;height:auto}
+  .hero-cap{
+    position:absolute;left:18px;bottom:13px;z-index:3;
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
+    color:var(--ink-dim);text-transform:uppercase;
+  }
+  .hero-cap b{color:var(--teal)}
+
+  /* ============ READING PROSE ============ */
+  .prose{
+    margin-top:34px;max-width:760px;
+  }
+  .prose h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
+    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+  }
+  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .prose h2.amber em{color:var(--amber)}
+  .prose .sec-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+    margin-top:42px;
+  }
+  .prose .sec-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
+  }
+  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .prose p{
+    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
+    letter-spacing:.002em;
+  }
+  .prose p b{color:var(--spore);font-weight:500}
+  .prose p em{font-style:italic;color:var(--ink-dim)}
+  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p .mono{
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
+  }
+  .prose .pull{
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+    color:var(--ink);max-width:680px;
+  }
+  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
+
+  /* template-label: visually distinct callout for the %s */
+  .template-label{
+    display:inline-flex;align-items:center;gap:9px;
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.12em;
+    color:var(--amber);border:1px dashed var(--amber-dim);border-radius:8px;
+    padding:7px 14px 8px;margin:16px 0 0;line-height:1.4;
+  }
+  .template-label .sd{
+    width:6px;height:6px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 2px rgba(255,179,71,.12),0 0 8px 1px rgba(255,179,71,.5);
+  }
+
+  /* ============ PROCESS DIAGRAMS ============ */
+  .diagram{
+    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+    background:
+      radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
+      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
+    position:relative;
+    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
+  }
+  .diagram svg{display:block;width:100%;height:auto}
+  .diagram .dcap{
+    padding:12px 20px 16px;border-top:1px solid var(--hairline);
+    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
+    color:var(--ink-dim);letter-spacing:.003em;
+    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  }
+  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
+  .diagram .dcap .num{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
+  }
+  .diagram .dcap .tmpl{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9px;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--amber-dim);margin-left:10px;
+    border:1px dashed var(--amber-dim);border-radius:20px;padding:2px 9px 3px;
+  }
+
+  /* ============ RECIPE BEAT LABELS ============ */
+  .beat-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  }
+  .beat-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.6);
+  }
+  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+
+  /* ============ PLATES (Use When / Build / Test) ============ */
+  .plates{
+    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
+  }
+  .plate{
+    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
+    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
+  }
+  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
+  .plate .body b{color:var(--spore);font-weight:500}
+  .plate .body .grey{color:var(--grey)}
+  .plate .body em{font-style:italic;color:var(--ink-dim)}
+  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
+  .plate.test .body em.yes{color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ CORE MOVES ============ */
+  .moves{margin-top:46px}
+  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
+  .moves-head h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
+  .move-rail{
+    margin-top:20px;position:relative;
+    display:grid;grid-template-columns:repeat(6,1fr);gap:0;
+  }
+  .move-rail .thread{
+    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
+    background:linear-gradient(90deg,
+      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
+      rgba(63,224,200,.7) 50%, rgba(255,179,71,.65) 94%, rgba(255,179,71,0) 100%);
+  }
+  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
+  .step:first-child{padding-left:0}
+  .step .bead{
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
+    margin-bottom:13px;
+  }
+  .step.current .bead{
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 6px rgba(255,179,71,.35), 0 0 22px 4px rgba(255,179,71,.6);
+  }
+  .step h3{
+    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
+  }
+  .step.current h3{color:var(--amber)}
+  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
+  .step p b{color:var(--ink);font-weight:500}
+  .step.current p{color:var(--ink)}
+
+  .compound{
+    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
+    padding:18px 22px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.07), transparent 60%),
+      rgba(8,17,18,.55);
+    display:flex;align-items:center;gap:20px;
+  }
+  .compound .loop-ico{flex:none}
+  .compound .ctext{flex:1}
+  .compound .ctext .cyc{
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
+  }
+  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
+  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
+  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+
+  .aside{
+    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
+    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+  }
+  .aside b{color:var(--amber);font-weight:500}
+  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
+
+  /* ============ WHY ============ */
+  .why{
+    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
+    padding:26px 30px 28px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
+      rgba(7,14,15,.6);
+  }
+  .why .beat-label{margin-bottom:14px}
+  .why .principle-block{
+    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
+  }
+  .why .principle-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
+  }
+  .why .principle-line{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
+    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
+  }
+  .why .principle-line em{font-style:italic;color:var(--teal)}
+  .why .quote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--teal);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(63,224,200,.26);max-width:840px;
+  }
+  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
+  .why .gloss b{color:var(--spore);font-weight:500}
+  .why .gloss em{font-style:italic;color:var(--ink-dim)}
+  .why .gloss + .gloss{margin-top:12px}
+  .why .gap-table{
+    margin-top:18px;width:100%;max-width:760px;border-collapse:collapse;
+    font-size:13px;
+  }
+  .why .gap-table th{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--ink-faint);padding:8px 14px;text-align:left;
+    border-bottom:1px solid var(--hairline);
+  }
+  .why .gap-table td{
+    padding:9px 14px;border-bottom:1px solid rgba(63,224,200,.05);
+    color:var(--ink);font-size:13px;line-height:1.38;
+  }
+  .why .gap-table td.domain{color:var(--spore);font-weight:500}
+  .why .gap-table td.gap{color:var(--amber);font-family:'Spline Sans Mono',monospace;font-size:12px}
+  .why .gap-table td.src{color:var(--ink-faint);font-family:'Spline Sans Mono',monospace;font-size:10.5px}
+  .why .corollary{
+    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
+    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+  }
+  .why .corollary .sd{
+    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+  }
+
+  /* ============ PRACTICE PANEL ============ */
+  .practice{
+    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
+    padding:22px 26px 24px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
+      rgba(8,15,17,.5);
+  }
+  .practice .beat-label{margin-bottom:12px}
+  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
+  .practice p b{color:var(--spore);font-weight:500}
+  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
+
+  /* ============ CONNECTS TO ============ */
+  .connects{margin-top:52px}
+  .connects h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .connects .sub{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:5px;
+  }
+  .web{position:relative;margin-top:8px}
+  .web svg{display:block;width:100%;height:auto}
+  .neighbours{position:absolute;inset:0;pointer-events:none}
+  .nb{
+    position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
+    display:flex;align-items:center;gap:9px;
+    padding:8px 14px 9px;border-radius:13px;
+    background:rgba(8,15,17,.82);backdrop-filter:blur(4px);
+    border:1px solid var(--hairline);
+    color:var(--ink);font-size:13px;letter-spacing:.005em;white-space:nowrap;
+    transition:border-color .3s,color .3s,background .3s,transform .3s;
+    cursor:pointer;text-decoration:none;
+  }
+  .nb .recipe-no{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--ink-faint);
+  }
+  .nb .sd{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 12px 2px rgba(63,224,200,.55);
+  }
+  .nb.amber .sd{background:var(--amber);box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 12px 2px rgba(255,179,71,.5)}
+  .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
+  .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
+  .nb:hover .sd{animation:throb 1s ease-in-out infinite}
+  .nb.soon{opacity:.62}
+  .nb.soon::after{
+    content:"soon";
+    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);
+    border:1px solid var(--ink-faint);border-radius:20px;
+    padding:2px 7px 3px;margin-left:4px;
+  }
+  .nb.soon:hover{opacity:1}
+  .origin-chip{
+    position:absolute;transform:translate(-50%,-50%);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 24px rgba(63,224,200,.4);white-space:nowrap;text-align:center;
+  }
+  .origin-chip small{
+    display:block;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:8.5px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--teal-dim);margin-top:3px;
+  }
+  @keyframes throb{50%{transform:scale(1.5)}}
+
+  /* ============ FOOTER ============ */
+  footer.floor{
+    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  footer.floor .door{
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
+    text-shadow:0 0 22px rgba(255,179,71,.3);
+  }
+  footer.floor .meta{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+
+  @keyframes breathe{
+    0%,100%{opacity:.55}
+    50%{opacity:1}
+  }
+  .breathe{animation:breathe 4.2s ease-in-out infinite}
+
+  @media (max-width:860px){
+    .plates{grid-template-columns:1fr 1fr}
+    .plate.use{grid-column:1 / -1}
+  }
+  @media (max-width:780px){
+    .plates{grid-template-columns:1fr}
+    .plate.use{grid-column:1}
+    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
+    .move-rail .thread{display:none}
+    .step{padding:0}
+    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .neighbours .nb{font-size:11px;padding:6px 10px}
+    .prose p{font-size:14.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ BREADCRUMB ============ -->
+  <nav class="crumb">
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Earn the next rung</span>
+  </nav>
+
+  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <header class="pat">
+    <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· shared lane · Verification → Absorption</span></div>
+    <h1>Earn the <em>next rung</em></h1>
+    <p class="principle">The principle: <b>Trust is earned, not granted</b> — no benchmark proves an agent is reliable for YOUR process; only observed performance on your data does.</p>
+    <p class="essence">
+      Turn every permission decision — <b>let it act, or only propose?</b> — into a ladder you climb one rung at a time, by building the check that would have caught the failure before you climb.
+    </p>
+  </header>
+
+  <!-- ============ HERO PICTURE: the trust/permission map ============ -->
+  <div class="hero-frame">
+    <svg viewBox="0 0 1080 400" role="img" aria-label="A CTO's per-agent trust map: six rungs from Draft Only to Escalate, with rung 4 marked boring and a timestamp showing when the failure mode last fired — three months ago, caught by the check.">
+      <defs>
+        <radialGradient id="hw" cx="70%" cy="40%" r="65%">
+          <stop offset="0%" stop-color="#a86a1f" stop-opacity=".18"/>
+          <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".06"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="rungrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".85"/>
+          <stop offset="100%" stop-color="#1d8d80" stop-opacity=".25"/>
+        </linearGradient>
+        <filter id="hw-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <rect width="1080" height="400" fill="url(#hw)"/>
+
+      <!-- table header -->
+      <text x="52" y="38" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing="2.8" fill="#3b524e">AGENT TRUST MAP · PER-DEPLOYMENT PERMISSION TABLE</text>
+
+      <!-- column headers -->
+      <g font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#3b524e">
+        <text x="52" y="68">RUNG</text>
+        <text x="160" y="68">ACTION CLASS</text>
+        <text x="390" y="68">STATUS</text>
+        <text x="530" y="68">CHECK IN PLACE</text>
+        <text x="760" y="68">N CLEAN RUNS</text>
+        <text x="920" y="68">BLOCKER</text>
+      </g>
+      <line x1="52" y1="74" x2="1028" y2="74" stroke="rgba(63,224,200,.12)" stroke-width="1"/>
+
+      <!-- RUNG 1 -->
+      <g>
+        <text x="52" y="99" font-family="'Fraunces',serif" font-size="13" fill="#6f8a85">1</text>
+        <text x="160" y="99" font-family="'Spline Sans',sans-serif" font-size="13" fill="#6f8a85">Draft only</text>
+        <rect x="384" y="86" width="70" height="19" rx="9" fill="rgba(63,224,200,.10)" stroke="rgba(63,224,200,.22)"/>
+        <text x="419" y="99" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#3fe0c8">active</text>
+        <text x="530" y="99" font-family="'Spline Sans',sans-serif" font-size="12" fill="#5d6a68">—</text>
+        <text x="760" y="99" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#5d6a68">—</text>
+        <text x="920" y="99" font-family="'Spline Sans',sans-serif" font-size="12" fill="#5d6a68">—</text>
+      </g>
+      <line x1="52" y1="110" x2="1028" y2="110" stroke="rgba(63,224,200,.06)"/>
+
+      <!-- RUNG 2 -->
+      <g>
+        <text x="52" y="133" font-family="'Fraunces',serif" font-size="13" fill="#6f8a85">2</text>
+        <text x="160" y="133" font-family="'Spline Sans',sans-serif" font-size="13" fill="#6f8a85">Draft + judge check</text>
+        <rect x="384" y="120" width="70" height="19" rx="9" fill="rgba(63,224,200,.10)" stroke="rgba(63,224,200,.22)"/>
+        <text x="419" y="133" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#3fe0c8">active</text>
+        <text x="530" y="133" font-family="'Spline Sans',sans-serif" font-size="12" fill="#9bffe9">tone-check.py fires on 3+ flags</text>
+        <text x="760" y="133" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#9bffe9">42</text>
+        <text x="920" y="133" font-family="'Spline Sans',sans-serif" font-size="12" fill="#5d6a68">—</text>
+      </g>
+      <line x1="52" y1="144" x2="1028" y2="144" stroke="rgba(63,224,200,.06)"/>
+
+      <!-- RUNG 3 -->
+      <g>
+        <text x="52" y="167" font-family="'Fraunces',serif" font-size="13" fill="#6f8a85">3</text>
+        <text x="160" y="167" font-family="'Spline Sans',sans-serif" font-size="13" fill="#6f8a85">Propose the action</text>
+        <rect x="384" y="154" width="70" height="19" rx="9" fill="rgba(63,224,200,.10)" stroke="rgba(63,224,200,.22)"/>
+        <text x="419" y="167" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#3fe0c8">active</text>
+        <text x="530" y="167" font-family="'Spline Sans',sans-serif" font-size="12" fill="#9bffe9">blast-radius classifier &lt;10 affected</text>
+        <text x="760" y="167" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#9bffe9">19</text>
+        <text x="920" y="167" font-family="'Spline Sans',sans-serif" font-size="12" fill="#3fe0c8">N≥30 before rung 4</text>
+      </g>
+      <line x1="52" y1="178" x2="1028" y2="178" stroke="rgba(63,224,200,.06)"/>
+
+      <!-- RUNG 4 — current, highlighted -->
+      <rect x="44" y="184" width="990" height="36" rx="6" fill="rgba(255,179,71,.06)" stroke="rgba(255,179,71,.22)" stroke-width="1.2"/>
+      <g>
+        <text x="52" y="207" font-family="'Fraunces',serif" font-size="13" fill="#ffb347" font-weight="500">4</text>
+        <text x="160" y="207" font-family="'Spline Sans',sans-serif" font-size="13" fill="#eafff9">Reversible safe actions</text>
+        <rect x="384" y="193" width="70" height="19" rx="9" fill="rgba(255,179,71,.15)" stroke="rgba(255,179,71,.45)"/>
+        <text x="419" y="206" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#ffb347">active</text>
+        <text x="530" y="207" font-family="'Spline Sans',sans-serif" font-size="12" fill="#9bffe9">undo-check + scope-guard running</text>
+        <text x="760" y="207" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#ffb347">87</text>
+        <!-- BORING badge -->
+        <rect x="900" y="193" width="66" height="19" rx="9" fill="rgba(255,179,71,.18)" stroke="rgba(255,179,71,.5)"/>
+        <text x="933" y="206" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#ffb347">boring</text>
+      </g>
+      <line x1="52" y1="220" x2="1028" y2="220" stroke="rgba(255,179,71,.10)"/>
+
+      <!-- RUNG 5 -->
+      <g>
+        <text x="52" y="243" font-family="'Fraunces',serif" font-size="13" fill="#3b524e">5</text>
+        <text x="160" y="243" font-family="'Spline Sans',sans-serif" font-size="13" fill="#3b524e">Routine actions auto</text>
+        <rect x="384" y="230" width="86" height="19" rx="9" fill="rgba(63,224,200,.04)" stroke="rgba(63,224,200,.10)"/>
+        <text x="427" y="243" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#3b524e">not yet</text>
+        <text x="530" y="243" font-family="'Spline Sans',sans-serif" font-size="12" fill="#3b524e">—</text>
+        <text x="760" y="243" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#3b524e">—</text>
+        <!-- last fired timestamp -->
+        <text x="920" y="237" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#3b524e">Last failure caught:</text>
+        <text x="920" y="250" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#a86a1f">2026-02-14 · check fired</text>
+      </g>
+      <line x1="52" y1="254" x2="1028" y2="254" stroke="rgba(63,224,200,.06)"/>
+
+      <!-- RUNG 6 -->
+      <g>
+        <text x="52" y="275" font-family="'Fraunces',serif" font-size="13" fill="#3b524e">6</text>
+        <text x="160" y="275" font-family="'Spline Sans',sans-serif" font-size="13" fill="#3b524e">Escalate the rest</text>
+        <rect x="384" y="262" width="86" height="19" rx="9" fill="rgba(63,224,200,.04)" stroke="rgba(63,224,200,.10)"/>
+        <text x="427" y="275" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#3b524e">always on</text>
+        <text x="530" y="275" font-family="'Spline Sans',sans-serif" font-size="12" fill="#3b524e">irreversible / external / political → you</text>
+        <text x="760" y="275" font-family="'Spline Sans',sans-serif" font-size="12" fill="#3b524e">permanent</text>
+        <text x="920" y="275" font-family="'Spline Sans',sans-serif" font-size="12" fill="#3b524e">—</text>
+      </g>
+
+      <!-- current rung arrow -->
+      <g transform="translate(36, 196)">
+        <polygon points="0,6 10,0 10,12" fill="#ffb347" filter="url(#hw-glow)" opacity=".9"/>
+      </g>
+      <text x="22" y="206" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".1em" fill="#a86a1f" text-anchor="middle" transform="rotate(-90 22 206)">YOU ARE HERE</text>
+
+      <!-- caption -->
+      <text x="52" y="310" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">RUNG 4 IS BORING. RUNG 5 NEEDS 30+ CLEAN RUNS FIRST. THE TABLE MAKES THE CURRENT RUNG VISIBLE TO THE NEXT ENGINEER.</text>
+    </svg>
+    <div class="hero-cap">Rung 4 is <b>boring</b> — the failure mode fired in February, the check caught it, no drama. That's the condition for climbing.</div>
+  </div>
+
+  <!-- ============ PROSE 1 — the mechanism ============ -->
+  <section class="prose">
+    <div class="sec-label">The mechanism · the jump that breaks things</div>
+    <h2>The gap isn't <em>access</em>. It's trust.</h2>
+
+    <p>
+      Almost every organisation with a working pilot has the same failure mode. The demo goes well, excitement builds,
+      someone decides to skip the boring middle part and push the agent from <b>"it drafts, we review"</b> to
+      <b>"it acts, we check the logs."</b> The problem is not the agent — it's that nobody has actually seen the failure mode
+      in their data, their edge cases, their org's particular flavour of weird. The move from rung 1 to rung 5 in one leap
+      is not bold. It's just skipping the evidence collection.
+    </p>
+
+    <p>
+      Five independent research streams — legal, cross-industry, security, finance, software — all find the same pattern:
+      access to AI is high and rising (54–95% of organisations have something deployed); autonomous trust is stuck at 5–22%.
+      The gaps are enormous: 61 points in legal, 80 in cross-industry, 66 in security. This is not a slow adoption curve.
+      It's an org-learning bottleneck. <b>The bottleneck is not access. It is the absence of a protocol for building
+      observed competence between pilot and deploy.</b> The autonomy ladder is that protocol, made explicit and auditable.
+    </p>
+
+    <p class="pull">
+      No governance platform can <b>grant</b> trust. No vendor benchmark proves an agent is reliable for YOUR process.
+      Trust is earned the same way it is between humans: observed performance, over time, in your context.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 1 — THE SIX-RUNG LADDER ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 480" role="img" aria-label="Six-rung autonomy ladder from Draft Only at the bottom to Escalate the Rest at the top, with rung 4 (reversible actions) highlighted as current.">
+      <defs>
+        <linearGradient id="d1-rail" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stop-color="#1d8d80" stop-opacity=".4"/>
+          <stop offset="60%" stop-color="#3fe0c8" stop-opacity=".8"/>
+          <stop offset="100%" stop-color="#ffb347" stop-opacity=".6"/>
+        </linearGradient>
+        <radialGradient id="d1-bead" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#9bffe9"/>
+          <stop offset="55%" stop-color="#3fe0c8"/>
+          <stop offset="100%" stop-color="#1d8d80"/>
+        </radialGradient>
+        <radialGradient id="d1-bead-cur" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#ffe0a8"/>
+          <stop offset="55%" stop-color="#ffb347"/>
+          <stop offset="100%" stop-color="#a86a1f"/>
+        </radialGradient>
+        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="d1-glow-cur" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing="2.8" fill="#3b524e">THE AUTONOMY LADDER · CLIMB ONE RUNG AT A TIME</text>
+
+      <!-- the vertical rail -->
+      <line x1="130" y1="66" x2="130" y2="440" stroke="url(#d1-rail)" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- horizontal rungs -->
+      <g stroke="rgba(63,224,200,.22)" stroke-width="1.4">
+        <line x1="110" y1="440" x2="150" y2="440"/>
+        <line x1="110" y1="374" x2="150" y2="374"/>
+        <line x1="110" y1="308" x2="150" y2="308"/>
+        <line x1="110" y1="242" x2="150" y2="242"/>
+        <line x1="110" y1="176" x2="150" y2="176"/>
+        <line x1="110" y1="110" x2="150" y2="110"/>
+      </g>
+
+      <!-- breathing pulse ascending the ladder -->
+      <circle r="3.4" fill="#aeffee">
+        <animateMotion dur="7s" repeatCount="indefinite" path="M130,440 L130,66"/>
+        <animate attributeName="opacity" values="0;.7;.7;0" dur="7s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- RUNG 1 — Draft only -->
+      <g>
+        <circle cx="130" cy="440" r="18" fill="url(#d1-bead)" filter="url(#d1-glow)"/>
+        <text x="130" y="445" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#05080a" font-weight="500">1</text>
+        <text x="168" y="436" font-family="'Spline Sans',sans-serif" font-size="14" fill="#9bffe9">Draft only</text>
+        <text x="168" y="452" font-family="'Spline Sans',sans-serif" font-size="12" fill="#5d6a68">Agent produces text; you decide everything after.</text>
+      </g>
+
+      <!-- RUNG 2 -->
+      <g>
+        <circle cx="130" cy="374" r="18" fill="url(#d1-bead)" filter="url(#d1-glow)"/>
+        <text x="130" y="379" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#05080a" font-weight="500">2</text>
+        <text x="168" y="370" font-family="'Spline Sans',sans-serif" font-size="14" fill="#9bffe9">Draft and check</text>
+        <text x="168" y="386" font-family="'Spline Sans',sans-serif" font-size="12" fill="#5d6a68">Agent writes AND runs the relevant judge/check before you read it.</text>
+      </g>
+
+      <!-- RUNG 3 -->
+      <g>
+        <circle cx="130" cy="308" r="18" fill="url(#d1-bead)" filter="url(#d1-glow)"/>
+        <text x="130" y="313" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#05080a" font-weight="500">3</text>
+        <text x="168" y="304" font-family="'Spline Sans',sans-serif" font-size="14" fill="#9bffe9">Propose the action</text>
+        <text x="168" y="320" font-family="'Spline Sans',sans-serif" font-size="12" fill="#5d6a68">Agent writes the exact command/email/change; you apply it.</text>
+      </g>
+
+      <!-- RUNG 4 — current, amber glow -->
+      <rect x="50" y="222" width="1000" height="44" rx="8" fill="rgba(255,179,71,.06)" stroke="rgba(255,179,71,.28)" stroke-width="1.2"/>
+      <g>
+        <circle cx="130" cy="244" r="22" fill="url(#d1-bead-cur)" filter="url(#d1-glow-cur)"/>
+        <text x="130" y="250" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">4</text>
+        <text x="170" y="238" font-family="'Spline Sans',sans-serif" font-size="14" fill="#ffb347" font-weight="600">Reversible safe actions  ← you are here</text>
+        <text x="170" y="254" font-family="'Spline Sans',sans-serif" font-size="12" fill="#cfe6e0">Low blast-radius, easy undo, easy inspect: label, draft ticket, update private file.</text>
+        <!-- "earning next" pointer -->
+        <rect x="830" y="228" width="200" height="28" rx="8" fill="rgba(255,179,71,.10)" stroke="rgba(255,179,71,.4)"/>
+        <text x="930" y="246" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".15em" fill="#ffb347">earning rung 5 →</text>
+      </g>
+
+      <!-- RUNG 5 -->
+      <g>
+        <circle cx="130" cy="176" r="18" fill="url(#d1-bead)" filter="url(#d1-glow)" opacity=".45"/>
+        <text x="130" y="181" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#05080a" font-weight="500" opacity=".5">5</text>
+        <text x="168" y="172" font-family="'Spline Sans',sans-serif" font-size="14" fill="#3b524e">Routine actions automatically</text>
+        <text x="168" y="188" font-family="'Spline Sans',sans-serif" font-size="12" fill="#3b524e">A narrow class, repeated, when checks pass and blast radius is low.</text>
+      </g>
+
+      <!-- RUNG 6 -->
+      <g>
+        <circle cx="130" cy="110" r="18" fill="url(#d1-bead)" filter="url(#d1-glow)" opacity=".35"/>
+        <text x="130" y="115" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#05080a" font-weight="500" opacity=".5">6</text>
+        <text x="168" y="106" font-family="'Spline Sans',sans-serif" font-size="14" fill="#3b524e">Escalate the rest</text>
+        <text x="168" y="122" font-family="'Spline Sans',sans-serif" font-size="12" fill="#3b524e">High-risk / irreversible / political → back to you. Always on.</text>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 01</span>The ladder is directional: each rung earned gives you the <b>observed evidence</b> to authorise the next one. Rungs 5 and 6 are receded — you don't grant them, you build toward them.</div>
+  </div>
+
+  <!-- ============ PROSE 2 — the rung-climb protocol ============ -->
+  <section class="prose">
+    <div class="sec-label">The rung-climb protocol · what "earned" means exactly</div>
+    <h2>Run the <em>proposal version</em> first.</h2>
+
+    <p>
+      Before any rung promotion, run the agent in proposal mode at the new rung — it produces exactly what it would do,
+      you observe it, you don't apply it. This is not risk-aversion theatre. It is <b>the only way to see the failure mode
+      in your data, not the vendor's benchmark.</b> Vendor benchmarks are measured on the vendor's test set.
+      Your calendar, your Slack history, your ticket queue, your customers' edge cases — these are not in the test set.
+      The failure mode in your context only becomes visible when you run your context.
+    </p>
+
+    <p>
+      The rung is earned when three conditions hold simultaneously: (1) the proposal version passed N times with no surprise
+      — N higher for higher blast radius; (2) the <b>failure mode now has an explicit functioning check</b> — the bad version
+      would have been caught; (3) that check has fired at least once on real input. Not conceptually. Actually fired.
+      Elapsed time is not a condition. Vendor confidence scores are not a condition. The check firing on real input is the condition.
+    </p>
+
+    <p>
+      The check that catches the failure is not overhead. <b>It is the durable institutional artefact.</b> The next engineer
+      who inherits the deployment doesn't just get an agent — they get a trust map that shows which rungs have been earned,
+      what check is in place at each one, and when it last fired. That's the difference between tribal knowledge and
+      a transferable operating model.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 2 — "ADD THE CHECK" LOOP ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="The rung-climb loop: proposal runs, failure surfaces, check designed, check added to the deployment, proposal re-runs with check active, check fires on bad input, boring accumulates, rung advanced.">
+      <defs>
+        <linearGradient id="d2-ring" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".8"/>
+          <stop offset="100%" stop-color="#ffb347" stop-opacity=".6"/>
+        </linearGradient>
+        <radialGradient id="d2-bead" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#9bffe9"/>
+          <stop offset="55%" stop-color="#3fe0c8"/>
+          <stop offset="100%" stop-color="#1d8d80"/>
+        </radialGradient>
+        <radialGradient id="d2-bead-a" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#ffe0a8"/>
+          <stop offset="55%" stop-color="#ffb347"/>
+          <stop offset="100%" stop-color="#a86a1f"/>
+        </radialGradient>
+        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing="2.8" fill="#3b524e">ADD THE CHECK THAT WOULD'VE CAUGHT IT · THE CLIMB IS AN ARTEFACT, NOT ELAPSED TIME</text>
+
+      <!-- the ring (loop path) -->
+      <g transform="translate(230, 70)">
+        <!-- ring path for animation -->
+        <circle cx="190" cy="165" r="134" fill="none" stroke="url(#d2-ring)" stroke-width="2" stroke-dasharray="600 60" stroke-linecap="round" transform="rotate(-90 190 165)"/>
+
+        <!-- animated pulse -->
+        <circle r="3.8" fill="#aeffee">
+          <animateMotion dur="10s" repeatCount="indefinite" path="M190,31 a134,134 0 1,1 -0.1,0"/>
+          <animate attributeName="opacity" values="0;1;1;0" dur="10s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- bead 1 — run proposal -->
+        <circle cx="190" cy="31" r="20" fill="url(#d2-bead)" filter="url(#d2-glow)"/>
+        <text x="190" y="36" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#05080a" font-weight="500">1</text>
+        <text x="190" y="16" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Run proposal</text>
+
+        <!-- bead 2 — failure surfaces -->
+        <circle cx="324" cy="81" r="20" fill="url(#d2-bead)" filter="url(#d2-glow)"/>
+        <text x="324" y="86" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#05080a" font-weight="500">2</text>
+        <text x="352" y="78" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Failure surfaces</text>
+        <text x="352" y="93" font-family="'Spline Sans',sans-serif" font-size="11" fill="#5d6a68">(in your data)</text>
+
+        <!-- bead 3 — design the check -->
+        <circle cx="380" cy="208" r="20" fill="url(#d2-bead)" filter="url(#d2-glow)"/>
+        <text x="380" y="213" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#05080a" font-weight="500">3</text>
+        <text x="408" y="212" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Design the check</text>
+
+        <!-- bead 4 — check added -->
+        <circle cx="312" cy="328" r="20" fill="url(#d2-bead)" filter="url(#d2-glow)"/>
+        <text x="312" y="333" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#05080a" font-weight="500">4</text>
+        <text x="312" y="362" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Check added to deployment</text>
+
+        <!-- bead 5 — check fires -->
+        <circle cx="68" cy="328" r="20" fill="url(#d2-bead)" filter="url(#d2-glow)"/>
+        <text x="68" y="333" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#05080a" font-weight="500">5</text>
+        <text x="68" y="362" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#9bffe9">Check fires on real input</text>
+
+        <!-- bead 6 — boring -->
+        <circle cx="0" cy="208" r="20" fill="url(#d2-bead-a)" filter="url(#d2-glow)"/>
+        <text x="0" y="213" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#05080a" font-weight="500">6</text>
+        <text x="-26" y="204" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12" fill="#ffb347">"boring" accumulates</text>
+        <text x="-26" y="218" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="11" fill="#5d6a68">(no surprises, N runs)</text>
+
+        <!-- bead 7 — rung advanced -->
+        <circle cx="56" cy="81" r="20" fill="url(#d2-bead-a)" filter="url(#d2-glow)"/>
+        <text x="56" y="86" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#05080a" font-weight="500">↑</text>
+        <text x="28" y="78" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12" fill="#ffb347">Rung advanced</text>
+
+        <!-- centre -->
+        <text x="190" y="160" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EVERY CLIMB</text>
+        <text x="190" y="178" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">leaves a check</text>
+      </g>
+
+      <!-- right side: what you end up with -->
+      <g transform="translate(700, 90)">
+        <text x="0" y="0" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#3b524e">EACH CLIMB PRODUCES</text>
+        <rect x="0" y="14" width="310" height="260" rx="10" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.18)"/>
+        <rect x="0" y="14" width="310" height="22" rx="6" fill="rgba(63,224,200,.08)"/>
+        <text x="12" y="30" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#3fe0c8">trust-map.md · rung 4</text>
+
+        <g font-family="'Spline Sans',sans-serif" font-size="13" fill="#cfe6e0">
+          <text x="14" y="58">Action class: reversible updates</text>
+          <text x="14" y="80" fill="#9bffe9">Check: undo-check.py + scope-guard</text>
+          <text x="14" y="102">N clean runs: 87</text>
+          <text x="14" y="124" fill="#ffb347">Status: <tspan font-family="'Spline Sans Mono',monospace" font-size="11">boring</tspan></text>
+          <text x="14" y="148">Last failure caught: 2026-02-14</text>
+          <text x="14" y="168" fill="#5d6a68">  → check fired, no action needed</text>
+          <text x="14" y="192">Blocker to rung 5: N≥30 at next scope</text>
+        </g>
+
+        <!-- glowing status line -->
+        <rect x="0" y="204" width="310" height="1.5" fill="url(#d2-ring)" opacity=".5"/>
+        <text x="14" y="226" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">NOT ELAPSED TIME. NOT VENDOR SCORE.</text>
+        <text x="14" y="244" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#ffb347">OBSERVED COMPETENCE + FUNCTIONING CHECK.</text>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 02</span><em>Each climb produces a check, not just confidence.</em> The check is the durable artefact — <b>the institutional memory of where this agent fails in your context</b>.</div>
+  </div>
+
+  <!-- ============ PROSE 3 — the check ============ -->
+  <section class="prose">
+    <div class="sec-label">The artefact · what the check actually is</div>
+    <h2>The failure mode is the <em>specification</em>.</h2>
+
+    <p>
+      Designing the check that would have caught the failure is not a defensive move. It is the moment you understand
+      the agent well enough to give it more autonomy. <b>The check encodes your accumulated knowledge of where the agent
+      fails on your specific process.</b> An agent without checks isn't "low overhead." It's just an agent whose failure modes
+      haven't been documented yet.
+    </p>
+
+    <p>
+      The check needs to be concrete and executable, not a policy statement. "Review high-stakes emails" is not a check —
+      it's a thought you had once. A check is something that <em>runs</em>: a judge that flags sentiment drift, a classifier
+      that catches blast radius, a simple rule that blocks actions touching more than N records. The criterion is equally simple:
+      <b>would this check have caught the bad version, reliably?</b> If yes, you have a check. If the answer is "probably,"
+      you have a hypothesis that needs to fire on real input before it earns that status.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 3 — TRUST OVER TIME (TEMPLATE) ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="Trust over time showing review intensity declining from full review at month 1 to doctrine-only at month 12 as boring accumulates. Labelled as illustrative template — not independently replicated.">
+      <defs>
+        <linearGradient id="d3-curve" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".9"/>
+          <stop offset="60%" stop-color="#9bffe9" stop-opacity=".85"/>
+          <stop offset="100%" stop-color="#ffb347" stop-opacity=".8"/>
+        </linearGradient>
+        <linearGradient id="d3-fill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".12"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
+        </linearGradient>
+        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing="2.8" fill="#3b524e">TRUST OVER TIME AS BORING ACCUMULATES</text>
+
+      <!-- TEMPLATE label — prominent and unambiguous -->
+      <rect x="40" y="40" width="580" height="24" rx="6" fill="rgba(255,179,71,.08)" stroke="rgba(255,179,71,.35)" stroke-width="1.2"/>
+      <text x="52" y="56" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#a86a1f">⚠  ILLUSTRATIVE TEMPLATE — adapt to your context · not a researched norm · not independently replicated</text>
+
+      <!-- axes -->
+      <line x1="80" y1="74" x2="80" y2="350" stroke="rgba(63,224,200,.2)" stroke-width="1.2"/>
+      <line x1="80" y1="350" x2="980" y2="350" stroke="rgba(63,224,200,.2)" stroke-width="1.2"/>
+
+      <!-- y-axis labels -->
+      <g font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3b524e" text-anchor="end">
+        <text x="72" y="102">95%</text>
+        <text x="72" y="143">85%</text>
+        <text x="72" y="222">60%</text>
+        <text x="72" y="334">10%</text>
+      </g>
+
+      <!-- y-axis title -->
+      <text x="20" y="215" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#3b524e" text-anchor="middle" transform="rotate(-90 20 215)">TRUST / AUTONOMOUS ACTION</text>
+
+      <!-- x-axis month labels -->
+      <g font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#3b524e" text-anchor="middle">
+        <text x="80" y="368">M0</text>
+        <text x="300" y="368">M1</text>
+        <text x="520" y="368">M3</text>
+        <text x="740" y="368">M6</text>
+        <text x="960" y="368">M12</text>
+      </g>
+      <text x="520" y="390" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3b524e">MONTHS (ILLUSTRATIVE)</text>
+
+      <!-- the S-curve fill -->
+      <path d="M80,340 C120,338 200,330 300,320 C400,308 440,260 520,210 C600,160 650,128 740,115 C820,104 880,98 960,95" stroke="none" fill="url(#d3-fill)"/>
+      <!-- the S-curve line -->
+      <path d="M80,340 C120,338 200,330 300,320 C400,308 440,260 520,210 C600,160 650,128 740,115 C820,104 880,98 960,95" stroke="url(#d3-curve)" stroke-width="2.4" fill="none" filter="url(#d3-glow)"/>
+
+      <!-- month milestone dots -->
+      <circle cx="300" cy="320" r="5" fill="#3fe0c8" filter="url(#d3-glow)"/>
+      <circle cx="520" cy="210" r="5" fill="#9bffe9" filter="url(#d3-glow)"/>
+      <circle cx="740" cy="115" r="5" fill="#aeffee" filter="url(#d3-glow)"/>
+      <circle cx="960" cy="95" r="5.4" fill="#ffb347" filter="url(#d3-glow)"/>
+
+      <!-- milestone labels with review cadence — the Template percentages clearly shown -->
+      <g>
+        <!-- M1 -->
+        <line x1="300" y1="320" x2="300" y2="290" stroke="rgba(63,224,200,.3)" stroke-width="1" stroke-dasharray="3 3"/>
+        <rect x="198" y="250" width="204" height="38" rx="7" fill="rgba(8,17,18,.75)" stroke="rgba(63,224,200,.22)"/>
+        <text x="300" y="267" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#3fe0c8">~10% (template)</text>
+        <text x="300" y="282" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85">Review everything</text>
+
+        <!-- M3 -->
+        <line x1="520" y1="210" x2="520" y2="170" stroke="rgba(63,224,200,.3)" stroke-width="1" stroke-dasharray="3 3"/>
+        <rect x="420" y="134" width="200" height="38" rx="7" fill="rgba(8,17,18,.75)" stroke="rgba(63,224,200,.22)"/>
+        <text x="520" y="151" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#9bffe9">~60% (template)</text>
+        <text x="520" y="166" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85">Review flagged only</text>
+
+        <!-- M6 -->
+        <line x1="740" y1="115" x2="740" y2="92" stroke="rgba(255,179,71,.3)" stroke-width="1" stroke-dasharray="3 3"/>
+        <rect x="636" y="56" width="208" height="38" rx="7" fill="rgba(8,17,18,.75)" stroke="rgba(255,179,71,.22)"/>
+        <text x="740" y="73" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#ffb347">~85% (template)</text>
+        <text x="740" y="88" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85">Spot-check</text>
+
+        <!-- M12 -->
+        <line x1="960" y1="95" x2="960" y2="72" stroke="rgba(255,179,71,.3)" stroke-width="1" stroke-dasharray="3 3"/>
+        <rect x="856" y="38" width="196" height="38" rx="7" fill="rgba(8,17,18,.75)" stroke="rgba(255,179,71,.35)"/>
+        <text x="954" y="55" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#ffb347">~95% (template)</text>
+        <text x="954" y="70" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85">Doctrine-only review</text>
+      </g>
+
+      <!-- "boring" annotation -->
+      <text x="620" y="340" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#3fe0c8" opacity=".55">"boring" accumulates →</text>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 03</span><b>Template — adapt to your risk profile.</b> <span class="tmpl">⚠ not a researched norm</span> The month-by-month percentages are a single-source practitioner scaffold — useful as a planning starting point; your sequence depends on your observed failure modes and blast radius.</div>
+  </div>
+
+  <!-- ============ PROSE 4 — the boring condition ============ -->
+  <section class="prose">
+    <div class="sec-label amber">What "boring" means in practice</div>
+    <h2 class="amber">The goal is a <em>boring check</em>.</h2>
+
+    <p>
+      "Boring" is the operational test for rung advancement. Not "the agent did well this week." Not "we're comfortable."
+      <b>Boring means: the check fires, catches the bad version, and nobody is surprised.</b> The failure mode has become
+      a known quantity. It appears, the check catches it, you log it, you move on. The anxiety around
+      "what if it does something wrong?" has been replaced by a specific, answerable question: "did the check fire today?"
+    </p>
+
+    <p>
+      This matters especially at the transition from rung 3 to rung 4 — from proposal to action. That's the rung where
+      the agent stops asking and starts doing. The temptation is to reason about it in the abstract: "the blast radius is
+      low, the actions are reversible, we're comfortable." The discipline is to run the proposal version N times
+      until the boring condition holds, <b>then</b> flip the switch. The difference between these two paths, at scale,
+      across a dozen agents, is the difference between an org that owns its AI deployment and one that hopes for the best.
+    </p>
+
+    <p>
+      The ceiling in the planning template — call it 95%, though it's an illustrative template number and yours will differ —
+      is worth noting only for what it isn't: it's never 100%. Not because the remaining few percent will inevitably
+      fail, but because architecture that assumes 100% trust is architecture that has stopped watching. Rung 6 — escalate
+      the rest — is always on. That's not a limitation. That's the design.
+    </p>
+  </section>
+
+  <!-- ============ USE WHEN · BUILD · TEST ============ -->
+  <div class="plates">
+    <div class="plate use">
+      <div class="beat-label amber"><b>Use when</b></div>
+      <p class="body">
+        You have a working agent and a permission decision: <b>let it act, or only propose?</b>
+        This question recurs at every new scope — new connector, new action type, new team, new blast radius.
+        The temptation is to jump because the demo went well.
+        <span class="grey">The risk is you haven't seen the failure mode in your data yet.</span>
+      </p>
+    </div>
+    <div class="plate build">
+      <div class="beat-label"><b>Build</b></div>
+      <p class="body">
+        A <b>per-deployment trust/permission map</b> — one table per agent:
+        Rung · Action class · Current status · Check in place · N clean runs · Blocker to next rung.
+        Makes the current rung visible to the next engineer, compliance, quarterly review.
+      </p>
+    </div>
+    <div class="plate test">
+      <div class="beat-label"><b>Test</b></div>
+      <p class="body">
+        Three conditions simultaneously: proposal passed N times; failure mode has a <em class="yes">functioning check</em>;
+        check fired on real input. <em class="no">Not elapsed time.</em> <em class="no">Not vendor benchmarks.</em>
+        Observed competence on your process.
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ CORE MOVES ============ -->
+  <section class="moves">
+    <div class="beat-label"><b>Core moves</b></div>
+    <div class="moves-head">
+      <h2>The climb, step by step</h2>
+      <span class="lede">The protocol, not the permission.</span>
+    </div>
+
+    <div class="move-rail">
+      <div class="thread"></div>
+      <div class="step">
+        <div class="bead">1</div>
+        <h3>Name the current rung</h3>
+        <p>Honestly. Most agents are rung 1 or 2. <b>The map starts here.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">2</div>
+        <h3>Run proposal mode at next rung</h3>
+        <p>See what it would do. <b>Don't apply it yet.</b> See the failure mode in your data.</p>
+      </div>
+      <div class="step current">
+        <div class="bead">3</div>
+        <h3>Design the check</h3>
+        <p>The bad version would have been caught by: ___.
+          <b>Write that sentence. Make it executable.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">4</div>
+        <h3>Let the check fire</h3>
+        <p>On real input. Not conceptually. <b>At least once.</b> Now you have evidence.</p>
+      </div>
+      <div class="step">
+        <div class="bead">5</div>
+        <h3>Reach boring</h3>
+        <p>N clean runs, no surprises. <b>The check fires, catches it, nobody panics.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">6</div>
+        <h3>Advance the rung</h3>
+        <p>Update the trust map. <b>The check stays. It is now institutional memory.</b></p>
+      </div>
+    </div>
+
+    <div class="compound">
+      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+        <defs><linearGradient id="cl" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
+        </linearGradient></defs>
+        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#cl)" stroke-width="2.4"
+          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
+        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
+        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
+        <circle r="3" fill="#aeffee">
+          <animateMotion dur="5s" repeatCount="indefinite"
+            path="M37,11 a26,26 0 1,1 -0.1,0"/>
+        </circle>
+      </svg>
+      <div class="ctext">
+        <div class="cyc">proposal runs<span class="arr">→</span>failure surfaces<span class="arr">→</span>check designed<span class="arr">→</span>boring<span class="arr">→</span>rung advanced</div>
+        <p>Then repeat at the next rung. Each climb leaves a check: <b>compound institutional knowledge of where this agent fails in your context.</b></p>
+      </div>
+    </div>
+
+    <p class="aside">
+      <b>Monday move:</b> Pick one agent you already use. Write its current rung (honestly — most are 1 or 2).
+      <span class="mono">Write the one failure mode you've observed or can clearly imagine. Write one sentence: "the check that would have caught it is ___." That's your rung-2 spec. No infra, no budget, no vendor contract. One sentence.</span>
+    </p>
+  </section>
+
+  <!-- ============ WHY ============ -->
+  <section class="why">
+    <div class="beat-label"><b>Why</b></div>
+
+    <div class="principle-block">
+      <div class="principle-label">The principle</div>
+      <p class="principle-line">The bottleneck is not access. It is the <em>absence of observed competence</em> between pilot and deploy.</p>
+    </div>
+
+    <p class="quote">"The move is not to jump from rung 1 to rung 6. The move is to earn the next rung."</p>
+
+    <p class="gloss">
+      Five independent research streams — legal, cross-industry, security, finance, task-specific software —
+      all find the same structural gap between access and autonomous trust. The numbers vary by domain
+      but the shape is constant: organisations that have AI deployed (54–95%) vastly outnumber those that trust it
+      to act autonomously (5–22%). The gap is not ignorance. It's the absence of a protocol for building evidence
+      between "it demos well" and "it acts in production." The autonomy ladder makes that evidence-building explicit,
+      step by step, artefact by artefact.
+    </p>
+
+    <!-- gap table — the SOLID evidence -->
+    <table class="gap-table">
+      <tr>
+        <th>Domain</th><th>Access</th><th>Autonomous trust</th><th>Gap</th><th>Source</th>
+      </tr>
+      <tr>
+        <td class="domain">Legal</td><td>83%</td><td>22%</td><td class="gap">61 pts</td><td class="src">Factor / Artificial Lawyer</td>
+      </tr>
+      <tr>
+        <td class="domain">Cross-industry</td><td>86%</td><td>6%</td><td class="gap">80 pts</td><td class="src">HBR n=603</td>
+      </tr>
+      <tr>
+        <td class="domain">Security</td><td>81%</td><td>14%</td><td class="gap">66 pts</td><td class="src">Gravitee n=900+</td>
+      </tr>
+      <tr>
+        <td class="domain">Finance</td><td>54%</td><td>15%</td><td class="gap">39 pts</td><td class="src">Deloitte CFO Signals</td>
+      </tr>
+    </table>
+
+    <p class="gloss">
+      The Moltke parallel is structural, not borrowed prestige: Auftragstaktik — mission command — worked on the same
+      principle. Autonomy isn't granted top-down at appointment. <b>It is earned bottom-up through demonstrated
+      performance over time, at increasing responsibility.</b> Skipping the observation phase produces fragile systems
+      whether the context is Prussian cavalry or production AI. The analogy clarifies the mechanism; it doesn't replace the evidence.
+    </p>
+
+    <div class="corollary"><span class="sd"></span>No governance platform can grant trust. Only observed performance earns it.</div>
+  </section>
+
+  <!-- ============ PRACTICE / MONDAY MOVE ============ -->
+  <div class="practice">
+    <div class="beat-label amber"><b>Monday move · no-permission framing</b></div>
+    <p>
+      <b>Pick one agent you already use.</b> Doesn't matter which. Open a blank document.
+      Write: <em>current rung: ___</em>. Write: <em>one failure mode I've seen or can clearly imagine: ___</em>.
+      Write: <em>the check that would have caught it: ___</em>. That's the rung-2 design spec.
+    </p>
+    <p>
+      No org sign-off required. Rungs 1 and 2 are purely additive — checks on work you already do.
+      No platform, no budget, no vendor contract. The trust map is a personal audit doc until you choose to share it.
+      The first move costs one sentence. <b>Don't upgrade to rung 3 until that check exists and has fired.</b>
+    </p>
+  </div>
+
+  <!-- ============ CONNECTS TO ============ -->
+  <section class="connects">
+    <h2>Connects to</h2>
+    <div class="sub">Threads leaving this node · the pattern language</div>
+
+    <div class="web">
+      <svg viewBox="0 0 1080 300" aria-hidden="true">
+        <defs>
+          <linearGradient id="ct1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="ct2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="ct3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="ct4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#6f8a85" stop-opacity=".5"/></linearGradient>
+          <filter id="cwglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <circle cx="150" cy="150" r="30" fill="none" stroke="#3fe0c8" stroke-width="1.2" opacity=".5"/>
+        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#cwglow)"/>
+        <circle cx="150" cy="150" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
+
+        <path id="cth1" d="M150,150 C360,70 540,52 760,56" stroke="url(#ct1)" stroke-width="2.2" fill="none"/>
+        <path id="cth2" d="M150,150 C380,118 560,116 760,118" stroke="url(#ct2)" stroke-width="2.2" fill="none"/>
+        <path id="cth3" d="M150,150 C380,186 560,188 760,188" stroke="url(#ct3)" stroke-width="2.2" fill="none"/>
+        <path id="cth4" d="M150,150 C360,232 540,250 760,250" stroke="url(#ct4)" stroke-width="1.6" stroke-dasharray="4 6" fill="none"/>
+
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#cth1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#cth2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#cth3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+      </svg>
+
+      <div class="neighbours">
+        <div class="origin-chip" style="left:13.8%;top:50%">Earn the next rung<small>shared · verification → absorption</small></div>
+        <a class="nb" href="scope-for-trust.html" style="left:74%;top:18.7%"><span class="sd"></span>Scope for trust <span class="recipe-no">R4</span></a>
+        <a class="nb" href="benchmark-the-judge.html" style="left:74%;top:39.3%"><span class="sd"></span>Benchmark the judge <span class="recipe-no">R5</span></a>
+        <a class="nb amber" href="fixed-judge-loop.html" style="left:74%;top:62.7%"><span class="sd"></span>Fixed-judge loop <span class="recipe-no">R6</span></a>
+        <a class="nb component soon" href="index.html" title="Opens on the canvas — its own page is coming soon" style="left:74%;top:83.3%"><span class="sd"></span>Plan-mode review <span class="recipe-no">component</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="floor">
+    <span class="door">No org sign-off to climb the ladder on your own deployments. The first move costs one sentence.</span>
+    <span class="meta">The Big Picture · Pattern Language</span>
+  </footer>
+
+</div>
+</body>
+</html>

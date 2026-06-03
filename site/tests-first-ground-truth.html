@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Write the failing test first — Pattern · The Big Picture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-0:#05080a;
+    --soil-1:#080d10;
+    --soil-2:#0c1418;
+    --teal:#3fe0c8;
+    --teal-dim:#1d8d80;
+    --amber:#ffb347;
+    --amber-dim:#a86a1f;
+    --red:#ff6b6b;
+    --red-dim:#9c3a3a;
+    --spore:#eafff9;
+    --ink:#cfe6e0;
+    --ink-dim:#6f8a85;
+    --ink-faint:#3b524e;
+    --hairline:rgba(63,224,200,.10);
+    --grey:#5d6a68;
+    --grey-dim:#39423f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--soil-0);
+    font-family:'Spline Sans',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  /* atmospheric soil + light-well — recedes for the long read */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
+      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
+      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+  }
+  /* grain / spore dust */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 64px;}
+
+  /* ============ BREADCRUMB ============ */
+  .crumb{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+    color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
+  }
+  .crumb a{color:var(--teal-dim);text-decoration:none;transition:color .25s}
+  .crumb a:hover{color:var(--teal)}
+  .crumb .here{color:var(--ink)}
+
+  /* ============ PATTERN HEADER (name + essence) ============ */
+  header.pat{padding:30px 0 8px;max-width:900px;}
+  .kicker{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--teal-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .kicker .spore-mark{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 14px 2px rgba(63,224,200,.6);
+    flex:none;
+  }
+  .kicker .pat-no{color:var(--ink-faint)}
+  header.pat h1{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(40px,7vw,68px);line-height:.98;
+    color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
+  }
+  header.pat h1 em{font-style:italic;color:var(--teal);font-weight:400}
+  .principle{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
+  }
+  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .essence{
+    font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:720px;
+  }
+  .essence b{color:var(--spore);font-weight:500}
+
+  /* ============ HERO PICTURE ============ */
+  .hero-frame{
+    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(13,31,32,.5), rgba(5,8,10,.6));
+    position:relative;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.04) inset;
+  }
+  .hero-frame svg{display:block;width:100%;height:auto}
+  .hero-cap{
+    position:absolute;left:18px;bottom:13px;z-index:3;
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
+    color:var(--ink-dim);text-transform:uppercase;
+  }
+  .hero-cap b{color:var(--teal)}
+
+  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
+  .prose{
+    margin-top:34px;max-width:760px;
+  }
+  .prose h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
+    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+  }
+  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .prose h2.amber em{color:var(--amber)}
+  .prose .sec-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+    margin-top:42px;
+  }
+  .prose .sec-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
+  }
+  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .prose p{
+    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
+    letter-spacing:.002em;
+  }
+  .prose p b{color:var(--spore);font-weight:500}
+  .prose p em{font-style:italic;color:var(--ink-dim)}
+  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p .mono{
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
+  }
+  .prose p .mono.amber{color:var(--amber)}
+  .prose p .mono.red{color:var(--red)}
+  .prose .pull{
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+    color:var(--ink);max-width:680px;
+  }
+  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
+
+  /* ============ PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
+  .diagram{
+    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+    background:
+      radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
+      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
+    position:relative;
+    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
+  }
+  .diagram svg{display:block;width:100%;height:auto}
+  .diagram .dcap{
+    padding:12px 20px 16px;border-top:1px solid var(--hairline);
+    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
+    color:var(--ink-dim);letter-spacing:.003em;
+    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  }
+  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
+  .diagram .dcap .num{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
+  }
+
+  /* ============ RECIPE SECTION BEATS ============ */
+  .beat-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  }
+  .beat-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.6);
+  }
+  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+
+  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
+  .plates{
+    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
+  }
+  .plate{
+    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
+    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
+  }
+  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
+  .plate .body b{color:var(--spore);font-weight:500}
+  .plate .body .grey{color:var(--grey)}
+  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
+  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
+
+  /* ============ CORE MOVES ============ */
+  .moves{margin-top:46px}
+  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
+  .moves-head h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
+  .move-rail{
+    margin-top:20px;position:relative;
+    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+  }
+  .move-rail .thread{
+    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
+    background:linear-gradient(90deg,
+      rgba(255,107,107,0) 0%, rgba(156,58,58,.5) 5%,
+      rgba(255,107,107,.7) 22%, rgba(63,224,200,.7) 60%, rgba(255,179,71,.65) 95%, rgba(255,179,71,0) 100%);
+  }
+  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
+  .step:first-child{padding-left:0}
+  .step .bead{
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
+    margin-bottom:13px;
+  }
+  /* first bead reads red — the move starts at the failing test */
+  .step:first-child .bead{
+    background:radial-gradient(circle at 35% 30%, #ffb3b3, #ff6b6b 55%, #9c3a3a);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,107,107,.22), 0 0 18px 3px rgba(255,107,107,.5);
+  }
+  .step:nth-child(5) .bead{
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
+  }
+  .step h3{
+    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
+  }
+  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
+  .step p b{color:var(--ink);font-weight:500}
+
+  .compound{
+    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
+    padding:18px 22px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.07), transparent 60%),
+      rgba(8,17,18,.55);
+    display:flex;align-items:center;gap:20px;
+  }
+  .compound .loop-ico{flex:none}
+  .compound .ctext{flex:1}
+  .compound .ctext .cyc{
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
+  }
+  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
+  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
+  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+
+  .aside{
+    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
+    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+  }
+  .aside b{color:var(--amber);font-weight:500}
+  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
+
+  /* ============ WHY ============ */
+  .why{
+    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
+    padding:26px 30px 28px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
+      rgba(7,14,15,.6);
+  }
+  .why .beat-label{margin-bottom:14px}
+  .why .principle-block{
+    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
+  }
+  .why .principle-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
+  }
+  .why .principle-line{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
+    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
+  }
+  .why .principle-line em{font-style:italic;color:var(--teal)}
+  .why .quote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--teal);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(63,224,200,.26);max-width:840px;
+  }
+  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
+  .why .gloss b{color:var(--spore);font-weight:500}
+  .why .gloss em{font-style:italic;color:var(--ink-dim)}
+  .why .gloss + .gloss{margin-top:12px}
+  .why .corollary{
+    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
+    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+  }
+  .why .corollary .sd{
+    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+  }
+
+  /* ============ TEST-IN-PRACTICE inline panel ============ */
+  .practice{
+    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
+    padding:22px 26px 24px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
+      rgba(8,15,17,.5);
+  }
+  .practice .beat-label{margin-bottom:12px}
+  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
+  .practice p b{color:var(--spore);font-weight:500}
+  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
+  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ TEMPLATE / CALIBRATION STRIP — labelled, carries epistemic content ============ */
+  .calib{
+    margin-top:20px;border:1px dashed var(--amber-dim);border-radius:12px;
+    padding:14px 18px 15px;max-width:760px;
+    background:radial-gradient(120% 160% at 0% 0%, rgba(255,179,71,.05), transparent 60%), rgba(12,9,5,.4);
+    display:flex;gap:14px;align-items:flex-start;
+  }
+  .calib .tag{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--amber);border:1px solid var(--amber-dim);border-radius:20px;padding:4px 9px 5px;
+    flex:none;white-space:nowrap;margin-top:1px;
+  }
+  .calib p{font-size:12.5px;line-height:1.55;color:var(--ink-dim);margin:0}
+  .calib p b{color:var(--amber);font-weight:500}
+  .calib p em{font-style:italic;color:var(--ink)}
+
+  /* ============ CONNECTS TO ============ */
+  .connects{margin-top:52px}
+  .connects h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .connects .sub{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:5px;
+  }
+  .web{position:relative;margin-top:8px}
+  .web svg{display:block;width:100%;height:auto}
+  .neighbours{position:absolute;inset:0;pointer-events:none}
+  .nb{
+    position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
+    display:flex;align-items:center;gap:9px;
+    padding:8px 14px 9px;border-radius:13px;
+    background:rgba(8,15,17,.82);backdrop-filter:blur(4px);
+    border:1px solid var(--hairline);
+    color:var(--ink);font-size:13px;letter-spacing:.005em;white-space:nowrap;
+    transition:border-color .3s,color .3s,background .3s,transform .3s;
+    cursor:pointer;text-decoration:none;
+  }
+  .nb .recipe-no{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--ink-faint);
+  }
+  .nb .sd{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 12px 2px rgba(63,224,200,.55);
+  }
+  .nb.amber .sd{background:var(--amber);box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 12px 2px rgba(255,179,71,.5)}
+  .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
+  .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
+  .nb:hover .sd{animation:throb 1s ease-in-out infinite}
+  .nb.soon{opacity:.62}
+  .nb.soon::after{
+    content:"soon";
+    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);
+    border:1px solid var(--ink-faint);border-radius:20px;
+    padding:2px 7px 3px;margin-left:4px;
+  }
+  .nb.soon:hover{opacity:1}
+  @keyframes throb{50%{transform:scale(1.5)}}
+  .origin-chip{
+    position:absolute;transform:translate(-50%,-50%);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 24px rgba(63,224,200,.4);white-space:nowrap;text-align:center;
+  }
+  .origin-chip small{
+    display:block;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:8.5px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--teal-dim);margin-top:3px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer.floor{
+    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  footer.floor .door{
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
+    text-shadow:0 0 22px rgba(255,179,71,.3);
+  }
+  footer.floor .meta{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+
+  /* breathing glow on the diagram spore-tips */
+  @keyframes breathe{
+    0%,100%{opacity:.55}
+    50%{opacity:1}
+  }
+  .breathe{animation:breathe 4.2s ease-in-out infinite}
+
+  @media (max-width:860px){
+    .plates{grid-template-columns:1fr 1fr}
+    .plate.use{grid-column:1 / -1}
+  }
+  @media (max-width:780px){
+    .plates{grid-template-columns:1fr}
+    .plate.use{grid-column:1}
+    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
+    .move-rail .thread{display:none}
+    .step{padding:0}
+    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .calib{flex-direction:column;gap:9px}
+    .neighbours .nb{font-size:11px;padding:6px 10px}
+    .prose p{font-size:14.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ BREADCRUMB ============ -->
+  <nav class="crumb">
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Write the failing test first</span>
+  </nav>
+
+  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <header class="pat">
+    <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· software · Context &amp; Guardrails · the move before any agent fix</span></div>
+    <h1>Write the failing <em>test</em> first</h1>
+    <p class="principle">The principle: <b>claims aren't evidence</b> — an agent's "fixed it" is a story; a red-then-green test is the only thing that can't confabulate.</p>
+    <p class="essence">
+      Before the agent touches code, make it write the test that <b>fails for the bug's reason</b> — watch it go red —
+      then let it fix until the test goes green. The personal habit fences the agent's fluency at your own keyboard,
+      and the same test becomes the gate every later PR has to clear.
+    </p>
+  </header>
+
+  <!-- ============ HERO PICTURE: confident green claim vs red-then-green evidence ============ -->
+  <div class="hero-frame">
+    <svg viewBox="0 0 1080 392" role="img" aria-label="Left: an agent presenting a green 'Fixed!' diff with no test — a confident claim. Right: the same bug with a test that goes red first, then green after the fix, the commit timeline showing the test landing before the fix.">
+      <defs>
+        <radialGradient id="hwell" cx="78%" cy="50%" r="62%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".22"/>
+          <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".07"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="agentCore" cx="40%" cy="35%" r="70%">
+          <stop offset="0%" stop-color="#eafff9"/>
+          <stop offset="45%" stop-color="#3fe0c8"/>
+          <stop offset="100%" stop-color="#0c2b2a"/>
+        </radialGradient>
+        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <rect x="0" y="0" width="1080" height="392" fill="url(#hwell)"/>
+
+      <!-- LEFT: the confident claim, no test -->
+      <text x="60" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#5d6a68">THE CLAIM · NO TEST</text>
+      <!-- agent core -->
+      <circle cx="120" cy="150" r="20" fill="url(#agentCore)" filter="url(#hglow)"/>
+      <text x="120" y="192" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#6f8a85">AGENT</text>
+      <!-- green diff panel claiming "Fixed!" -->
+      <g>
+        <rect x="180" y="72" width="260" height="190" rx="12" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.18)"/>
+        <rect x="180" y="72" width="260" height="22" rx="6" fill="rgba(63,224,200,.10)"/>
+        <text x="196" y="87" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#3fe0c8">diff · src/total.js</text>
+        <g font-family="'Spline Sans Mono',monospace" font-size="10.5">
+          <text x="196" y="120" fill="#9c3a3a">- return sum(items)</text>
+          <text x="196" y="142" fill="#3fe0c8">+ return sum(items) + tax</text>
+          <text x="196" y="170" fill="#6f8a85">all green · compiles · ships</text>
+        </g>
+        <rect x="196" y="196" width="120" height="34" rx="9" fill="rgba(63,224,200,.12)" stroke="rgba(63,224,200,.4)"/>
+        <text x="256" y="218" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="16" fill="#9bffe9">"Fixed!"</text>
+      </g>
+      <text x="180" y="300" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#5d6a68" font-style="italic">reads right · proves nothing · a guess that compiles</text>
+
+      <!-- divider -->
+      <line x1="540" y1="40" x2="540" y2="352" stroke="rgba(63,224,200,.14)" stroke-width="1" stroke-dasharray="3 7"/>
+
+      <!-- RIGHT: red-then-green, the evidence -->
+      <text x="600" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#3fe0c8">THE EVIDENCE · TEST FIRST</text>
+      <!-- RED state -->
+      <g>
+        <circle cx="640" cy="130" r="26" fill="none" stroke="#ff6b6b" stroke-width="2.4" filter="url(#hglow)"/>
+        <circle cx="640" cy="130" r="9" fill="#ff6b6b" filter="url(#hglow)"/>
+        <text x="640" y="180" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#ff6b6b">RED</text>
+        <text x="640" y="198" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#9c3a3a" font-style="italic">test fails — bug reproduced</text>
+      </g>
+      <!-- arrow red→green -->
+      <g transform="translate(700,130)">
+        <path d="M0,0 L96,0" stroke="#3fe0c8" stroke-width="1.6" fill="none" opacity=".7"/>
+        <polygon points="96,0 86,-6 86,6" fill="#3fe0c8" opacity=".85"/>
+        <text x="48" y="-12" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3fe0c8">FIX ROOT CAUSE</text>
+      </g>
+      <!-- GREEN state -->
+      <g>
+        <circle cx="860" cy="130" r="26" fill="none" stroke="#3fe0c8" stroke-width="2.4" filter="url(#hglow)"/>
+        <circle cx="860" cy="130" r="9" fill="#3fe0c8" filter="url(#hglow)"/>
+        <text x="860" y="180" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#3fe0c8">GREEN</text>
+        <text x="860" y="198" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#1d8d80" font-style="italic">same test now passes</text>
+      </g>
+      <!-- commit timeline: test commit BEFORE fix commit -->
+      <g transform="translate(600,250)">
+        <line x1="0" y1="20" x2="440" y2="20" stroke="rgba(63,224,200,.3)" stroke-width="1.4"/>
+        <circle cx="60" cy="20" r="7" fill="#ff6b6b" filter="url(#hglow)"/>
+        <text x="60" y="50" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ff6b6b">test commit</text>
+        <text x="60" y="64" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#9c3a3a">(red)</text>
+        <circle cx="280" cy="20" r="7" fill="#3fe0c8" filter="url(#hglow)"/>
+        <text x="280" y="50" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">fix commit</text>
+        <text x="280" y="64" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#1d8d80">(green)</text>
+        <text x="440" y="24" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#3b524e">→ MERGE</text>
+        <!-- order marker -->
+        <text x="170" y="8" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".2em" fill="#6f8a85">TEST BEFORE FIX</text>
+      </g>
+      <!-- nutrient pulse running red→green -->
+      <circle r="3.4" fill="#aeffee">
+        <animateMotion dur="4s" repeatCount="indefinite" path="M666,130 L834,130"/>
+        <animate attributeName="opacity" values="0;1;1;0" dur="4s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+    <div class="hero-cap">A green diff is a confident claim. <b>A test that went red first is the only proof the bug existed.</b></div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
+  <!-- ============================================================ -->
+  <section class="prose">
+    <div class="sec-label">The mechanism · claim vs. evidence</div>
+    <h2>Two paths from the <em>same bug</em>.</h2>
+
+    <p>
+      Hand a coding agent a bug and it does the natural thing: reads the symptom, nods, and starts editing — fast,
+      plausible, unverified. The diff that comes back <em>reads</em> right. It compiles. It probably even runs. And that
+      is exactly the trap, because a fix that reads right is not a fix that <b>is</b> right, and the agent's fluency is
+      most convincing precisely where it's wrong. Its self-report — <em class="teal">"fixed it, here's why"</em> — is a
+      reconstruction after the fact, not an observation. You are one <em class="teal">"looks fine"</em> away from merging
+      a change whose only proof is that it didn't error.
+    </p>
+
+    <p>
+      The same bug can take a second path that ends somewhere very different. Before any code changes, the agent writes
+      the test that reveals the bug, runs it, and you watch it <b>fail</b> — red, for the reason you'd expect. Then it
+      fixes the root cause and runs again — green. Same input, same agent. The only thing that changed is that one path
+      produced an artefact that <em>could have said no.</em> A test that fails first and passes after can't confabulate:
+      it either reproduces the bug or it doesn't. The picture below puts the two paths side by side.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 1 — CLAIM PATH vs EVIDENCE PATH ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="Two paths from the same bug. Path A: agent, fix, looks-right, merge — a confident but unverified claim. Path B: agent, failing red test, fix, passing green test, merge — a falsifiable claim, now evidence.">
+      <defs>
+        <linearGradient id="d1-claim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5d6a68" stop-opacity=".7"/><stop offset="1" stop-color="#39423f" stop-opacity=".3"/></linearGradient>
+        <linearGradient id="d1-evid" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff6b6b" stop-opacity=".85"/><stop offset="0.45" stop-color="#3fe0c8" stop-opacity=".85"/><stop offset="1" stop-color="#3fe0c8" stop-opacity=".85"/></linearGradient>
+        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME BUG · TWO PATHS · DIFFERENT TRUST AT THE MERGE</text>
+
+      <!-- shared origin: the bug -->
+      <g>
+        <circle cx="100" cy="210" r="22" fill="rgba(255,107,107,.14)" stroke="#ff6b6b" stroke-width="1.6" filter="url(#d1-glow)"/>
+        <text x="100" y="214" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".06em" fill="#ff6b6b">BUG</text>
+        <text x="100" y="252" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85" font-style="italic">the same input</text>
+      </g>
+
+      <!-- ===== PATH A — the claim (upper) ===== -->
+      <g>
+        <path d="M122,196 C200,150 240,108 300,108" stroke="url(#d1-claim)" stroke-width="2" fill="none"/>
+        <text x="150" y="78" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#5d6a68">PATH A · THE CLAIM</text>
+        <!-- agent -->
+        <g transform="translate(300,108)">
+          <rect x="0" y="-20" width="120" height="40" rx="11" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.2)"/>
+          <text x="60" y="5" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#cfe6e0">agent fixes</text>
+        </g>
+        <path d="M420,108 L470,108" stroke="#5d6a68" stroke-width="1.6" fill="none"/><polygon points="470,108 462,103 462,113" fill="#5d6a68"/>
+        <g transform="translate(470,108)">
+          <rect x="0" y="-20" width="150" height="40" rx="11" fill="rgba(93,106,104,.10)" stroke="rgba(93,106,104,.4)"/>
+          <text x="75" y="5" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#9bbcb6">"looks right" · 30s</text>
+        </g>
+        <path d="M620,108 L670,108" stroke="#5d6a68" stroke-width="1.6" fill="none"/><polygon points="670,108 662,103 662,113" fill="#5d6a68"/>
+        <g transform="translate(670,108)">
+          <rect x="0" y="-20" width="120" height="40" rx="11" fill="rgba(93,106,104,.10)" stroke="rgba(93,106,104,.4)"/>
+          <text x="60" y="5" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#9bbcb6">merge</text>
+        </g>
+        <text x="820" y="112" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".14em" fill="#5d6a68">UNVERIFIED</text>
+        <text x="820" y="128" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85" font-style="italic">trust = the agent's confidence</text>
+      </g>
+
+      <!-- ===== PATH B — the evidence (lower) ===== -->
+      <g>
+        <path d="M122,224 C200,280 240,320 300,320" stroke="url(#d1-evid)" stroke-width="2.4" fill="none" filter="url(#d1-glow)"/>
+        <text x="150" y="362" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#3fe0c8">PATH B · THE EVIDENCE</text>
+        <!-- failing red test -->
+        <g transform="translate(300,320)">
+          <rect x="0" y="-20" width="140" height="40" rx="11" fill="rgba(255,107,107,.10)" stroke="#ff6b6b" stroke-width="1.4"/>
+          <circle cx="20" cy="0" r="6" fill="#ff6b6b" filter="url(#d1-glow)"/>
+          <text x="80" y="5" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#ffb3b3">failing test</text>
+        </g>
+        <path d="M440,320 L490,320" stroke="#3fe0c8" stroke-width="1.6" fill="none"/><polygon points="490,320 482,315 482,325" fill="#3fe0c8"/>
+        <g transform="translate(490,320)">
+          <rect x="0" y="-20" width="120" height="40" rx="11" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.25)"/>
+          <text x="60" y="5" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#cfe6e0">fix root cause</text>
+        </g>
+        <path d="M610,320 L660,320" stroke="#3fe0c8" stroke-width="1.6" fill="none"/><polygon points="660,320 652,315 652,325" fill="#3fe0c8"/>
+        <!-- passing green test -->
+        <g transform="translate(660,320)">
+          <rect x="0" y="-20" width="150" height="40" rx="11" fill="rgba(63,224,200,.10)" stroke="#3fe0c8" stroke-width="1.4"/>
+          <circle cx="20" cy="0" r="6" fill="#3fe0c8" filter="url(#d1-glow)"/>
+          <text x="85" y="5" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#9bffe9">passing test → merge</text>
+        </g>
+        <text x="838" y="316" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".14em" fill="#3fe0c8">FALSIFIABLE</text>
+        <text x="838" y="332" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85" font-style="italic">trust = an artefact that could say no</text>
+      </g>
+
+      <!-- nutrient pulse on path B -->
+      <circle r="3.4" fill="#aeffee">
+        <animateMotion dur="5s" repeatCount="indefinite" path="M122,224 C200,280 240,320 300,320"/>
+        <animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/>
+      </circle>
+
+      <text x="40" y="404" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">THE WORDS DIDN'T CHANGE — ONE PATH PRODUCED A TEST THAT COULD HAVE SAID NO.</text>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 01</span>Same bug, same agent. <b>Path B produced a test that could have said no</b> — which is the entire difference between a claim and evidence.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 2 — fail for the right reason + skip plan mode ============ -->
+  <section class="prose">
+    <p>
+      The instruction is one sentence, and the order inside it is the whole pattern: <span class="mono">write the test
+      that reveals this bug, run it, confirm it fails the way you'd expect, then fix the root cause and run again.</span>
+      The middle clause does the work. <b>A test that fails for the wrong reason is worse than no test</b> — it green-lights
+      with a typo in the assertion, a wrong import, a fixture that never reached the code. So you watch the red, and you
+      check it's red <em>because the bug is real</em>, not because the test is broken. Only then is the green meaningful.
+    </p>
+
+    <p class="pull">
+      A test that fails for the wrong reason is worse than none. <b>Watch the red — and check why it's red.</b>
+    </p>
+
+    <p>
+      Resist the urge to dress this up. On a trivial bug, plan mode is overhead, not safety — ceremony you reach for
+      because it <em>feels</em> like rigour. The discipline that actually earns its keep on a small bug isn't a plan; it's
+      the failing test. And the temptation runs the other way too: when the fix is "obvious" you want to skip the test
+      entirely. Obvious is exactly when the agent's guess compiles and ships. The smaller and more boring the bug, the
+      cheaper the test, and the more often you'd otherwise wave it through on a glance.
+    </p>
+
+    <div class="sec-label">The upgrade · rubber-stamp → interrogated</div>
+    <h2>From the <em>30-second nod</em> to the diff you argued with.</h2>
+
+    <p>
+      Writing the test is half the move; reading the diff is the other half, and it's a separate discipline. The brittle
+      version is the rubber-stamp — the agent shows a change, you say <em class="teal">"looks fine"</em> in under thirty
+      seconds, and you've tested the agent's confidence, not the code. The upgraded version is interrogated: you read the
+      diff line by line, <b>quote the one line you'd have written differently and say why</b>, and let the better argument
+      win — yours or the agent's. Then you push once on depth: is this the root cause, or a layer above it? The first cut
+      usually fixes whatever makes the test pass; the deeper cut asks whether the test pointed at the right thing at all.
+      Ask what a deeper edit would touch, and watch what the agent defends.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 2 — THE UPGRADE: rubber-stamp → interrogated ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 360" role="img" aria-label="A brittle 30-second accept upgraded into a guarded one: read the diff, quote one line back, push on root-cause-versus-surface, then an optional second TDD pass on the deeper layer — with the human kept in the loop where judgment, not speed, decides.">
+      <defs>
+        <linearGradient id="d2-up" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#5d6a68" stop-opacity=".5"/>
+          <stop offset="1" stop-color="#3fe0c8" stop-opacity=".8"/>
+        </linearGradient>
+        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME REVIEW · DIFFERENT RIGOUR · WHERE JUDGMENT DECIDES, NOT SPEED</text>
+
+      <!-- LEFT: brittle rubber-stamp -->
+      <g>
+        <text x="80" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#5d6a68">BRITTLE · RUBBER-STAMP</text>
+        <rect x="80" y="92" width="300" height="120" rx="12" fill="rgba(93,106,104,.07)" stroke="rgba(93,106,104,.35)"/>
+        <text x="100" y="124" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#9bbcb6">diff appears →</text>
+        <text x="100" y="150" font-family="'Fraunces',serif" font-style="italic" font-size="17" fill="#9bbcb6">"looks fine"</text>
+        <text x="100" y="176" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".14em" fill="#5d6a68">⏱ UNDER 30 SECONDS → MERGE</text>
+        <text x="100" y="200" font-family="'Spline Sans',sans-serif" font-size="11" fill="#5d6a68" font-style="italic">you tested confidence, not code</text>
+      </g>
+
+      <!-- upgrade arrow -->
+      <g transform="translate(400,150)">
+        <path d="M0,0 L70,0" stroke="url(#d2-up)" stroke-width="1.8" fill="none"/>
+        <polygon points="70,0 60,-6 60,6" fill="#3fe0c8" opacity=".85"/>
+        <text x="36" y="-12" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".24em" fill="#3fe0c8">UPGRADE</text>
+      </g>
+
+      <!-- RIGHT: interrogated — four beads on a thread -->
+      <g>
+        <text x="500" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#3fe0c8">GUARDED · INTERROGATED</text>
+        <!-- thread -->
+        <path d="M540,150 C660,118 760,118 980,150" stroke="url(#d2-up)" stroke-width="2.2" fill="none" filter="url(#d2-glow)"/>
+        <!-- beads -->
+        <g>
+          <circle cx="540" cy="148" r="15" fill="rgba(63,224,200,.18)" stroke="#3fe0c8" stroke-width="1.4"/>
+          <text x="540" y="153" text-anchor="middle" font-family="'Fraunces',serif" font-size="13" fill="#9bffe9">1</text>
+          <text x="540" y="186" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#cfe6e0">read the diff</text>
+        </g>
+        <g>
+          <circle cx="680" cy="126" r="15" fill="rgba(63,224,200,.18)" stroke="#3fe0c8" stroke-width="1.4"/>
+          <text x="680" y="131" text-anchor="middle" font-family="'Fraunces',serif" font-size="13" fill="#9bffe9">2</text>
+          <text x="680" y="100" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#cfe6e0">quote one line</text>
+          <text x="680" y="160" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#6f8a85">"…and say why"</text>
+        </g>
+        <g>
+          <circle cx="820" cy="126" r="15" fill="rgba(63,224,200,.18)" stroke="#3fe0c8" stroke-width="1.4"/>
+          <text x="820" y="131" text-anchor="middle" font-family="'Fraunces',serif" font-size="13" fill="#9bffe9">3</text>
+          <text x="820" y="100" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#cfe6e0">root or surface?</text>
+          <text x="820" y="160" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#6f8a85">push once on depth</text>
+        </g>
+        <g>
+          <circle cx="980" cy="148" r="15" fill="rgba(255,179,71,.18)" stroke="#ffb347" stroke-width="1.4"/>
+          <text x="980" y="153" text-anchor="middle" font-family="'Fraunces',serif" font-size="13" fill="#ffe0a8">4</text>
+          <text x="980" y="186" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#fff4e2">2nd TDD pass</text>
+          <text x="980" y="202" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#a86a1f">(optional · deeper layer)</text>
+        </g>
+        <!-- human-in-loop marker -->
+        <text x="760" y="250" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">the human stays where judgment decides</text>
+      </g>
+
+      <!-- pulse along the interrogated thread -->
+      <circle r="3" fill="#aeffee">
+        <animateMotion dur="5.4s" repeatCount="indefinite" path="M540,150 C660,118 760,118 980,150"/>
+        <animate attributeName="opacity" values="0;1;1;0" dur="5.4s" repeatCount="indefinite"/>
+      </circle>
+
+      <text x="40" y="338" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">WHOEVER HAS THE BETTER ARGUMENT WINS — YOURS OR THE AGENT'S.</text>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 02</span>The accept upgrades from a glance to an argument: <b>read · quote one line · push on root-cause-vs-surface</b> · optional second pass on the deeper layer.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 3 — guard against faked tests + compounding intro ============ -->
+  <section class="prose">
+    <p>
+      One trap is built into the loop itself. An agent under pressure to go green can write a test that passes vacuously —
+      asserting nothing, or asserting something that was already true. It looks like coverage; it covers nothing. The guard
+      is the same red you already insisted on: the test must <b>fail first, and fail for the bug's reason.</b> If it's green
+      on the very first run, you didn't gain a test — you gained a decoration. This is why "watch it fail" isn't a nicety;
+      it's the one check that catches a faked test before it becomes permanent false comfort in the suite.
+    </p>
+
+    <div class="sec-label">The compounding loop · the suite gets richer</div>
+    <h2>The test you wrote today catches the regression you'd <em>re-debug next month</em>.</h2>
+
+    <p>
+      Here's where the move stops being a one-off and starts paying interest. Each closed loop — bug, failing test, fix,
+      passing test — leaves the test behind as <b>permanent regression cover.</b> The next change runs against it for free.
+      Do this a hundred times and the suite isn't a chore you maintain; it's a hundred bugs that can no longer come back
+      without tripping an alarm. The loop closes back through the codebase, not as a ritual you perform — the test you
+      wrote for today's confident-but-wrong fix is the one that catches the silent regression you'd otherwise re-debug,
+      from scratch, next month.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP (suite gets richer) ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="A four-beat loop — bug, failing red test, fix, passing test that stays as regression cover — closing back through the soil, with the test suite visibly densifying across passes one, two and three.">
+      <defs>
+        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#ff6b6b" stop-opacity=".8"/>
+          <stop offset=".5" stop-color="#3fe0c8" stop-opacity=".8"/>
+          <stop offset="1" stop-color="#ffb347" stop-opacity=".6"/>
+        </linearGradient>
+        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%">
+          <stop offset="0" stop-color="#9bffe9"/>
+          <stop offset=".55" stop-color="#3fe0c8"/>
+          <stop offset="1" stop-color="#1d8d80"/>
+        </radialGradient>
+        <radialGradient id="d3-red" cx="35%" cy="30%" r="70%">
+          <stop offset="0" stop-color="#ffb3b3"/>
+          <stop offset=".55" stop-color="#ff6b6b"/>
+          <stop offset="1" stop-color="#9c3a3a"/>
+        </radialGradient>
+        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">EACH CLOSED LOOP LEAVES THE SUITE RICHER · WHAT CHANGES BETWEEN PASSES</text>
+
+      <!-- ===== LEFT HALF: the loop, closing through the soil (not a clean ring) ===== -->
+      <g transform="translate(40,52)">
+        <!-- arc-pair that bows out and rejoins through the soil, rather than a closed circle -->
+        <path d="M70,170 C70,70 330,70 330,170" stroke="url(#d3-ring)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M330,170 C330,300 70,300 70,170" stroke="url(#d3-ring)" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-dasharray="3 9" opacity=".75"/>
+        <text x="200" y="320" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#3b524e">↓ CLOSES BACK THROUGH THE CODEBASE</text>
+
+        <!-- breathing pulse running the live arc -->
+        <circle r="3.6" fill="#aeffee">
+          <animateMotion dur="9s" repeatCount="indefinite" path="M70,170 C70,70 330,70 330,170 C330,300 70,300 70,170"/>
+          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- beads -->
+        <g>
+          <circle cx="70" cy="170" r="20" fill="url(#d3-red)" filter="url(#d3-glow)"/>
+          <text x="70" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#3a0f0f" font-weight="500">1</text>
+          <text x="38" y="173" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12" fill="#ffb3b3">bug</text>
+        </g>
+        <g>
+          <circle cx="200" cy="80" r="20" fill="url(#d3-red)" filter="url(#d3-glow)"/>
+          <text x="200" y="85" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#3a0f0f" font-weight="500">2</text>
+          <text x="200" y="56" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#ffb3b3">failing test (red)</text>
+        </g>
+        <g>
+          <circle cx="330" cy="170" r="20" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="330" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">3</text>
+          <text x="362" y="173" font-family="'Spline Sans',sans-serif" font-size="12" fill="#9bffe9">fix → green</text>
+        </g>
+        <g>
+          <circle cx="200" cy="260" r="20" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="200" y="265" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">4</text>
+          <text x="200" y="296" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">test stays · regression cover</text>
+        </g>
+        <text x="200" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">NEXT CHANGE</text>
+        <text x="200" y="184" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#3fe0c8">runs against it free</text>
+      </g>
+
+      <!-- ===== RIGHT HALF: the suite densifying across passes ===== -->
+      <g transform="translate(540,68)">
+
+        <!-- pass 1 — thin -->
+        <g>
+          <rect x="0" y="14" width="160" height="200" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.22)"/>
+          <rect x="0" y="14" width="160" height="20" rx="6" fill="rgba(63,224,200,.10)"/>
+          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">test suite</text>
+          <text x="150" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">wk1</text>
+          <g stroke="#3fe0c8" stroke-width="2" opacity=".7">
+            <line x1="12" y1="58" x2="120" y2="58"/>
+          </g>
+          <g stroke="#6f8a85" stroke-width="2" opacity=".4">
+            <line x1="12" y1="78" x2="98" y2="78"/>
+            <line x1="12" y1="98" x2="80" y2="98"/>
+          </g>
+          <text x="80" y="240" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#5d6a68">1 BUG FENCED</text>
+        </g>
+
+        <!-- arrow -->
+        <g transform="translate(170,114)">
+          <path d="M0,0 L26,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
+          <polygon points="26,0 18,-5 18,5" fill="#3fe0c8" opacity=".75"/>
+        </g>
+
+        <!-- pass 2 — denser -->
+        <g transform="translate(200,0)">
+          <rect x="0" y="14" width="160" height="220" rx="8" fill="rgba(8,17,18,.78)" stroke="rgba(63,224,200,.35)"/>
+          <rect x="0" y="14" width="160" height="20" rx="6" fill="rgba(63,224,200,.14)"/>
+          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">test suite</text>
+          <text x="150" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">wk4</text>
+          <g stroke="#3fe0c8" stroke-width="2" opacity=".8">
+            <line x1="12" y1="58" x2="120" y2="58"/>
+            <line x1="12" y1="78" x2="140" y2="78"/>
+            <line x1="12" y1="98" x2="108" y2="98"/>
+          </g>
+          <g stroke="#9bffe9" stroke-width="2" opacity=".7">
+            <line x1="12" y1="118" x2="132" y2="118"/>
+            <line x1="12" y1="138" x2="98" y2="138"/>
+            <line x1="12" y1="158" x2="126" y2="158"/>
+          </g>
+          <text x="80" y="252" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#9bffe9">EACH BUG · A TEST</text>
+        </g>
+
+        <!-- arrow -->
+        <g transform="translate(370,124)">
+          <path d="M0,0 L26,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
+          <polygon points="26,0 18,-5 18,5" fill="#3fe0c8" opacity=".75"/>
+        </g>
+
+        <!-- pass 3 — a wall the regressions can't get past -->
+        <g transform="translate(400,0)">
+          <rect x="0" y="0" width="160" height="260" rx="8" fill="rgba(8,17,18,.85)" stroke="url(#d3-ring)" stroke-width="1.5" filter="url(#d3-glow)"/>
+          <rect x="0" y="0" width="160" height="20" rx="6" fill="rgba(255,179,71,.16)"/>
+          <text x="10" y="15" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">test suite</text>
+          <text x="150" y="15" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">wk12</text>
+          <g stroke="#ffb347" stroke-width="2.2">
+            <line x1="12" y1="40" x2="138" y2="40"/>
+            <line x1="12" y1="60" x2="120" y2="60"/>
+          </g>
+          <g stroke="#9bffe9" stroke-width="2" opacity=".8">
+            <line x1="12" y1="84" x2="146" y2="84"/>
+            <line x1="12" y1="104" x2="120" y2="104"/>
+            <line x1="12" y1="124" x2="138" y2="124"/>
+            <line x1="12" y1="144" x2="110" y2="144"/>
+            <line x1="12" y1="164" x2="128" y2="164"/>
+            <line x1="12" y1="184" x2="138" y2="184"/>
+            <line x1="12" y1="204" x2="104" y2="204"/>
+            <line x1="12" y1="224" x2="126" y2="224"/>
+          </g>
+          <text x="80" y="280" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#ffb347">A WALL OF NO-RETURN</text>
+        </g>
+
+        <!-- legend -->
+        <g transform="translate(0,300)">
+          <rect x="0" y="0" width="14" height="3" fill="#ffb347"/>
+          <text x="22" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">BUGS THAT CAN'T COME BACK</text>
+          <rect x="0" y="14" width="14" height="3" fill="#9bffe9"/>
+          <text x="22" y="18" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">REGRESSION COVER · ADDED PER LOOP</text>
+        </g>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 03</span><em>Compound interest on a test suite.</em> Each closed loop leaves a test behind; <b>the bug you fenced today can't come back without tripping an alarm</b>.</div>
+  </div>
+
+  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
+  <div class="plates">
+    <div class="plate use">
+      <div class="beat-label amber"><b>Use when</b></div>
+      <p class="body">
+        You're about to hand an agent a bug and <span class="grey">it's already drafting the fix</span> — a backlog bug
+        you half-remember, a wrong-total or off-by-one you <b>can't eyeball</b>, a change touching a file you didn't write.
+        Anywhere agent speed outruns your ability to check it.
+      </p>
+    </div>
+    <div class="plate build">
+      <div class="beat-label"><b>Build</b></div>
+      <p class="body">
+        A failing test committed <b>before the fix</b> — the bug's evidence, now permanent regression cover — and a shipped
+        PR whose history shows test-before-fix, plus a diff you objected to at least once.
+      </p>
+    </div>
+    <div class="plate test">
+      <div class="beat-label"><b>Test</b></div>
+      <p class="body">
+        The test went <em>red before green</em>, for the right reason.<br>
+        Not <em class="no">"looks fine" in 30 seconds.</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ CORE MOVES — actionable heart ============ -->
+  <section class="moves">
+    <div class="beat-label"><b>Core moves</b></div>
+    <div class="moves-head">
+      <h2>The action, in order</h2>
+      <span class="lede">Reuse it on every bug an agent offers to fix — not just this one.</span>
+    </div>
+
+    <div class="move-rail">
+      <div class="thread"></div>
+      <div class="step">
+        <div class="bead">1</div>
+        <h3>Test first — and watch it fail</h3>
+        <p>One line: write the test, run it, <b>confirm it's red</b> for the bug's reason.</p>
+      </div>
+      <div class="step">
+        <div class="bead">2</div>
+        <h3>Skip plan mode</h3>
+        <p>On a trivial bug, ceremony is overhead. <b>Tests-first is the discipline.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">3</div>
+        <h3>Read the diff, push one line</h3>
+        <p>Quote the line you'd write differently. <b>Better argument wins.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">4</div>
+        <h3>Push once on depth</h3>
+        <p>Root cause, or a layer above? <b>See what the agent defends.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">5</div>
+        <h3>Guard against faked tests</h3>
+        <p>Green on first run = a decoration. <b>It must fail first.</b></p>
+      </div>
+    </div>
+
+    <div class="compound">
+      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ff6b6b"/><stop offset="55%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
+        </linearGradient></defs>
+        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
+          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
+        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
+        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
+        <circle r="3" fill="#aeffee">
+          <animateMotion dur="5s" repeatCount="indefinite"
+            path="M37,11 a26,26 0 1,1 -0.1,0"/>
+        </circle>
+      </svg>
+      <div class="ctext">
+        <div class="cyc">bug<span class="arr">→</span>failing test (red)<span class="arr">→</span>fix root cause<span class="arr">→</span>green<span class="arr">→</span>stays as regression cover</div>
+        <p>Then it's a habit, not a task: <b>compound interest on a test suite.</b> Each loop fences one more bug for good — and converts the agent's fluency from a risk into reviewable evidence.</p>
+      </div>
+    </div>
+
+    <!-- the Monday-move / no-permission aside -->
+    <p class="aside">
+      <b>Monday move: take the next bug an agent offers to fix.</b> Before it touches code, send one line —
+      <span class="mono">"Write the failing test that proves this bug exists, run it, show me it fails — then fix the root cause."</span>
+      Needs nothing but a different first sentence: no platform, no budget, no sign-off. No test infra on this path? Log
+      <span class="mono">"no verifier here"</span> as a real finding — the gap surfaces later, it isn't a blocker now.
+    </p>
+  </section>
+
+  <!-- ============ WHY — the conviction ============ -->
+  <section class="why">
+    <div class="beat-label"><b>Why</b></div>
+
+    <div class="principle-block">
+      <div class="principle-label">The principle</div>
+      <p class="principle-line">Claims aren't <em>evidence</em>. The agent's fix is a hypothesis; the failing test is the only thing that makes it falsifiable.</p>
+    </div>
+
+    <p class="quote">"Without a failing test first, the fix isn't a fix — it's a guess that happens to compile."</p>
+    <p class="gloss">
+      An agent's self-report is a reconstruction — persuasive precisely where it's wrong. A test that fails first and
+      passes after is <b>the one artefact in the loop that can't confabulate.</b> It either reproduces the bug or it
+      doesn't. You already know TDD; the second discipline is what's new — running it <em>with</em> an agent means the
+      test also fences the agent, converting its fluency from a risk you absorb into evidence you can review.
+    </p>
+    <p class="gloss">
+      The counterintuitive part: on a trivial bug you're tempted to skip the test because the fix is <em>"obvious."</em>
+      Obvious is exactly when the agent's guess compiles and ships. Calibration helps here too — the curriculum's
+      rule-of-thumb is to assume roughly a tenth of what the agent says or does is misrepresentation. The failing test is
+      how you stop guessing which tenth.
+    </p>
+
+    <!-- labelled calibration strip — carries epistemic content, not a decorative shout -->
+    <div class="calib">
+      <span class="tag">⚠ Calibration, not measurement</span>
+      <p>
+        <b>"Assume ~10% of what the agent says or does is misrepresentation"</b> is an <em>illustrative calibration figure
+        the curriculum uses to set skepticism — not a measured error rate.</em> Could be more, could be less. It justifies
+        the habit; it doesn't quantify the risk.
+      </p>
+    </div>
+
+    <div class="corollary"><span class="sd"></span>A green diff is a claim. A red-then-green test is evidence.</div>
+  </section>
+
+  <!-- ============ TEST-IN-PRACTICE inline panel ============ -->
+  <section class="practice">
+    <div class="beat-label amber"><b>How you KNOW it worked · in practice</b></div>
+    <p>
+      The test went <em>red before it went green</em> — you watched it fail for the right reason, not pass on the first
+      run. A <b>line-level objection</b> sits in your scrollback or the commit body before the merge: proof you read the
+      diff, not skimmed it. And the root-cause turn actually happened — a <em>"is this the root cause or a layer above?"</em>
+      exchange before any commit.
+    </p>
+    <p>
+      The negative test is the honest one: if the agent's first answer went straight to green and you said
+      <em class="no">"looks fine"</em> in under thirty seconds, you tested the agent's confidence, not the code. No red,
+      no objection, no depth question — no evidence.
+    </p>
+  </section>
+
+  <!-- ============ CONNECTS TO — neighbour patterns ============ -->
+  <section class="connects">
+    <h2>Connects to</h2>
+    <div class="sub">Threads leaving this node · the pattern language</div>
+
+    <div class="web">
+      <svg viewBox="0 0 1080 300" aria-hidden="true">
+        <defs>
+          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <circle cx="150" cy="150" r="30" fill="none" stroke="#3fe0c8" stroke-width="1.2" opacity=".5"/>
+        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#wglow)"/>
+        <circle cx="150" cy="150" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
+
+        <path id="th1" d="M150,150 C360,88 540,70 760,74" stroke="url(#t1)" stroke-width="2.2" fill="none"/>
+        <path id="th2" d="M150,150 C380,148 560,150 760,150" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
+        <path id="th3" d="M150,150 C360,212 540,228 760,228" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
+
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+      </svg>
+
+      <div class="neighbours">
+        <div class="origin-chip" style="left:13.8%;top:50%">Write the failing test first<small>software · you are here</small></div>
+        <a class="nb" href="orient-and-introspect.html" style="left:74%;top:24.7%"><span class="sd"></span>Orient and introspect <span class="recipe-no">prerequisite</span></a>
+        <a class="nb" href="access-surface-map.html" style="left:74%;top:50%"><span class="sd"></span>Map the access surface <span class="recipe-no">sibling guardrail</span></a>
+        <a class="nb amber" href="packaging-the-run.html" style="left:74%;top:76%"><span class="sd"></span>Package the run <span class="recipe-no">downstream</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="floor">
+    <span class="door">A door, not a destination — fence the agent's claims at your own keyboard first; the same test becomes the gate every PR clears.</span>
+    <span class="meta">The Big Picture · Pattern Language</span>
+  </footer>
+
+</div>
+</body>
+</html>

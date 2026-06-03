@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Run N tasks in parallel — Pattern · The Big Picture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-0:#05080a;
+    --soil-1:#080d10;
+    --soil-2:#0c1418;
+    --teal:#3fe0c8;
+    --teal-dim:#1d8d80;
+    --amber:#ffb347;
+    --amber-dim:#a86a1f;
+    --spore:#eafff9;
+    --ink:#cfe6e0;
+    --ink-dim:#6f8a85;
+    --ink-faint:#3b524e;
+    --hairline:rgba(63,224,200,.10);
+    --grey:#5d6a68;
+    --grey-dim:#39423f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--soil-0);
+    font-family:'Spline Sans',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  /* atmospheric soil + light-well — recedes for the long read */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
+      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
+      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+  }
+  /* grain / spore dust */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 64px;}
+
+  /* ============ BREADCRUMB ============ */
+  .crumb{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+    color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
+  }
+  .crumb a{color:var(--teal-dim);text-decoration:none;transition:color .25s}
+  .crumb a:hover{color:var(--teal)}
+  .crumb .here{color:var(--ink)}
+
+  /* ============ PATTERN HEADER (name + essence) ============ */
+  header.pat{padding:30px 0 8px;max-width:900px;}
+  .kicker{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--teal-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .kicker .spore-mark{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 14px 2px rgba(63,224,200,.6);
+    flex:none;
+  }
+  .kicker .pat-no{color:var(--ink-faint)}
+  header.pat h1{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(40px,7vw,68px);line-height:.98;
+    color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
+  }
+  header.pat h1 em{font-style:italic;color:var(--teal);font-weight:400}
+  .principle{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
+  }
+  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .essence{
+    font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:720px;
+  }
+  .essence b{color:var(--spore);font-weight:500}
+
+  /* ============ HERO PICTURE ============ */
+  .hero-frame{
+    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(13,31,32,.5), rgba(5,8,10,.6));
+    position:relative;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.04) inset;
+  }
+  .hero-frame svg{display:block;width:100%;height:auto}
+  .hero-cap{
+    position:absolute;left:18px;bottom:13px;z-index:3;
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
+    color:var(--ink-dim);text-transform:uppercase;
+  }
+  .hero-cap b{color:var(--teal)}
+
+  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
+  .prose{
+    margin-top:34px;max-width:760px;
+  }
+  .prose h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
+    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+  }
+  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .prose h2.amber em{color:var(--amber)}
+  .prose .sec-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+    margin-top:42px;
+  }
+  .prose .sec-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
+  }
+  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .prose p{
+    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
+    letter-spacing:.002em;
+  }
+  .prose p b{color:var(--spore);font-weight:500}
+  .prose p em{font-style:italic;color:var(--ink-dim)}
+  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p .mono{
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
+  }
+  .prose p .mono.amber{color:var(--amber)}
+  .prose .pull{
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+    color:var(--ink);max-width:680px;
+  }
+  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
+
+  /* ============ PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
+  .diagram{
+    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+    background:
+      radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
+      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
+    position:relative;
+    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
+  }
+  .diagram svg{display:block;width:100%;height:auto}
+  .diagram .dcap{
+    padding:12px 20px 16px;border-top:1px solid var(--hairline);
+    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
+    color:var(--ink-dim);letter-spacing:.003em;
+    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  }
+  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
+  .diagram .dcap .num{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
+  }
+
+  /* ============ RECIPE SECTION BEATS ============ */
+  .beat-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  }
+  .beat-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.6);
+  }
+  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+
+  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
+  .plates{
+    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
+  }
+  .plate{
+    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
+    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
+  }
+  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
+  .plate .body b{color:var(--spore);font-weight:500}
+  .plate .body .grey{color:var(--grey)}
+  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
+  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
+
+  /* ============ CORE MOVES ============ */
+  .moves{margin-top:46px}
+  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
+  .moves-head h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
+  .move-rail{
+    margin-top:20px;position:relative;
+    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+  }
+  .move-rail .thread{
+    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
+    background:linear-gradient(90deg,
+      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
+      rgba(63,224,200,.7) 50%, rgba(255,179,71,.65) 94%, rgba(255,179,71,0) 100%);
+  }
+  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
+  .step:first-child{padding-left:0}
+  .step .bead{
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
+    margin-bottom:13px;
+  }
+  .step:nth-child(5) .bead,
+  .step:nth-child(6) .bead{
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
+  }
+  .step h3{
+    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
+  }
+  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
+  .step p b{color:var(--ink);font-weight:500}
+
+  .compound{
+    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
+    padding:18px 22px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.07), transparent 60%),
+      rgba(8,17,18,.55);
+    display:flex;align-items:center;gap:20px;
+  }
+  .compound .loop-ico{flex:none}
+  .compound .ctext{flex:1}
+  .compound .ctext .cyc{
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
+  }
+  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
+  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
+  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+
+  .aside{
+    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
+    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+  }
+  .aside b{color:var(--amber);font-weight:500}
+  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
+
+  /* ============ WHY ============ */
+  .why{
+    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
+    padding:26px 30px 28px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
+      rgba(7,14,15,.6);
+  }
+  .why .beat-label{margin-bottom:14px}
+  .why .principle-block{
+    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
+  }
+  .why .principle-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
+  }
+  .why .principle-line{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
+    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
+  }
+  .why .principle-line em{font-style:italic;color:var(--teal)}
+  .why .quote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--teal);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(63,224,200,.26);max-width:840px;
+  }
+  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
+  .why .gloss b{color:var(--spore);font-weight:500}
+  .why .gloss em{font-style:italic;color:var(--ink-dim)}
+  .why .gloss + .gloss{margin-top:12px}
+  .why .corollary{
+    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
+    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+  }
+  .why .corollary .sd{
+    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+  }
+
+  /* ============ TEST-IN-PRACTICE inline panel ============ */
+  .practice{
+    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
+    padding:22px 26px 24px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
+      rgba(8,15,17,.5);
+  }
+  .practice .beat-label{margin-bottom:12px}
+  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
+  .practice p b{color:var(--spore);font-weight:500}
+  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
+  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ CONNECTS TO ============ */
+  .connects{margin-top:52px}
+  .connects h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .connects .sub{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:5px;
+  }
+  .web{position:relative;margin-top:8px}
+  .web svg{display:block;width:100%;height:auto}
+  .neighbours{position:absolute;inset:0;pointer-events:none}
+  .nb{
+    position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
+    display:flex;align-items:center;gap:9px;
+    padding:8px 14px 9px;border-radius:13px;
+    background:rgba(8,15,17,.82);backdrop-filter:blur(4px);
+    border:1px solid var(--hairline);
+    color:var(--ink);font-size:13px;letter-spacing:.005em;white-space:nowrap;
+    transition:border-color .3s,color .3s,background .3s,transform .3s;
+    cursor:pointer;text-decoration:none;
+  }
+  .nb .recipe-no{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--ink-faint);
+  }
+  .nb .sd{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 12px 2px rgba(63,224,200,.55);
+  }
+  .nb.amber .sd{background:var(--amber);box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 12px 2px rgba(255,179,71,.5)}
+  .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
+  .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
+  .nb:hover .sd{animation:throb 1s ease-in-out infinite}
+  .nb.soon{opacity:.62}
+  .nb.soon::after{
+    content:"soon";
+    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);
+    border:1px solid var(--ink-faint);border-radius:20px;
+    padding:2px 7px 3px;margin-left:4px;
+  }
+  .nb.soon:hover{opacity:1}
+  @keyframes throb{50%{transform:scale(1.5)}}
+  .origin-chip{
+    position:absolute;transform:translate(-50%,-50%);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 24px rgba(63,224,200,.4);white-space:nowrap;text-align:center;
+  }
+  .origin-chip small{
+    display:block;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:8.5px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--teal-dim);margin-top:3px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer.floor{
+    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  footer.floor .door{
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
+    text-shadow:0 0 22px rgba(255,179,71,.3);
+  }
+  footer.floor .meta{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+
+  /* breathing glow on the diagram spore-tips */
+  @keyframes breathe{
+    0%,100%{opacity:.55}
+    50%{opacity:1}
+  }
+  .breathe{animation:breathe 4.2s ease-in-out infinite}
+
+  @media (max-width:860px){
+    .plates{grid-template-columns:1fr 1fr}
+    .plate.use{grid-column:1 / -1}
+  }
+  @media (max-width:780px){
+    .plates{grid-template-columns:1fr}
+    .plate.use{grid-column:1}
+    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
+    .move-rail .thread{display:none}
+    .step{padding:0}
+    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .neighbours .nb{font-size:11px;padding:6px 10px}
+    .prose p{font-size:14.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ BREADCRUMB ============ -->
+  <nav class="crumb">
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Run N tasks in parallel</span>
+  </nav>
+
+  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <header class="pat">
+    <div class="kicker"><span class="spore-mark"></span>Recipe · the work · <span class="pat-no">software mat · personal throughput</span></div>
+    <h1>Run <em>N</em> tasks in parallel</h1>
+    <p class="principle">The principle: <b>one session per working directory</b> — isolate the tree, reconcile on the shared graph.</p>
+    <p class="essence">
+      Give each parallel task <b>its own working directory</b> on its own branch, all sharing one Git history —
+      so three agents can run at once without clobbering each other's files. The personal unlock that becomes a
+      team's <b>collision-free contribution model</b>.
+    </p>
+  </header>
+
+  <!-- ============ HERO PICTURE: one trunk → three worktrees, shared roots, one anti-pattern ghost ============ -->
+  <div class="hero-frame">
+    <svg viewBox="0 0 1080 440" role="img" aria-label="One repository trunk in the soil splitting into three sibling worktree directories — bug fix, refactor, feature — each with one Claude Code session glowing above it, all rooted in the same shared Git history below. A greyed ghost folder on the side shows two sessions crammed into one directory, the later write overwriting the earlier edit.">
+      <defs>
+        <radialGradient id="hwell" cx="50%" cy="22%" r="70%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".16"/>
+          <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".07"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="sessCore" cx="40%" cy="35%" r="70%">
+          <stop offset="0%" stop-color="#eafff9"/>
+          <stop offset="45%" stop-color="#3fe0c8"/>
+          <stop offset="100%" stop-color="#0c2b2a"/>
+        </radialGradient>
+        <linearGradient id="rootGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#1d8d80" stop-opacity=".7"/>
+          <stop offset="50%" stop-color="#3fe0c8" stop-opacity=".85"/>
+          <stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/>
+        </linearGradient>
+        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <rect x="0" y="0" width="1080" height="440" fill="url(#hwell)"/>
+
+      <!-- shared git history root running across the bottom -->
+      <path d="M120,372 C360,372 720,372 960,372" stroke="url(#rootGrad)" stroke-width="3" fill="none" opacity=".9"/>
+      <text x="120" y="400" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".22em" fill="#1d8d80">ONE SHARED GIT HISTORY · THE COMMIT GRAPH ALL THREE RIDE</text>
+      <!-- root tendrils -->
+      <g stroke="#1d8d80" stroke-width="1" fill="none" opacity=".4">
+        <path d="M300,372 C300,396 340,406 380,414"/>
+        <path d="M540,372 C540,398 520,408 500,418"/>
+        <path d="M780,372 C780,396 820,406 860,414"/>
+      </g>
+
+      <!-- the trunk rising from the root, splitting into three -->
+      <g stroke="#3fe0c8" stroke-width="2.4" fill="none" opacity=".85">
+        <path d="M300,372 C300,300 250,250 250,196"/>
+        <path d="M540,372 C540,290 540,250 540,196"/>
+        <path d="M780,372 C780,300 830,250 830,196"/>
+      </g>
+
+      <!-- ===== three worktree directories ===== -->
+      <!-- worktree 1: bug fix -->
+      <g>
+        <rect x="170" y="150" width="160" height="46" rx="9" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.4)" stroke-width="1.2"/>
+        <text x="186" y="170" font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#3fe0c8">../repo-bug-fix</text>
+        <text x="186" y="186" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".06em" fill="#6f8a85">branch: bug/issue-412</text>
+        <circle cx="250" cy="84" r="20" fill="url(#sessCore)" filter="url(#hglow)"/>
+        <text x="250" y="58" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#6f8a85">SESSION 1</text>
+        <line x1="250" y1="104" x2="250" y2="150" stroke="#3fe0c8" stroke-width="1" opacity=".5"/>
+      </g>
+      <!-- worktree 2: refactor -->
+      <g>
+        <rect x="460" y="150" width="160" height="46" rx="9" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.4)" stroke-width="1.2"/>
+        <text x="476" y="170" font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#3fe0c8">../repo-refactor</text>
+        <text x="476" y="186" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".06em" fill="#6f8a85">branch: refactor/auth</text>
+        <circle cx="540" cy="84" r="20" fill="url(#sessCore)" filter="url(#hglow)"/>
+        <text x="540" y="58" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#6f8a85">SESSION 2</text>
+        <line x1="540" y1="104" x2="540" y2="150" stroke="#3fe0c8" stroke-width="1" opacity=".5"/>
+      </g>
+      <!-- worktree 3: feature -->
+      <g>
+        <rect x="750" y="150" width="160" height="46" rx="9" fill="rgba(8,17,18,.7)" stroke="rgba(255,179,71,.4)" stroke-width="1.2"/>
+        <text x="766" y="170" font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#ffb347">../repo-feature</text>
+        <text x="766" y="186" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".06em" fill="#6f8a85">branch: feature/export-csv</text>
+        <circle cx="830" cy="84" r="20" fill="url(#sessCore)" filter="url(#hglow)"/>
+        <text x="830" y="58" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#6f8a85">SESSION 3</text>
+        <line x1="830" y1="104" x2="830" y2="150" stroke="#ffb347" stroke-width="1" opacity=".5"/>
+      </g>
+
+      <!-- nutrient pulse climbing one trunk -->
+      <circle r="3.4" fill="#aeffee">
+        <animateMotion dur="4.6s" repeatCount="indefinite" path="M540,372 C540,290 540,250 540,196"/>
+        <animate attributeName="opacity" values="0;1;1;0" dur="4.6s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- ===== the anti-pattern ghost: two sessions in one folder ===== -->
+      <g opacity=".62">
+        <rect x="952" y="150" width="118" height="46" rx="9" fill="rgba(13,16,16,.6)" stroke="#39423f" stroke-width="1" stroke-dasharray="4 4"/>
+        <text x="964" y="170" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#5d6a68">../repo</text>
+        <text x="964" y="186" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#4b5654">two sessions</text>
+        <!-- two ghost sessions crammed above one folder -->
+        <circle cx="998" cy="100" r="13" fill="#2a3331" stroke="#5d6a68" stroke-width=".8"/>
+        <circle cx="1024" cy="100" r="13" fill="#2a3331" stroke="#5d6a68" stroke-width=".8"/>
+        <!-- the later write overwrites -->
+        <line x1="990" y1="208" x2="1036" y2="226" stroke="#5d6a68" stroke-width="1.4"/>
+        <line x1="1036" y1="208" x2="990" y2="226" stroke="#5d6a68" stroke-width="1.4"/>
+        <text x="1012" y="248" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#5d6a68" font-style="italic">later write wins</text>
+        <text x="1012" y="263" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#5d6a68" font-style="italic">edit clobbered</text>
+      </g>
+
+      <text x="170" y="430" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">ISOLATION ABOVE · SHARED ROOTS BELOW · &nbsp;ONE PLACE IT BREAKS →</text>
+    </svg>
+    <div class="hero-cap">Three trees, one root. <b>The model was never the bottleneck</b> — the single working tree was.</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
+  <!-- ============================================================ -->
+  <section class="prose">
+    <div class="sec-label">The mechanism · why a branch isn't enough</div>
+    <h2>Same two branches — the question is whether the tree <em>moves under the session</em>.</h2>
+
+    <p>
+      Once you trust the agent on one thing, the obvious move is to run it on three: a bug here, a refactor there,
+      a small feature in a third corner. The hour you spent on one task could carry three. Then you point a second
+      session at the same folder and they start clobbering each other. The reflex fix — <span class="mono">git checkout</span>
+      a different branch — is worse than useless here: it <b>overwrites the working tree in place</b>. The editor and the
+      running session are suddenly staring at file contents that changed under them; the session's scrollback now
+      references files that no longer look the way it remembers, and the next turn goes sideways.
+    </p>
+
+    <p>
+      A clone fixes the collision the heavy way — a full second copy on disk, history severed — which is overkill for
+      "I want two branches at once." Worktrees are the middle path: <b>one repo, many working directories</b>, each
+      checked out to its own branch, all sharing the same underlying Git history. Switching between them is
+      <span class="mono">cd</span>, not <span class="mono">git checkout</span>. Your original directory stays exactly
+      where it was — zero checkout churn. The diagram below puts the two tracks side by side: same two branches, the only
+      difference is whether the tree moves under the session.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 1 — BRANCH-SWITCH CHURN vs. WORKTREE ISOLATION ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 432" role="img" aria-label="Top track: one directory, git checkout flips its working-tree contents in place while a session is mid-edit, leaving the session referencing files that no longer look the way it remembers. Bottom track: the same two branches each in its own worktree directory, cd moves between them, both working trees stable, the shared Git history a single root beneath both.">
+      <defs>
+        <linearGradient id="d1-grey" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5d6a68" stop-opacity=".7"/><stop offset="1" stop-color="#39423f" stop-opacity=".2"/></linearGradient>
+        <linearGradient id="d1-teal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/><stop offset="1" stop-color="#1d8d80" stop-opacity=".3"/></linearGradient>
+        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME TWO BRANCHES · THE DIFFERENCE IS WHETHER THE WORKING TREE MOVES UNDER THE SESSION</text>
+
+      <!-- ===== TOP TRACK — git checkout overwrites in place ===== -->
+      <g>
+        <text x="40" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#5d6a68">ONE DIRECTORY · git checkout</text>
+
+        <!-- the single directory -->
+        <rect x="40" y="90" width="150" height="92" rx="10" fill="rgba(13,16,16,.6)" stroke="#5d6a68" stroke-width="1"/>
+        <text x="56" y="112" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#9aa6a3">../repo</text>
+        <text x="56" y="132" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#6f8a85">on: bug/issue-412</text>
+        <!-- session above it, mid-edit -->
+        <circle cx="115" cy="60" r="14" fill="#2a3331" stroke="#6f8a85" stroke-width=".9"/>
+        <text x="115" y="40" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing="1.5" fill="#6f8a85">SESSION · MID-EDIT</text>
+
+        <!-- the checkout arrow flipping contents -->
+        <g transform="translate(210,136)">
+          <path d="M0,0 L70,0" stroke="#5d6a68" stroke-width="1.6" fill="none"/>
+          <polygon points="70,0 60,-6 60,6" fill="#5d6a68"/>
+          <text x="34" y="-12" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">checkout refactor/auth</text>
+          <text x="34" y="24" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="11.5" fill="#a8504a">overwrites in place</text>
+        </g>
+
+        <!-- same directory, contents flipped -->
+        <rect x="300" y="90" width="150" height="92" rx="10" fill="rgba(13,16,16,.6)" stroke="#5d6a68" stroke-width="1"/>
+        <text x="316" y="112" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#9aa6a3">../repo</text>
+        <text x="316" y="132" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#6f8a85">now: refactor/auth</text>
+        <text x="316" y="152" font-family="'Spline Sans',sans-serif" font-size="9.5" fill="#a8504a" font-style="italic">files changed underneath</text>
+
+        <!-- the session's broken footing -->
+        <g stroke="url(#d1-grey)" stroke-width="1.8" fill="none" stroke-dasharray="3 5">
+          <path d="M480,136 C560,120 640,150 720,128"/>
+        </g>
+        <rect x="724" y="100" width="316" height="64" rx="10" fill="rgba(40,20,18,.45)" stroke="#7a3b35" stroke-width="1"/>
+        <text x="740" y="124" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#c77">CONFUSED</text>
+        <text x="740" y="144" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfa9a4" font-style="italic">scrollback references files that no</text>
+        <text x="740" y="158" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfa9a4" font-style="italic">longer look the way it remembers</text>
+      </g>
+
+      <!-- divider -->
+      <line x1="40" y1="218" x2="1040" y2="218" stroke="var(--hairline)" stroke-width="1"/>
+
+      <!-- ===== BOTTOM TRACK — two worktrees, cd, shared root ===== -->
+      <g>
+        <text x="40" y="258" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#3fe0c8">TWO WORKTREE DIRECTORIES · cd</text>
+
+        <!-- worktree A -->
+        <rect x="120" y="276" width="170" height="86" rx="10" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.4)" stroke-width="1.2"/>
+        <text x="136" y="298" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#3fe0c8">../repo-bug-fix</text>
+        <text x="136" y="318" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#6f8a85">bug/issue-412 · stable</text>
+        <circle cx="205" cy="248" r="13" fill="url(#sessCore)" filter="url(#d1-glow)"/>
+        <text x="205" y="350" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="10" fill="#3fe0c8" font-style="italic">footing intact</text>
+
+        <!-- cd between -->
+        <g transform="translate(310,318)">
+          <path d="M0,0 L70,0" stroke="#3fe0c8" stroke-width="1.4" fill="none" opacity=".8"/>
+          <path d="M70,0 L0,0" stroke="#3fe0c8" stroke-width="1.4" fill="none" opacity=".8" transform="translate(0,-12)"/>
+          <polygon points="70,0 60,-5 60,5" fill="#3fe0c8"/>
+          <polygon points="0,-12 10,-17 10,-7" fill="#3fe0c8"/>
+          <text x="35" y="22" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".14em" fill="#3fe0c8">cd</text>
+        </g>
+
+        <!-- worktree B -->
+        <rect x="400" y="276" width="170" height="86" rx="10" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.4)" stroke-width="1.2"/>
+        <text x="416" y="298" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#3fe0c8">../repo-refactor</text>
+        <text x="416" y="318" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#6f8a85">refactor/auth · stable</text>
+        <circle cx="485" cy="248" r="13" fill="url(#sessCore)" filter="url(#d1-glow)"/>
+        <text x="485" y="350" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="10" fill="#3fe0c8" font-style="italic">footing intact</text>
+
+        <!-- shared root beneath both -->
+        <path d="M205,362 C205,392 345,400 485,400 C625,400 760,392 760,362" stroke="url(#d1-teal)" stroke-width="2" fill="none" opacity=".8"/>
+        <text x="612" y="334" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#1d8d80">SAME UNDERLYING</text>
+        <text x="612" y="350" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#1d8d80">GIT HISTORY</text>
+        <circle cx="760" cy="362" r="6" fill="#3fe0c8" filter="url(#d1-glow)"/>
+        <circle r="2.6" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite" path="M205,362 C205,392 345,400 485,400 C625,400 760,392 760,362"/><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 01</span>A branch switch <b>moves the tree under the running session</b>; a worktree gives each branch its own directory, so <b>cd replaces checkout</b> and nobody loses their footing.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 2 — the upgrade: branches → clones → worktrees ============ -->
+  <section class="prose">
+    <p>
+      That's the whole reason the field reaches past branches and clones. Each option buys isolation; only one buys
+      it without giving something up you needed to keep. Branches are cheap but pay at switch time — the session's
+      footing. Clones are isolated but heavy — disk, plus a severed history that no longer reconciles. Worktrees give
+      <b>isolation without divergence</b>: N working trees, one shared commit graph, so the sessions can't collide on
+      disk yet every change still rides the same history and reconciles at merge. The upgrade picture below tags each
+      step with what it actually costs you.
+    </p>
+
+    <p class="pull">
+      The bottleneck on running more agents was never the model. <b>It was that one repo gave you one working directory.</b>
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 2 — THE UPGRADE (branches → clones → worktrees) ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 396" role="img" aria-label="Three steps on a diagonal. Branches: cheap, but switching overwrites the tree under the session. Clones: isolated, but heavy — a full copy on disk and severed history. Worktrees: isolated and shared history, cd not checkout, one session per directory enforced for free.">
+      <defs>
+        <linearGradient id="d2-up" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#5d6a68" stop-opacity=".5"/><stop offset="1" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THREE WAYS TO ISOLATE · EACH TAGGED WITH WHAT IT COSTS YOU</text>
+
+      <!-- diagonal connecting thread -->
+      <path d="M120,320 C360,300 420,200 560,180 C700,160 760,90 940,72" stroke="url(#d2-up)" stroke-width="2" fill="none" opacity=".7"/>
+
+      <!-- ① branches -->
+      <g>
+        <rect x="60" y="288" width="240" height="78" rx="11" fill="rgba(13,16,16,.6)" stroke="#5d6a68" stroke-width="1"/>
+        <circle cx="90" cy="312" r="13" fill="#2a3331" stroke="#6f8a85" stroke-width="1"/>
+        <text x="90" y="317" text-anchor="middle" font-family="'Fraunces',serif" font-size="13" fill="#9aa6a3">1</text>
+        <text x="116" y="310" font-family="'Spline Sans',sans-serif" font-size="14" fill="#cfe6e0">Branches</text>
+        <text x="116" y="328" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85">cheap · one tree, many branches</text>
+        <text x="74" y="356" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#a8504a">COST: the session's footing</text>
+      </g>
+
+      <!-- ② clones -->
+      <g>
+        <rect x="420" y="148" width="240" height="78" rx="11" fill="rgba(13,16,16,.6)" stroke="#6f8a85" stroke-width="1"/>
+        <circle cx="450" cy="172" r="13" fill="#2a3331" stroke="#8a9794" stroke-width="1"/>
+        <text x="450" y="177" text-anchor="middle" font-family="'Fraunces',serif" font-size="13" fill="#cfe6e0">2</text>
+        <text x="476" y="170" font-family="'Spline Sans',sans-serif" font-size="14" fill="#cfe6e0">Clones</text>
+        <text x="476" y="188" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85">isolated · a full second copy</text>
+        <text x="434" y="216" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#a86a1f">COST: disk + a severed graph</text>
+      </g>
+
+      <!-- ③ worktrees -->
+      <g>
+        <rect x="780" y="36" width="252" height="92" rx="12" fill="rgba(8,17,18,.8)" stroke="url(#d2-up)" stroke-width="1.6" filter="url(#d2-glow)"/>
+        <circle cx="812" cy="64" r="14" fill="url(#sessCore)" filter="url(#d2-glow)"/>
+        <text x="812" y="69" text-anchor="middle" font-family="'Fraunces',serif" font-size="13" fill="#05080a" font-weight="500">3</text>
+        <text x="838" y="60" font-family="'Spline Sans',sans-serif" font-size="14.5" fill="#eafff9">Worktrees</text>
+        <text x="838" y="78" font-family="'Spline Sans',sans-serif" font-size="11" fill="#9bffe9">isolated AND shared history</text>
+        <text x="838" y="94" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#3fe0c8">cd, not checkout</text>
+        <text x="796" y="118" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".08em" fill="#3fe0c8">COST: nothing it needed to keep</text>
+        <circle cx="1014" cy="52" r="4" fill="#aeffee" class="breathe"/>
+      </g>
+
+      <!-- the invariant return-arrow -->
+      <g transform="translate(906,150)">
+        <path d="M0,0 C-120,30 -360,90 -700,150" stroke="#ffb347" stroke-width="1.4" fill="none" stroke-dasharray="5 6" opacity=".7"/>
+        <polygon points="-700,150 -688,144 -690,156" fill="#ffb347" opacity=".8"/>
+      </g>
+      <text x="300" y="240" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#ffb347">the invariant holds: one session per working directory</text>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 02</span>Branches cost the session's footing; clones cost disk and a shared graph. <b>Worktrees give isolation and shared history at once</b> — and enforce the invariant for free.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 3 — the invariant + when NOT to ============ -->
+  <section class="prose">
+    <p>
+      The named principle reads like a tooling tip and is actually the thing the whole pattern protects:
+      <b>one session per working directory.</b> Every collision failure mode — clobbered edits, stale scrollback,
+      sideways turns — traces back to violating it. Two sessions in one folder and the later write wins; the earlier
+      session's in-progress edit is gone from disk while its scrollback still believes the old content. Worktrees
+      aren't the goal. They're the cheapest way to make the invariant hold while still running N sessions, which is
+      precisely why Boris Cherny calls parallel worktrees the single biggest productivity unlock —
+      <em>a named practitioner's stance (Jan 2026 X thread + Pragmatic Engineer interview), not a measured or benchmarked finding.</em>
+    </p>
+
+    <p>
+      The discipline keeps going past the start. Don't make one session narrate to the other what it did — that's
+      asking two conversations to stay in sync by hand. Let Git carry the bits: commit, push a branch, or
+      <span class="mono">git stash push</span> / <span class="mono">cd</span> / <span class="mono">git stash pop</span>.
+      And when two worktrees touch the same file, the conflict surfaces cleanly at merge — Git stops both and shows
+      the markers. <b>This is the one place the human stays in the driver seat.</b> Agents are confident and don't
+      always read carefully enough at a merge boundary; you know what each change was for, Git knows the lines, you
+      put them together. Do not let either agent auto-resolve.
+    </p>
+
+    <p>
+      The honest part: refuse to parallelise when serial is faster. Three cases earn a serial run. Ordering
+      dependencies — a migration, then a backfill, then the reader code — where step three against pre-step-one state
+      buys nothing and risks corruption. Greedy parallelism on small tasks, where the worktree coordination plus the
+      conflict recovery loses to just doing the two tasks in sequence. And the case where you're still learning what
+      "good" looks like in one session — a second session adds variables, not learning. <b>The win is wall-clock time
+      saved, not worktrees created.</b> The loop below shows where the human stays in it.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP (N tasks → trunk richer) ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="Closed loop — send N tasks to N worktrees, sessions run isolated, changes ride the shared Git graph by commit stash or push, conflicts surface at merge where the human resolves by hand, merged branches are removed with git worktree remove, and the trunk ends richer and ready for the next N.">
+      <defs>
+        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/>
+          <stop offset="1" stop-color="#ffb347" stop-opacity=".6"/>
+        </linearGradient>
+        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%">
+          <stop offset="0" stop-color="#9bffe9"/>
+          <stop offset=".55" stop-color="#3fe0c8"/>
+          <stop offset="1" stop-color="#1d8d80"/>
+        </radialGradient>
+        <radialGradient id="d3-amberbead" cx="35%" cy="30%" r="70%">
+          <stop offset="0" stop-color="#ffe0a8"/>
+          <stop offset=".55" stop-color="#ffb347"/>
+          <stop offset="1" stop-color="#a86a1f"/>
+        </radialGradient>
+        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE TRUNK ABSORBS MORE PARALLEL WORK EACH PASS · WITHOUT THE SESSIONS COLLIDING</text>
+
+      <!-- ===== LEFT HALF: the loop ===== -->
+      <g transform="translate(40,56)">
+        <!-- the ring -->
+        <circle cx="200" cy="172" r="132" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="540 70" stroke-linecap="round" transform="rotate(-90 200 172)"/>
+        <circle r="3.6" fill="#aeffee">
+          <animateMotion dur="9s" repeatCount="indefinite" path="M200,40 a132,132 0 1,1 -0.1,0"/>
+          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- five beads around the loop -->
+        <g>
+          <circle cx="200" cy="40" r="21" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="200" y="45" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">1</text>
+          <text x="200" y="20" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Send N tasks to N worktrees</text>
+        </g>
+        <g>
+          <circle cx="325" cy="118" r="21" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="325" y="123" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">2</text>
+          <text x="356" y="116" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Sessions run isolated</text>
+        </g>
+        <g>
+          <circle cx="290" cy="262" r="21" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="290" y="267" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">3</text>
+          <text x="322" y="266" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Changes ride the Git graph</text>
+        </g>
+        <!-- bead 4 amber — the human merge node -->
+        <g>
+          <circle cx="110" cy="262" r="21" fill="url(#d3-amberbead)" filter="url(#d3-glow)"/>
+          <text x="110" y="267" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">4</text>
+          <text x="78" y="266" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12" fill="#fff4e2">Conflicts → resolve by hand</text>
+          <text x="78" y="282" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".08em" fill="#ffb347">human in the driver seat here</text>
+        </g>
+        <g>
+          <circle cx="75" cy="118" r="21" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="75" y="123" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">5</text>
+          <text x="44" y="116" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Remove merged worktrees</text>
+        </g>
+
+        <text x="200" y="168" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EACH PASS</text>
+        <text x="200" y="186" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">trunk gets richer</text>
+      </g>
+
+      <!-- ===== RIGHT HALF: the trunk densifying across passes ===== -->
+      <g transform="translate(560,72)">
+        <text x="0" y="0" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#5d6a68">THE TRUNK · COMMITS ABSORBED PER PASS</text>
+
+        <!-- pass 1 — thin trunk -->
+        <g>
+          <line x1="20" y1="40" x2="20" y2="280" stroke="#1d8d80" stroke-width="2" opacity=".5"/>
+          <circle cx="20" cy="100" r="5" fill="#3fe0c8" opacity=".6"/>
+          <circle cx="20" cy="170" r="5" fill="#3fe0c8" opacity=".6"/>
+          <text x="20" y="304" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">PASS 1</text>
+        </g>
+        <!-- pass 2 — denser -->
+        <g transform="translate(160,0)">
+          <line x1="20" y1="40" x2="20" y2="280" stroke="#3fe0c8" stroke-width="2.4" opacity=".7"/>
+          <circle cx="20" cy="80" r="5" fill="#3fe0c8" opacity=".75"/>
+          <circle cx="20" cy="130" r="5" fill="#3fe0c8" opacity=".75"/>
+          <circle cx="20" cy="180" r="5" fill="#3fe0c8" opacity=".75"/>
+          <circle cx="20" cy="230" r="5" fill="#ffb347" opacity=".8"/>
+          <text x="20" y="304" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#9bffe9">PASS 2</text>
+        </g>
+        <!-- pass 3 — sharp, full -->
+        <g transform="translate(320,0)">
+          <line x1="20" y1="40" x2="20" y2="280" stroke="url(#d3-ring)" stroke-width="3" filter="url(#d3-glow)"/>
+          <circle cx="20" cy="70" r="5.4" fill="#9bffe9"/>
+          <circle cx="20" cy="112" r="5.4" fill="#3fe0c8"/>
+          <circle cx="20" cy="154" r="5.4" fill="#ffb347"/>
+          <circle cx="20" cy="196" r="5.4" fill="#3fe0c8"/>
+          <circle cx="20" cy="238" r="5.4" fill="#ffb347"/>
+          <text x="20" y="304" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#ffb347">PASS 3</text>
+          <circle cx="40" cy="56" r="4" fill="#aeffee" class="breathe"/>
+        </g>
+
+        <!-- arrows between trunks -->
+        <g stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".6">
+          <path d="M40,160 L150,160"/><polygon points="150,160 142,155 142,165" fill="#3fe0c8"/>
+          <path d="M200,160 L310,160"/><polygon points="310,160 302,155 302,165" fill="#3fe0c8"/>
+        </g>
+
+        <!-- legend -->
+        <g transform="translate(0,330)">
+          <circle cx="6" cy="0" r="4" fill="#ffb347"/>
+          <text x="18" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#a86a1f">MERGE THE HUMAN RESOLVED BY HAND</text>
+          <circle cx="6" cy="16" r="4" fill="#3fe0c8"/>
+          <text x="18" y="20" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#1d8d80">PARALLEL WORK ABSORBED CLEANLY</text>
+        </g>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 03</span>Send N → run isolated → ride the graph → <b>resolve conflicts by hand</b> → <span style="font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:12.5px;color:#3fe0c8">git worktree remove</span>. Each pass the trunk absorbs more parallel work without the sessions ever colliding.</div>
+  </div>
+
+  <!-- ============ TEST-IN-PRACTICE inline panel ============ -->
+  <div class="practice">
+    <div class="beat-label amber"><b>Test · how you know it worked</b></div>
+    <p>
+      Three sessions run for an hour and <b>none of them gets confused about what's on disk</b> — each has its own
+      scrollback, its own working directory, its own branch, and none references file contents that changed under it.
+    </p>
+    <p>
+      When two worktrees did touch the same file, the collision shows up as a <em>clean merge conflict you resolve by
+      hand</em> — not as a <em class="no">silently overwritten edit</em> you discover later. And the honest negative
+      test: if you spent more time coordinating worktrees and recovering from conflicts than the tasks would have taken
+      in sequence, the parallelism was the wrong call.
+    </p>
+  </div>
+
+  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
+  <div class="plates">
+    <div class="plate use">
+      <div class="beat-label amber"><b>Use when</b></div>
+      <p class="body">
+        You trust the agent on one thing and now want it on three — <span class="grey">a bug, a refactor, a small
+        feature</span> — but the moment you point a second session at the <b>same folder</b>, they clobber each other.
+      </p>
+    </div>
+    <div class="plate build">
+      <div class="beat-label"><b>Build</b></div>
+      <p class="body">
+        Sibling worktree directories, each on its own branch, <b>one session each</b>, all sharing one Git history —
+        removed with <span style="font-family:'Spline Sans Mono',monospace;font-size:12px;color:var(--teal)">git worktree remove</span> once merged.
+      </p>
+    </div>
+    <div class="plate test">
+      <div class="beat-label"><b>Test</b></div>
+      <p class="body">
+        Collisions arrive as <em>clean merge conflicts.</em><br>
+        Not as <em class="no">silently clobbered edits.</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ CORE MOVES — actionable heart ============ -->
+  <section class="moves">
+    <div class="beat-label"><b>Core moves</b></div>
+    <div class="moves-head">
+      <h2>From one contended directory to N isolated ones</h2>
+      <span class="lede">Two git commands and the restraint to stop there.</span>
+    </div>
+
+    <div class="move-rail">
+      <div class="thread"></div>
+      <div class="step">
+        <div class="bead">1</div>
+        <h3>Add a worktree per task</h3>
+        <p>Not a branch. <b>A sibling directory</b> on its own branch — <span style="font-family:'Spline Sans Mono',monospace;font-size:10.5px;color:var(--teal)">git worktree add -b</span>.</p>
+      </div>
+      <div class="step">
+        <div class="bead">2</div>
+        <h3>One session per folder</h3>
+        <p>The invariant. <b>Never two in one directory</b> — the later write wins.</p>
+      </div>
+      <div class="step">
+        <div class="bead">3</div>
+        <h3>Let Git carry the bits</h3>
+        <p>Commit, push, or stash. <b>Don't make one session narrate</b> to the other.</p>
+      </div>
+      <div class="step">
+        <div class="bead">4</div>
+        <h3>Resolve at merge by hand</h3>
+        <p>Read the diff. <b>Pick which line wins</b> — no agent auto-resolve.</p>
+      </div>
+      <div class="step">
+        <div class="bead">5</div>
+        <h3>Refuse when serial wins</h3>
+        <p>Ordering deps · tiny tasks · still learning. <b>Wall-clock is the test.</b></p>
+      </div>
+    </div>
+
+    <div class="compound">
+      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
+        </linearGradient></defs>
+        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
+          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
+        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
+        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
+        <circle r="3" fill="#aeffee">
+          <animateMotion dur="5s" repeatCount="indefinite"
+            path="M37,11 a26,26 0 1,1 -0.1,0"/>
+        </circle>
+      </svg>
+      <div class="ctext">
+        <div class="cyc">add worktree<span class="arr">→</span>one session each<span class="arr">→</span>Git carries the bits<span class="arr">→</span>merge by hand<span class="arr">→</span>remove</div>
+        <p>Then it scales: <b>isolate the tree, reconcile on the shared graph, resolve by hand.</b> The same discipline a whole team relies on when many contributors run many agents against one codebase.</p>
+      </div>
+    </div>
+
+    <!-- the Monday-move / no-permission aside -->
+    <p class="aside">
+      <b>Monday move: two unrelated tasks already in your backlog.</b> A bug and a small refactor that don't depend on each other.
+      <span class="mono">git worktree add -b &lt;task&gt; ../&lt;repo&gt;-&lt;task&gt; · twice · one session in each · no platform · no budget · no sign-off.</span>
+      If they turn out to depend on each other, you learned the "when NOT to" lesson the cheap way. Worktrees ship with Git — the only thing you need permission for is your own restraint.
+    </p>
+  </section>
+
+  <!-- ============ WHY — the conviction ============ -->
+  <section class="why">
+    <div class="beat-label"><b>Why</b></div>
+
+    <div class="principle-block">
+      <div class="principle-label">The principle</div>
+      <p class="principle-line">One session per <em>working directory</em>. Isolate the tree; reconcile on the shared graph.</p>
+    </div>
+
+    <p class="quote">"One repo, many working directories — the model was never the bottleneck; the single working tree was."</p>
+    <p class="gloss">
+      Worktrees break the one-to-one between a repo and its working directory. The mechanism is <b>isolation without
+      divergence</b>: N working trees, one shared history, so the sessions can't clobber each other on disk yet every
+      change still rides the same commit graph and reconciles at merge. Branches gave cheap isolation but overwrote the
+      tree under the running session; clones gave isolation but severed the history. Worktrees are the move that gives
+      you both at once.
+    </p>
+    <p class="gloss">
+      Which is why <b>Boris Cherny calls parallel worktrees the single biggest productivity unlock</b> —
+      <em>one named practitioner's stance (Jan 2026 X thread + Pragmatic Engineer interview), not a quantified or
+      benchmarked result.</em> Read the claim as a practitioner pointing at the lever, not as proof of a number. The
+      lever itself is plain: the invariant the whole pattern protects is one session per working directory, and a
+      worktree is the cheapest way to make it hold while still running N sessions.
+    </p>
+    <div class="corollary"><span class="sd"></span>Isolate the tree. Reconcile on the graph. Resolve by hand.</div>
+  </section>
+
+  <!-- ============ CONNECTS TO — neighbour patterns ============ -->
+  <section class="connects">
+    <h2>Connects to</h2>
+    <div class="sub">Threads leaving this node · the pattern language</div>
+
+    <div class="web">
+      <svg viewBox="0 0 1080 260" aria-hidden="true">
+        <defs>
+          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t2" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".6"/></linearGradient>
+          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <circle cx="150" cy="130" r="30" fill="none" stroke="#3fe0c8" stroke-width="1.2" opacity=".5"/>
+        <circle cx="150" cy="130" r="11" fill="#3fe0c8" filter="url(#wglow)"/>
+        <circle cx="150" cy="130" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
+
+        <!-- downstream thread (teal) → packaging-the-run -->
+        <path id="th1" d="M150,130 C380,80 560,72 760,74" stroke="url(#t1)" stroke-width="2.2" fill="none"/>
+        <!-- upstream thread (dim teal) → walk-and-fill-before-sendoff -->
+        <path id="th2" d="M150,130 C380,180 560,190 760,192" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
+
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.6s" begin=".7s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.6s" begin=".7s" repeatCount="indefinite"/></circle>
+      </svg>
+
+      <div class="neighbours">
+        <div class="origin-chip" style="left:13.8%;top:50%">Run N tasks in parallel<small>the work · you are here</small></div>
+        <a class="nb" href="packaging-the-run.html" style="left:74%;top:28.5%"><span class="sd"></span>Package the run <span class="recipe-no">downstream · runs inside a worktree</span></a>
+        <a class="nb" href="walk-and-fill-before-sendoff.html" style="left:74%;top:73.8%"><span class="sd"></span>Walk and fill before sendoff <span class="recipe-no">upstream · scopes each lane</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="floor">
+    <span class="door">A personal unlock that becomes a team's collision-free contribution model. No platform, no vendor, no permission — worktrees ship with Git.</span>
+    <span class="meta">The Big Picture · Pattern Language</span>
+  </footer>
+
+</div>
+</body>
+</html>

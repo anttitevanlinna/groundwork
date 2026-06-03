@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pick the verifier that matches the failure — Pattern · The Big Picture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-0:#05080a;
+    --soil-1:#080d10;
+    --soil-2:#0c1418;
+    --teal:#3fe0c8;
+    --teal-dim:#1d8d80;
+    --amber:#ffb347;
+    --amber-dim:#a86a1f;
+    --spore:#eafff9;
+    --ink:#cfe6e0;
+    --ink-dim:#6f8a85;
+    --ink-faint:#3b524e;
+    --hairline:rgba(63,224,200,.10);
+    --grey:#5d6a68;
+    --grey-dim:#39423f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--soil-0);
+    font-family:'Spline Sans',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  /* atmospheric soil + light-well — recedes for the long read */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
+      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
+      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+  }
+  /* grain / spore dust */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 64px;}
+
+  /* ============ BREADCRUMB ============ */
+  .crumb{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+    color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
+  }
+  .crumb a{color:var(--teal-dim);text-decoration:none;transition:color .25s}
+  .crumb a:hover{color:var(--teal)}
+  .crumb .here{color:var(--ink)}
+
+  /* ============ PATTERN HEADER (name + essence) ============ */
+  header.pat{padding:30px 0 8px;max-width:920px;}
+  .kicker{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--teal-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .kicker .spore-mark{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 14px 2px rgba(63,224,200,.6);
+    flex:none;
+  }
+  .kicker .pat-no{color:var(--ink-faint)}
+  header.pat h1{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(38px,6.4vw,64px);line-height:.98;
+    color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
+  }
+  header.pat h1 em{font-style:italic;color:var(--teal);font-weight:400}
+  .principle{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
+  }
+  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .essence{
+    font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:730px;
+  }
+  .essence b{color:var(--spore);font-weight:500}
+
+  /* ============ HERO PICTURE ============ */
+  .hero-frame{
+    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(13,31,32,.5), rgba(5,8,10,.6));
+    position:relative;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.04) inset;
+  }
+  .hero-frame svg{display:block;width:100%;height:auto}
+  .hero-cap{
+    position:absolute;left:18px;bottom:13px;z-index:3;
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
+    color:var(--ink-dim);text-transform:uppercase;
+  }
+  .hero-cap b{color:var(--teal)}
+
+  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
+  .prose{
+    margin-top:34px;max-width:760px;
+  }
+  .prose h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
+    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+  }
+  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .prose h2.amber em{color:var(--amber)}
+  .prose .sec-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+    margin-top:42px;
+  }
+  .prose .sec-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
+  }
+  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .prose p{
+    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
+    letter-spacing:.002em;
+  }
+  .prose p b{color:var(--spore);font-weight:500}
+  .prose p em{font-style:italic;color:var(--ink-dim)}
+  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p .mono{
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
+  }
+  .prose p .mono.amber{color:var(--amber)}
+  .prose .pull{
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+    color:var(--ink);max-width:680px;
+  }
+  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
+
+  /* labelled caveat strip — carries epistemic content, not decoration */
+  .caveat{
+    margin-top:22px;border:1px dashed var(--amber-dim);border-radius:12px;
+    padding:13px 18px 14px;max-width:760px;
+    background:radial-gradient(120% 160% at 0% 0%, rgba(255,179,71,.05), transparent 60%), rgba(8,15,17,.4);
+  }
+  .caveat .tag{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;
+    color:var(--amber);display:inline-flex;align-items:center;gap:8px;
+  }
+  .caveat .tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55);flex:none}
+  .caveat p{font-size:13px;line-height:1.55;color:var(--ink-dim);margin-top:9px}
+  .caveat p b{color:var(--ink);font-weight:500}
+
+  /* ============ PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
+  .diagram{
+    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+    background:
+      radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
+      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
+    position:relative;
+    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
+  }
+  .diagram svg{display:block;width:100%;height:auto}
+  .diagram .dcap{
+    padding:12px 20px 16px;border-top:1px solid var(--hairline);
+    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
+    color:var(--ink-dim);letter-spacing:.003em;
+    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  }
+  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
+  .diagram .dcap .num{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
+  }
+
+  /* ============ RECIPE SECTION BEATS ============ */
+  .beat-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  }
+  .beat-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.6);
+  }
+  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+
+  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
+  .plates{
+    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
+  }
+  .plate{
+    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
+    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
+  }
+  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
+  .plate .body b{color:var(--spore);font-weight:500}
+  .plate .body .grey{color:var(--grey)}
+  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
+  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
+
+  /* ============ CORE MOVES ============ */
+  .moves{margin-top:46px}
+  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px;flex-wrap:wrap}
+  .moves-head h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
+  .move-rail{
+    margin-top:20px;position:relative;
+    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+  }
+  .move-rail .thread{
+    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
+    background:linear-gradient(90deg,
+      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
+      rgba(63,224,200,.7) 50%, rgba(255,179,71,.65) 94%, rgba(255,179,71,0) 100%);
+  }
+  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
+  .step:first-child{padding-left:0}
+  .step .bead{
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
+    margin-bottom:13px;
+  }
+  .step:nth-child(6) .bead{
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
+  }
+  .step h3{
+    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
+  }
+  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
+  .step p b{color:var(--ink);font-weight:500}
+
+  .compound{
+    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
+    padding:18px 22px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.07), transparent 60%),
+      rgba(8,17,18,.55);
+    display:flex;align-items:center;gap:20px;
+  }
+  .compound .loop-ico{flex:none}
+  .compound .ctext{flex:1}
+  .compound .ctext .cyc{
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
+  }
+  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
+  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
+  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+
+  .aside{
+    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
+    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+  }
+  .aside b{color:var(--amber);font-weight:500}
+  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
+
+  /* ============ WHY ============ */
+  .why{
+    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
+    padding:26px 30px 28px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
+      rgba(7,14,15,.6);
+  }
+  .why .beat-label{margin-bottom:14px}
+  .why .principle-block{
+    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
+  }
+  .why .principle-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
+  }
+  .why .principle-line{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(21px,2.7vw,27px);
+    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
+  }
+  .why .principle-line em{font-style:italic;color:var(--teal)}
+  .why .quote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(21px,2.9vw,28px);line-height:1.22;color:var(--teal);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(63,224,200,.26);max-width:860px;
+  }
+  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
+  .why .gloss b{color:var(--spore);font-weight:500}
+  .why .gloss em{font-style:italic;color:var(--ink-dim)}
+  .why .gloss + .gloss{margin-top:12px}
+  .why .corollary{
+    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
+    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+  }
+  .why .corollary .sd{
+    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+  }
+
+  /* ============ TEST-IN-PRACTICE inline panel ============ */
+  .practice{
+    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
+    padding:22px 26px 24px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
+      rgba(8,15,17,.5);
+  }
+  .practice .beat-label{margin-bottom:12px}
+  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
+  .practice p b{color:var(--spore);font-weight:500}
+  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
+  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ CONNECTS TO ============ */
+  .connects{margin-top:52px}
+  .connects h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .connects .sub{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:5px;
+  }
+  .web{position:relative;margin-top:8px}
+  .web svg{display:block;width:100%;height:auto}
+  .neighbours{position:absolute;inset:0;pointer-events:none}
+  .nb{
+    position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
+    display:flex;align-items:center;gap:9px;
+    padding:8px 14px 9px;border-radius:13px;
+    background:rgba(8,15,17,.82);backdrop-filter:blur(4px);
+    border:1px solid var(--hairline);
+    color:var(--ink);font-size:13px;letter-spacing:.005em;white-space:nowrap;
+    transition:border-color .3s,color .3s,background .3s,transform .3s;
+    cursor:pointer;text-decoration:none;
+  }
+  .nb .recipe-no{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--ink-faint);
+  }
+  .nb .sd{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 12px 2px rgba(63,224,200,.55);
+  }
+  .nb.amber .sd{background:var(--amber);box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 12px 2px rgba(255,179,71,.5)}
+  .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
+  .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
+  .nb:hover .sd{animation:throb 1s ease-in-out infinite}
+  .nb.soon{opacity:.62}
+  .nb.soon::after{
+    content:"soon";
+    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);
+    border:1px solid var(--ink-faint);border-radius:20px;
+    padding:2px 7px 3px;margin-left:4px;
+  }
+  .nb.soon:hover{opacity:1}
+  @keyframes throb{50%{transform:scale(1.5)}}
+  .origin-chip{
+    position:absolute;transform:translate(-50%,-50%);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 24px rgba(63,224,200,.4);white-space:nowrap;text-align:center;
+  }
+  .origin-chip small{
+    display:block;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:8.5px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--teal-dim);margin-top:3px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer.floor{
+    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  footer.floor .door{
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
+    text-shadow:0 0 22px rgba(255,179,71,.3);
+  }
+  footer.floor .meta{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+
+  /* breathing glow on the diagram spore-tips */
+  @keyframes breathe{
+    0%,100%{opacity:.55}
+    50%{opacity:1}
+  }
+  .breathe{animation:breathe 4.2s ease-in-out infinite}
+
+  @media (max-width:860px){
+    .plates{grid-template-columns:1fr 1fr}
+    .plate.use{grid-column:1 / -1}
+  }
+  @media (max-width:780px){
+    .plates{grid-template-columns:1fr}
+    .plate.use{grid-column:1}
+    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
+    .move-rail .thread{display:none}
+    .step{padding:0}
+    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .neighbours .nb{font-size:11px;padding:6px 10px}
+    .prose p{font-size:14.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ BREADCRUMB ============ -->
+  <nav class="crumb">
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Pick the verifier that matches the failure</span>
+  </nav>
+
+  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <header class="pat">
+    <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· software lane · verification phase · the gate every team eval grows out of</span></div>
+    <h1>Pick the verifier that matches the <em>failure</em></h1>
+    <p class="principle">The principle: <b>a verifier's authority comes from fit</b> — from firing on candid evidence, not from how much it checks.</p>
+    <p class="essence">
+      After a long run goes wrong, name the one failure that cost the most — then build the <b>one verifier
+      whose shape catches that failure</b>, not the check that's easiest to reach for. The verifier you fit
+      by hand is your first eval, and the seed every team-scale eval grows from.
+    </p>
+  </header>
+
+  <!-- ============ HERO PICTURE: lit failure → matching shape, crossed-out comfortable pairing ============ -->
+  <div class="hero-frame">
+    <svg viewBox="0 0 1080 410" role="img" aria-label="On the left, three failure cards — goal drift, context rot, plausible-but-wrong — with plausible-but-wrong lit as dominant this run. On the right, three verifier shapes — shell-hook, LLM-judge, Ralph re-feed. A single bright thread connects the lit failure to the LLM-judge; a faint crossed-out thread shows the comfortable shell-hook the engineer almost picked.">
+      <defs>
+        <radialGradient id="hwell" cx="50%" cy="46%" r="62%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".16"/>
+          <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".06"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="fitThread" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".25"/>
+          <stop offset="55%" stop-color="#3fe0c8" stop-opacity=".95"/>
+          <stop offset="100%" stop-color="#aeffee" stop-opacity=".95"/>
+        </linearGradient>
+        <radialGradient id="litCard" cx="30%" cy="25%" r="90%">
+          <stop offset="0%" stop-color="rgba(255,179,71,.22)"/>
+          <stop offset="100%" stop-color="rgba(255,179,71,.04)"/>
+        </radialGradient>
+        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <rect x="0" y="0" width="1080" height="410" fill="url(#hwell)"/>
+
+      <!-- LEFT: the diagnosis — three failure cards -->
+      <text x="58" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2.4" fill="#3b524e">THE DIAGNOSIS · WHICH FAILURE DOMINATED?</text>
+
+      <!-- failure card 1: goal drift (dim) -->
+      <g opacity=".5">
+        <rect x="58" y="64" width="300" height="78" rx="11" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.18)"/>
+        <text x="76" y="92" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".2em" fill="#6f8a85">GOAL DRIFT</text>
+        <text x="76" y="116" font-family="'Spline Sans',sans-serif" font-size="13" fill="#8aa6a0">it quietly changed</text>
+        <text x="76" y="133" font-family="'Spline Sans',sans-serif" font-size="13" fill="#8aa6a0">what it was solving</text>
+      </g>
+      <!-- failure card 2: context rot (dim) -->
+      <g opacity=".5">
+        <rect x="58" y="158" width="300" height="78" rx="11" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.18)"/>
+        <text x="76" y="186" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".2em" fill="#6f8a85">CONTEXT ROT</text>
+        <text x="76" y="210" font-family="'Spline Sans',sans-serif" font-size="13" fill="#8aa6a0">lost the thread across</text>
+        <text x="76" y="227" font-family="'Spline Sans',sans-serif" font-size="13" fill="#8aa6a0">the long session</text>
+      </g>
+      <!-- failure card 3: plausible-but-wrong (LIT — dominant this run) -->
+      <g>
+        <rect x="58" y="252" width="300" height="86" rx="11" fill="url(#litCard)" stroke="#ffb347" stroke-width="1.6" filter="url(#hglow)"/>
+        <text x="76" y="280" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".2em" fill="#ffb347">PLAUSIBLE-BUT-WRONG</text>
+        <text x="76" y="304" font-family="'Spline Sans',sans-serif" font-size="13" fill="#fff4e2">looks right, isn't —</text>
+        <text x="76" y="321" font-family="'Spline Sans',sans-serif" font-size="13" fill="#fff4e2">no exit code caught it</text>
+        <circle cx="338" cy="270" r="4.4" fill="#ffb347" filter="url(#hglow)"/>
+        <text x="76" y="356" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".24em" fill="#a86a1f">◂ DOMINANT THIS RUN</text>
+      </g>
+
+      <!-- the threads from the lit failure to the right -->
+      <!-- the WRONG (comfortable) thread — to the shell-hook, crossed out -->
+      <path d="M358,295 C500,300 560,150 720,124" stroke="#5d6a68" stroke-width="1.6" fill="none" stroke-dasharray="5 7" opacity=".55"/>
+      <line x1="528" y1="216" x2="552" y2="200" stroke="#5d6a68" stroke-width="2"/>
+      <line x1="552" y1="216" x2="528" y2="200" stroke="#5d6a68" stroke-width="2"/>
+      <text x="540" y="246" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">the comfortable check</text>
+      <text x="540" y="261" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">fires green · sees nothing</text>
+
+      <!-- the RIGHT (fitted) thread — to the LLM-judge -->
+      <path d="M358,300 C520,310 560,228 720,222" stroke="url(#fitThread)" stroke-width="2.8" fill="none" filter="url(#hglow)"/>
+      <circle r="3.4" fill="#aeffee">
+        <animateMotion dur="4.4s" repeatCount="indefinite" path="M358,300 C520,310 560,228 720,222"/>
+        <animate attributeName="opacity" values="0;1;1;0" dur="4.4s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- RIGHT: the three verifier shapes -->
+      <text x="1022" y="40" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2.4" fill="#1d8d80">THE THREE SHAPES · PICK BY FIT</text>
+
+      <!-- shape 1: shell-hook (the one almost picked, dim) -->
+      <g opacity=".5">
+        <rect x="720" y="64" width="302" height="78" rx="11" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.18)"/>
+        <text x="738" y="92" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".18em" fill="#6f8a85">SHELL-HOOK</text>
+        <text x="738" y="116" font-family="'Spline Sans',sans-serif" font-size="13" fill="#8aa6a0">it compiles, lints, the</text>
+        <text x="738" y="133" font-family="'Spline Sans',sans-serif" font-size="13" fill="#8aa6a0">bytes match — or they don't</text>
+      </g>
+      <!-- shape 2: LLM-judge (LIT — the matching shape) -->
+      <g>
+        <rect x="720" y="182" width="302" height="86" rx="11" fill="rgba(63,224,200,.08)" stroke="#3fe0c8" stroke-width="1.6" filter="url(#hglow)"/>
+        <text x="738" y="210" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".18em" fill="#3fe0c8">LLM-JUDGE</text>
+        <text x="738" y="234" font-family="'Spline Sans',sans-serif" font-size="13" fill="#eafff9">reads what no exit code</text>
+        <text x="738" y="251" font-family="'Spline Sans',sans-serif" font-size="13" fill="#eafff9">can see · the fitted one</text>
+        <circle cx="1002" cy="200" r="4.4" fill="#3fe0c8" filter="url(#hglow)"/>
+        <text x="738" y="287" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".22em" fill="#1d8d80">▸ MATCHES THE FAILURE</text>
+      </g>
+      <!-- shape 3: Ralph re-feed (dim) -->
+      <g opacity=".5">
+        <rect x="720" y="300" width="302" height="78" rx="11" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.18)"/>
+        <text x="738" y="328" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".18em" fill="#6f8a85">RALPH RE-FEED</text>
+        <text x="738" y="352" font-family="'Spline Sans',sans-serif" font-size="13" fill="#8aa6a0">re-reads its own intent</text>
+        <text x="738" y="369" font-family="'Spline Sans',sans-serif" font-size="13" fill="#8aa6a0">and self-corrects</text>
+      </g>
+    </svg>
+    <div class="hero-cap">The failure picks the verifier. <b>Not your comfort</b> — the dashed thread is the check that fires green and sees nothing.</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ============ PROSE BLOCK 1 — THE TRAP ===================== -->
+  <!-- ============================================================ -->
+  <section class="prose">
+    <div class="sec-label">The trap · the comfortable check vs. the fitted one</div>
+    <h2>The verifier you reach for and the one you <em>need</em> are rarely the same.</h2>
+
+    <p>
+      Here is the moment this pattern lives in: a long run came back, you read the artefact, and you named where it
+      went wrong. The agent quietly changed what it was solving (drift), or lost the thread across a long session
+      (rot), or shipped something that looks right and isn't (plausible-but-wrong). Diagnosis done. Now you reach
+      for a check — and the trap springs. You reach for the <b>comfortable</b> check, the one your hands already know,
+      not the one that fits the failure you just named. A shell-hook for a qualitative miss. An LLM-judge for
+      something a one-line lint would catch deterministically. Both fire green. Both catch nothing.
+    </p>
+
+    <p>
+      The counterintuitive part is what makes a verifier strong. It isn't rigour — it's fit. A meticulous shell-hook
+      is worthless against a drift it cannot see; a careful judge is overkill, and noise, on a thing an exit code
+      would have flagged for free. <b>A verifier you didn't shape to a named failure is a green light wired to
+      nothing.</b> It tells you everything is fine in exactly the cases where it can't tell. The check that protects
+      you is the one whose shape matches the failure that actually happened — read from your own artefact, not chosen
+      from a menu in the abstract.
+    </p>
+
+    <p class="pull">
+      A green light wired to nothing is worse than no light. <b>It tells you it's fine in exactly the case it can't see.</b>
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 1 — THE MECHANISM: same artefact, three verdicts ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 430" role="img" aria-label="One failed run output feeds three candidate verifiers in parallel. The matching LLM-judge fires red with a quotable line. The two mismatched verifiers — shell-hook and re-feed — fire green and miss the failure.">
+      <defs>
+        <linearGradient id="d1-feed" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffb347" stop-opacity=".7"/><stop offset="1" stop-color="#ffb347" stop-opacity=".15"/></linearGradient>
+        <radialGradient id="d1-red" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#ff9a6e"/><stop offset="1" stop-color="#a83a1f"/></radialGradient>
+        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">ONE FAILED ARTEFACT · THREE CANDIDATE VERIFIERS · ONLY THE FITTED ONE SEES IT</text>
+
+      <!-- the one artefact on the left -->
+      <g>
+        <rect x="40" y="150" width="190" height="130" rx="12" fill="rgba(255,179,71,.06)" stroke="#a86a1f" stroke-width="1.4"/>
+        <text x="56" y="176" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#a86a1f">THE RUN OUTPUT</text>
+        <text x="56" y="202" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">compiled clean.</text>
+        <text x="56" y="222" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">summary reads polished.</text>
+        <text x="56" y="248" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#ffb347">a contract silently broke</text>
+        <text x="56" y="266" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#ffb347">— qualitative miss.</text>
+        <circle cx="212" cy="168" r="3.4" fill="#ffb347" filter="url(#d1-glow)"/>
+      </g>
+
+      <!-- three feed threads -->
+      <path d="M230,200 C300,200 320,96 400,96" stroke="url(#d1-feed)" stroke-width="2" fill="none" opacity=".7"/>
+      <path d="M230,215 C300,215 320,215 400,215" stroke="url(#d1-feed)" stroke-width="2.6" fill="none"/>
+      <path d="M230,230 C300,230 320,334 400,334" stroke="url(#d1-feed)" stroke-width="2" fill="none" opacity=".7"/>
+
+      <!-- candidate A: shell-hook → green, missed -->
+      <g>
+        <rect x="400" y="64" width="300" height="66" rx="11" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.16)"/>
+        <text x="418" y="90" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".16em" fill="#6f8a85">SHELL-HOOK</text>
+        <text x="418" y="114" font-family="'Spline Sans',sans-serif" font-size="12" fill="#8aa6a0">exit 0 — it compiled, after all</text>
+        <circle cx="676" cy="97" r="9" fill="none" stroke="#5d6a68" stroke-width="2"/>
+        <path d="M671,97 l4,4 l7,-9" stroke="#5d6a68" stroke-width="2" fill="none"/>
+        <text x="712" y="100" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#5d6a68">GREEN · MISSED</text>
+      </g>
+
+      <!-- candidate B: LLM-judge → RED, caught (the fitted one) -->
+      <g>
+        <rect x="400" y="180" width="300" height="74" rx="11" fill="rgba(168,58,31,.10)" stroke="#ff9a6e" stroke-width="1.6" filter="url(#d1-glow)"/>
+        <text x="418" y="206" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".16em" fill="#ff9a6e">LLM-JUDGE · FITTED TO THE MISS</text>
+        <text x="418" y="230" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#ffd9c4">"the response asserts X; the contract requires Y."</text>
+        <circle cx="676" cy="217" r="9" fill="url(#d1-red)" filter="url(#d1-glow)"/>
+        <text x="671" y="221" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#fff" font-weight="700">!</text>
+        <text x="730" y="220" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#ff9a6e">RED · CAUGHT</text>
+      </g>
+
+      <!-- candidate C: re-feed → green, missed -->
+      <g>
+        <rect x="400" y="302" width="300" height="66" rx="11" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.16)"/>
+        <text x="418" y="328" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".16em" fill="#6f8a85">RALPH RE-FEED</text>
+        <text x="418" y="352" font-family="'Spline Sans',sans-serif" font-size="12" fill="#8aa6a0">intent never drifted — nothing to re-ground</text>
+        <circle cx="676" cy="335" r="9" fill="none" stroke="#5d6a68" stroke-width="2"/>
+        <path d="M671,335 l4,4 l7,-9" stroke="#5d6a68" stroke-width="2" fill="none"/>
+        <text x="712" y="338" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#5d6a68">GREEN · MISSED</text>
+      </g>
+
+      <!-- the takeaway band -->
+      <text x="760" y="200" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#3b524e">SAME INPUT.</text>
+      <text x="760" y="218" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#3b524e">ONLY THE FITTED</text>
+      <text x="760" y="236" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#3b524e">VERIFIER SEES IT.</text>
+
+      <text x="40" y="412" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">THE OTHER TWO AREN'T BROKEN — THEY'RE GREEN LIGHTS WIRED TO NOTHING ON THIS PARTICULAR FAILURE.</text>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 01</span>Same input, three verdicts. <b>Only the verifier shaped to the failure fires red</b> — the others pass it cleanly and tell you nothing.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 2 — the three shapes, three failures ============ -->
+  <section class="prose">
+    <p>
+      Why three shapes and not one universal check? Because the three failures are genuinely distinct, and no single
+      instrument sees all three. <b>Deterministic-wrong</b> — it doesn't compile, the lint fails, the bytes don't
+      match — wants a <span class="mono">shell-hook</span>: an exit code can see it. <b>Qualitative-wrong</b> — it
+      reads wrong, asserts something subtly off, breaks a contract no test names — wants an <span class="mono">LLM-judge</span>:
+      only a reading sees it. And <b>goal drift</b> — the run wandered off its own intent — wants a
+      <span class="mono">Ralph re-feed</span>: only re-grounding the agent in what it set out to do fixes it. One move
+      per failure mode, not three to memorise. You pick the shape against the diagnosis, not the path of least resistance.
+    </p>
+
+    <p>
+      Notice the discipline this asks of you: <b>finish the diagnosis before you reach for the fix.</b> The reflex
+      is to jump from "it failed" straight to "I'll add a check" — and that jump is exactly how the wrong instrument
+      gets built. The question matters more than the answer: <em class="teal">what validation would have caught this
+      in minutes, not hours?</em> Answer that honestly and the shape falls out of the failure. Skip it, and you'll
+      armour-plate the one wall the attacker never came at.
+    </p>
+
+    <!-- the labelled caveat strip — real epistemic content, not decoration -->
+    <div class="caveat">
+      <span class="tag">Convergent practitioner pattern · not a vendor menu</span>
+      <p>
+        The three failure modes (drift · rot · plausible-but-wrong) and the three matched shapes (shell-hook ·
+        LLM-judge · re-feed) are a <b>convergent practitioner pattern</b> — Ronacher's three-pattern and Cherny's
+        three stop-hook shapes — not an Anthropic-documented feature or an official Claude Code taxonomy. Treat it as
+        <b>the three shapes practitioners converge on, open to a fourth</b>, not a fixed list handed down by the tool.
+      </p>
+    </div>
+
+    <div class="sec-label">The upgrade move · reflexive check → failure-fitted eval</div>
+    <h2>From a check that <em>names nothing</em> to one that names its own target.</h2>
+
+    <p>
+      The move that turns a reflex into an instrument is small and almost clerical: <b>make the verifier name its
+      own target in its first lines.</b> Line one states the dominant failure it's built to catch. Line two names the
+      shape that catches it — hook, judge, or re-feed. A check whose intent isn't readable is a check nobody trusts
+      and nobody reuses; it rots into a green tick everyone clicks past. When the first ten lines say what failure
+      this guards against, a teammate reading it cold knows what it covers — and so does future-you, three weeks on,
+      when you'd otherwise have forgotten why it exists.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 2 — THE UPGRADE MOVE ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 380" role="img" aria-label="A diagonal from a reflexively bolted-on check that names no target, up to a verifier whose first lines name the dominant failure and the matching shape, up to that same verifier firing on candid output and quoted verbatim. Each step tagged with what it closes.">
+      <defs>
+        <linearGradient id="d2-diag" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0" stop-color="#5d6a68" stop-opacity=".5"/>
+          <stop offset="55" stop-color="#3fe0c8" stop-opacity=".6"/>
+          <stop offset="1" stop-color="#ffb347" stop-opacity=".7"/>
+        </linearGradient>
+        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">FROM REFLEX TO INSTRUMENT · EACH STEP CLOSES WHAT THE LAST LEFT OPEN</text>
+
+      <!-- the rising diagonal thread -->
+      <path d="M110,310 C360,300 420,200 560,190 C720,178 760,90 980,82" stroke="url(#d2-diag)" stroke-width="2.4" fill="none"/>
+      <circle r="3.4" fill="#aeffee">
+        <animateMotion dur="6s" repeatCount="indefinite" path="M110,310 C360,300 420,200 560,190 C720,178 760,90 980,82"/>
+        <animate attributeName="opacity" values="0;1;1;0" dur="6s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- step 1 — reflexive check (grey, low) -->
+      <g>
+        <circle cx="110" cy="310" r="20" fill="rgba(8,17,18,.85)" stroke="#5d6a68" stroke-width="1.6"/>
+        <text x="110" y="316" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#8aa6a0">1</text>
+        <rect x="56" y="234" width="200" height="50" rx="9" fill="rgba(8,17,18,.6)" stroke="rgba(93,106,104,.5)"/>
+        <text x="70" y="256" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#8aa6a0">reflexive check, bolted on</text>
+        <text x="70" y="274" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#5d6a68">chosen by comfort · names no target</text>
+        <text x="56" y="346" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#5d6a68">CLOSES: nothing reliably</text>
+      </g>
+
+      <!-- step 2 — names its target (teal, mid) -->
+      <g>
+        <circle cx="560" cy="190" r="22" fill="rgba(8,17,18,.85)" stroke="#3fe0c8" stroke-width="1.8" filter="url(#d2-glow)"/>
+        <text x="560" y="196" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#3fe0c8">2</text>
+        <rect x="430" y="106" width="270" height="64" rx="9" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.3)"/>
+        <text x="446" y="128" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#3fe0c8"># targets: plausible-but-wrong</text>
+        <text x="446" y="146" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#9bffe9"># shape: LLM-judge (reads, not lints)</text>
+        <text x="446" y="164" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfe6e0" font-style="italic">first lines name the failure + the shape</text>
+        <text x="430" y="226" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#1d8d80">CLOSES: readable · trusted · reusable</text>
+      </g>
+
+      <!-- step 3 — fires on candid output (amber, high) -->
+      <g>
+        <circle cx="980" cy="82" r="22" fill="rgba(8,17,18,.85)" stroke="#ffb347" stroke-width="1.8" filter="url(#d2-glow)"/>
+        <text x="980" y="88" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#ffb347">3</text>
+        <rect x="700" y="36" width="300" height="0" /> <!-- spacer -->
+        <rect x="694" y="100" width="306" height="64" rx="9" fill="rgba(255,179,71,.06)" stroke="rgba(255,179,71,.34)"/>
+        <text x="710" y="122" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#ffb347">▸ fired on the REAL artefact</text>
+        <text x="710" y="142" font-family="'Fraunces',serif" font-style="italic" font-size="12.5" fill="#fff4e2">"asserts X; contract requires Y" — quoted</text>
+        <text x="710" y="159" font-family="'Spline Sans',sans-serif" font-size="11" fill="#cfe6e0">verbatim, not paraphrased into a vibe</text>
+        <text x="694" y="184" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#a86a1f">CLOSES: proof, not vibe</text>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 02</span><em>Reflex → instrument.</em> A check that names its own target becomes a verifier; a verifier fired on candid output and <b>quoted verbatim</b> becomes proof.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 3 — candour ============ -->
+  <section class="prose">
+    <p>
+      Then comes the step that separates a verifier you trust from one you merely own: <b>fire it on the candid
+      artefact, not the polished summary.</b> RLHF trains models to frame partial failures as partial successes, so
+      the agent's own write-up will read smoother than the work deserves. The fix is mechanical and unsentimental —
+      point the verifier at the run's real output, and read its words verbatim where it fired. If the summary glows,
+      make it quote the verifier and list what didn't ship. <em>The artefact rules; self-reports don't.</em> A
+      verifier only earns its authority against evidence that hasn't been rounded up.
+    </p>
+
+    <p>
+      And one restraint worth naming, because it's where good engineers over-build: <b>this run's verifier targets
+      one failure shape.</b> Not a five-shape suit of armour that tries to catch everything — gold-plating catches
+      nothing well and never ships. Cover the one mode that dominated this run. Let the kit expand later, one earned
+      shape at a time. A verifier that fires green on a run you <em>know</em> was broken isn't thorough; it's
+      mis-shaped, and the honest move is to re-scope it, not to admire its coverage.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP (verifier → first eval → kit) ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="A closed loop — diagnose the dominant failure, fit the verifier to its shape, fire on the candid artefact, read what it caught, the verifier becomes a named eval the next session inherits, a new failure mode surfaces, sharpen or add a shape. Beside it the eval kit grows from one shape to a ladder of shapes.">
+      <defs>
+        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/>
+          <stop offset="1" stop-color="#ffb347" stop-opacity=".6"/>
+        </linearGradient>
+        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%">
+          <stop offset="0" stop-color="#9bffe9"/>
+          <stop offset=".55" stop-color="#3fe0c8"/>
+          <stop offset="1" stop-color="#1d8d80"/>
+        </radialGradient>
+        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE VERIFIER YOU FIT BY HAND IS THE FIRST RUNG OF THE TEAM'S EVAL LADDER</text>
+
+      <!-- ===== LEFT HALF: the loop ===== -->
+      <g transform="translate(40,60)">
+        <circle cx="200" cy="170" r="130" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="540 60" stroke-linecap="round" transform="rotate(-90 200 170)"/>
+        <circle r="3.6" fill="#aeffee">
+          <animateMotion dur="9s" repeatCount="indefinite" path="M200,40 a130,130 0 1,1 -0.1,0"/>
+          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- four beads -->
+        <g>
+          <circle cx="200" cy="40" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="200" y="45" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">1</text>
+          <text x="200" y="20" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Diagnose the dominant failure</text>
+        </g>
+        <g>
+          <circle cx="330" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="330" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">2</text>
+          <text x="362" y="173" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Fit the verifier to its shape</text>
+        </g>
+        <g>
+          <circle cx="200" cy="300" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="200" y="305" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">3</text>
+          <text x="200" y="338" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Fire on the candid artefact</text>
+        </g>
+        <g>
+          <circle cx="70" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="70" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">4</text>
+          <text x="38" y="173" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Read what it caught</text>
+        </g>
+
+        <!-- centre label -->
+        <text x="200" y="160" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">NEW FAILURE SURFACES</text>
+        <text x="200" y="178" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">sharpen · add a shape</text>
+      </g>
+
+      <!-- bridge: this verifier becomes a named eval -->
+      <g transform="translate(380,170)">
+        <path d="M0,0 L70,0" stroke="#3fe0c8" stroke-width="1.4" fill="none" opacity=".7"/>
+        <polygon points="70,0 60,-6 60,6" fill="#3fe0c8" opacity=".8"/>
+        <text x="36" y="-12" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3fe0c8">PROMOTES TO</text>
+        <text x="36" y="22" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#6f8a85">a named eval</text>
+      </g>
+
+      <!-- ===== RIGHT HALF: the kit growing from one shape to a ladder ===== -->
+      <g transform="translate(540,68)">
+        <text x="0" y="14" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#3fe0c8">THE EVAL KIT · ONE EARNED SHAPE AT A TIME</text>
+
+        <!-- rung 1: this run's verifier (amber, load-bearing) -->
+        <g transform="translate(0,40)">
+          <rect x="0" y="0" width="470" height="44" rx="9" fill="rgba(255,179,71,.08)" stroke="#ffb347" stroke-width="1.4"/>
+          <circle cx="26" cy="22" r="7" fill="#ffb347" filter="url(#d3-glow)"/>
+          <text x="48" y="20" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#ffb347">verifier.sh · evals/judge.md · stop-hook</text>
+          <text x="48" y="36" font-family="'Spline Sans',sans-serif" font-size="11" fill="#fff4e2" font-style="italic">your first eval — the one you fit by hand today</text>
+        </g>
+
+        <!-- rung 2 -->
+        <g transform="translate(0,98)" opacity=".82">
+          <rect x="0" y="0" width="470" height="40" rx="9" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.32)"/>
+          <circle cx="26" cy="20" r="6" fill="#3fe0c8"/>
+          <text x="48" y="25" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfe6e0">+ a second shape, when a new failure surfaces</text>
+        </g>
+
+        <!-- rung 3 -->
+        <g transform="translate(0,148)" opacity=".62">
+          <rect x="0" y="0" width="470" height="40" rx="9" fill="rgba(63,224,200,.05)" stroke="rgba(63,224,200,.22)"/>
+          <circle cx="26" cy="20" r="6" fill="#9bffe9"/>
+          <text x="48" y="25" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#9bbeb8">+ the team's shared CI eval — once it earned its keep</text>
+        </g>
+
+        <!-- rung 4 -->
+        <g transform="translate(0,198)" opacity=".42">
+          <rect x="0" y="0" width="470" height="40" rx="9" fill="rgba(63,224,200,.04)" stroke="rgba(63,224,200,.16)"/>
+          <circle cx="26" cy="20" r="6" fill="#6f8a85"/>
+          <text x="48" y="25" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#6f8a85">+ the company's reliability standard, built up from these</text>
+        </g>
+
+        <!-- the rising thread linking the rungs -->
+        <path d="M26,84 L26,98 M26,138 L26,148 M26,188 L26,198" stroke="#3fe0c8" stroke-width="1.4" opacity=".5"/>
+
+        <text x="0" y="276" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3b524e">A SHARED CI EVAL IS ONLY EVER A HAND-FITTED VERIFIER THAT EARNED ITS WAY IN.</text>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 03</span><em>The loop becomes a ladder.</em> Each pass promotes a fitted verifier to a named eval — and <b>the team's CI bar is built up from these, never handed down to them</b>.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 4 — what Test actually means ============ -->
+  <section class="prose">
+    <div class="sec-label amber">What "Test" actually means · in practice</div>
+    <h2 class="amber">The test isn't "does it run." It's <em>"does it catch what I diagnosed."</em></h2>
+
+    <p>
+      Here's the practitioner's tell that a verifier is fitted, not bolted on: point it at the un-packaged run that
+      surfaced the failure and <b>watch it catch what you named.</b> A verifier that fires green on a run you know was
+      broken is mis-shaped — and there's a sharp diagnostic for it. If your verification step runs suspiciously short,
+      that's the smell of a too-thin check; ask whether it actually fires on the failure shape it's targeting, and if
+      not, re-scope. The second tell is conversational: you can say in one sentence <em>why a judge, not a hook, was
+      right here</em> — or why a re-feed, not a judge. If you can't articulate the fit, you guessed the shape. The
+      verifier you fit by hand today is the precedent the next agent reads when the team encodes a shared eval, so
+      getting its fit right once pays forward into everything built on it.
+    </p>
+  </section>
+
+  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
+  <div class="plates">
+    <div class="plate use">
+      <div class="beat-label amber"><b>Use when</b></div>
+      <p class="body">
+        You've read a failed long-run, named where it went wrong — and you're tempted to bolt on
+        <span class="grey">whatever check is easiest</span>, not the one that fits.
+        After the refactor that compiled but drifted; the cutover that "passed" but broke an unasserted contract.
+      </p>
+    </div>
+    <div class="plate build">
+      <div class="beat-label"><b>Build</b></div>
+      <p class="body">
+        <b>One verifier file</b> at a stable path — <span class="grey">verifier.sh, evals/judge.md, or a stop-hook config</span> — whose first lines name the failure it targets and the shape that catches it. Your first eval.
+      </p>
+    </div>
+    <div class="plate test">
+      <div class="beat-label"><b>Test</b></div>
+      <p class="body">
+        Point it at the broken run — it <em>catches what you diagnosed.</em><br>
+        Not merely <em class="no">"the suite is green."</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ CORE MOVES — actionable heart ============ -->
+  <section class="moves">
+    <div class="beat-label"><b>Core moves</b></div>
+    <div class="moves-head">
+      <h2>The action, in sequence</h2>
+      <span class="lede">From reflexive check to failure-fitted instrument — reusable at every post-run review.</span>
+    </div>
+
+    <div class="move-rail">
+      <div class="thread"></div>
+      <div class="step">
+        <div class="bead">1</div>
+        <h3>Name the dominant failure</h3>
+        <p>Finish the diagnosis. <b>Which mode cost the most?</b> Don't skip to the fix.</p>
+      </div>
+      <div class="step">
+        <div class="bead">2</div>
+        <h3>Match shape to failure</h3>
+        <p>Hook for deterministic, judge for qualitative, <b>re-feed for drift.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">3</div>
+        <h3>Build ONE, not armour</h3>
+        <p>Cover one mode well. <b>Gold-plating ships nothing.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">4</div>
+        <h3>Make it name its target</h3>
+        <p>First lines state the failure + the shape. <b>So it's trusted.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">5</div>
+        <h3>Fire on candid output</h3>
+        <p>The real artefact, <b>quoted verbatim</b> — not the polished summary.</p>
+      </div>
+    </div>
+
+    <div class="compound">
+      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
+        </linearGradient></defs>
+        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
+          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
+        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
+        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
+        <circle r="3" fill="#aeffee">
+          <animateMotion dur="5s" repeatCount="indefinite"
+            path="M37,11 a26,26 0 1,1 -0.1,0"/>
+        </circle>
+      </svg>
+      <div class="ctext">
+        <div class="cyc">diagnose<span class="arr">→</span>fit the shape<span class="arr">→</span>fire on candid output<span class="arr">→</span>read what it caught<span class="arr">→</span>sharpen</div>
+        <p>Each pass leaves a named eval the next session inherits: <b>the first rung of the team's eval ladder.</b> A new failure surfaces, you add a shape — the kit grows one earned check at a time.</p>
+      </div>
+    </div>
+
+    <!-- the Monday-move / no-permission aside -->
+    <p class="aside">
+      <b>Monday move:</b> open the last long-run artefact you have. Name the one failure that cost you most — drift, rot, or plausible-but-wrong. Write three lines of a verifier: line one names the failure, line two names the shape (hook / judge / re-feed), line three is the check itself. Point it at that same artefact and confirm it fires.
+      <span class="mono">One file · your own repo · no platform · no CI gate · no sign-off · ~10 min.</span>
+    </p>
+  </section>
+
+  <!-- ============ WHY — the conviction ============ -->
+  <section class="why">
+    <div class="beat-label"><b>Why</b></div>
+
+    <div class="principle-block">
+      <div class="principle-label">The principle</div>
+      <p class="principle-line">A verifier's strength isn't its rigour — it's its <em>fit</em>, and its firing on candid evidence.</p>
+    </div>
+
+    <p class="quote">"Your verifier is your first eval — and it only protects you if its shape matches the failure that actually happened."</p>
+    <p class="gloss">
+      The counterintuitive part: a more rigorous check is not a safer one. A meticulous shell-hook is blind to a
+      qualitative drift; a careful judge is noise on a one-line lint's job. <b>The eval that protects you is the one
+      whose shape matches the failure that actually happened</b> — read from your own artefact, not picked from a menu
+      in the abstract. This is the verification arm of the three-pattern, re-discovered from your run rather than
+      memorised as a taxonomy.
+    </p>
+    <p class="gloss">
+      And it composes upward. The verifier you fit by hand today is the precedent the next agent reads when the team
+      encodes a shared eval — and a shared CI eval is only ever <b>a hand-fitted verifier that earned its way into the
+      kit.</b> That's the whole chain: one engineer's quality bar becomes a named, readable instrument, which becomes
+      the team's eval, which becomes the company's reliability standard — built up from candid evidence, never handed
+      down as a mandate. <em>(Convergent practitioner pattern — Ronacher / Cherny — not a vendor menu; treat the three
+      shapes as the ones practitioners converge on, open to a fourth.)</em>
+    </p>
+    <div class="corollary"><span class="sd"></span>A verifier you didn't shape to a named failure is a green light wired to nothing.</div>
+  </section>
+
+  <!-- ============ CONNECTS TO — neighbour patterns ============ -->
+  <section class="connects">
+    <h2>Connects to</h2>
+    <div class="sub">Threads leaving this node · the pattern language</div>
+
+    <div class="web">
+      <svg viewBox="0 0 1080 300" aria-hidden="true">
+        <defs>
+          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".55"/></linearGradient>
+          <linearGradient id="t4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <circle cx="150" cy="150" r="30" fill="none" stroke="#3fe0c8" stroke-width="1.2" opacity=".5"/>
+        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#wglow)"/>
+        <circle cx="150" cy="150" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
+
+        <path id="th1" d="M150,150 C360,70 540,52 760,56" stroke="url(#t1)" stroke-width="2.2" fill="none"/>
+        <path id="th2" d="M150,150 C380,118 560,116 760,118" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
+        <path id="th3" d="M150,150 C380,186 560,188 760,188" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
+        <path id="th4" d="M150,150 C360,232 540,250 760,250" stroke="url(#t4)" stroke-width="1.8" stroke-dasharray="5 6" fill="none"/>
+
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#9bffe9"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="6.2s" begin="1.6s" repeatCount="indefinite"><mpath href="#th4"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="6.2s" begin="1.6s" repeatCount="indefinite"/></circle>
+      </svg>
+
+      <div class="neighbours">
+        <div class="origin-chip" style="left:13.8%;top:50%">Verifier shaped to failure<small>software · you are here</small></div>
+        <a class="nb" href="failure-mode-diagnosis.html" style="left:74%;top:18.7%"><span class="sd"></span>Diagnose the failure mode <span class="recipe-no">prerequisite</span></a>
+        <a class="nb" href="packaging-the-run.html" style="left:74%;top:39.3%"><span class="sd"></span>Package the run <span class="recipe-no">parent move</span></a>
+        <a class="nb" href="session-shaper-authoring.html" style="left:74%;top:62.7%"><span class="sd"></span>Author the session-shaper <span class="recipe-no">downstream</span></a>
+        <a class="nb amber" href="fixed-judge-loop.html" style="left:74%;top:83.3%"><span class="sd"></span>Tighten under a fixed judge <span class="recipe-no">R6 · business twin</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="floor">
+    <span class="door">A door, not a destination — the verifier is one file in your own repo. No platform, no CI gate, no permission required.</span>
+    <span class="meta">The Big Picture · Pattern Language</span>
+  </footer>
+
+</div>
+</body>
+</html>

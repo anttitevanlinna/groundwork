@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Split the work across agents — Pattern · The Big Picture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-0:#05080a;
+    --soil-1:#080d10;
+    --soil-2:#0c1418;
+    --teal:#3fe0c8;
+    --teal-dim:#1d8d80;
+    --amber:#ffb347;
+    --amber-dim:#a86a1f;
+    --spore:#eafff9;
+    --ink:#cfe6e0;
+    --ink-dim:#6f8a85;
+    --ink-faint:#3b524e;
+    --hairline:rgba(63,224,200,.10);
+    --hairline-a:rgba(255,179,71,.12);
+    --grey:#5d6a68;
+    --grey-dim:#39423f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--soil-0);
+    font-family:'Spline Sans',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  /* atmospheric soil + light-well — business lane leans amber, recedes for the long read */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.10) 0%, transparent 46%),
+      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.06) 0%, transparent 44%),
+      linear-gradient(180deg, #2a1e08 0%, #14100b 10%, #05080a 42%, #04060a 100%);
+  }
+  /* grain / spore dust */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 64px;}
+
+  /* ============ BREADCRUMB ============ */
+  .crumb{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+    color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
+  }
+  .crumb a{color:var(--amber-dim);text-decoration:none;transition:color .25s}
+  .crumb a:hover{color:var(--amber)}
+  .crumb .here{color:var(--ink)}
+
+  /* ============ PATTERN HEADER (name + essence) ============ */
+  header.pat{padding:30px 0 8px;max-width:920px;}
+  .kicker{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--amber-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .kicker .spore-mark{
+    width:8px;height:8px;border-radius:50%;background:var(--amber);
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 14px 2px rgba(255,179,71,.55);
+    flex:none;
+  }
+  .kicker .pat-no{color:var(--ink-faint)}
+  header.pat h1{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(38px,6.6vw,64px);line-height:.99;
+    color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
+  }
+  header.pat h1 em{font-style:italic;color:var(--amber);font-weight:400}
+  .principle{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
+  }
+  .principle b{color:var(--amber);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .essence{
+    font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:740px;
+  }
+  .essence b{color:var(--spore);font-weight:500}
+  .essence .cross{
+    display:inline-block;margin-top:4px;font-family:'Spline Sans Mono',monospace;font-size:11px;
+    letter-spacing:.06em;color:var(--ink-dim);
+  }
+  .essence .cross b{color:var(--amber);font-weight:500}
+
+  /* ============ HERO PICTURE ============ */
+  .hero-frame{
+    margin:30px 0 8px;border:1px solid var(--hairline-a);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(31,24,13,.5), rgba(5,8,10,.6));
+    position:relative;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(255,179,71,.04) inset;
+  }
+  .hero-frame svg{display:block;width:100%;height:auto}
+  .hero-cap{
+    position:absolute;left:18px;bottom:13px;z-index:3;
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
+    color:var(--ink-dim);text-transform:uppercase;
+  }
+  .hero-cap b{color:var(--amber)}
+
+  /* ============ READING-PROSE ============ */
+  .prose{
+    margin-top:34px;max-width:760px;
+  }
+  .prose h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
+    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+  }
+  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .prose h2.amber em{color:var(--amber)}
+  .prose .sec-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+    margin-top:42px;
+  }
+  .prose .sec-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
+  }
+  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .prose p{
+    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
+    letter-spacing:.002em;
+  }
+  .prose p b{color:var(--spore);font-weight:500}
+  .prose p em{font-style:italic;color:var(--ink-dim)}
+  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p .mono{
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
+  }
+  .prose p .mono.amber{color:var(--amber)}
+  .prose .pull{
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--amber-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+    color:var(--ink);max-width:680px;
+  }
+  .prose .pull b{color:var(--amber);font-weight:500;font-style:normal}
+
+  /* ============ PROCESS DIAGRAMS ============ */
+  .diagram{
+    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+    background:
+      radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
+      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
+    position:relative;
+    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
+  }
+  .diagram svg{display:block;width:100%;height:auto}
+  .diagram .dcap{
+    padding:12px 20px 16px;border-top:1px solid var(--hairline);
+    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
+    color:var(--ink-dim);letter-spacing:.003em;
+    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  }
+  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
+  .diagram .dcap .num{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
+  }
+
+  /* ============ RECIPE SECTION BEATS ============ */
+  .beat-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  }
+  .beat-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.6);
+  }
+  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+
+  /* USE WHEN + BUILD + TEST plates */
+  .plates{
+    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
+  }
+  .plate{
+    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
+    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
+  }
+  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
+  .plate .body b{color:var(--spore);font-weight:500}
+  .plate .body .grey{color:var(--grey)}
+  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
+  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
+
+  /* ============ CORE MOVES ============ */
+  .moves{margin-top:46px}
+  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
+  .moves-head h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
+  .move-rail{
+    margin-top:20px;position:relative;
+    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+  }
+  .move-rail .thread{
+    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
+    background:linear-gradient(90deg,
+      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
+      rgba(63,224,200,.7) 48%, rgba(255,179,71,.7) 92%, rgba(255,179,71,0) 100%);
+  }
+  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
+  .step:first-child{padding-left:0}
+  .step .bead{
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
+    margin-bottom:13px;
+  }
+  .step:nth-child(5) .bead,
+  .step:nth-child(6) .bead{
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
+  }
+  .step h3{
+    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
+  }
+  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
+  .step p b{color:var(--ink);font-weight:500}
+
+  .compound{
+    margin-top:26px;border:1px solid rgba(255,179,71,.18);border-radius:14px;
+    padding:18px 22px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(255,179,71,.07), transparent 60%),
+      rgba(8,17,18,.55);
+    display:flex;align-items:center;gap:20px;
+  }
+  .compound .loop-ico{flex:none}
+  .compound .ctext{flex:1}
+  .compound .ctext .cyc{
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--amber);
+  }
+  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
+  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
+  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+
+  .aside{
+    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
+    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+  }
+  .aside b{color:var(--amber);font-weight:500}
+  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
+
+  /* ============ WHY ============ */
+  .why{
+    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
+    padding:26px 30px 28px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 90% 0%, rgba(255,179,71,.08), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(63,224,200,.05), transparent 55%),
+      rgba(7,14,15,.6);
+  }
+  .why .beat-label{margin-bottom:14px}
+  .why .principle-block{
+    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
+  }
+  .why .principle-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
+  }
+  .why .principle-line{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
+    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
+  }
+  .why .principle-line em{font-style:italic;color:var(--amber)}
+  .why .quote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(21px,2.9vw,28px);line-height:1.22;color:var(--amber);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(255,179,71,.24);max-width:860px;
+  }
+  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
+  .why .gloss b{color:var(--spore);font-weight:500}
+  .why .gloss em{font-style:italic;color:var(--ink-dim)}
+  .why .gloss em.teal{color:var(--teal);font-style:italic}
+  .why .gloss + .gloss{margin-top:12px}
+  .why .corollary{
+    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
+    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+  }
+  .why .corollary .sd{
+    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+  }
+
+  /* ============ TEST-IN-PRACTICE inline panel ============ */
+  .practice{
+    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
+    padding:22px 26px 24px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
+      rgba(8,15,17,.5);
+  }
+  .practice .beat-label{margin-bottom:12px}
+  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
+  .practice p b{color:var(--spore);font-weight:500}
+  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
+  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ CONNECTS TO ============ */
+  .connects{margin-top:52px}
+  .connects h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .connects .sub{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:5px;
+  }
+  .web{position:relative;margin-top:8px}
+  .web svg{display:block;width:100%;height:auto}
+  .neighbours{position:absolute;inset:0;pointer-events:none}
+  .nb{
+    position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
+    display:flex;align-items:center;gap:9px;
+    padding:8px 14px 9px;border-radius:13px;
+    background:rgba(8,15,17,.82);backdrop-filter:blur(4px);
+    border:1px solid var(--hairline);
+    color:var(--ink);font-size:13px;letter-spacing:.005em;white-space:nowrap;
+    transition:border-color .3s,color .3s,background .3s,transform .3s;
+    cursor:pointer;text-decoration:none;
+  }
+  .nb .recipe-no{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--ink-faint);
+  }
+  .nb .sd{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 12px 2px rgba(63,224,200,.55);
+  }
+  .nb.amber .sd{background:var(--amber);box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 12px 2px rgba(255,179,71,.5)}
+  .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
+  .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
+  .nb:hover .sd{animation:throb 1s ease-in-out infinite}
+  .nb.soon{opacity:.62}
+  .nb.soon::after{
+    content:"soon";
+    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);
+    border:1px solid var(--ink-faint);border-radius:20px;
+    padding:2px 7px 3px;margin-left:4px;
+  }
+  .nb.soon:hover{opacity:1}
+  @keyframes throb{50%{transform:scale(1.5)}}
+  .origin-chip{
+    position:absolute;transform:translate(-50%,-50%);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 24px rgba(255,179,71,.4);white-space:nowrap;text-align:center;
+  }
+  .origin-chip small{
+    display:block;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:8.5px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--amber-dim);margin-top:3px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer.floor{
+    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  footer.floor .door{
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
+    text-shadow:0 0 22px rgba(255,179,71,.3);
+  }
+  footer.floor .meta{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+
+  @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
+  .breathe{animation:breathe 4.2s ease-in-out infinite}
+
+  @media (max-width:860px){
+    .plates{grid-template-columns:1fr 1fr}
+    .plate.use{grid-column:1 / -1}
+  }
+  @media (max-width:780px){
+    .plates{grid-template-columns:1fr}
+    .plate.use{grid-column:1}
+    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
+    .move-rail .thread{display:none}
+    .step{padding:0}
+    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .neighbours .nb{font-size:11px;padding:6px 10px}
+    .prose p{font-size:14.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ BREADCRUMB ============ -->
+  <nav class="crumb">
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Split the work across agents</span>
+  </nav>
+
+  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <header class="pat">
+    <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· business lane · phase: The Work · the more-than-one-mind move</span></div>
+    <h1>Split the work <em>across agents</em></h1>
+    <p class="principle">The principle: <b>the filesystem is the meeting room</b> — parallel agents coordinate through files you can inspect, not a chat that smooths the friction away.</p>
+    <p class="essence">
+      Break a question into agents only when one agent genuinely <b>can't be one</b> — when the access, dialect, or
+      stance the work needs truly differ — then make them disagree on disk and force a framework to <b>pick</b>.
+      <span class="cross">SCOPE · <b>personal → team → company</b>: a single builder's research habit becomes the org's standing knowledge surface.</span>
+    </p>
+  </header>
+
+  <!-- ============ HERO PICTURE: one question → three dialect-retrievers → files in the soil → three stances pick under a framework ============ -->
+  <div class="hero-frame">
+    <svg viewBox="0 0 1080 440" role="img" aria-label="One strategic question splits into three retriever threads — wiki, warehouse, public-web — each writing a file to a shared filesystem soil-bed, then three synthesis stances draw from those files into one framework-shaped answer where the disagreements are visibly kept, not blended.">
+      <defs>
+        <radialGradient id="hwell" cx="50%" cy="6%" r="90%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".18"/>
+          <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".06"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="qCore" cx="40%" cy="35%" r="70%">
+          <stop offset="0%" stop-color="#fff4e2"/>
+          <stop offset="45%" stop-color="#ffb347"/>
+          <stop offset="100%" stop-color="#2a1a06"/>
+        </radialGradient>
+        <linearGradient id="zA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".9"/><stop offset="1" stop-color="#1d8d80" stop-opacity=".3"/></linearGradient>
+        <linearGradient id="zB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9bffe9" stop-opacity=".9"/><stop offset="1" stop-color="#1d8d80" stop-opacity=".3"/></linearGradient>
+        <linearGradient id="zC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffce85" stop-opacity=".9"/><stop offset="1" stop-color="#a86a1f" stop-opacity=".3"/></linearGradient>
+        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <rect x="0" y="0" width="1080" height="440" fill="url(#hwell)"/>
+
+      <!-- ===== TOP: the one question ===== -->
+      <text x="540" y="30" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.4" fill="#a86a1f">ONE STRATEGIC QUESTION</text>
+      <circle cx="540" cy="62" r="20" fill="url(#qCore)" filter="url(#hglow)"/>
+      <circle cx="540" cy="62" r="20" fill="none" stroke="#ffe0a8" stroke-width="1" opacity=".6"/>
+      <text x="540" y="100" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#fff4e2">"How big is this market, really?"</text>
+
+      <!-- ===== SPLIT into three dialect threads ===== -->
+      <g fill="none" stroke-width="2.4" filter="url(#hglow)">
+        <path d="M540,82 C400,120 250,128 196,150" stroke="url(#zA)"/>
+        <path d="M540,82 C540,120 540,128 540,150" stroke="url(#zB)"/>
+        <path d="M540,82 C680,120 830,128 884,150" stroke="url(#zC)"/>
+      </g>
+
+      <!-- ===== three retrievers, each its own dialect-tint ===== -->
+      <g>
+        <circle cx="196" cy="158" r="13" fill="#3fe0c8" filter="url(#hglow)"/>
+        <text x="196" y="190" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">wiki retriever</text>
+        <text x="196" y="207" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#1d8d80">DIALECT · INTERNAL</text>
+      </g>
+      <g>
+        <circle cx="540" cy="158" r="13" fill="#9bffe9" filter="url(#hglow)"/>
+        <text x="540" y="190" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">warehouse retriever</text>
+        <text x="540" y="207" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#1d8d80">DIALECT · NUMBERS</text>
+      </g>
+      <g>
+        <circle cx="884" cy="158" r="13" fill="#ffb347" filter="url(#hglow)"/>
+        <text x="884" y="190" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">public-web retriever</text>
+        <text x="884" y="207" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#a86a1f">DIALECT · THE LOUD ANSWER</text>
+      </g>
+
+      <!-- ===== the soil-bed: the filesystem is the meeting room ===== -->
+      <rect x="60" y="232" width="960" height="58" rx="10" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.14)"/>
+      <text x="78" y="252" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">THE FILESYSTEM IS THE MEETING ROOM · ONE FILE PER ZONE · NON-COMPARABLE ON PURPOSE</text>
+      <!-- three files, each tinted to its retriever, dropped to disk -->
+      <g font-family="'Spline Sans Mono',monospace" font-size="9.5">
+        <rect x="150" y="262" width="120" height="20" rx="5" fill="rgba(63,224,200,.10)" stroke="#1d8d80"/>
+        <text x="160" y="276" fill="#3fe0c8">wiki.md</text>
+        <rect x="480" y="262" width="120" height="20" rx="5" fill="rgba(155,255,233,.10)" stroke="#1d8d80"/>
+        <text x="490" y="276" fill="#9bffe9">warehouse.md</text>
+        <rect x="824" y="262" width="120" height="20" rx="5" fill="rgba(255,179,71,.10)" stroke="#a86a1f"/>
+        <text x="834" y="276" fill="#ffb347">public-web.md</text>
+      </g>
+      <!-- retriever → file drops -->
+      <g stroke-width="1.6" fill="none" opacity=".8">
+        <line x1="196" y1="171" x2="196" y2="262" stroke="#1d8d80"/>
+        <line x1="540" y1="171" x2="540" y2="262" stroke="#1d8d80"/>
+        <line x1="884" y1="171" x2="884" y2="262" stroke="#a86a1f"/>
+      </g>
+
+      <!-- ===== three synthesis stances draw from the files ===== -->
+      <g stroke-width="1.4" fill="none" opacity=".7">
+        <path d="M210,282 C300,320 360,330 430,346" stroke="#1d8d80"/>
+        <path d="M540,282 C540,318 540,330 540,346" stroke="#1d8d80"/>
+        <path d="M870,282 C780,320 720,330 650,346" stroke="#a86a1f"/>
+      </g>
+      <g font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85" text-anchor="middle">
+        <circle cx="430" cy="356" r="6" fill="#3fe0c8" filter="url(#hglow)"/>
+        <text x="430" y="380">PLANNER</text>
+        <circle cx="540" cy="356" r="6" fill="#9bffe9" filter="url(#hglow)"/>
+        <text x="540" y="380">ASSUMPTION-TESTER</text>
+        <circle cx="650" cy="356" r="6" fill="#ffb347" filter="url(#hglow)"/>
+        <text x="650" y="380">REFRAMER</text>
+      </g>
+
+      <!-- ===== framework picks: one answer, seams visibly kept ===== -->
+      <rect x="360" y="396" width="360" height="34" rx="9" fill="rgba(255,179,71,.07)" stroke="#a86a1f" stroke-width="1.4"/>
+      <text x="540" y="412" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#fff4e2">framework picks — and keeps the seams visible</text>
+      <text x="540" y="425" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".2em" fill="#a86a1f">SPECIFIC ENOUGH TO BRING FORWARD · GAPS PLAIN ENOUGH TO INSPECT</text>
+      <g stroke-width="1.2" fill="none" opacity=".55">
+        <line x1="430" y1="362" x2="470" y2="396" stroke="#3fe0c8"/>
+        <line x1="540" y1="362" x2="540" y2="396" stroke="#9bffe9"/>
+        <line x1="650" y1="362" x2="610" y2="396" stroke="#ffb347"/>
+      </g>
+
+      <!-- nutrient pulse drifting question → answer -->
+      <circle r="3.2" fill="#ffe0a8">
+        <animateMotion dur="5.2s" repeatCount="indefinite" path="M540,82 C540,120 540,128 540,150 L540,262 C540,318 540,330 540,396"/>
+        <animate attributeName="opacity" values="0;1;1;0" dur="5.2s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+    <div class="hero-cap">Three honest seams a single summary would have erased. <b>The filesystem is the meeting room.</b></div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================ -->
+  <!-- ============================================================ -->
+  <section class="prose">
+    <div class="sec-label">The mechanism · what the split actually buys</div>
+    <h2>More agents isn't more <em>intelligence</em>.</h2>
+
+    <p>
+      Multi-agent has a glamour problem. It <em>feels</em> powerful — three minds, a swarm, an org chart of bots — and
+      most builders reach for it because the shape looks serious, not because the work demanded it. Here's the
+      unglamorous truth: a second agent that reads the same sources, speaks the same dialect, and holds the same stance
+      as the first is not a colleague. It's <b>overhead wearing a costume</b>. You've doubled the coordination cost and
+      bought nothing, because anything the pair could conclude, one good prompt could have concluded alone.
+    </p>
+
+    <p>
+      So the move starts with a refusal. Before you split anything, name the <b>forcing axis</b>: is it <em class="teal">access</em>
+      (the agents literally reach different things — one sees the wiki, one the warehouse, one the open web),
+      <em class="teal">dialect</em> (the sources don't speak the same language and shouldn't be normalised into one before
+      you've looked), or <em class="teal">stance</em> (the answer needs a planner, an assumption-tester, and a reframer
+      arguing, not one summary splitting the difference)? If you can't name which of the three is making one agent
+      impossible, you don't have a split. You have one prompt cosplaying as three. Below: what the split buys is not
+      more words — it's the seams a single summary papers over.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 1 — SINGLE BEIGE vs SPLIT-WITH-SEAMS ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="Left: one agent answers the same question and produces a confident, beige, blended summary. Right: three agents on the three axes produce a specific answer with the disagreements visible. The split buys honest seams, not more text.">
+      <defs>
+        <linearGradient id="d1-beige" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5d6a68" stop-opacity=".1"/><stop offset="1" stop-color="#5d6a68" stop-opacity=".7"/></linearGradient>
+        <linearGradient id="d1-a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".85"/><stop offset="1" stop-color="#1d8d80" stop-opacity=".25"/></linearGradient>
+        <linearGradient id="d1-b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9bffe9" stop-opacity=".85"/><stop offset="1" stop-color="#1d8d80" stop-opacity=".25"/></linearGradient>
+        <linearGradient id="d1-c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb347" stop-opacity=".9"/><stop offset="1" stop-color="#a86a1f" stop-opacity=".25"/></linearGradient>
+        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.4" fill="#3b524e">SAME QUESTION · ONE MIND vs THREE KINDS OF MIND</text>
+
+      <!-- LEFT: one agent → beige -->
+      <g>
+        <text x="60" y="68" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#5d6a68">ONE AGENT · NO FORCING AXIS</text>
+        <circle cx="120" cy="150" r="20" fill="#39423f" filter="url(#d1-glow)"/>
+        <circle cx="120" cy="150" r="20" fill="none" stroke="#5d6a68" stroke-width="1" opacity=".6"/>
+        <text x="120" y="190" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#5d6a68">AGENT</text>
+        <!-- single flat output -->
+        <g stroke="url(#d1-beige)" stroke-width="2" fill="none">
+          <path d="M140,150 C220,150 300,150 420,150"/>
+        </g>
+        <rect x="240" y="232" width="200" height="120" rx="9" fill="rgba(57,66,63,.18)" stroke="#4b5654"/>
+        <text x="340" y="220" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">CONFIDENT · BLENDED</text>
+        <g stroke="#5d6a68" stroke-width="2" opacity=".5">
+          <line x1="258" y1="258" x2="420" y2="258"/>
+          <line x1="258" y1="280" x2="406" y2="280"/>
+          <line x1="258" y1="302" x2="420" y2="302"/>
+          <line x1="258" y1="324" x2="388" y2="324"/>
+        </g>
+        <text x="340" y="380" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="15" fill="#5d6a68">averages to beige</text>
+        <text x="340" y="400" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#39423f">DISAGREEMENT ROUNDED AWAY</text>
+      </g>
+
+      <!-- divider -->
+      <line x1="540" y1="58" x2="540" y2="404" stroke="rgba(63,224,200,.12)" stroke-width="1" stroke-dasharray="3 7"/>
+
+      <!-- RIGHT: three axes → specific, seams visible -->
+      <g>
+        <text x="600" y="68" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#ffb347">THREE KINDS OF MIND · ACCESS · DIALECT · STANCE</text>
+        <g>
+          <circle cx="620" cy="118" r="13" fill="#3fe0c8" filter="url(#d1-glow)"/>
+          <circle cx="620" cy="200" r="13" fill="#9bffe9" filter="url(#d1-glow)"/>
+          <circle cx="620" cy="282" r="13" fill="#ffb347" filter="url(#d1-glow)"/>
+        </g>
+        <g font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".14em" fill="#6f8a85">
+          <text x="642" y="121">ACCESS</text>
+          <text x="642" y="203">DIALECT</text>
+          <text x="642" y="285">STANCE</text>
+        </g>
+        <!-- three threads stay distinct, do NOT merge into one line -->
+        <g fill="none" stroke-width="2.2">
+          <path d="M640,118 C760,112 840,108 980,104" stroke="url(#d1-a)"/>
+          <path d="M640,200 C760,200 840,200 980,200" stroke="url(#d1-b)"/>
+          <path d="M640,282 C760,288 840,292 980,296" stroke="url(#d1-c)"/>
+        </g>
+        <!-- the kept-seam markers -->
+        <g>
+          <circle cx="982" cy="104" r="5" fill="#aeffee" filter="url(#d1-glow)"/>
+          <circle cx="982" cy="200" r="5" fill="#5cffe6" filter="url(#d1-glow)"/>
+          <circle cx="982" cy="296" r="5" fill="#ffce85" filter="url(#d1-glow)"/>
+        </g>
+        <g font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfe6e0" text-anchor="start">
+          <text x="700" y="98" font-style="italic" fill="#3fe0c8">the loud answer says X…</text>
+          <text x="700" y="180" font-style="italic" fill="#9bffe9">…the numbers say less…</text>
+          <text x="700" y="362" font-style="italic" fill="#ffb347">…the quiet practitioner answer says it depends</text>
+        </g>
+        <!-- seam-keep callout -->
+        <path d="M982,104 C1010,150 1010,250 982,296" stroke="#a86a1f" stroke-width="1" fill="none" opacity=".55" stroke-dasharray="3 5"/>
+        <text x="1030" y="200" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".16em" fill="#a86a1f" transform="rotate(90 1030 200)">SEAMS KEPT</text>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 01</span>Same question. The split doesn't buy more text — it buys <b>the three honest seams</b> a single summary rounds away.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 2 — the fake split → the forced split ============ -->
+  <section class="prose">
+    <p>
+      Sizing a market is the canonical case, because the answer is genuinely three answers in three dialects. There's
+      the <b>loud answer</b> — press releases, analyst predictions, the numbers everyone repeats. There's the
+      <b>quiet answer</b> — practitioner blogs, GitHub activity, what people say at conferences when the slides are off.
+      And there's the <b>academic answer</b> — benchmarks, papers, the careful caveated version. Normalise those into one
+      tidy figure before you've looked and you've thrown away exactly the disagreement that tells you what's real. Three
+      retrievers, each fluent in one source's language, return non-comparable outputs <em>by design</em>. Don't let any of
+      them average on the way in.
+    </p>
+
+    <p class="pull">
+      Faking the multi-agent shape with one prompt wearing three hats is the tell that you <b>didn't need to split.</b>
+    </p>
+
+    <div class="sec-label">The upgrade · from a prompt in three hats to agents on disk</div>
+    <h2>From the <em>fake split</em> to the split that bears load.</h2>
+
+    <p>
+      The brittle version is one chat thread doing all of it: a single agent prompted to "consider the market data,
+      the practitioner view, and the academic literature" — three hats, one head, one transcript that quietly reconciles
+      everything as it goes. It looks like multi-agent. It behaves like a summary. The load-bearing version gives each
+      dialect its <b>own agent and its own file</b> — parallel sessions on a shared folder, or subagents inside one
+      session; different shapes, same territory — and then makes a fourth move do the work the others can't:
+      <b>a framework that forces the question "where do these disagree?" before a single sentence of synthesis.</b>
+      Below: three hats writing to one chat on the left, three agents writing to three files on the right.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 2 — FAKE SPLIT → FORCED SPLIT ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 390" role="img" aria-label="Left: one prompt wearing three hats writes to a single chat thread, reconciling as it goes — the tell of a fake split. Right: three agents each own one source dialect, each write a separate file, and a framework forces 'where do these disagree?' before synthesis.">
+      <defs>
+        <linearGradient id="d2-fake" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5d6a68" stop-opacity=".6"/><stop offset="1" stop-color="#5d6a68" stop-opacity="0"/></linearGradient>
+        <linearGradient id="d2-real" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".4"/><stop offset="1" stop-color="#ffb347" stop-opacity=".35"/></linearGradient>
+        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.4" fill="#3b524e">FAKE SPLIT vs FORCED SPLIT · SAME SHAPE, DIFFERENT PHYSICS</text>
+
+      <!-- LEFT: one prompt, three hats, one chat -->
+      <g>
+        <text x="70" y="70" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#5d6a68">BRITTLE · ONE PROMPT, THREE HATS</text>
+        <circle cx="130" cy="150" r="22" fill="#39423f" filter="url(#d2-glow)"/>
+        <!-- three little hats stacked on the single head -->
+        <g fill="#5d6a68" opacity=".8">
+          <polygon points="118,132 130,124 142,132"/>
+          <polygon points="113,140 130,128 147,140" opacity=".55"/>
+        </g>
+        <text x="130" y="190" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#5d6a68">ONE HEAD</text>
+        <!-- single chat thread, reconciling -->
+        <rect x="200" y="110" width="220" height="150" rx="10" fill="rgba(57,66,63,.14)" stroke="#4b5654"/>
+        <text x="310" y="100" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">ONE CHAT THREAD</text>
+        <g stroke="url(#d2-fake)" stroke-width="2" fill="none">
+          <path d="M152,150 C175,150 185,150 200,150"/>
+        </g>
+        <g stroke="#5d6a68" stroke-width="2" opacity=".5">
+          <line x1="216" y1="138" x2="404" y2="138"/>
+          <line x1="216" y1="160" x2="390" y2="160"/>
+          <line x1="216" y1="182" x2="404" y2="182"/>
+          <line x1="216" y1="204" x2="372" y2="204"/>
+        </g>
+        <text x="310" y="240" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#5d6a68">reconciles as it goes</text>
+        <text x="310" y="294" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#39423f">THE TELL · YOU DIDN'T NEED TO SPLIT</text>
+      </g>
+
+      <!-- arrow -->
+      <g transform="translate(470,180)">
+        <path d="M0,0 L70,0" stroke="#ffb347" stroke-width="1.4" fill="none" opacity=".7"/>
+        <polygon points="70,0 60,-6 60,6" fill="#ffb347" opacity=".85"/>
+        <text x="36" y="-12" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".24em" fill="#ffb347">FORCE IT</text>
+        <text x="36" y="22" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#6f8a85">name the axis</text>
+      </g>
+
+      <!-- RIGHT: three agents, three files, framework forces disagreement -->
+      <g>
+        <text x="580" y="70" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#ffb347">LOAD-BEARING · ONE DIALECT PER AGENT</text>
+        <!-- three agents -->
+        <g>
+          <circle cx="600" cy="110" r="12" fill="#3fe0c8" filter="url(#d2-glow)"/>
+          <circle cx="600" cy="170" r="12" fill="#9bffe9" filter="url(#d2-glow)"/>
+          <circle cx="600" cy="230" r="12" fill="#ffb347" filter="url(#d2-glow)"/>
+        </g>
+        <!-- three separate files -->
+        <g font-family="'Spline Sans Mono',monospace" font-size="10">
+          <rect x="660" y="98" width="130" height="26" rx="6" fill="rgba(63,224,200,.10)" stroke="#1d8d80"/>
+          <text x="674" y="115" fill="#3fe0c8">loud.md</text>
+          <rect x="660" y="158" width="130" height="26" rx="6" fill="rgba(155,255,233,.10)" stroke="#1d8d80"/>
+          <text x="674" y="175" fill="#9bffe9">academic.md</text>
+          <rect x="660" y="218" width="130" height="26" rx="6" fill="rgba(255,179,71,.10)" stroke="#a86a1f"/>
+          <text x="674" y="235" fill="#ffb347">quiet.md</text>
+        </g>
+        <g stroke-width="1.6" fill="none" opacity=".8">
+          <line x1="612" y1="110" x2="660" y2="111" stroke="#1d8d80"/>
+          <line x1="612" y1="170" x2="660" y2="171" stroke="#1d8d80"/>
+          <line x1="612" y1="230" x2="660" y2="231" stroke="#a86a1f"/>
+        </g>
+        <!-- framework node -->
+        <g filter="url(#d2-glow)">
+          <rect x="830" y="120" width="200" height="110" rx="12" fill="rgba(8,17,18,.82)" stroke="url(#d2-real)" stroke-width="1.6"/>
+        </g>
+        <rect x="830" y="120" width="200" height="22" rx="6" fill="rgba(255,179,71,.14)"/>
+        <text x="844" y="136" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".06em" fill="#ffb347">FRAMEWORK</text>
+        <text x="930" y="166" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#eafff9">"where do these</text>
+        <text x="930" y="184" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#eafff9">disagree?"</text>
+        <text x="930" y="212" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".14em" fill="#a86a1f">…BEFORE ANY SUMMARY</text>
+        <g stroke-width="1.4" fill="none" opacity=".7">
+          <path d="M790,111 C812,120 818,140 830,150" stroke="#1d8d80"/>
+          <path d="M790,171 C812,171 818,171 830,175" stroke="#1d8d80"/>
+          <path d="M790,231 C812,222 818,205 830,200" stroke="#a86a1f"/>
+        </g>
+        <circle cx="1010" cy="132" r="4" fill="#aeffee" class="breathe"/>
+      </g>
+
+      <text x="540" y="372" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">THE FILESYSTEM IS WHERE THE WORK LIVES. THE CHAT THAT PAPERS OVER DISAGREEMENT ISN'T.</text>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 02</span>One head in three hats <em>reconciles</em>; three agents on three files, under a framework, are <b>forced to show where they disagree</b>.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 3 — the framework + the compounding intro ============ -->
+  <section class="prose">
+    <p>
+      A word on that framework, because it's the step most people skip and the one that decides whether the whole
+      thing was worth the coordination cost. A synthesiser left un-prompted does what any model does at a fork: it
+      <b>rounds the corner and makes peace.</b> Hand it three conflicting files and no spine, and it will produce a fluent,
+      reasonable, utterly beige reconciliation — the very thing you split to avoid. Give it a framework — a strategy
+      kernel by default, swap a stance if your challenge fits another <em>(the default trio below is a starting point,
+      not the only correct configuration)</em> — and it stops averaging and starts <b>picking</b>. The framework is the
+      synthesiser's spine. Without one, you've built an expensive way to get the single-agent answer back.
+    </p>
+
+    <div class="sec-label amber">The compounding loop · what changes between passes</div>
+    <h2 class="amber">Next split starts from <em>earned rules</em>, not defaults.</h2>
+
+    <p>
+      The first time you split a question, you're guessing at the division of labour. By the third time, you shouldn't be.
+      The artefact that carries the learning forward is a root <span class="mono amber">./CLAUDE.md</span> that governs
+      how the agents divide the work — and in the review after each run, you sharpen it from the four agent prompts and
+      the retrieval files: this zone was noise, that stance was redundant, the framework needed a sharper "show me the
+      seam" instruction. Each pass the rules file gets visibly richer, and the next question's split starts from earned
+      division-of-work rules instead of a blank guess. Below: the loop, with the rules file densifying across passes.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="Four-beat compounding loop — question splits, retrievers write files, synthesiser picks under a framework, seam audit sharpens the root rules — with the division-of-work rules file visibly densifying across passes one, two and three.">
+      <defs>
+        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffb347" stop-opacity=".8"/><stop offset="1" stop-color="#3fe0c8" stop-opacity=".6"/></linearGradient>
+        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#9bffe9"/><stop offset=".55" stop-color="#3fe0c8"/><stop offset="1" stop-color="#1d8d80"/></radialGradient>
+        <radialGradient id="d3-beadA" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#ffe0a8"/><stop offset=".55" stop-color="#ffb347"/><stop offset="1" stop-color="#a86a1f"/></radialGradient>
+        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.4" fill="#3b524e">DIVISION-OF-WORK RULES COMPOUND · WHAT CHANGES BETWEEN PASSES</text>
+
+      <!-- ===== LEFT HALF: the loop ===== -->
+      <g transform="translate(40,60)">
+        <circle cx="200" cy="170" r="130" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="540 60" stroke-linecap="round" transform="rotate(-90 200 170)"/>
+        <circle r="3.6" fill="#ffe0a8">
+          <animateMotion dur="9s" repeatCount="indefinite" path="M200,40 a130,130 0 1,1 -0.1,0"/>
+          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
+        </circle>
+
+        <g>
+          <circle cx="200" cy="40" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="200" y="45" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">1</text>
+          <text x="200" y="20" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Question splits</text>
+        </g>
+        <g>
+          <circle cx="330" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="330" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">2</text>
+          <text x="362" y="173" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Retrievers write files</text>
+        </g>
+        <g>
+          <circle cx="200" cy="300" r="22" fill="url(#d3-beadA)" filter="url(#d3-glow)"/>
+          <text x="200" y="305" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">3</text>
+          <text x="200" y="338" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Framework picks</text>
+        </g>
+        <g>
+          <circle cx="70" cy="170" r="22" fill="url(#d3-beadA)" filter="url(#d3-glow)"/>
+          <text x="70" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">4</text>
+          <text x="38" y="166" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Seam audit</text>
+          <text x="38" y="183" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">sharpens rules</text>
+        </g>
+
+        <text x="200" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EVERY PASS</text>
+        <text x="200" y="184" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#ffb347">splits sharper</text>
+      </g>
+
+      <!-- ===== RIGHT HALF: the rules file densifying ===== -->
+      <g transform="translate(540,68)">
+        <!-- pass 1 — thin -->
+        <g>
+          <rect x="0" y="14" width="160" height="200" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.22)"/>
+          <rect x="0" y="14" width="160" height="20" rx="6" fill="rgba(63,224,200,.10)"/>
+          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">./CLAUDE.md</text>
+          <text x="150" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v1</text>
+          <g stroke="#6f8a85" stroke-width="2" opacity=".55">
+            <line x1="12" y1="58" x2="98" y2="58"/>
+            <line x1="12" y1="78" x2="140" y2="78"/>
+            <line x1="12" y1="98" x2="78" y2="98"/>
+          </g>
+          <text x="80" y="240" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#5d6a68">PASS 1 · GUESSED SPLIT</text>
+        </g>
+
+        <g transform="translate(170,114)">
+          <path d="M0,0 L26,0" stroke="#ffb347" stroke-width="1.2" fill="none" opacity=".7"/>
+          <polygon points="26,0 18,-5 18,5" fill="#ffb347" opacity=".75"/>
+        </g>
+
+        <!-- pass 2 — denser -->
+        <g transform="translate(200,0)">
+          <rect x="0" y="14" width="160" height="220" rx="8" fill="rgba(8,17,18,.78)" stroke="rgba(63,224,200,.35)"/>
+          <rect x="0" y="14" width="160" height="20" rx="6" fill="rgba(63,224,200,.14)"/>
+          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">./CLAUDE.md</text>
+          <text x="150" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v2</text>
+          <g stroke="#9bffe9" stroke-width="2" opacity=".75">
+            <line x1="12" y1="58" x2="120" y2="58"/>
+            <line x1="12" y1="78" x2="140" y2="78"/>
+            <line x1="12" y1="98" x2="98" y2="98"/>
+            <line x1="12" y1="118" x2="132" y2="118"/>
+            <line x1="12" y1="138" x2="108" y2="138"/>
+          </g>
+          <g stroke="#ffb347" stroke-width="2" opacity=".75">
+            <line x1="12" y1="158" x2="126" y2="158"/>
+            <line x1="12" y1="178" x2="92" y2="178"/>
+          </g>
+          <text x="80" y="252" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#9bffe9">PASS 2 · ZONES NAMED</text>
+        </g>
+
+        <g transform="translate(370,124)">
+          <path d="M0,0 L26,0" stroke="#ffb347" stroke-width="1.2" fill="none" opacity=".7"/>
+          <polygon points="26,0 18,-5 18,5" fill="#ffb347" opacity=".75"/>
+        </g>
+
+        <!-- pass 3 — sharp, load-bearing -->
+        <g transform="translate(400,0)">
+          <rect x="0" y="0" width="160" height="260" rx="8" fill="rgba(8,17,18,.85)" stroke="url(#d3-ring)" stroke-width="1.5" filter="url(#d3-glow)"/>
+          <rect x="0" y="0" width="160" height="20" rx="6" fill="rgba(255,179,71,.16)"/>
+          <text x="10" y="15" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">./CLAUDE.md</text>
+          <text x="150" y="15" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v3</text>
+          <g stroke="#ffb347" stroke-width="2.2">
+            <line x1="12" y1="40" x2="138" y2="40"/>
+            <line x1="12" y1="60" x2="120" y2="60"/>
+          </g>
+          <g stroke="#9bffe9" stroke-width="2" opacity=".8">
+            <line x1="12" y1="84" x2="146" y2="84"/>
+            <line x1="12" y1="104" x2="120" y2="104"/>
+            <line x1="12" y1="124" x2="138" y2="124"/>
+            <line x1="12" y1="144" x2="110" y2="144"/>
+            <line x1="12" y1="164" x2="128" y2="164"/>
+            <line x1="12" y1="184" x2="138" y2="184"/>
+            <line x1="12" y1="204" x2="104" y2="204"/>
+            <line x1="12" y1="224" x2="126" y2="224"/>
+          </g>
+          <text x="80" y="280" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#ffb347">PASS 3 · EARNED DIVISION</text>
+        </g>
+
+        <g transform="translate(0,300)">
+          <rect x="0" y="0" width="14" height="3" fill="#ffb347"/>
+          <text x="22" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">SPLITS THAT EARNED THEIR KEEP</text>
+          <rect x="0" y="14" width="14" height="3" fill="#9bffe9"/>
+          <text x="22" y="18" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">ZONE RULES · STILL USEFUL</text>
+        </g>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 03</span><em>The division-of-work file compounds.</em> The first split is a guess; <b>by the third the rules carry what earned its keep</b> — and a teammate inherits it.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 4 — what Test actually means ============ -->
+  <section class="prose">
+    <div class="sec-label amber">What "Test" actually means · in practice</div>
+    <h2 class="amber">The split earned its keep if the <em>seam shows</em>.</h2>
+
+    <p>
+      Here's the test, and it's harsher than "looks thorough." The answer has to be <em class="teal">specific enough to bring
+      forward</em> <b>and</b> its uncertainty has to be <em class="teal">plain enough to inspect</em> — and a reader has to be able
+      to see <b>where the agents disagreed</b>, because the synthesiser picked a direction instead of averaging the three
+      into a hedge. Then the negative test, which most work fails — and that failing is the point. If you can't name which
+      of access, dialect, or stance forced the split, or if one good prompt would have produced the same answer, you didn't
+      need to split. You added coordination cost for nothing. Most work lives on that side of the line; the discipline is
+      learning the move <b>and respecting the default.</b>
+    </p>
+  </section>
+
+  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
+  <div class="plates">
+    <div class="plate use">
+      <div class="beat-label amber"><b>Use when</b></div>
+      <p class="body">
+        One agent <span class="grey">can't sensibly cover the access, dialect, or stance the work needs</span> —
+        and you can <b>name which of the three</b> is forcing your hand. Can't name one? Keep the single agent.
+      </p>
+    </div>
+    <div class="plate build">
+      <div class="beat-label"><b>Build</b></div>
+      <p class="body">
+        <b>Parallel retrieval + framework-shaped synthesis</b>: one file per source zone on disk, a synthesiser
+        briefing carrying a framework, and a root rules file that compounds.
+      </p>
+    </div>
+    <div class="plate test">
+      <div class="beat-label"><b>Test</b></div>
+      <p class="body">
+        Specific enough to bring forward, gaps plain to inspect, <em>the seam shows.</em><br>
+        Not merely <em class="no">"looks thorough."</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ CORE MOVES ============ -->
+  <section class="moves">
+    <div class="beat-label"><b>Core moves</b></div>
+    <div class="moves-head">
+      <h2>The action, in sequence</h2>
+      <span class="lede">The first move is a refusal — it kills the splits that earn nothing.</span>
+    </div>
+
+    <div class="move-rail">
+      <div class="thread"></div>
+      <div class="step">
+        <div class="bead">1</div>
+        <h3>Name the forcing axis</h3>
+        <p>Access, dialect, or stance? <b>Can't name one — don't split.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">2</div>
+        <h3>Split by source zone</h3>
+        <p>One dialect per retriever. <b>Non-comparable by design.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">3</div>
+        <h3>Write to files, not chat</h3>
+        <p>The filesystem is the meeting room. <b>One file per zone.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">4</div>
+        <h3>Run distinct stances</h3>
+        <p>Default trio: planner · assumption-tester · reframer — <b>swap one if your challenge fits another.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">5</div>
+        <h3>Force disagreement</h3>
+        <p>A framework, or it averages. <b>"Show me where these disagree."</b></p>
+      </div>
+    </div>
+
+    <div class="compound">
+      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ffb347"/><stop offset="100%" stop-color="#3fe0c8"/>
+        </linearGradient></defs>
+        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
+          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
+        <polygon points="37,8 30,16 44,16" fill="#ffb347"/>
+        <circle cx="37" cy="37" r="6" fill="#ffb347" opacity=".25"/>
+        <circle r="3" fill="#ffe0a8">
+          <animateMotion dur="5s" repeatCount="indefinite"
+            path="M37,11 a26,26 0 1,1 -0.1,0"/>
+        </circle>
+      </svg>
+      <div class="ctext">
+        <div class="cyc">question splits<span class="arr">→</span>retrievers write files<span class="arr">→</span>framework picks<span class="arr">→</span>seam audit sharpens the rules<span class="arr">→</span>repeat</div>
+        <p>Then it's a system, not a one-off: <b>the next split starts from earned division-of-work rules.</b> The same source-zone split that answered your question once becomes a running capability a colleague reads from.</p>
+      </div>
+    </div>
+
+    <!-- the Monday-move / no-permission aside -->
+    <p class="aside">
+      <b>Monday move: take one question you keep getting beige back on.</b> Write down which ONE of access / dialect /
+      stance makes it hard — if you genuinely can't, stop, keep the single agent, you just saved the coordination cost.
+      <span class="mono">Two sessions on one folder · each pointed at a different source zone · write to two files before anything synthesises · no fourth agent, no framework yet.</span>
+      No platform, budget, or sign-off — multiple sessions on a working directory already run.
+    </p>
+  </section>
+
+  <!-- ============ WHY — the conviction ============ -->
+  <section class="why">
+    <div class="beat-label amber"><b>Why</b></div>
+
+    <div class="principle-block">
+      <div class="principle-label">The principle</div>
+      <p class="principle-line">The filesystem is the <em>meeting room</em>. Parallel minds coordinate through files you can inspect — not a chat that smooths the friction away.</p>
+    </div>
+
+    <p class="quote">"Three agents don't make you smarter. Three different kinds of access, dialect, or stance do — and if you can't name which, you've hired three of the same agent."</p>
+    <p class="gloss">
+      More agents is not more intelligence; it's more <b>access</b>, more <b>dialect</b>, more <b>stance</b> — and only
+      when those genuinely differ. The counterintuitive part is that the move which earns its keep is most often the
+      <em>refusal</em> to split: most builders reach for multi-agent because it feels powerful, and most of the time one
+      good prompt would have done it cheaper. When the split is real, the danger moves to the seams — conflicts get
+      dropped, dialects clash, the synthesiser rounds everything into beige. <b>The whole skill is watching where the
+      pieces meet.</b>
+    </p>
+    <p class="gloss">
+      And the synthesiser needs a framework precisely because, left alone, a model's default at a disagreement is to
+      <em class="teal">round the corner and make peace.</em> A framework forces it to <b>choose.</b> That is why the
+      coordination happens on disk and not in a chat: a chat thread is built to reconcile, and reconciliation is exactly
+      the friction you most need to see.
+    </p>
+    <div class="corollary"><span class="sd"></span>Most work doesn't need the split. Learn the move; respect the default.</div>
+  </section>
+
+  <!-- ============ CONNECTS TO — neighbour patterns ============ -->
+  <section class="connects">
+    <h2>Connects to</h2>
+    <div class="sub">Threads leaving this node · the pattern language</div>
+
+    <div class="web">
+      <svg viewBox="0 0 1080 300" aria-hidden="true">
+        <defs>
+          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <circle cx="150" cy="150" r="30" fill="none" stroke="#ffb347" stroke-width="1.2" opacity=".5"/>
+        <circle cx="150" cy="150" r="11" fill="#ffb347" filter="url(#wglow)"/>
+        <circle cx="150" cy="150" r="46" fill="none" stroke="#ffb347" stroke-width=".7" opacity=".25"/>
+
+        <path id="th1" d="M150,150 C360,82 540,64 760,68" stroke="url(#t1)" stroke-width="2.2" fill="none"/>
+        <path id="th2" d="M150,150 C380,150 560,150 760,150" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
+        <path id="th3" d="M150,150 C360,218 540,236 760,236" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
+
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+      </svg>
+
+      <div class="neighbours">
+        <div class="origin-chip" style="left:13.8%;top:50%">Split the work<small>business · you are here</small></div>
+        <a class="nb amber" href="hybrid-beats-autonomous.html" style="left:70.4%;top:22.7%"><span class="sd"></span>Keep the human in the seam <span class="recipe-no">hybrid-beats-autonomous</span></a>
+        <a class="nb" href="benchmark-the-judge.html" style="left:70.4%;top:50%"><span class="sd"></span>Measure the judge, don't trust it <span class="recipe-no">benchmark-the-judge</span></a>
+        <a class="nb amber" href="compounding-system.html" style="left:70.4%;top:78.7%"><span class="sd"></span>Build the substrate it compounds on <span class="recipe-no">compounding-system</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="floor">
+    <span class="door">A door, not a destination — most questions don't need the split. Learn the move; respect the default.</span>
+    <span class="meta">The Big Picture · Pattern Language</span>
+  </footer>
+
+</div>
+</body>
+</html>

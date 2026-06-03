@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grow rules from proof — Pattern · The Big Picture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-0:#05080a;
+    --soil-1:#080d10;
+    --soil-2:#0c1418;
+    --teal:#3fe0c8;
+    --teal-dim:#1d8d80;
+    --amber:#ffb347;
+    --amber-dim:#a86a1f;
+    --spore:#eafff9;
+    --ink:#cfe6e0;
+    --ink-dim:#6f8a85;
+    --ink-faint:#3b524e;
+    --hairline:rgba(63,224,200,.10);
+    --grey:#5d6a68;
+    --grey-dim:#39423f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--soil-0);
+    font-family:'Spline Sans',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
+      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
+      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+  }
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 64px;}
+
+  /* ============ BREADCRUMB ============ */
+  .crumb{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+    color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
+  }
+  .crumb a{color:var(--teal-dim);text-decoration:none;transition:color .25s}
+  .crumb a:hover{color:var(--teal)}
+  .crumb .here{color:var(--ink)}
+
+  /* ============ PATTERN HEADER ============ */
+  header.pat{padding:30px 0 8px;max-width:900px;}
+  .kicker{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--teal-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .kicker .spore-mark{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 14px 2px rgba(63,224,200,.6);
+    flex:none;
+  }
+  .kicker .pat-no{color:var(--ink-faint)}
+  header.pat h1{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(40px,7vw,68px);line-height:.98;
+    color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
+  }
+  header.pat h1 em{font-style:italic;color:var(--teal);font-weight:400}
+  .principle{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
+  }
+  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .essence{
+    font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:720px;
+  }
+  .essence b{color:var(--spore);font-weight:500}
+
+  /* ============ HERO PICTURE ============ */
+  .hero-frame{
+    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(13,31,32,.5), rgba(5,8,10,.6));
+    position:relative;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.04) inset;
+  }
+  .hero-frame svg{display:block;width:100%;height:auto}
+  .hero-cap{
+    position:absolute;left:18px;bottom:13px;z-index:3;
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
+    color:var(--ink-dim);text-transform:uppercase;
+  }
+  .hero-cap b{color:var(--teal)}
+
+  /* ============ READING PROSE ============ */
+  .prose{
+    margin-top:34px;max-width:760px;
+  }
+  .prose h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
+    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+  }
+  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .prose h2.amber em{color:var(--amber)}
+  .prose .sec-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+    margin-top:42px;
+  }
+  .prose .sec-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
+  }
+  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .prose p{
+    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
+    letter-spacing:.002em;
+  }
+  .prose p b{color:var(--spore);font-weight:500}
+  .prose p em{font-style:italic;color:var(--ink-dim)}
+  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p .mono{
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
+  }
+  .prose p .mono.amber{color:var(--amber)}
+  .prose .pull{
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+    color:var(--ink);max-width:680px;
+  }
+  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
+
+  /* ============ PROCESS DIAGRAMS ============ */
+  .diagram{
+    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+    background:
+      radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
+      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
+    position:relative;
+    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
+  }
+  .diagram svg{display:block;width:100%;height:auto}
+  .diagram .dcap{
+    padding:12px 20px 16px;border-top:1px solid var(--hairline);
+    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
+    color:var(--ink-dim);letter-spacing:.003em;
+    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  }
+  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
+  .diagram .dcap .num{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
+  }
+
+  /* ============ RECIPE BEAT LABELS ============ */
+  .beat-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  }
+  .beat-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.6);
+  }
+  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+
+  /* ============ USE WHEN · BUILD · TEST PLATES ============ */
+  .plates{
+    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
+  }
+  .plate{
+    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
+    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
+  }
+  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
+  .plate .body b{color:var(--spore);font-weight:500}
+  .plate .body .grey{color:var(--grey)}
+  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
+  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ CORE MOVES ============ */
+  .moves{margin-top:46px}
+  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
+  .moves-head h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
+  .move-rail{
+    margin-top:20px;position:relative;
+    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+  }
+  .move-rail .thread{
+    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
+    background:linear-gradient(90deg,
+      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
+      rgba(63,224,200,.7) 50%, rgba(255,179,71,.65) 94%, rgba(255,179,71,0) 100%);
+  }
+  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
+  .step:first-child{padding-left:0}
+  .step .bead{
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
+    margin-bottom:13px;
+  }
+  .step:nth-child(5) .bead,
+  .step:nth-child(6) .bead{
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
+  }
+  .step h3{
+    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
+  }
+  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
+  .step p b{color:var(--ink);font-weight:500}
+
+  .compound{
+    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
+    padding:18px 22px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.07), transparent 60%),
+      rgba(8,17,18,.55);
+    display:flex;align-items:center;gap:20px;
+  }
+  .compound .loop-ico{flex:none}
+  .compound .ctext{flex:1}
+  .compound .ctext .cyc{
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
+  }
+  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
+  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
+  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+
+  .aside{
+    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
+    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+  }
+  .aside b{color:var(--amber);font-weight:500}
+  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
+
+  /* ============ WHY ============ */
+  .why{
+    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
+    padding:26px 30px 28px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
+      rgba(7,14,15,.6);
+  }
+  .why .beat-label{margin-bottom:14px}
+  .why .principle-block{
+    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
+  }
+  .why .principle-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
+  }
+  .why .principle-line{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
+    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
+  }
+  .why .principle-line em{font-style:italic;color:var(--teal)}
+  .why .quote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--teal);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(63,224,200,.26);max-width:840px;
+  }
+  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
+  .why .gloss b{color:var(--spore);font-weight:500}
+  .why .gloss em{font-style:italic;color:var(--ink-dim)}
+  .why .gloss + .gloss{margin-top:12px}
+  .why .corollary{
+    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
+    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+  }
+  .why .corollary .sd{
+    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+  }
+
+  /* ============ PRACTICE PANEL ============ */
+  .practice{
+    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
+    padding:22px 26px 24px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
+      rgba(8,15,17,.5);
+  }
+  .practice .beat-label{margin-bottom:12px}
+  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
+  .practice p b{color:var(--spore);font-weight:500}
+  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
+  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ CONNECTS TO ============ */
+  .connects{margin-top:52px}
+  .connects h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .connects .sub{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:5px;
+  }
+  .web{position:relative;margin-top:8px}
+  .web svg{display:block;width:100%;height:auto}
+  .neighbours{position:absolute;inset:0;pointer-events:none}
+  .nb{
+    position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
+    display:flex;align-items:center;gap:9px;
+    padding:8px 14px 9px;border-radius:13px;
+    background:rgba(8,15,17,.82);backdrop-filter:blur(4px);
+    border:1px solid var(--hairline);
+    color:var(--ink);font-size:13px;letter-spacing:.005em;white-space:nowrap;
+    transition:border-color .3s,color .3s,background .3s,transform .3s;
+    cursor:pointer;text-decoration:none;
+  }
+  .nb .sd{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 12px 2px rgba(63,224,200,.55);
+  }
+  .nb.amber .sd{background:var(--amber);box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 12px 2px rgba(255,179,71,.5)}
+  .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
+  .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
+  .nb:hover .sd{animation:throb 1s ease-in-out infinite}
+  .nb.soon{opacity:.62}
+  .nb.soon::after{
+    content:"soon";
+    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);
+    border:1px solid var(--ink-faint);border-radius:20px;
+    padding:2px 7px 3px;margin-left:4px;
+  }
+  .nb.soon:hover{opacity:1}
+  @keyframes throb{50%{transform:scale(1.5)}}
+  .origin-chip{
+    position:absolute;transform:translate(-50%,-50%);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 24px rgba(63,224,200,.4);white-space:nowrap;text-align:center;
+  }
+  .origin-chip small{
+    display:block;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:8.5px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--teal-dim);margin-top:3px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer.floor{
+    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  footer.floor .door{
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
+    text-shadow:0 0 22px rgba(255,179,71,.3);
+  }
+  footer.floor .meta{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+
+  @keyframes breathe{
+    0%,100%{opacity:.55}
+    50%{opacity:1}
+  }
+  .breathe{animation:breathe 4.2s ease-in-out infinite}
+
+  @media (max-width:860px){
+    .plates{grid-template-columns:1fr 1fr}
+    .plate.use{grid-column:1 / -1}
+  }
+  @media (max-width:780px){
+    .plates{grid-template-columns:1fr}
+    .plate.use{grid-column:1}
+    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
+    .move-rail .thread{display:none}
+    .step{padding:0}
+    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .neighbours .nb{font-size:11px;padding:6px 10px}
+    .prose p{font-size:14.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ BREADCRUMB ============ -->
+  <nav class="crumb">
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Grow rules from proof</span>
+  </nav>
+
+  <!-- ============ PATTERN HEADER ============ -->
+  <header class="pat">
+    <div class="kicker"><span class="spore-mark"></span>Recipe · software lane · <span class="pat-no">Absorption phase · compounding engine</span></div>
+    <h1>Grow rules from <em>proof</em></h1>
+    <p class="principle">The principle: <b>Compound from evidence</b> — rules grown from session signal outlast rules drafted from intent.</p>
+    <p class="essence">
+      After each non-trivial session the agent reads its own transcript and <b>rewrites the rules file in place.</b>
+      You push back, you commit. Boring on day one; dominant by day thirty.
+    </p>
+  </header>
+
+  <!-- ============ HERO: side-by-side diff — before / after compound prompt ============ -->
+  <div class="hero-frame">
+    <svg viewBox="0 0 1080 400" role="img" aria-label="Side-by-side diff of CLAUDE.local.md: left shows two generic lines plus one stale rule before the session; right shows three specific rules each citing the session beat that earned them, with the stale line deleted.">
+      <defs>
+        <radialGradient id="hwell" cx="78%" cy="50%" r="62%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".18"/>
+          <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".06"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="deleteLine" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#ff6b6b" stop-opacity=".7"/>
+          <stop offset="100%" stop-color="#ff6b6b" stop-opacity=".2"/>
+        </linearGradient>
+        <linearGradient id="addLine" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".8"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity=".25"/>
+        </linearGradient>
+        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <rect x="0" y="0" width="1080" height="400" fill="url(#hwell)"/>
+
+      <!-- BEFORE label -->
+      <text x="62" y="36" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#5d6a68">BEFORE · CLAUDE.LOCAL.MD · STALE TEMPLATE</text>
+
+      <!-- BEFORE file frame -->
+      <rect x="62" y="54" width="420" height="296" rx="12" fill="rgba(8,17,18,.75)" stroke="rgba(63,224,200,.14)" stroke-width="1"/>
+      <rect x="62" y="54" width="420" height="26" rx="8" fill="rgba(63,224,200,.07)"/>
+      <text x="80" y="72" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing=".06em" fill="#6f8a85">./CLAUDE.local.md</text>
+
+      <!-- stale / generic lines -->
+      <g font-family="'Spline Sans Mono',monospace" font-size="12" fill="#5d6a68">
+        <text x="80" y="106"># rules</text>
+        <text x="80" y="132" fill="#4b5654">- be concise</text>
+        <text x="80" y="156" fill="#4b5654">- check your work</text>
+      </g>
+
+      <!-- stale line with deletion mark -->
+      <rect x="80" y="176" width="360" height="22" rx="4" fill="rgba(255,80,80,.06)" stroke="rgba(255,80,80,.22)" stroke-width="1"/>
+      <text x="88" y="192" font-family="'Spline Sans Mono',monospace" font-size="11.5" fill="#ff6b6b" opacity=".7">- always ask before deleting files</text>
+      <line x1="88" y1="187" x2="420" y2="187" stroke="#ff6b6b" stroke-width="1" opacity=".5"/>
+      <text x="430" y="192" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#ff6b6b" opacity=".5">stale</text>
+
+      <!-- empty space = thin -->
+      <text x="80" y="228" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#3b524e">…written from intent,</text>
+      <text x="80" y="248" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#3b524e">not evidence.</text>
+
+      <!-- the gap annotation -->
+      <rect x="80" y="272" width="340" height="50" rx="8" fill="rgba(255,179,71,.04)" stroke="rgba(255,179,71,.14)"/>
+      <text x="96" y="292" font-family="'Spline Sans',sans-serif" font-size="12" fill="#a86a1f">Could have been written day zero.</text>
+      <text x="96" y="311" font-family="'Spline Sans',sans-serif" font-size="12" fill="#a86a1f">No session touched it.</text>
+
+      <!-- arrow + compound prompt label -->
+      <g transform="translate(502,196)">
+        <path d="M0,0 L66,0" stroke="#3fe0c8" stroke-width="1.6" fill="none"/>
+        <polygon points="66,0 56,-7 56,7" fill="#3fe0c8"/>
+        <text x="33" y="-13" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3fe0c8">COMPOUND</text>
+        <text x="33" y="-1" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3fe0c8">PROMPT</text>
+        <text x="33" y="20" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#6f8a85">reads transcript</text>
+        <text x="33" y="36" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#6f8a85">rewrites in place</text>
+      </g>
+
+      <!-- AFTER label -->
+      <text x="598" y="36" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3fe0c8">AFTER · CLAUDE.LOCAL.MD · SESSION-CALIBRATED</text>
+
+      <!-- AFTER file frame — glowing -->
+      <rect x="598" y="54" width="420" height="296" rx="12" fill="rgba(8,17,18,.85)" stroke="#3fe0c8" stroke-width="1.3" filter="url(#hglow)"/>
+      <rect x="598" y="54" width="420" height="26" rx="8" fill="rgba(63,224,200,.12)"/>
+      <text x="616" y="72" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing=".06em" fill="#3fe0c8">./CLAUDE.local.md</text>
+
+      <!-- new rules — each citing a session beat -->
+      <rect x="616" y="89" width="380" height="62" rx="6" fill="rgba(63,224,200,.05)" stroke="rgba(63,224,200,.22)" stroke-width="1"/>
+      <text x="626" y="107" font-family="'Spline Sans Mono',monospace" font-size="11.5" fill="#9bffe9">+ validate webhook sigs before dispatch</text>
+      <text x="626" y="127" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#3b524e" letter-spacing=".1em">  # session: payment-flow pushback · 14:22</text>
+      <text x="626" y="143" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#1d8d80" letter-spacing=".08em">  ← earned here</text>
+
+      <rect x="616" y="162" width="380" height="62" rx="6" fill="rgba(63,224,200,.05)" stroke="rgba(63,224,200,.22)" stroke-width="1"/>
+      <text x="626" y="180" font-family="'Spline Sans Mono',monospace" font-size="11.5" fill="#9bffe9">+ read existing test patterns before writing new</text>
+      <text x="626" y="200" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#3b524e" letter-spacing=".1em">  # session: duplicate helper spotted · 09:04</text>
+      <text x="626" y="216" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#1d8d80" letter-spacing=".08em">  ← earned here</text>
+
+      <rect x="616" y="236" width="380" height="62" rx="6" fill="rgba(63,224,200,.05)" stroke="rgba(63,224,200,.22)" stroke-width="1"/>
+      <text x="626" y="254" font-family="'Spline Sans Mono',monospace" font-size="11.5" fill="#9bffe9">+ use transaction IDs not timestamps in logs</text>
+      <text x="626" y="274" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#3b524e" letter-spacing=".1em">  # session: debug spiral · 16:47</text>
+      <text x="626" y="290" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#1d8d80" letter-spacing=".08em">  ← earned here</text>
+
+      <!-- deleted line visible in diff -->
+      <text x="616" y="332" font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#ff6b6b" opacity=".55">- always ask before deleting files</text>
+      <line x1="616" y1="327" x2="920" y2="327" stroke="#ff6b6b" stroke-width="1" opacity=".4"/>
+      <text x="926" y="332" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#ff6b6b" opacity=".45">deleted · diagnosis killed it</text>
+
+      <!-- breathing spore on after file -->
+      <circle cx="996" cy="66" r="4" fill="#aeffee" class="breathe"/>
+
+      <!-- bottom strip -->
+      <text x="540" y="388" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">THE DIFF IS THE POINT. EVIDENCE MEDIATES EVERY LINE.</text>
+    </svg>
+    <div class="hero-cap">Rules drafted from intent vs rules grown from proof. <b>Only one survives the second session.</b></div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
+  <!-- ============================================================ -->
+  <section class="prose">
+    <div class="sec-label">The mechanism · what actually happens</div>
+    <h2>The session is <em>evidence.</em> Mine it.</h2>
+
+    <p>
+      Most engineers open a new session, do good work, ship the PR, and move on.
+      The rules file — if one exists — stays exactly as written the week the repo was set up.
+      It remains a generic wishlist: <em>"be concise," "check your work."</em> Indistinguishable from
+      the default scaffolding that shipped with the template. <b>The gap between that file and the one
+      that knows your codebase is the cost you pay at the start of every session, forever.</b>
+    </p>
+
+    <p>
+      The compound move closes that gap. On session close, run one prompt:
+      <em class="teal">"Review this session's transcript and diffs, rewrite the rules file in place, report what changed in 3–5 lines."</em>
+      The agent reads the actual signal — where it was pushed back, what it got wrong, what pattern produced a better result —
+      and integrates that into the file. Not appended to the bottom. Integrated. Then you read three to five lines and push back
+      on anything you cannot trace to a specific moment from today's session. <b>If the rule couldn't have been written from this
+      session, it doesn't belong here.</b> Confabulation and evidence look identical until you check.
+    </p>
+
+    <p class="pull">
+      "Rules grow from evidence, not blank pages." <b>The blank-page instinct produces policies. Evidence produces instruments.</b>
+    </p>
+
+    <div class="sec-label">The subtraction ·  what deletion means</div>
+    <h2>Cut the rule the <em>diagnosis killed.</em></h2>
+
+    <p>
+      Compounding is not pure accretion. After two runs of the same task, if a rule didn't fire, didn't help,
+      or reflected a pattern you no longer use: delete it. <b>Subtraction is compounding.</b>
+      The file is leaner, sharper, and the cold-start reads faster. The git history carries the evidence;
+      a deletion commit that names the diagnosis is as valuable as an addition commit that names the session beat.
+      A rules file whose history has no deletions hasn't been calibrated — it's been padded.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 1 — THE MECHANISM (session → compound → file rewrites) ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 380" role="img" aria-label="Mechanism diagram: session runs, produces transcript and diffs, compound prompt reads both, rules file rewrites in place — evidence mediates every line at the rules-file node.">
+      <defs>
+        <linearGradient id="d1-flow" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".2"/>
+          <stop offset="60%" stop-color="#3fe0c8" stop-opacity=".85"/>
+          <stop offset="100%" stop-color="#ffb347" stop-opacity=".8"/>
+        </linearGradient>
+        <radialGradient id="d1-bead" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#9bffe9"/>
+          <stop offset=".55" stop-color="#3fe0c8"/>
+          <stop offset="1" stop-color="#1d8d80"/>
+        </radialGradient>
+        <radialGradient id="d1-amber" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#ffe0a8"/>
+          <stop offset=".55" stop-color="#ffb347"/>
+          <stop offset="1" stop-color="#a86a1f"/>
+        </radialGradient>
+        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">MECHANISM · EVIDENCE MEDIATES EVERY LINE</text>
+
+      <!-- five-node flow -->
+      <!-- node 1: Session runs -->
+      <g transform="translate(60,100)">
+        <circle cx="0" cy="70" r="32" fill="url(#d1-bead)" filter="url(#d1-glow)"/>
+        <text x="0" y="75" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#05080a" font-weight="500">1</text>
+        <text x="0" y="120" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13" fill="#eafff9">Session runs</text>
+        <text x="0" y="138" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#6f8a85">don't draft first</text>
+      </g>
+
+      <!-- arrow 1→2 -->
+      <path d="M148,170 C190,170 210,170 235,170" stroke="url(#d1-flow)" stroke-width="1.8" fill="none" opacity=".8"/>
+      <polygon points="235,170 225,164 225,176" fill="#3fe0c8" opacity=".75"/>
+
+      <!-- node 2: Transcript + diffs -->
+      <g transform="translate(245,100)">
+        <circle cx="0" cy="70" r="32" fill="url(#d1-bead)" filter="url(#d1-glow)"/>
+        <text x="0" y="75" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#05080a" font-weight="500">2</text>
+        <text x="0" y="120" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13" fill="#eafff9">Transcript</text>
+        <text x="0" y="137" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13" fill="#eafff9">+ diffs</text>
+        <text x="0" y="158" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#6f8a85">pushback moments</text>
+      </g>
+
+      <!-- arrow 2→3 -->
+      <path d="M333,170 C370,170 390,170 415,170" stroke="url(#d1-flow)" stroke-width="1.8" fill="none" opacity=".8"/>
+      <polygon points="415,170 405,164 405,176" fill="#3fe0c8" opacity=".75"/>
+
+      <!-- node 3: Compound prompt (central — highlighted) -->
+      <g transform="translate(425,100)">
+        <circle cx="0" cy="70" r="36" fill="rgba(8,17,18,.9)" stroke="#3fe0c8" stroke-width="2" filter="url(#d1-glow)"/>
+        <text x="0" y="67" text-anchor="middle" font-family="'Fraunces',serif" font-size="13" fill="#9bffe9">compound</text>
+        <text x="0" y="83" text-anchor="middle" font-family="'Fraunces',serif" font-size="13" fill="#9bffe9">prompt</text>
+        <text x="0" y="125" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13" fill="#eafff9">Agent reads</text>
+        <text x="0" y="142" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13" fill="#eafff9">all signal</text>
+        <!-- breathing pulse -->
+        <circle cx="0" cy="70" r="44" fill="none" stroke="#3fe0c8" stroke-width=".8" opacity=".3" class="breathe"/>
+      </g>
+
+      <!-- arrow 3→4 -->
+      <path d="M517,170 C555,170 578,170 600,170" stroke="url(#d1-flow)" stroke-width="1.8" fill="none" opacity=".8"/>
+      <polygon points="600,170 590,164 590,176" fill="#ffb347" opacity=".75"/>
+
+      <!-- node 4: Rules file rewrites -->
+      <g transform="translate(610,100)">
+        <circle cx="0" cy="70" r="32" fill="url(#d1-amber)" filter="url(#d1-glow)"/>
+        <text x="0" y="75" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#05080a" font-weight="500">4</text>
+        <text x="0" y="120" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13" fill="#fff4e2">Rules file</text>
+        <text x="0" y="137" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13" fill="#fff4e2">rewrites</text>
+        <text x="0" y="158" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#a86a1f">not appended</text>
+        <!-- "evidence mediates every line" callout -->
+        <rect x="-80" y="182" width="160" height="32" rx="8" fill="rgba(255,179,71,.08)" stroke="rgba(255,179,71,.3)" stroke-width="1"/>
+        <text x="0" y="196" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#a86a1f">EVIDENCE MEDIATES</text>
+        <text x="0" y="208" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#a86a1f">EVERY LINE</text>
+      </g>
+
+      <!-- arrow 4→5 -->
+      <path d="M698,170 C730,170 755,170 778,170" stroke="url(#d1-flow)" stroke-width="1.8" fill="none" opacity=".8"/>
+      <polygon points="778,170 768,164 768,176" fill="#ffb347" opacity=".75"/>
+
+      <!-- node 5: You push back + commit -->
+      <g transform="translate(788,100)">
+        <circle cx="0" cy="70" r="32" fill="url(#d1-amber)" filter="url(#d1-glow)"/>
+        <text x="0" y="75" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#05080a" font-weight="500">5</text>
+        <text x="0" y="120" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13" fill="#fff4e2">You push back</text>
+        <text x="0" y="137" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13" fill="#fff4e2">+ commit</text>
+        <text x="0" y="158" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#a86a1f">name the session beat</text>
+      </g>
+
+      <!-- arrow looping back from 5 to cold start node -->
+      <path d="M878,170 C970,170 1020,310 540,320 C200,320 100,290 60,240" stroke="rgba(63,224,200,.35)" stroke-width="1.4" fill="none" stroke-dasharray="6 8"/>
+      <polygon points="60,240 55,252 68,248" fill="#3fe0c8" opacity=".5"/>
+      <text x="540" y="344" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#3b524e">NEXT SESSION OPENS WITH THE UPDATED FILE ALREADY IN CONTEXT</text>
+
+      <!-- pulse on the flow -->
+      <circle r="3.4" fill="#aeffee">
+        <animateMotion dur="4s" repeatCount="indefinite" path="M148,170 C190,170 210,170 235,170"/>
+        <animate attributeName="opacity" values="0;1;1;0" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <circle r="3.4" fill="#ffce85">
+        <animateMotion dur="4.5s" begin="1s" repeatCount="indefinite" path="M698,170 C730,170 755,170 778,170"/>
+        <animate attributeName="opacity" values="0;1;1;0" dur="4.5s" begin="1s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 01</span>The compound prompt reads the session, then rewrites — not appends. <b>Evidence mediates every line.</b> The loop closes when the commit ships.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 2 — blank vs calibrated ============ -->
+  <section class="prose">
+    <div class="sec-label">The upgrade ·  blank to calibrated</div>
+    <h2>Three states of the same file. One <em>shortcut.</em></h2>
+
+    <p>
+      Every rules file passes through three states. State zero: blank (or not created yet).
+      State one: generic — written from best-guess intent on day zero. Looks reasonable. Says nothing specific.
+      This is the dangerous state. <b>A blank file knows it's empty; a generic file thinks it's done.</b>
+      The team onboards against it, the agent reads it cold every session, and nothing gets sharper.
+    </p>
+
+    <p>
+      State two: instrument — calibrated by evidence. This file has deletions in its history. Its rules name the moments that produced them. It reads short because the padding was cut. The shortcut to state two is not to write a better version on day zero. The shortcut is: <b>start sparse, earn each rule.</b> One compound step after the first real session and you're already past the generic state, because the evidence exists.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 2 — THREE STATES (blank → generic trap → instrument) ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 360" role="img" aria-label="Three states of CLAUDE.local.md on a timeline: blank day zero, generic rules drafted from best-guess (the trap), then instrument calibrated by evidence after the compound step.">
+      <defs>
+        <linearGradient id="d2-time" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#3b524e" stop-opacity=".5"/>
+          <stop offset="50%" stop-color="#3fe0c8" stop-opacity=".3"/>
+          <stop offset="100%" stop-color="#ffb347" stop-opacity=".8"/>
+        </linearGradient>
+        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THREE STATES · THE SHORTCUT IS NOT A BETTER DAY-ZERO DRAFT</text>
+
+      <!-- timeline thread -->
+      <line x1="60" y1="165" x2="1020" y2="165" stroke="url(#d2-time)" stroke-width="1.6"/>
+
+      <!-- STATE 0: blank -->
+      <g transform="translate(100,0)">
+        <circle cx="0" cy="165" r="8" fill="#3b524e" stroke="rgba(63,224,200,.25)" stroke-width="1.2"/>
+        <text x="0" y="200" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#3b524e">DAY 0</text>
+
+        <rect x="-68" y="52" width="136" height="90" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.12)"/>
+        <rect x="-68" y="52" width="136" height="18" rx="6" fill="rgba(63,224,200,.06)"/>
+        <text x="0" y="65" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#3b524e">CLAUDE.local.md</text>
+        <text x="0" y="96" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#3b524e">(empty)</text>
+        <text x="0" y="120" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#3b524e">blank · honest</text>
+
+        <line x1="0" y1="142" x2="0" y2="157" stroke="rgba(63,224,200,.2)" stroke-width="1.2"/>
+      </g>
+
+      <!-- STATE 1: generic trap -->
+      <g transform="translate(430,0)">
+        <circle cx="0" cy="165" r="10" fill="#5d6a68" stroke="rgba(255,179,71,.3)" stroke-width="1.4"/>
+        <text x="0" y="200" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#a86a1f">TRAP · DRAFTED FROM INTENT</text>
+
+        <rect x="-90" y="42" width="180" height="106" rx="8" fill="rgba(8,17,18,.8)" stroke="rgba(255,179,71,.22)"/>
+        <rect x="-90" y="42" width="180" height="18" rx="6" fill="rgba(255,179,71,.07)"/>
+        <text x="0" y="55" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#a86a1f">CLAUDE.local.md</text>
+        <g font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#5d6a68">
+          <text x="-76" y="82">- be concise</text>
+          <text x="-76" y="100">- check your work</text>
+          <text x="-76" y="118">- always ask first</text>
+        </g>
+        <text x="0" y="136" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#a86a1f">looks done · is generic</text>
+
+        <line x1="0" y1="148" x2="0" y2="155" stroke="rgba(255,179,71,.3)" stroke-width="1.2"/>
+
+        <!-- warning annotation -->
+        <rect x="-100" y="212" width="200" height="32" rx="8" fill="rgba(255,80,80,.05)" stroke="rgba(255,80,80,.2)" stroke-width="1"/>
+        <text x="0" y="226" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#ff6b6b" opacity=".7" letter-spacing=".14em">THE BLANK-PAGE TRAP</text>
+        <text x="0" y="238" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#ff6b6b" opacity=".55">no evidence touched this</text>
+      </g>
+
+      <!-- compound step arrow (not linear!) -->
+      <g transform="translate(558,165)">
+        <path d="M0,0 C40,-60 80,-80 120,-80 C160,-80 200,-60 260,0" stroke="rgba(63,224,200,.6)" stroke-width="1.6" fill="none"/>
+        <polygon points="260,0 250,-8 254,5" fill="#3fe0c8" opacity=".7"/>
+        <text x="130" y="-96" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3fe0c8">COMPOUND STEP</text>
+        <text x="130" y="-78" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#6f8a85">not a better draft — evidence</text>
+      </g>
+
+      <!-- STATE 2: instrument -->
+      <g transform="translate(900,0)">
+        <circle cx="0" cy="165" r="13" fill="rgba(8,17,18,.9)" stroke="#ffb347" stroke-width="2" filter="url(#d2-glow)"/>
+        <text x="0" y="200" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#ffb347">INSTRUMENT · CALIBRATED</text>
+
+        <rect x="-90" y="32" width="180" height="120" rx="8" fill="rgba(8,17,18,.88)" stroke="#ffb347" stroke-width="1.2" filter="url(#d2-glow)"/>
+        <rect x="-90" y="32" width="180" height="18" rx="6" fill="rgba(255,179,71,.12)"/>
+        <text x="0" y="45" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#ffb347">CLAUDE.local.md</text>
+        <!-- lines with hash marks (evidence accumulated) -->
+        <g stroke="#ffb347" stroke-width="1.8" opacity=".85">
+          <line x1="-76" y1="72" x2="66" y2="72"/>
+          <line x1="-76" y1="92" x2="54" y2="92"/>
+        </g>
+        <g stroke="#9bffe9" stroke-width="1.6" opacity=".7">
+          <line x1="-76" y1="112" x2="70" y2="112"/>
+          <line x1="-76" y1="132" x2="44" y2="132"/>
+        </g>
+        <text x="0" y="142" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#ffb347">deletions in history</text>
+
+        <line x1="0" y1="152" x2="0" y2="152" stroke="rgba(255,179,71,.3)" stroke-width="1.2"/>
+
+        <!-- "starts smarter" annotation -->
+        <rect x="-90" y="212" width="180" height="32" rx="8" fill="rgba(255,179,71,.07)" stroke="rgba(255,179,71,.25)"/>
+        <text x="0" y="226" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#ffb347" letter-spacing=".14em">COLD START</text>
+        <text x="0" y="238" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#a86a1f">reads it already knowing</text>
+
+        <circle cx="78" cy="44" r="3.5" fill="#aeffee" class="breathe"/>
+      </g>
+
+      <!-- bottom note -->
+      <text x="540" y="340" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">THE SHORTCUT: START SPARSE · EARN EACH RULE · ONE COMPOUND STEP CLEARS THE GENERIC STATE</text>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 02</span>The generic state is the dangerous one — it looks done. <b>The compound step is not a better first draft; it's the move that makes evidence possible.</b></div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 3 — the loop closing ============ -->
+  <section class="prose">
+    <div class="sec-label">The compounding loop · what changes between cycles</div>
+    <h2>Each cycle leaves the <em>next one cheaper.</em></h2>
+
+    <p>
+      The compounding loop is concrete: you do the task, the session produces evidence, the compound prompt reads it,
+      the rules file rewrites. <b>The cold start next time opens with an already-calibrated instrument.</b>
+      The next session needs less course-correction to land. The cycle repeats. Each pass the rules node gets
+      denser — and occasionally gets cut. Subtraction is visible in the loop too: a rule deleted is a calibration event,
+      not a failure. The git history is the evidence log; each commit message names the session beat that produced the change.
+      Not <em>"update rules"</em> — that's forecasting language. <em class="amber">"add: validate webhook signatures before dispatch (payment-flow incident)"</em> — that's instrument language.
+    </p>
+
+    <p>
+      At day thirty, the difference between a team that runs this loop and one that doesn't is legible in a single session.
+      One opens with a file that already knows the codebase quirks, the failing patterns, the things that earn pushback.
+      The other opens with whatever the template said. Both used the same agent. <b>Only one made the agent cheaper per session.</b>
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 3 — COMPOUNDING LOOP ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 440" role="img" aria-label="Closed compounding loop: task, session evidence, compound prompt, rules file rewrites, cold start reads updated file, task again. Loop visible as a closed thread; each cycle the rules node gets a hash mark for evidence accumulated; one hash mark can be crossed out showing deletion as calibration.">
+      <defs>
+        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/>
+          <stop offset="1" stop-color="#ffb347" stop-opacity=".6"/>
+        </linearGradient>
+        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#9bffe9"/>
+          <stop offset=".55" stop-color="#3fe0c8"/>
+          <stop offset="1" stop-color="#1d8d80"/>
+        </radialGradient>
+        <radialGradient id="d3-amber" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#ffe0a8"/>
+          <stop offset=".55" stop-color="#ffb347"/>
+          <stop offset="1" stop-color="#a86a1f"/>
+        </radialGradient>
+        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE COMPOUNDING LOOP · EACH CYCLE THE RULES NODE ACCUMULATES EVIDENCE</text>
+
+      <!-- LEFT: the loop -->
+      <g transform="translate(40,60)">
+        <!-- the ring as organic thread, not a perfect circle -->
+        <circle cx="210" cy="180" r="138" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="560 60" stroke-linecap="round" transform="rotate(-90 210 180)"/>
+
+        <!-- breathing pulse on the ring -->
+        <circle r="3.8" fill="#aeffee">
+          <animateMotion dur="10s" repeatCount="indefinite" path="M210,42 a138,138 0 1,1 -0.1,0"/>
+          <animate attributeName="opacity" values=".3;1;1;.3" dur="10s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- beads: Task / Session evidence / Compound prompt / Rules file rewrites / Cold start -->
+        <!-- 1: Task (top) -->
+        <g>
+          <circle cx="210" cy="42" r="24" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="210" y="48" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">1</text>
+          <text x="210" y="22" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Task</text>
+        </g>
+
+        <!-- 2: Session evidence (right) -->
+        <g>
+          <circle cx="348" cy="132" r="24" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="348" y="137" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">2</text>
+          <text x="390" y="130" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Session</text>
+          <text x="390" y="146" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">evidence</text>
+        </g>
+
+        <!-- 3: Compound prompt (right-low) -->
+        <g>
+          <circle cx="348" cy="228" r="24" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="348" y="234" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">3</text>
+          <text x="390" y="226" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Compound</text>
+          <text x="390" y="242" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">prompt</text>
+        </g>
+
+        <!-- 4: Rules file rewrites (bottom) — amber, the key node -->
+        <g>
+          <circle cx="210" cy="318" r="28" fill="url(#d3-amber)" filter="url(#d3-glow)"/>
+          <text x="210" y="323" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">4</text>
+          <text x="210" y="362" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">Rules file</text>
+          <text x="210" y="378" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">rewrites</text>
+          <!-- glowing larger ring = the key node -->
+          <circle cx="210" cy="318" r="38" fill="none" stroke="#ffb347" stroke-width=".8" opacity=".4" class="breathe"/>
+        </g>
+
+        <!-- 5: Cold start (left) -->
+        <g>
+          <circle cx="72" cy="180" r="24" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="72" y="185" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">5</text>
+          <text x="30" y="172" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Cold start</text>
+          <text x="30" y="188" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">reads file</text>
+        </g>
+
+        <!-- centre label -->
+        <text x="210" y="176" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EACH CYCLE</text>
+        <text x="210" y="194" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14.5" fill="#3fe0c8">cheaper</text>
+      </g>
+
+      <!-- RIGHT: the rules node accumulating evidence across cycles -->
+      <g transform="translate(570,72)">
+        <text x="195" y="0" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#3b524e">RULES NODE · EVIDENCE ACCUMULATES ACROSS CYCLES</text>
+
+        <!-- cycle 1 -->
+        <g transform="translate(0,18)">
+          <rect x="0" y="0" width="136" height="160" rx="8" fill="rgba(8,17,18,.75)" stroke="rgba(63,224,200,.2)"/>
+          <rect x="0" y="0" width="136" height="18" rx="6" fill="rgba(63,224,200,.07)"/>
+          <text x="8" y="13" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#3fe0c8">CLAUDE.local.md</text>
+          <text x="118" y="13" font-family="'Spline Sans Mono',monospace" font-size="7.5" fill="#3b524e" text-anchor="end">c1</text>
+          <g stroke="#9bffe9" stroke-width="1.8" opacity=".6">
+            <line x1="12" y1="42" x2="112" y2="42"/>
+            <line x1="12" y1="62" x2="96" y2="62"/>
+          </g>
+          <text x="68" y="180" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#5d6a68">CYCLE 1 · SPARSE</text>
+        </g>
+
+        <!-- arrow -->
+        <g transform="translate(148,98)">
+          <path d="M0,0 L22,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
+          <polygon points="22,0 14,-5 14,5" fill="#3fe0c8" opacity=".7"/>
+        </g>
+
+        <!-- cycle 2 -->
+        <g transform="translate(174,18)">
+          <rect x="0" y="0" width="136" height="180" rx="8" fill="rgba(8,17,18,.82)" stroke="rgba(63,224,200,.3)"/>
+          <rect x="0" y="0" width="136" height="18" rx="6" fill="rgba(63,224,200,.10)"/>
+          <text x="8" y="13" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#3fe0c8">CLAUDE.local.md</text>
+          <text x="118" y="13" font-family="'Spline Sans Mono',monospace" font-size="7.5" fill="#3b524e" text-anchor="end">c2</text>
+          <g stroke="#9bffe9" stroke-width="1.8" opacity=".8">
+            <line x1="12" y1="42" x2="112" y2="42"/>
+            <line x1="12" y1="62" x2="96" y2="62"/>
+            <line x1="12" y1="82" x2="120" y2="82"/>
+            <line x1="12" y1="102" x2="88" y2="102"/>
+          </g>
+          <!-- new amber addition -->
+          <g stroke="#ffb347" stroke-width="1.8" opacity=".75">
+            <line x1="12" y1="122" x2="108" y2="122"/>
+          </g>
+          <text x="68" y="200" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#9bffe9">CYCLE 2 · DENSER</text>
+        </g>
+
+        <!-- arrow -->
+        <g transform="translate(322,98)">
+          <path d="M0,0 L22,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
+          <polygon points="22,0 14,-5 14,5" fill="#3fe0c8" opacity=".7"/>
+        </g>
+
+        <!-- cycle 3: sharp, with a deletion -->
+        <g transform="translate(348,18)">
+          <rect x="0" y="0" width="136" height="210" rx="8" fill="rgba(8,17,18,.9)" stroke="url(#d3-ring)" stroke-width="1.4" filter="url(#d3-glow)"/>
+          <rect x="0" y="0" width="136" height="18" rx="6" fill="rgba(255,179,71,.14)"/>
+          <text x="8" y="13" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#ffb347">CLAUDE.local.md</text>
+          <text x="118" y="13" font-family="'Spline Sans Mono',monospace" font-size="7.5" fill="#3b524e" text-anchor="end">c3</text>
+          <!-- load-bearing rules amber -->
+          <g stroke="#ffb347" stroke-width="2.2">
+            <line x1="12" y1="40" x2="122" y2="40"/>
+            <line x1="12" y1="60" x2="108" y2="60"/>
+          </g>
+          <g stroke="#9bffe9" stroke-width="1.8" opacity=".8">
+            <line x1="12" y1="84" x2="120" y2="84"/>
+            <line x1="12" y1="104" x2="96" y2="104"/>
+            <line x1="12" y1="124" x2="112" y2="124"/>
+            <line x1="12" y1="144" x2="80" y2="144"/>
+          </g>
+          <!-- deleted line crossed out -->
+          <g stroke="#ff6b6b" stroke-width="1.4" opacity=".55">
+            <line x1="12" y1="168" x2="108" y2="168"/>
+          </g>
+          <line x1="12" y1="168" x2="108" y2="168" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="2 3" opacity=".4"/>
+          <text x="68" y="230" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#ffb347">CYCLE 3 · SHARP</text>
+          <circle cx="122" cy="12" r="3.5" fill="#aeffee" class="breathe"/>
+        </g>
+
+        <!-- legend -->
+        <g transform="translate(0,300)">
+          <rect x="0" y="0" width="14" height="3" fill="#ffb347"/>
+          <text x="22" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#a86a1f">RULES THAT EARNED THEIR KEEP</text>
+          <rect x="0" y="16" width="14" height="3" fill="#9bffe9"/>
+          <text x="22" y="20" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#1d8d80">EVIDENCE-BACKED SCAFFOLDING</text>
+          <g transform="translate(0,32)">
+            <line x1="0" y1="2" x2="14" y2="2" stroke="#ff6b6b" stroke-width="1.8" opacity=".6"/>
+            <text x="22" y="6" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#ff6b6b" opacity=".7">DELETION = CALIBRATION</text>
+          </g>
+        </g>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 03</span>The loop closes when the commit ships. <b>Each cycle the rules node accumulates evidence — or subtracts what the diagnosis killed.</b> The loop without a commit is a retro without a ticket.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 4 — what Test actually means ============ -->
+  <section class="prose">
+    <div class="sec-label amber">What "Test" actually means · in practice</div>
+    <h2 class="amber">Read a rule aloud. <em>Name the moment.</em></h2>
+
+    <p>
+      The test is concrete. Pick a rule in the file. Read it aloud. Can you name the specific session moment that produced it?
+      Not the general problem it addresses — the moment. The exact pushback, the transcript line, the diff that forced the correction.
+      <b>If you can name it, the rule is evidence-backed.</b> If you're reaching for a general principle,
+      the rule was drafted from intent and the compounding hasn't started yet.
+    </p>
+  </section>
+
+  <!-- ============ USE WHEN · BUILD · TEST PLATES ============ -->
+  <div class="plates">
+    <div class="plate use">
+      <div class="beat-label amber"><b>Use when</b></div>
+      <p class="body">
+        A non-trivial session just ended. The agent did something <b>you didn't expect — good or bad.</b>
+        The PR shipped, the ticket closed, the session produced a surprise.
+        <span class="grey">The rules file still says what you typed two weeks ago.</span>
+      </p>
+    </div>
+    <div class="plate build">
+      <div class="beat-label"><b>Build</b></div>
+      <p class="body">
+        <b><span class="mono">./CLAUDE.local.md</span></b> — repo-personal, gitignored, auto-loaded at cold start.
+        A living rules file whose commit history reads as a session journal.
+        Each rule earned by evidence; each deletion earned by diagnosis.
+      </p>
+    </div>
+    <div class="plate test">
+      <div class="beat-label"><b>Test</b></div>
+      <p class="body">
+        You read a rule aloud and <em>name the session moment that produced it.</em><br>
+        The file has deletions in its git history.<br>
+        <em class="no">Still reads like an onboarding checklist.</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ CORE MOVES ============ -->
+  <section class="moves">
+    <div class="beat-label"><b>Core moves</b></div>
+    <div class="moves-head">
+      <h2>The action, in sequence</h2>
+      <span class="lede">Five moves — runs after any non-trivial session.</span>
+    </div>
+
+    <div class="move-rail">
+      <div class="thread"></div>
+      <div class="step">
+        <div class="bead">1</div>
+        <h3>Let the session run first</h3>
+        <p>Evidence must exist before review. <b>Don't draft rules in advance.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">2</div>
+        <h3>Run the compound prompt</h3>
+        <p>Agent reads transcript, diffs, pushbacks — <b>rewrites in place. Not appends.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">3</div>
+        <h3>Push back on untraced rules</h3>
+        <p>Any rule you can't trace to a moment: <b>remove it or quote the moment.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">4</div>
+        <h3>Cut the rule the diagnosis killed</h3>
+        <p>Two runs of the same task, rule didn't fire: <b>delete. Subtraction is compounding.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">5</div>
+        <h3>Commit with a session beat</h3>
+        <p>Not <em>"update rules."</em> <b>Name the incident.</b> The history IS the evidence log.</p>
+      </div>
+    </div>
+
+    <div class="compound">
+      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+        <defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
+        </linearGradient></defs>
+        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg2)" stroke-width="2.4"
+          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
+        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
+        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
+        <circle r="3" fill="#aeffee">
+          <animateMotion dur="5s" repeatCount="indefinite"
+            path="M37,11 a26,26 0 1,1 -0.1,0"/>
+        </circle>
+      </svg>
+      <div class="ctext">
+        <div class="cyc">session runs<span class="arr">→</span>compound prompt<span class="arr">→</span>push back<span class="arr">→</span>commit<span class="arr">→</span>repeat</div>
+        <p>Then it's a habit, not a task: <b>compound interest on a rule file.</b> Boring on day one; dominant by day thirty. The loop that makes the agent cheaper per session, every session.</p>
+      </div>
+    </div>
+
+    <!-- Monday move aside -->
+    <p class="aside">
+      <b>Monday move: after today's first substantive session.</b> Open <span class="mono">./CLAUDE.local.md</span> (create if absent). Run: <span class="mono">"review this session's transcript and diffs, rewrite the rules file in place, report what changed in 3–5 lines."</span> Read the delta. Push back on any rule you can't trace to a moment from today. Commit with the session beat named. <b>Ten minutes. No permission required. No one reviews it.</b>
+    </p>
+  </section>
+
+  <!-- ============ WHY ============ -->
+  <section class="why">
+    <div class="beat-label"><b>Why</b></div>
+
+    <div class="principle-block">
+      <div class="principle-label">The principle</div>
+      <p class="principle-line">Compound from evidence. <em>Drafting rules before you have evidence is forecasting.</em> Forecasters are confidently wrong; instruments are calibrated by use.</p>
+    </div>
+
+    <p class="quote">"Rules grow from evidence, not blank pages."</p>
+
+    <p class="gloss">
+      The reason a blank-page rules file underperforms is not laziness — it's the wrong epistemology.
+      Forecasting produces confident generic statements. Evidence produces specifics.
+      <b>A `./CLAUDE.local.md` built from session evidence reads different from one drafted blank: concrete, specific, yours.</b>
+      The compound move treats the rules file as an instrument you calibrate by use — not a document you author once.
+    </p>
+
+    <p class="gloss">
+      The compounding mechanism is exact: each unit of work makes the next cheaper — <em>but only if the lesson gets encoded.</em>
+      The session without a compound step is like a sprint without a retro: it happened, nothing propagated.
+      At the personal layer, the compounding surface is <span style="font-family:'Spline Sans Mono',monospace;font-size:13px;color:var(--teal)">./CLAUDE.local.md</span>;
+      the rate is set by how often you run the prompt and push back honestly.
+      <b>The personal organisational learning rate is the ceiling — this is the move that sets the floor.</b>
+    </p>
+
+    <div class="corollary"><span class="sd"></span>The session without a compound step is a retro without a ticket. It happened. Nothing propagated.</div>
+  </section>
+
+  <!-- ============ SYSTEMIC LINE ============ -->
+  <div class="practice">
+    <div class="beat-label amber"><b>Where this sits · personal → team → company</b></div>
+    <p>
+      At personal scope this is the calibration engine — the move that turns sessions into a sharpening instrument.
+      At team scope it becomes the quality gate: <b>only rules that have evidence behind them earn a PR into the shared kit.</b>
+      Run it further and the same loop is what lets a team — then a company — compound rather than merely accumulate: the shared kit is only as calibrated as the personal files that earned their way in.
+      <a href="team-kit-promotion.html" style="color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(63,224,200,.3)">Team-kit promotion</a> builds on this pattern —
+      <em>compound-from-evidence is the prerequisite conversation before the team conversation starts.</em>
+    </p>
+  </div>
+
+  <!-- ============ CONNECTS TO ============ -->
+  <section class="connects">
+    <h2>Connects to</h2>
+    <div class="sub">Threads leaving this node · the pattern language</div>
+
+    <div class="web">
+      <svg viewBox="0 0 1080 300" aria-hidden="true">
+        <defs>
+          <linearGradient id="tc1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="tc2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="tc3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="tc4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".4"/></linearGradient>
+          <linearGradient id="tc5" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#6f8a85" stop-opacity=".5"/></linearGradient>
+          <filter id="wglow2" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <circle cx="160" cy="150" r="30" fill="none" stroke="#3fe0c8" stroke-width="1.2" opacity=".5"/>
+        <circle cx="160" cy="150" r="11" fill="#3fe0c8" filter="url(#wglow2)"/>
+        <circle cx="160" cy="150" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
+
+        <path id="tth1" d="M160,150 C340,60 540,46 770,52" stroke="url(#tc1)" stroke-width="2.2" fill="none"/>
+        <path id="tth2" d="M160,150 C360,106 560,108 770,112" stroke="url(#tc2)" stroke-width="2.2" fill="none"/>
+        <path id="tth3" d="M160,150 C360,192 560,196 770,198" stroke="url(#tc3)" stroke-width="2.2" fill="none"/>
+        <path id="tth4" d="M160,150 C350,210 540,230 770,240" stroke="url(#tc4)" stroke-width="1.8" stroke-dasharray="4 6" fill="none"/>
+        <path id="tth5" d="M160,150 C350,238 530,262 770,270" stroke="url(#tc5)" stroke-width="1.6" stroke-dasharray="3 7" fill="none"/>
+
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#tth1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.6s" begin=".5s" repeatCount="indefinite"><mpath href="#tth2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.6s" begin=".5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="6s" begin="1s" repeatCount="indefinite"><mpath href="#tth3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="6s" begin="1s" repeatCount="indefinite"/></circle>
+      </svg>
+
+      <div class="neighbours">
+        <div class="origin-chip" style="left:14.8%;top:50%">Grow rules from proof<small>compound-from-evidence · you are here</small></div>
+
+        <!-- real pages — shipped -->
+        <a class="nb" href="team-kit-promotion.html" style="left:75%;top:17.3%"><span class="sd"></span>Team-kit promotion</a>
+        <a class="nb" href="compounding-system.html" style="left:75%;top:37.3%"><span class="sd"></span>Compounding system</a>
+
+        <!-- .soon — not yet shipped, route to canvas -->
+        <a class="nb" href="orient-and-introspect.html" style="left:75%;top:66%"><span class="sd"></span>Orient and introspect</a>
+        <a class="nb" href="plan-rule-extract.html" style="left:75%;top:80%"><span class="sd"></span>Plan-rule extract</a>
+        <a class="nb" href="session-shaper-authoring.html" style="left:75%;top:90%"><span class="sd"></span>Session-shaper authoring</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="floor">
+    <span class="door">./CLAUDE.local.md is gitignored and personal. No one reviews it. No platform change needed. The only decision that touches anyone else is the team-kit promotion — and that conversation starts downstream.</span>
+    <span class="meta">The Big Picture · Pattern Language</span>
+  </footer>
+
+</div>
+</body>
+</html>

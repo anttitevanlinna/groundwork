@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earn a judge by benchmarking — Pattern · The Big Picture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-0:#05080a;
+    --soil-1:#080d10;
+    --soil-2:#0c1418;
+    --teal:#3fe0c8;
+    --teal-dim:#1d8d80;
+    --amber:#ffb347;
+    --amber-dim:#a86a1f;
+    --spore:#eafff9;
+    --ink:#cfe6e0;
+    --ink-dim:#6f8a85;
+    --ink-faint:#3b524e;
+    --hairline:rgba(63,224,200,.10);
+    --grey:#5d6a68;
+    --grey-dim:#39423f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--soil-0);
+    font-family:'Spline Sans',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
+      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
+      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+  }
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 64px;}
+
+  /* ============ BREADCRUMB ============ */
+  .crumb{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+    color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
+  }
+  .crumb a{color:var(--teal-dim);text-decoration:none;transition:color .25s}
+  .crumb a:hover{color:var(--teal)}
+  .crumb .here{color:var(--ink)}
+
+  /* ============ PATTERN HEADER ============ */
+  header.pat{padding:30px 0 8px;max-width:900px;}
+  .kicker{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--teal-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .kicker .spore-mark{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 14px 2px rgba(63,224,200,.6);
+    flex:none;
+  }
+  .kicker .pat-no{color:var(--ink-faint)}
+  header.pat h1{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(38px,6.5vw,64px);line-height:.98;
+    color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
+  }
+  header.pat h1 em{font-style:italic;color:var(--amber);font-weight:400}
+  .principle{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
+  }
+  .principle b{color:var(--amber);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .essence{
+    font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:720px;
+  }
+  .essence b{color:var(--spore);font-weight:500}
+
+  /* ============ HERO FRAME ============ */
+  .hero-frame{
+    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(13,31,32,.5), rgba(5,8,10,.6));
+    position:relative;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.04) inset;
+  }
+  .hero-frame svg{display:block;width:100%;height:auto}
+  .hero-cap{
+    position:absolute;left:18px;bottom:13px;z-index:3;
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
+    color:var(--ink-dim);text-transform:uppercase;
+  }
+  .hero-cap b{color:var(--amber)}
+
+  /* ============ PROSE ============ */
+  .prose{
+    margin-top:34px;max-width:760px;
+  }
+  .prose h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
+    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+  }
+  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .prose h2.amber em{color:var(--amber)}
+  .prose .sec-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+    margin-top:42px;
+  }
+  .prose .sec-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
+  }
+  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .prose p{
+    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
+    letter-spacing:.002em;
+  }
+  .prose p b{color:var(--spore);font-weight:500}
+  .prose p em{font-style:italic;color:var(--ink-dim)}
+  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p .mono{
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
+  }
+  .prose p .mono.amber{color:var(--amber)}
+  .prose .pull{
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--amber-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+    color:var(--ink);max-width:680px;
+  }
+  .prose .pull b{color:var(--amber);font-weight:500;font-style:normal}
+
+  /* template caveat strip */
+  .caveat-strip{
+    margin:18px 0 4px;display:flex;align-items:flex-start;gap:12px;
+    padding:10px 16px 11px;border-radius:10px;
+    border:1px dashed var(--amber-dim);
+    background:rgba(255,179,71,.04);
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;line-height:1.55;
+    color:var(--ink-dim);max-width:760px;letter-spacing:.005em;
+  }
+  .caveat-strip .ci{color:var(--amber);flex:none;font-size:13px;}
+  .caveat-strip b{color:var(--amber);font-weight:500}
+
+  /* ============ DIAGRAM ============ */
+  .diagram{
+    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+    background:
+      radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
+      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
+    position:relative;
+    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
+  }
+  .diagram svg{display:block;width:100%;height:auto}
+  .diagram .dcap{
+    padding:12px 20px 16px;border-top:1px solid var(--hairline);
+    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
+    color:var(--ink-dim);letter-spacing:.003em;
+    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  }
+  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
+  .diagram .dcap .num{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
+  }
+
+  /* ============ RECIPE BEATS ============ */
+  .beat-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  }
+  .beat-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.6);
+  }
+  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+
+  /* ============ PLATES ============ */
+  .plates{
+    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
+  }
+  .plate{
+    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
+    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
+  }
+  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
+  .plate .body b{color:var(--spore);font-weight:500}
+  .plate .body .grey{color:var(--grey)}
+  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
+  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ CORE MOVES ============ */
+  .moves{margin-top:46px}
+  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
+  .moves-head h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
+  .move-rail{
+    margin-top:20px;position:relative;
+    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+  }
+  .move-rail .thread{
+    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
+    background:linear-gradient(90deg,
+      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
+      rgba(63,224,200,.7) 50%, rgba(255,179,71,.65) 94%, rgba(255,179,71,0) 100%);
+  }
+  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
+  .step:first-child{padding-left:0}
+  .step .bead{
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
+    margin-bottom:13px;
+  }
+  .step:nth-child(5) .bead,
+  .step:nth-child(6) .bead{
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
+  }
+  .step h3{
+    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
+  }
+  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
+  .step p b{color:var(--ink);font-weight:500}
+
+  .compound{
+    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
+    padding:18px 22px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(255,179,71,.07), transparent 60%),
+      rgba(8,17,18,.55);
+    display:flex;align-items:center;gap:20px;
+  }
+  .compound .loop-ico{flex:none}
+  .compound .ctext{flex:1}
+  .compound .ctext .cyc{
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--amber);
+  }
+  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
+  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
+  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+
+  .aside{
+    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
+    border-left:2px solid var(--teal-dim);padding:2px 0 2px 15px;max-width:760px;
+  }
+  .aside b{color:var(--teal);font-weight:500}
+  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
+
+  /* ============ WHY ============ */
+  .why{
+    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
+    padding:26px 30px 28px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 90% 0%, rgba(255,179,71,.08), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(63,224,200,.05), transparent 55%),
+      rgba(7,14,15,.6);
+  }
+  .why .beat-label{margin-bottom:14px}
+  .why .principle-block{
+    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
+  }
+  .why .principle-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
+  }
+  .why .principle-line{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
+    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
+  }
+  .why .principle-line em{font-style:italic;color:var(--amber)}
+  .why .quote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--amber);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(255,179,71,.26);max-width:840px;
+  }
+  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
+  .why .gloss b{color:var(--spore);font-weight:500}
+  .why .gloss em{font-style:italic;color:var(--ink-dim)}
+  .why .gloss + .gloss{margin-top:12px}
+  .why .corollary{
+    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
+    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+  }
+  .why .corollary .sd{
+    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+  }
+
+  /* ============ TEST-IN-PRACTICE ============ */
+  .practice{
+    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
+    padding:22px 26px 24px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
+      rgba(8,15,17,.5);
+  }
+  .practice .beat-label{margin-bottom:12px}
+  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
+  .practice p b{color:var(--spore);font-weight:500}
+  .practice p em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:16px}
+  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ CONNECTS TO ============ */
+  .connects{margin-top:52px}
+  .connects h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .connects .sub{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:5px;
+  }
+  .web{position:relative;margin-top:8px}
+  .web svg{display:block;width:100%;height:auto}
+  .neighbours{position:absolute;inset:0;pointer-events:none}
+  .nb{
+    position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
+    display:flex;align-items:center;gap:9px;
+    padding:8px 14px 9px;border-radius:13px;
+    background:rgba(8,15,17,.82);backdrop-filter:blur(4px);
+    border:1px solid var(--hairline);
+    color:var(--ink);font-size:13px;letter-spacing:.005em;white-space:nowrap;
+    transition:border-color .3s,color .3s,background .3s,transform .3s;
+    cursor:pointer;text-decoration:none;
+  }
+  .nb .recipe-no{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--ink-faint);
+  }
+  .nb .sd{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 12px 2px rgba(63,224,200,.55);
+  }
+  .nb.amber .sd{background:var(--amber);box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 12px 2px rgba(255,179,71,.5)}
+  .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
+  .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
+  .nb:hover .sd{animation:throb 1s ease-in-out infinite}
+  .nb.soon{opacity:.62}
+  .nb.soon::after{
+    content:"soon";
+    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);
+    border:1px solid var(--ink-faint);border-radius:20px;
+    padding:2px 7px 3px;margin-left:4px;
+  }
+  .nb.soon:hover{opacity:1}
+  .origin-chip{
+    position:absolute;transform:translate(-50%,-50%);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 24px rgba(255,179,71,.4);white-space:nowrap;text-align:center;
+  }
+  .origin-chip small{
+    display:block;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:8.5px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--amber-dim);margin-top:3px;
+  }
+  @keyframes throb{50%{transform:scale(1.5)}}
+
+  /* ============ FOOTER ============ */
+  footer.floor{
+    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  footer.floor .door{
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
+    text-shadow:0 0 22px rgba(255,179,71,.3);
+  }
+  footer.floor .meta{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+
+  @keyframes breathe{
+    0%,100%{opacity:.55}
+    50%{opacity:1}
+  }
+  .breathe{animation:breathe 4.2s ease-in-out infinite}
+
+  @media (max-width:860px){
+    .plates{grid-template-columns:1fr 1fr}
+    .plate.use{grid-column:1 / -1}
+  }
+  @media (max-width:780px){
+    .plates{grid-template-columns:1fr}
+    .plate.use{grid-column:1}
+    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
+    .move-rail .thread{display:none}
+    .step{padding:0}
+    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .neighbours .nb{font-size:11px;padding:6px 10px}
+    .prose p{font-size:14.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ BREADCRUMB ============ -->
+  <nav class="crumb">
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Earn a judge by benchmarking</span>
+  </nav>
+
+  <!-- ============ PATTERN HEADER ============ -->
+  <header class="pat">
+    <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· R5 · verification · business lane</span></div>
+    <h1>Earn a judge by <em>benchmarking</em></h1>
+    <p class="principle">The principle: <b>Empirical method selection over authority</b> — the scoreboard is the source of trust, not the method's pedigree.</p>
+    <p class="essence">
+      Stop trusting quality checks and <b>start measuring them</b> — by running several detectors on the same claim pool and reading the scoreboard that names the winner.
+    </p>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <div class="hero-frame">
+    <svg viewBox="0 0 1080 400" role="img" aria-label="Three-panel comparison: a trusted rubric on the left (clean, confident, fragile), the scoreboard in the centre with four detector rows and one winner highlighted, the earned judge file on the right with a Known limit line.">
+      <defs>
+        <radialGradient id="h-amber-well" cx="55%" cy="50%" r="68%">
+          <stop offset="0%" stop-color="#ffb347" stop-opacity=".14"/>
+          <stop offset="60%" stop-color="#3fe0c8" stop-opacity=".04"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="h-col-l" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#5d6a68" stop-opacity=".55"/>
+          <stop offset="100%" stop-color="#5d6a68" stop-opacity=".1"/>
+        </linearGradient>
+        <linearGradient id="h-col-r" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffb347" stop-opacity=".7"/>
+          <stop offset="100%" stop-color="#a86a1f" stop-opacity=".2"/>
+        </linearGradient>
+        <linearGradient id="h-col-m" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".6"/>
+          <stop offset="100%" stop-color="#1d8d80" stop-opacity=".15"/>
+        </linearGradient>
+        <filter id="h-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <rect x="0" y="0" width="1080" height="400" fill="url(#h-amber-well)"/>
+
+      <!-- LEFT: trusted rubric — clean, never measured -->
+      <g>
+        <text x="44" y="38" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#5d6a68">TRUSTED RUBRIC · WRITTEN ONCE · NEVER MEASURED</text>
+        <rect x="40" y="56" width="270" height="300" rx="12" fill="rgba(8,17,18,.65)" stroke="rgba(93,106,104,.35)" stroke-width="1"/>
+        <rect x="40" y="56" width="270" height="26" rx="6" fill="rgba(93,106,104,.18)"/>
+        <text x="55" y="74" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".08em" fill="#6f8a85">quality-rubric.md</text>
+        <!-- rubric lines — clean, confident -->
+        <g font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">
+          <text x="56" y="108">✓ Claims cite sources</text>
+          <text x="56" y="132">✓ No speculation</text>
+          <text x="56" y="156">✓ Consistent tone</text>
+          <text x="56" y="180">✓ Factual accuracy</text>
+          <text x="56" y="204">✓ No hallucination</text>
+        </g>
+        <!-- authority = opinion label -->
+        <rect x="55" y="228" width="186" height="28" rx="8" fill="rgba(93,106,104,.12)" stroke="rgba(93,106,104,.28)"/>
+        <text x="66" y="247" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".06em" fill="#5d6a68">authority = opinion</text>
+        <!-- fragile crack line -->
+        <path d="M180,275 L170,295 L188,305 L175,330" stroke="#5d6a68" stroke-width="1.2" fill="none" stroke-dasharray="3 3" opacity=".5"/>
+        <text x="148" y="348" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="11.5" fill="#5d6a68">wrote it before you knew what it would get wrong</text>
+      </g>
+
+      <!-- CENTRE: the scoreboard — the ONE clearly-watermarked illustrative mock -->
+      <g>
+        <text x="350" y="38" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3fe0c8">SCOREBOARD · 4 DETECTORS · SAME CLAIM POOL</text>
+        <rect x="348" y="56" width="380" height="308" rx="12" fill="rgba(8,17,18,.72)" stroke="rgba(63,224,200,.22)" stroke-width="1.2" filter="url(#h-glow)"/>
+        <!-- diagonal watermark: this table is a shape, not a measured run -->
+        <text x="538" y="218" text-anchor="middle" transform="rotate(-24 538 218)" font-family="'Spline Sans Mono',monospace" font-size="34" letter-spacing=".18em" fill="rgba(255,179,71,.10)" font-weight="500">ILLUSTRATIVE MOCK</text>
+        <!-- header row -->
+        <rect x="348" y="56" width="380" height="26" rx="6" fill="rgba(63,224,200,.10)"/>
+        <text x="365" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".12em" fill="#3fe0c8">DETECTOR</text>
+        <text x="555" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".12em" fill="#6f8a85">PREC</text>
+        <text x="610" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".12em" fill="#6f8a85">RECALL</text>
+        <text x="675" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".12em" fill="#6f8a85">COV</text>
+        <!-- row separator -->
+        <line x1="348" y1="90" x2="728" y2="90" stroke="rgba(63,224,200,.08)" stroke-width="1"/>
+        <!-- detector rows -->
+        <!-- row 1 — source triangulation -->
+        <text x="365" y="116" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#9bffe9">source triangulation</text>
+        <text x="555" y="116" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#3fe0c8">91%</text>
+        <text x="610" y="116" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#3fe0c8">87%</text>
+        <text x="675" y="116" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#3fe0c8">28/30</text>
+        <!-- winner highlight -->
+        <rect x="350" y="100" width="376" height="26" rx="6" fill="rgba(255,179,71,.09)" stroke="rgba(255,179,71,.35)" stroke-width="1.2"/>
+        <text x="700" y="116" font-family="'Spline Sans Mono',monospace" font-size="13" fill="#ffb347" filter="url(#h-glow)">✓</text>
+        <!-- row 2 -->
+        <line x1="348" y1="136" x2="728" y2="136" stroke="rgba(63,224,200,.06)" stroke-width="1"/>
+        <text x="365" y="160" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#6f8a85">entailment check</text>
+        <text x="555" y="160" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#6f8a85">78%</text>
+        <text x="610" y="160" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#6f8a85">64%</text>
+        <text x="675" y="160" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#6f8a85">19/30</text>
+        <!-- row 3 -->
+        <line x1="348" y1="178" x2="728" y2="178" stroke="rgba(63,224,200,.06)" stroke-width="1"/>
+        <text x="365" y="202" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#6f8a85">citation integrity</text>
+        <text x="555" y="202" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#6f8a85">83%</text>
+        <text x="610" y="202" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#6f8a85">71%</text>
+        <text x="675" y="202" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#6f8a85">21/30</text>
+        <!-- row 4 -->
+        <line x1="348" y1="220" x2="728" y2="220" stroke="rgba(63,224,200,.06)" stroke-width="1"/>
+        <text x="365" y="244" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#6f8a85">counter-evidence search</text>
+        <text x="555" y="244" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#6f8a85">69%</text>
+        <text x="610" y="244" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#6f8a85">82%</text>
+        <text x="675" y="244" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#6f8a85">25/30</text>
+        <!-- caption under table -->
+        <line x1="348" y1="264" x2="728" y2="264" stroke="rgba(63,224,200,.10)" stroke-width="1"/>
+        <text x="365" y="284" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">SAME INPUT · DIFFERENT PRECISION · THE DATA NAMES THE WINNER</text>
+        <text x="365" y="308" font-family="'Fraunces',serif" font-style="italic" font-size="12.5" fill="#a86a1f">↑ shape of a real scoreboard — the numbers are placeholders,</text>
+        <text x="365" y="325" font-family="'Fraunces',serif" font-style="italic" font-size="12.5" fill="#a86a1f">the only honest scores are the ones you run on your own output</text>
+        <!-- authority label -->
+        <text x="365" y="350" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".08em" fill="#3fe0c8">authority = scoreboard</text>
+      </g>
+
+      <!-- RIGHT: earned judge file -->
+      <g>
+        <text x="752" y="38" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#ffb347">EARNED JUDGE FILE · WINNER CONFIGURED + LIMIT NAMED</text>
+        <rect x="750" y="56" width="292" height="300" rx="12" fill="rgba(8,17,18,.75)" stroke="url(#h-col-r)" stroke-width="1.4" filter="url(#h-glow)"/>
+        <rect x="750" y="56" width="292" height="26" rx="6" fill="rgba(255,179,71,.13)"/>
+        <text x="764" y="74" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".08em" fill="#ffb347">judges/groundedness-judge.md</text>
+        <!-- judge content -->
+        <g font-family="'Spline Sans Mono',monospace" font-size="11" fill="#cfe6e0">
+          <text x="764" y="108"># Method</text>
+          <text x="764" y="128" fill="#9bffe9">source triangulation</text>
+          <text x="764" y="158"># Benchmark</text>
+          <text x="764" y="178" fill="#9bffe9">scored on your claim pool —</text>
+          <text x="764" y="196" fill="#9bffe9">precision/recall pasted from</text>
+          <text x="764" y="214" fill="#9bffe9">the run, not from here</text>
+          <text x="764" y="244"># Passes if</text>
+          <text x="764" y="262" fill="#9bffe9">every claim traceable to</text>
+          <text x="764" y="278" fill="#9bffe9">a named source in the pool</text>
+        </g>
+        <!-- known limit — highlighted -->
+        <rect x="764" y="292" width="260" height="48" rx="8" fill="rgba(255,179,71,.08)" stroke="rgba(255,179,71,.4)" stroke-width="1"/>
+        <text x="776" y="310" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".14em" fill="#ffb347"># Known limit:</text>
+        <text x="776" y="330" font-family="'Spline Sans',sans-serif" font-size="12" fill="#cfe6e0">implicit assumptions undetected</text>
+        <!-- breathing spore -->
+        <circle cx="1025" cy="70" r="4" fill="#ffd99a" class="breathe"/>
+        <text x="896" y="356" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12.5" fill="#a86a1f">the limit is written, not implied</text>
+      </g>
+    </svg>
+    <div class="hero-cap">The scoreboard is how you earn the authority the rubric <b>claimed</b>. <b>The table is a mock — the figures are placeholders, the real ones come from your run.</b></div>
+  </div>
+
+  <!-- ============ PROSE 1 — THE MECHANISM ============ -->
+  <section class="prose">
+    <div class="sec-label">The mechanism · why the rubric is the weakest possible authority</div>
+    <h2>The rubric you trusted <em>most</em> is the one you measured least.</h2>
+
+    <p>
+      Here is the uncomfortable arithmetic of pre-written rubrics: you write the check list before you know what the agent will get wrong. The rubric is calibrated to your expectations, not to the agent's failure modes. It passes everything it was never designed to catch — and you will not discover this until a claim slips through and someone downstream notices. By which point the authority you thought you'd built is borrowed time.
+    </p>
+
+    <p>
+      The move that fixes this is empirical rather than authoritative. <b>Pull the actual claims the agent produced.</b> Adjudicate them yourself — grounded, overreach, or fabricated — against the sources you have. Now you are the ground truth. Run several candidate detectors against that same pool, each writing results to its own file, none blended. Read the scoreboard: one detector won on precision and coverage; another had better recall but missed half the overreach cases. The data names the winner. That is a judge you can defend.
+    </p>
+
+    <p>
+      The default in Agents 101 Module 5 starts with thirty claims — enough to prove the method on your own output. <em>(Illustrative default — production judges scale to hundreds of claims and running corrections; the method is fixed, the benchmark size is not.)</em> The size is not the point; adjudicating those claims yourself is. You cannot benchmark a judge you haven't run on real output you actually produced.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 1 — FOUR DETECTORS · ONE CLAIM POOL ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 440" role="img" aria-label="A single claim pool splits to four parallel detector boxes each writing its own file; a scorer reads all four against human-adjudicated verdicts; one row is highlighted as the winner.">
+      <defs>
+        <linearGradient id="d1-pool" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".6"/>
+          <stop offset="100%" stop-color="#1d8d80" stop-opacity=".3"/>
+        </linearGradient>
+        <linearGradient id="d1-win" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#ffb347" stop-opacity=".5"/>
+          <stop offset="100%" stop-color="#a86a1f" stop-opacity=".2"/>
+        </linearGradient>
+        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="4" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">FOUR DETECTORS · ONE CLAIM POOL · ONE ADJUDICATOR</text>
+
+      <!-- claim pool -->
+      <rect x="40" y="54" width="200" height="120" rx="12" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.22)" stroke-width="1.2"/>
+      <rect x="40" y="54" width="200" height="22" rx="6" fill="rgba(63,224,200,.10)"/>
+      <text x="56" y="70" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".14em" fill="#3fe0c8">CLAIM POOL</text>
+      <g font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#9bffe9">
+        <text x="56" y="100">claim 01 — a factual claim</text>
+        <text x="56" y="120">claim 02 — your agent made</text>
+        <text x="56" y="140">claim 03 — in real output</text>
+        <text x="56" y="160" fill="#6f8a85">… the rest of the pool</text>
+      </g>
+      <text x="140" y="198" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#6f8a85">YOUR CLAIMS · YOUR OUTPUT</text>
+      <text x="140" y="212" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="10.5" fill="#3b524e">(101 M5 default starts at thirty)</text>
+
+      <!-- human adjudicator -->
+      <rect x="40" y="260" width="200" height="110" rx="12" fill="rgba(8,17,18,.7)" stroke="rgba(255,179,71,.22)" stroke-width="1.2"/>
+      <rect x="40" y="260" width="200" height="22" rx="6" fill="rgba(255,179,71,.10)"/>
+      <text x="56" y="276" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".14em" fill="#ffb347">YOU · GROUND TRUTH</text>
+      <g font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfe6e0">
+        <text x="56" y="305">grounded · overreach ·</text>
+        <text x="56" y="323">fabricated — one verdict</text>
+        <text x="56" y="341">per claim, by hand</text>
+      </g>
+      <text x="140" y="380" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#a86a1f">VERDICTS = THE YARDSTICK</text>
+
+      <!-- four detector columns -->
+      <!-- arrows from pool to each detector -->
+      <g stroke="rgba(63,224,200,.5)" stroke-width="1.2" fill="none">
+        <path d="M240,86 C300,86 310,100 358,100"/>
+        <path d="M240,114 C300,114 310,160 358,160"/>
+        <path d="M240,130 C300,130 310,250 358,250"/>
+        <path d="M240,154 C310,154 320,320 358,320"/>
+      </g>
+
+      <!-- detector 1 — winner -->
+      <rect x="360" y="56" width="188" height="110" rx="10" fill="rgba(8,17,18,.7)" stroke="rgba(255,179,71,.4)" stroke-width="1.4" filter="url(#d1-glow)"/>
+      <rect x="360" y="56" width="188" height="20" rx="5" fill="rgba(255,179,71,.12)"/>
+      <text x="374" y="71" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".12em" fill="#ffb347">DETECTOR 1 · WINS THE ROW</text>
+      <text x="374" y="94" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">source triangulation</text>
+      <text x="374" y="116" font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#3fe0c8">top precision + coverage</text>
+      <text x="374" y="134" font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#3fe0c8">on your verdicts</text>
+      <text x="374" y="156" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#ffb347">→ judge file</text>
+
+      <!-- detector 2 -->
+      <rect x="360" y="182" width="188" height="96" rx="10" fill="rgba(8,17,18,.65)" stroke="rgba(63,224,200,.15)" stroke-width="1"/>
+      <rect x="360" y="182" width="188" height="20" rx="5" fill="rgba(63,224,200,.07)"/>
+      <text x="374" y="197" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".12em" fill="#3b524e">DETECTOR 2</text>
+      <text x="374" y="220" font-family="'Spline Sans',sans-serif" font-size="12" fill="#6f8a85">entailment check</text>
+      <text x="374" y="242" font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#6f8a85">lower recall — misses</text>
+      <text x="374" y="262" font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#6f8a85">the overreach cases</text>
+
+      <!-- detector 3 -->
+      <rect x="360" y="294" width="188" height="96" rx="10" fill="rgba(8,17,18,.65)" stroke="rgba(63,224,200,.15)" stroke-width="1"/>
+      <rect x="360" y="294" width="188" height="20" rx="5" fill="rgba(63,224,200,.07)"/>
+      <text x="374" y="309" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".12em" fill="#3b524e">DETECTOR 3</text>
+      <text x="374" y="332" font-family="'Spline Sans',sans-serif" font-size="12" fill="#6f8a85">citation integrity</text>
+      <text x="374" y="354" font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#6f8a85">solid on cited claims,</text>
+      <text x="374" y="374" font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#6f8a85">blind to the uncited</text>
+
+      <!-- detector 4 further right, so scoreboard fits -->
+      <rect x="360" y="406" width="188" height="20" rx="5" fill="rgba(63,224,200,.07)"/>
+      <text x="374" y="421" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".12em" fill="#3b524e">DETECTOR 4 · counter-evidence · high recall, noisier precision</text>
+
+      <!-- scorer -->
+      <rect x="588" y="170" width="190" height="160" rx="12" fill="rgba(8,17,18,.72)" stroke="rgba(63,224,200,.22)" stroke-width="1.2" filter="url(#d1-glow)"/>
+      <rect x="588" y="170" width="190" height="22" rx="6" fill="rgba(63,224,200,.10)"/>
+      <text x="604" y="186" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".14em" fill="#3fe0c8">SCORER</text>
+      <text x="604" y="214" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">reads all four files</text>
+      <text x="604" y="234" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">against your verdicts</text>
+      <text x="604" y="262" font-family="'Spline Sans',sans-serif" font-size="12" fill="#9bffe9">precision, recall,</text>
+      <text x="604" y="280" font-family="'Spline Sans',sans-serif" font-size="12" fill="#9bffe9">coverage per row</text>
+      <text x="604" y="306" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#3b524e">BLIND · NO BLENDING</text>
+      <text x="604" y="320" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#3b524e">BEFORE SCORING</text>
+
+      <!-- arrows from detectors to scorer -->
+      <g stroke="rgba(63,224,200,.4)" stroke-width="1" fill="none">
+        <path d="M548,100 C568,100 575,220 588,220"/>
+        <path d="M548,230 C565,230 570,240 588,240"/>
+        <path d="M548,342 C565,342 568,270 588,270"/>
+      </g>
+
+      <!-- judge file (winner output) -->
+      <rect x="828" y="130" width="210" height="180" rx="12" fill="rgba(8,17,18,.78)" stroke="url(#d1-win)" stroke-width="1.4" filter="url(#d1-glow)"/>
+      <rect x="828" y="130" width="210" height="22" rx="6" fill="rgba(255,179,71,.12)"/>
+      <text x="844" y="146" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".12em" fill="#ffb347">JUDGE FILE</text>
+      <g font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#cfe6e0">
+        <text x="844" y="174">method: src-triangulation</text>
+        <text x="844" y="200">precision: &lt;your run&gt;</text>
+        <text x="844" y="222">recall: &lt;your run&gt;</text>
+        <text x="844" y="244">coverage: &lt;your run&gt;</text>
+      </g>
+      <rect x="844" y="256" width="178" height="36" rx="6" fill="rgba(255,179,71,.07)" stroke="rgba(255,179,71,.35)"/>
+      <text x="854" y="272" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#ffb347">Known limit:</text>
+      <text x="854" y="286" font-family="'Spline Sans',sans-serif" font-size="11" fill="#cfe6e0">implicit assumptions undetected</text>
+      <!-- breathing spore -->
+      <circle cx="1020" cy="142" r="3.5" fill="#ffd99a" class="breathe"/>
+
+      <!-- arrow from scorer to judge -->
+      <path d="M778,248 C800,248 810,248 828,248" stroke="rgba(255,179,71,.65)" stroke-width="1.4" fill="none" filter="url(#d1-glow)"/>
+      <polygon points="828,248 820,243 820,253" fill="#ffb347" opacity=".8"/>
+
+      <!-- footer note -->
+      <text x="40" y="428" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">SAME INPUT · DIFFERENT PRECISION — THE SCOREBOARD NAMES THE GAP.</text>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 01</span>Four detectors, one claim pool, one adjudicator. The scorer reads all four against your verdicts and <b>the row that won earned the judge file</b>. No blending before scoring.</div>
+  </div>
+
+  <!-- ============ PROSE 2 — THE CROSSING MOVE ============ -->
+  <section class="prose">
+    <div class="sec-label">The crossing move · from opinion to infrastructure</div>
+    <h2>The benchmark is what <em>separates</em> a decision from a guess.</h2>
+
+    <p>
+      There is a category error that survives most AI pilots: using a rubric as if it were a test. A rubric tells you what good looks like in advance; a benchmark tells you whether your detector finds good in practice. These feel similar from the outside — both involve a list and a tick — but their epistemic weight is completely different. The rubric's authority is the writer; the scoreboard's authority is the data. One of these survives a pointed question from a sceptical stakeholder; the other doesn't.
+    </p>
+
+    <p>
+      The crossing move is the benchmark itself — not a new tool, not a platform. You already have the output. You already have the sources. <b>Twenty minutes adjudicating ten claims</b> builds the ground truth half. From that moment you can run a candidate detector and score it. Nothing required that isn't in a plain text editor and the output you produced yesterday.
+    </p>
+
+    <div class="caveat-strip">
+      <span class="ci">⚠</span>
+      <span><b>Two honest labels, stated once.</b> The hero scoreboard is an <b>illustrative mock</b> — its precision and recall are placeholders for shape, not figures from a measured run; the only real numbers are the ones you produce on your own output. And <b>"30 claims"</b> is a pedagogically calibrated default from Agents 101 Module 5, not a validated production minimum — production judges scale to hundreds of claims and running corrections. The method is fixed; both the numbers and the pool size are yours to fill in.</span>
+    </div>
+  </section>
+
+  <!-- ============ DIAGRAM 2 — AUTHORITY SHIFT ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 380" role="img" aria-label="Two-column comparison: left = trusted rubric (written once, never measured, authority = opinion); right = benchmarked judge (measured against your own verdicts, authority = scoreboard). Arrow between them labelled 'the benchmark is the crossing move'.">
+      <defs>
+        <linearGradient id="d2-l" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#5d6a68" stop-opacity=".5"/>
+          <stop offset="100%" stop-color="#5d6a68" stop-opacity=".1"/>
+        </linearGradient>
+        <linearGradient id="d2-r" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffb347" stop-opacity=".6"/>
+          <stop offset="100%" stop-color="#a86a1f" stop-opacity=".2"/>
+        </linearGradient>
+        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">AUTHORITY SHIFT · TRUST → EVIDENCE</text>
+
+      <!-- left column: trusted rubric -->
+      <rect x="40" y="54" width="380" height="288" rx="12" fill="rgba(8,17,18,.65)" stroke="rgba(93,106,104,.25)" stroke-width="1"/>
+      <rect x="40" y="54" width="380" height="24" rx="6" fill="rgba(93,106,104,.14)"/>
+      <text x="56" y="71" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".14em" fill="#5d6a68">TRUSTED RUBRIC</text>
+      <!-- property rows -->
+      <g font-family="'Spline Sans',sans-serif" font-size="13">
+        <text x="56" y="108" fill="#6f8a85">Written: once, before deployment</text>
+        <text x="56" y="134" fill="#6f8a85">Measured: never</text>
+        <text x="56" y="160" fill="#6f8a85">Authority: the person who wrote it</text>
+        <text x="56" y="186" fill="#6f8a85">Fails when: agent hits an edge case</text>
+        <text x="56" y="212" fill="#6f8a85">the rubric wasn't designed for</text>
+        <text x="56" y="240" fill="#5d6a68" font-style="italic">defensible in a meeting?</text>
+      </g>
+      <rect x="56" y="258" width="140" height="28" rx="8" fill="rgba(93,106,104,.10)" stroke="rgba(93,106,104,.28)"/>
+      <text x="68" y="277" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#5d6a68">authority = opinion</text>
+      <text x="56" y="322" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#5d6a68">wrote it before you knew</text>
+      <text x="56" y="342" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#5d6a68">what it would miss</text>
+
+      <!-- centre arrow -->
+      <g transform="translate(447,168)">
+        <path d="M0,0 L82,0" stroke="#3fe0c8" stroke-width="1.6" fill="none" opacity=".7"/>
+        <polygon points="82,0 72,-7 72,7" fill="#3fe0c8" opacity=".8"/>
+        <text x="41" y="-14" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".2em" fill="#3fe0c8">THE BENCHMARK</text>
+        <text x="41" y="-2" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".2em" fill="#3fe0c8">IS THE CROSSING</text>
+        <text x="41" y="22" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12.5" fill="#6f8a85">same output · same sources</text>
+        <text x="41" y="40" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12.5" fill="#6f8a85">20 min to adjudicate</text>
+      </g>
+
+      <!-- right column: benchmarked judge -->
+      <rect x="550" y="54" width="490" height="288" rx="12" fill="rgba(8,17,18,.72)" stroke="url(#d2-r)" stroke-width="1.4" filter="url(#d2-glow)"/>
+      <rect x="550" y="54" width="490" height="24" rx="6" fill="rgba(255,179,71,.12)"/>
+      <text x="566" y="71" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".14em" fill="#ffb347">BENCHMARKED JUDGE</text>
+      <g font-family="'Spline Sans',sans-serif" font-size="13">
+        <text x="566" y="108" fill="#cfe6e0">Written: from a scoreboard you ran</text>
+        <text x="566" y="134" fill="#cfe6e0">Measured: against your adjudicated verdicts</text>
+        <text x="566" y="160" fill="#cfe6e0">Authority: precision/recall on the claim pool</text>
+        <text x="566" y="186" fill="#cfe6e0">Fails when: new claim shapes outside the pool</text>
+        <text x="566" y="212" fill="#9bffe9" font-style="italic">(the known limit is written down)</text>
+        <text x="566" y="240" fill="#cfe6e0" font-style="italic">defensible in a meeting?</text>
+      </g>
+      <rect x="566" y="258" width="200" height="28" rx="8" fill="rgba(255,179,71,.08)" stroke="rgba(255,179,71,.35)"/>
+      <text x="578" y="277" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#ffb347">authority = scoreboard</text>
+      <text x="566" y="322" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#ffb347">ran it against real claims</text>
+      <text x="566" y="342" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#ffb347">you actually got wrong</text>
+      <!-- breathing spore at right -->
+      <circle cx="1020" cy="67" r="3.5" fill="#ffd99a" class="breathe"/>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 02</span>The crossing move is the benchmark — <b>the same output, the same sources, twenty minutes to adjudicate</b>. On the left: opinion. On the right: scoreboard. One of these survives cross-examination.</div>
+  </div>
+
+  <!-- ============ PROSE 3 — WHAT THE BENCHMARK TEACHES YOU ============ -->
+  <section class="prose">
+    <p>
+      There is a side effect worth naming. Running the benchmark teaches you what the agent actually gets wrong — claim by claim, not in aggregate. The overreach cases are more instructive than the fabrications; the fabrications are obvious, the overreach is where a defensible agent walks into indefensible territory without either party noticing. That knowledge is structural. It flows back into the guardrail file, the context you provide, the constraints you place on the next generation pass. The benchmark is not a one-time quality gate. It's a diagnostic that sharpens the upstream build.
+    </p>
+
+    <p>
+      The scoreboard also teaches you to evaluate evaluators — and that move transfers. You bench-tested groundedness today. Tomorrow it's tone. Next month it's brand compliance or regulatory language. The specific domain is incidental; the empirical method is permanent. <b>Every future quality question you automate follows the same recipe.</b> That is why this pattern sits at a gate, not a tip.
+    </p>
+
+    <div class="pull">
+      A judge you benchmarked beats a rubric you trusted in advance. <b>The margin is the same as the pilot over the press release.</b>
+    </div>
+  </section>
+
+  <!-- ============ DIAGRAM 3 — COMPOUNDING LOOP ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="Compounding loop: benchmark produces judge file which feeds the fixed-judge eval loop which surfaces misses which sharpen the next benchmark's claim pool; the judge's known limit line gets more precise each pass.">
+      <defs>
+        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".8"/>
+          <stop offset="1%" stop-color="#ffb347" stop-opacity=".6"/>
+        </linearGradient>
+        <radialGradient id="d3-bead-teal" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#9bffe9"/>
+          <stop offset="55%" stop-color="#3fe0c8"/>
+          <stop offset="100%" stop-color="#1d8d80"/>
+        </radialGradient>
+        <radialGradient id="d3-bead-amber" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#ffe0a8"/>
+          <stop offset="55%" stop-color="#ffb347"/>
+          <stop offset="100%" stop-color="#a86a1f"/>
+        </radialGradient>
+        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">BENCHMARK → JUDGE → EVAL LOOP → SHARPER BENCHMARK</text>
+
+      <!-- loop thread -->
+      <g transform="translate(80,64)">
+        <circle cx="210" cy="172" r="138" fill="none" stroke="url(#d3-ring)" stroke-width="2.2"
+          stroke-dasharray="580 60" stroke-linecap="round" transform="rotate(-90 210 172)"/>
+        <!-- breathing pulse -->
+        <circle r="3.6" fill="#aeffee">
+          <animateMotion dur="10s" repeatCount="indefinite" path="M210,34 a138,138 0 1,1 -0.1,0"/>
+          <animate attributeName="opacity" values=".3;1;1;.3" dur="10s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- bead 1 — benchmark -->
+        <circle cx="210" cy="34" r="24" fill="url(#d3-bead-teal)" filter="url(#d3-glow)"/>
+        <text x="210" y="40" text-anchor="middle" font-family="'Fraunces',serif" font-size="17" fill="#05080a" font-weight="500">1</text>
+        <text x="210" y="18" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Build the benchmark</text>
+
+        <!-- bead 2 — judge file -->
+        <circle cx="348" cy="172" r="24" fill="url(#d3-bead-teal)" filter="url(#d3-glow)"/>
+        <text x="348" y="178" text-anchor="middle" font-family="'Fraunces',serif" font-size="17" fill="#05080a" font-weight="500">2</text>
+        <text x="392" y="170" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Earn the judge</text>
+        <text x="392" y="186" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".12em" fill="#6f8a85">file + known limit</text>
+
+        <!-- bead 3 — eval loop runs it -->
+        <circle cx="210" cy="310" r="24" fill="url(#d3-bead-amber)" filter="url(#d3-glow)"/>
+        <text x="210" y="316" text-anchor="middle" font-family="'Fraunces',serif" font-size="17" fill="#05080a" font-weight="500">3</text>
+        <text x="210" y="348" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Eval loop runs it</text>
+        <text x="210" y="364" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".12em" fill="#a86a1f">misses surface</text>
+
+        <!-- bead 4 — sharpen -->
+        <circle cx="72" cy="172" r="24" fill="url(#d3-bead-amber)" filter="url(#d3-glow)"/>
+        <text x="72" y="178" text-anchor="middle" font-family="'Fraunces',serif" font-size="17" fill="#05080a" font-weight="500">4</text>
+        <text x="28" y="170" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Sharpen</text>
+        <text x="28" y="186" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".12em" fill="#a86a1f">claim pool + limit</text>
+
+        <!-- centre label -->
+        <text x="210" y="168" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EVERY PASS</text>
+        <text x="210" y="186" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#ffb347">judge tightens</text>
+      </g>
+
+      <!-- right side: judge file evolving across passes -->
+      <g transform="translate(560,52)">
+        <!-- pass 1 judge -->
+        <rect x="0" y="10" width="140" height="170" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(255,179,71,.22)"/>
+        <rect x="0" y="10" width="140" height="20" rx="5" fill="rgba(255,179,71,.08)"/>
+        <text x="10" y="25" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#a86a1f">judge v1</text>
+        <g font-family="'Spline Sans Mono',monospace" font-size="10" fill="#6f8a85">
+          <text x="10" y="52">method: src-tri</text>
+          <text x="10" y="70">scored on your pool</text>
+          <text x="10" y="88">1 detector · 1 limit</text>
+        </g>
+        <rect x="10" y="104" width="114" height="42" rx="5" fill="rgba(255,179,71,.05)" stroke="rgba(255,179,71,.22)"/>
+        <text x="18" y="120" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".1em" fill="#a86a1f">Known limit:</text>
+        <text x="18" y="138" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#6f8a85">implicit assumptions</text>
+        <text x="70" y="198" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#5d6a68">PASS 1</text>
+
+        <!-- arrow -->
+        <g transform="translate(150,95)">
+          <path d="M0,0 L26,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".6"/>
+          <polygon points="26,0 18,-5 18,5" fill="#3fe0c8" opacity=".7"/>
+        </g>
+
+        <!-- pass 2 judge -->
+        <g transform="translate(178,0)">
+          <rect x="0" y="0" width="148" height="200" rx="8" fill="rgba(8,17,18,.75)" stroke="rgba(255,179,71,.32)"/>
+          <rect x="0" y="0" width="148" height="20" rx="5" fill="rgba(255,179,71,.10)"/>
+          <text x="10" y="15" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#ffb347">judge v2</text>
+          <g font-family="'Spline Sans Mono',monospace" font-size="10" fill="#9bffe9">
+            <text x="10" y="42">method: src-tri</text>
+            <text x="10" y="60">re-scored, same pool</text>
+            <text x="10" y="78">+ two rules below</text>
+          </g>
+          <!-- more rules added -->
+          <g font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#cfe6e0">
+            <text x="10" y="100">+ causal claims flagged</text>
+            <text x="10" y="118">+ date-range check</text>
+          </g>
+          <rect x="10" y="132" width="120" height="48" rx="5" fill="rgba(255,179,71,.08)" stroke="rgba(255,179,71,.35)"/>
+          <text x="18" y="148" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".1em" fill="#ffb347">Known limit:</text>
+          <text x="18" y="164" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#cfe6e0">implicit assumptions</text>
+          <text x="18" y="178" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#cfe6e0">+ quantitative ranges</text>
+          <text x="74" y="216" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#9bffe9">PASS 2</text>
+        </g>
+
+        <!-- arrow -->
+        <g transform="translate(336,105)">
+          <path d="M0,0 L26,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".6"/>
+          <polygon points="26,0 18,-5 18,5" fill="#3fe0c8" opacity=".7"/>
+        </g>
+
+        <!-- pass 3 judge — sharpest -->
+        <g transform="translate(364,-10)">
+          <rect x="0" y="0" width="150" height="240" rx="8" fill="rgba(8,17,18,.82)" stroke="url(#d3-ring)" stroke-width="1.6" filter="url(#d3-glow)"/>
+          <rect x="0" y="0" width="150" height="20" rx="5" fill="rgba(255,179,71,.14)"/>
+          <text x="10" y="15" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#ffb347">judge v3 · sharpest</text>
+          <g font-family="'Spline Sans Mono',monospace" font-size="10" fill="#9bffe9">
+            <text x="10" y="44">re-scored each pass</text>
+            <text x="10" y="62">tighter limit, wider net</text>
+          </g>
+          <g font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#cfe6e0">
+            <text x="10" y="84">+ causal claims</text>
+            <text x="10" y="102">+ date-range check</text>
+            <text x="10" y="120">+ stat significance</text>
+            <text x="10" y="138">+ attribution source</text>
+          </g>
+          <rect x="10" y="154" width="124" height="58" rx="5" fill="rgba(255,179,71,.08)" stroke="rgba(255,179,71,.5)" stroke-width="1.2"/>
+          <text x="18" y="170" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".1em" fill="#ffb347">Known limit:</text>
+          <text x="18" y="186" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#cfe6e0">implicit assumptions</text>
+          <text x="18" y="202" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#cfe6e0">+ quantitative ranges</text>
+          <text x="18" y="218" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#ffb347">+ novel domain claims</text>
+          <text x="75" y="256" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#ffb347">PASS 3 · EARNED</text>
+        </g>
+
+        <!-- legend -->
+        <g transform="translate(0,320)">
+          <rect x="0" y="0" width="14" height="3" fill="#ffb347"/>
+          <text x="20" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#a86a1f">LIMIT LINE GETS MORE PRECISE EACH PASS</text>
+          <rect x="0" y="14" width="14" height="3" fill="#3fe0c8"/>
+          <text x="20" y="18" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#1d8d80">COVERAGE RISING AS MISSES SHARPEN THE POOL</text>
+        </g>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 03</span>The judge you earned becomes the yardstick the work tightens against. <b>Each eval pass surfaces misses; misses sharpen the next benchmark's claim pool; the known limit gets more precise</b>. This is how a small benchmark grows into production infrastructure.</div>
+  </div>
+
+  <!-- ============ PROSE 4 — WHAT TEST MEANS HERE ============ -->
+  <section class="prose">
+    <div class="sec-label amber">What "Test" actually means · the scoreboard read</div>
+    <h2 class="amber">A colleague reads the scoreboard <em>and explains why this judge won</em>.</h2>
+
+    <p>
+      The test for a benchmarked judge is not the precision number. The number can be right by chance. The test is whether a colleague — one who wasn't in the room when you ran it — can read the scoreboard and say: here is why detector 1 won, here is the claim shape detector 3 missed, here is what the known limit line covers. If they can, the authority has transferred. If they can't, the judge is not a judge; it's a number with a label.
+    </p>
+
+    <p>
+      The known limit line is not an admission of failure. It is the most important line in the file. Every detector has a reach boundary; the judge that names its boundary is the one that doesn't fail silently. A narrow judge that works beats a broad judge that pretends — because the broad judge fails on the exact claim shapes the team assumes it caught. Name the limit once, written down, and the team can reason around it.
+    </p>
+  </section>
+
+  <!-- ============ USE WHEN · BUILD · TEST ============ -->
+  <div class="plates">
+    <div class="plate use">
+      <div class="beat-label amber"><b>Use when</b></div>
+      <p class="body">
+        Quality matters enough that <span class="grey">"looks good"</span> is not a decision method — and someone will eventually ask: <b>how do you know the judge works?</b> Recurs after any first agent build producing text with downstream consequences, at the moment a team considers trusting agent output for external audiences, whenever the output sits at uneasy distance from the sources.
+      </p>
+    </div>
+    <div class="plate build">
+      <div class="beat-label"><b>Build</b></div>
+      <p class="body">
+        A <b>30-claim benchmark</b> (illustrative default — scale in production): evidence roster + claim pool + adjudicated verdicts. A <b>detector scoreboard</b>. A <b>judge file</b> with the winning detector configured and a <span class="grey">"Known limit:"</span> line that names what it cannot reach.
+      </p>
+    </div>
+    <div class="plate test">
+      <div class="beat-label"><b>Test</b></div>
+      <p class="body">
+        A colleague reads the scoreboard and explains why this judge won and where it stops — <em>without asking you</em>.<br>
+        Not merely <em class="no">"it scored well."</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ CORE MOVES ============ -->
+  <section class="moves">
+    <div class="beat-label"><b>Core moves</b></div>
+    <div class="moves-head">
+      <h2>The action, in sequence</h2>
+      <span class="lede">Quality authority shifts from trust to evidence in five moves.</span>
+    </div>
+
+    <div class="move-rail">
+      <div class="thread"></div>
+      <div class="step">
+        <div class="bead">1</div>
+        <h3>Pull claims from the real output</h3>
+        <p>Not a hypothetical. The actual thing. <b>Thirty claims is the default</b> — illustrative; scale in production.</p>
+      </div>
+      <div class="step">
+        <div class="bead">2</div>
+        <h3>Adjudicate against sources yourself</h3>
+        <p>Grounded / overreach / fabricated. <b>You are the ground truth.</b> This is what makes everything downstream defensible.</p>
+      </div>
+      <div class="step">
+        <div class="bead">3</div>
+        <h3>Run candidate detectors blind</h3>
+        <p>Each writes to its own file. <b>No blending before scoring.</b> Four is a good starting count.</p>
+      </div>
+      <div class="step">
+        <div class="bead">4</div>
+        <h3>Score precision, recall, coverage</h3>
+        <p>Read the scoreboard row by row. <b>The data names the winner</b> — not the method's reputation.</p>
+      </div>
+      <div class="step">
+        <div class="bead">5</div>
+        <h3>Package winner as a judge file</h3>
+        <p>Configured detector plus a <b>"Known limit:" line</b> naming what it cannot catch. A narrow judge that works beats a broad one that pretends.</p>
+      </div>
+    </div>
+
+    <div class="compound">
+      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
+        </linearGradient></defs>
+        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
+          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
+        <polygon points="37,8 30,16 44,16" fill="#ffb347"/>
+        <circle cx="37" cy="37" r="6" fill="#ffb347" opacity=".25"/>
+        <circle r="3" fill="#ffd99a">
+          <animateMotion dur="5s" repeatCount="indefinite"
+            path="M37,11 a26,26 0 1,1 -0.1,0"/>
+        </circle>
+      </svg>
+      <div class="ctext">
+        <div class="cyc">benchmark<span class="arr">→</span>earn judge<span class="arr">→</span>run eval loop<span class="arr">→</span>surface misses<span class="arr">→</span>sharpen benchmark</div>
+        <p>Then the judge is infrastructure, not a one-time check. <b>Every eval pass makes the next benchmark's claim pool sharper.</b> The specific domain changes; the empirical method stays.</p>
+      </div>
+    </div>
+
+    <p class="aside">
+      <b>Fastest entry point: any output you already have.</b> Pull ten claims (not thirty — just ten). Open the sources. Adjudicate each one.
+      <span class="mono">Plain text file · agent prompts for detectors · markdown for the judge · no platform · no budget · ~20 min.</span>
+      You've built the ground truth half. Everything else follows.
+    </p>
+  </section>
+
+  <!-- ============ WHY ============ -->
+  <section class="why">
+    <div class="beat-label amber"><b>Why</b></div>
+
+    <div class="principle-block">
+      <div class="principle-label">The principle</div>
+      <p class="principle-line">Empirical method selection over <em>authority</em>. The scoreboard is the source of trust, not the method's pedigree.</p>
+    </div>
+
+    <p class="quote">"A judge you benchmarked beats a rubric you trusted in advance."</p>
+    <p class="gloss">
+      The rubric you trust most in advance is the weakest possible quality authority — you calibrated it to your expectations before the agent ran, before you knew which claim shapes it would miss. The benchmark flips that entirely. You pull real claims from real output, adjudicate them yourself, and the data names the winner. You walk out with a judge you'd defend in a meeting, not a document you'd apologise for.
+    </p>
+    <p class="gloss">
+      There is a subtler transfer: running the benchmark teaches you to evaluate evaluators — and that move applies to tone, brand, compliance, any quality dimension you'll ever automate. The domain is groundedness. The skill is empirical method selection. <b>Every future quality question in the operating model follows the same recipe.</b>
+    </p>
+    <p class="gloss">
+      This is also the personal quality gate: the moment you stop trusting agent outputs and start measuring them. Without it, every downstream quality claim at team or company level rests on opinion. With it, the authority is owned, transferable, and defensible — which is what makes the next autonomy rung earnable rather than asserted.
+    </p>
+    <div class="corollary"><span class="sd"></span>The method you measured beats the method you read about by the same margin the pilot beats the press release.</div>
+  </section>
+
+  <!-- ============ TEST IN PRACTICE ============ -->
+  <div class="practice">
+    <div class="beat-label amber"><b>Test in practice</b></div>
+    <p>
+      Hand the scoreboard to a colleague who wasn't in the room. Ask them: why did detector 1 win? Where does it stop? If they can answer — from the file, not from memory — the judge is <em>earned</em>.
+    </p>
+    <p>
+      If they say <em class="no">"it scored highest"</em> without explaining the claim shapes it missed and the ones it caught, the scoreboard isn't readable enough yet. That's the edit: make the recall gap visible in the table, not just in the number. A readable scoreboard is part of the artefact.
+    </p>
+  </div>
+
+  <!-- ============ CONNECTS TO ============ -->
+  <section class="connects">
+    <h2>Connects to</h2>
+    <div class="sub">Threads leaving this node · the pattern language</div>
+
+    <div class="web">
+      <svg viewBox="0 0 1080 320" aria-hidden="true">
+        <defs>
+          <linearGradient id="ct1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="ct2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="ct3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".65"/></linearGradient>
+          <linearGradient id="ct4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".55"/></linearGradient>
+          <linearGradient id="ct5" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#6f8a85" stop-opacity=".45"/></linearGradient>
+          <filter id="cwglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <circle cx="160" cy="160" r="32" fill="none" stroke="#ffb347" stroke-width="1.2" opacity=".5"/>
+        <circle cx="160" cy="160" r="12" fill="#ffb347" filter="url(#cwglow)"/>
+        <circle cx="160" cy="160" r="50" fill="none" stroke="#ffb347" stroke-width=".7" opacity=".22"/>
+
+        <path id="th1" d="M160,160 C340,60 540,44 780,48" stroke="url(#ct1)" stroke-width="2.2" fill="none"/>
+        <path id="th2" d="M160,160 C360,110 560,100 780,98" stroke="url(#ct2)" stroke-width="2.2" fill="none"/>
+        <path id="th3" d="M160,160 C380,160 560,160 780,160" stroke="url(#ct3)" stroke-width="2.2" fill="none"/>
+        <path id="th4" d="M160,160 C360,220 560,236 780,240" stroke="url(#ct4)" stroke-width="2.2" fill="none"/>
+        <path id="th5" d="M160,160 C340,256 540,278 780,282" stroke="url(#ct5)" stroke-width="1.6" stroke-dasharray="4 6" fill="none"/>
+
+        <circle r="2.8" fill="#ffd99a"><animateMotion dur="5.2s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.2s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.6s" begin=".5s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.6s" begin=".5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#9bffe9"><animateMotion dur="6s" begin="1s" repeatCount="indefinite"><mpath href="#th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="6s" begin="1s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="6.4s" begin="1.5s" repeatCount="indefinite"><mpath href="#th4"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="6.4s" begin="1.5s" repeatCount="indefinite"/></circle>
+      </svg>
+
+      <div class="neighbours">
+        <div class="origin-chip" style="left:14.8%;top:50%">Earn a judge by benchmarking<small>recipe R5 · you are here</small></div>
+
+        <a class="nb" href="make-output-yours.html" style="left:76%;top:15%">
+          <span class="sd"></span>Make output yours <span class="recipe-no">R1</span>
+        </a>
+
+        <a class="nb" href="earn-the-next-rung.html" style="left:76%;top:30.6%">
+          <span class="sd"></span>Earn the next rung <span class="recipe-no">B6</span>
+        </a>
+
+        <a class="nb" href="compounding-system.html" style="left:76%;top:50%">
+          <span class="sd"></span>Build a compounding system <span class="recipe-no">R2</span>
+        </a>
+
+        <a class="nb" href="fixed-judge-loop.html" style="left:76%;top:75%">
+          <span class="sd"></span>Fixed-judge loop <span class="recipe-no">R6</span>
+        </a>
+
+        <a class="nb" href="failure-mode-diagnosis.html" style="left:76%;top:88.1%">
+          <span class="sd"></span>Failure-mode diagnosis <span class="recipe-no"></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="floor">
+    <span class="door">The benchmark is a text file. The judge is a markdown file. The only resource is twenty minutes adjudicating claims — which is also when you learn what your agent actually gets wrong.</span>
+    <span class="meta">The Big Picture · Pattern Language</span>
+  </footer>
+
+</div>
+</body>
+</html>

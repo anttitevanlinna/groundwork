@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WOW before strategy — Pattern · The Big Picture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-0:#05080a;
+    --soil-1:#080d10;
+    --soil-2:#0c1418;
+    --teal:#3fe0c8;
+    --teal-dim:#1d8d80;
+    --amber:#ffb347;
+    --amber-dim:#a86a1f;
+    --spore:#eafff9;
+    --ink:#cfe6e0;
+    --ink-dim:#6f8a85;
+    --ink-faint:#3b524e;
+    --hairline:rgba(255,179,71,.10);
+    --hairline-teal:rgba(63,224,200,.10);
+    --grey:#5d6a68;
+    --grey-dim:#39423f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--soil-0);
+    font-family:'Spline Sans',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  /* atmospheric soil + light-well — business lane leans amber, recedes for the long read */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.11) 0%, transparent 46%),
+      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.06) 0%, transparent 44%),
+      linear-gradient(180deg, #2a1c06 0%, #14100a 10%, #05080a 42%, #04060a 100%);
+  }
+  /* grain / spore dust */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 64px;}
+
+  /* ============ BREADCRUMB ============ */
+  .crumb{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+    color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
+  }
+  .crumb a{color:var(--amber-dim);text-decoration:none;transition:color .25s}
+  .crumb a:hover{color:var(--amber)}
+  .crumb .here{color:var(--ink)}
+
+  /* ============ PATTERN HEADER (name + essence) ============ */
+  header.pat{padding:30px 0 8px;max-width:900px;}
+  .kicker{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--amber-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .kicker .spore-mark{
+    width:8px;height:8px;border-radius:50%;background:var(--amber);
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 14px 2px rgba(255,179,71,.6);
+    flex:none;
+  }
+  .kicker .pat-no{color:var(--ink-faint)}
+  .kicker .lane-tag{color:var(--ink-faint)}
+  header.pat h1{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(40px,7vw,68px);line-height:.98;
+    color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
+  }
+  header.pat h1 em{font-style:italic;color:var(--amber);font-weight:400}
+  .principle{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
+  }
+  .principle b{color:var(--amber);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .essence{
+    font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:740px;
+  }
+  .essence b{color:var(--spore);font-weight:500}
+  .essence .sys{color:var(--amber);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+
+  /* ============ HERO PICTURE ============ */
+  .hero-frame{
+    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(31,24,13,.5), rgba(5,8,10,.6));
+    position:relative;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(255,179,71,.04) inset;
+  }
+  .hero-frame svg{display:block;width:100%;height:auto}
+  .hero-cap{
+    position:absolute;left:18px;bottom:13px;z-index:3;
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
+    color:var(--ink-dim);text-transform:uppercase;
+  }
+  .hero-cap b{color:var(--amber)}
+
+  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
+  .prose{
+    margin-top:34px;max-width:760px;
+  }
+  .prose h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
+    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+  }
+  .prose h2 em{font-style:italic;color:var(--amber);font-weight:400}
+  .prose h2.teal em{color:var(--teal)}
+  .prose .sec-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+    margin-top:42px;
+  }
+  .prose .sec-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);
+    box-shadow:0 0 9px rgba(255,179,71,.55);flex:none;
+  }
+  .prose .sec-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
+  .prose p{
+    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
+    letter-spacing:.002em;
+  }
+  .prose p b{color:var(--spore);font-weight:500}
+  .prose p em{font-style:italic;color:var(--ink-dim)}
+  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p .mono{
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--amber);letter-spacing:.005em;
+  }
+  .prose p .mono.teal{color:var(--teal)}
+  .prose .pull{
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--amber-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+    color:var(--ink);max-width:680px;
+  }
+  .prose .pull b{color:var(--amber);font-weight:500;font-style:normal}
+
+  /* the source-ledger caveat — a labelled epistemic strip, not a shout */
+  .ledger{
+    margin:18px 0 4px;border:1px dashed var(--amber-dim);border-radius:11px;
+    padding:13px 18px 14px;background:rgba(255,179,71,.035);max-width:740px;
+  }
+  .ledger .tag{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--amber);display:flex;align-items:center;gap:8px;
+  }
+  .ledger .tag::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 10px 2px rgba(255,179,71,.5);
+  }
+  .ledger p{font-size:13px;line-height:1.55;color:var(--ink-dim);margin-top:9px}
+  .ledger p b{color:var(--ink);font-weight:500}
+  .ledger p .src{font-family:'Spline Sans Mono',monospace;font-size:11.5px;color:var(--amber-dim);letter-spacing:.02em}
+
+  /* ============ PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
+  .diagram{
+    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+    background:
+      radial-gradient(110% 130% at 8% 8%, rgba(255,179,71,.05), transparent 55%),
+      linear-gradient(180deg, rgba(20,16,10,.55), rgba(5,8,10,.65));
+    position:relative;
+    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(255,179,71,.03) inset;
+  }
+  .diagram svg{display:block;width:100%;height:auto}
+  .diagram .dcap{
+    padding:12px 20px 16px;border-top:1px solid var(--hairline);
+    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
+    color:var(--ink-dim);letter-spacing:.003em;
+    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  }
+  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
+  .diagram .dcap .num{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--amber-dim);margin-right:10px;
+  }
+
+  /* ============ RECIPE SECTION BEATS ============ */
+  .beat-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  }
+  .beat-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);flex:none;
+    box-shadow:0 0 9px rgba(255,179,71,.55);
+  }
+  .beat-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
+  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+
+  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
+  .plates{
+    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
+  }
+  .plate{
+    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
+    background:rgba(17,14,9,.5);backdrop-filter:blur(2px);position:relative;
+  }
+  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
+  .plate .body b{color:var(--spore);font-weight:500}
+  .plate .body .grey{color:var(--grey)}
+  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.06), transparent 55%),rgba(17,14,9,.5)}
+  .plate.test .body em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
+
+  /* ============ CORE MOVES ============ */
+  .moves{margin-top:46px}
+  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px;flex-wrap:wrap}
+  .moves-head h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
+  .move-rail{
+    margin-top:20px;position:relative;
+    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+  }
+  .move-rail .thread{
+    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
+    background:linear-gradient(90deg,
+      rgba(255,179,71,0) 0%, rgba(168,106,31,.5) 6%,
+      rgba(255,179,71,.7) 50%, rgba(63,224,200,.65) 94%, rgba(63,224,200,0) 100%);
+  }
+  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
+  .step:first-child{padding-left:0}
+  .step .bead{
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
+    margin-bottom:13px;
+  }
+  .step:nth-child(6) .bead{
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
+  }
+  .step h3{
+    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
+  }
+  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
+  .step p b{color:var(--ink);font-weight:500}
+
+  .compound{
+    margin-top:26px;border:1px solid rgba(255,179,71,.18);border-radius:14px;
+    padding:18px 22px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(255,179,71,.07), transparent 60%),
+      rgba(17,14,9,.55);
+    display:flex;align-items:center;gap:20px;
+  }
+  .compound .loop-ico{flex:none}
+  .compound .ctext{flex:1}
+  .compound .ctext .cyc{
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--amber);
+  }
+  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
+  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
+  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+
+  .aside{
+    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
+    border-left:2px solid var(--teal-dim);padding:2px 0 2px 15px;max-width:760px;
+  }
+  .aside b{color:var(--teal);font-weight:500}
+  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
+
+  /* ============ WHY ============ */
+  .why{
+    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
+    padding:26px 30px 28px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 90% 0%, rgba(255,179,71,.08), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(63,224,200,.05), transparent 55%),
+      rgba(15,12,8,.6);
+  }
+  .why .beat-label{margin-bottom:14px}
+  .why .principle-block{
+    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
+  }
+  .why .principle-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
+  }
+  .why .principle-line{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
+    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
+  }
+  .why .principle-line em{font-style:italic;color:var(--amber)}
+  .why .quote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(21px,2.9vw,28px);line-height:1.24;color:var(--amber);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(255,179,71,.24);max-width:840px;
+  }
+  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
+  .why .gloss b{color:var(--spore);font-weight:500}
+  .why .gloss em{font-style:italic;color:var(--ink-dim)}
+  .why .gloss + .gloss{margin-top:12px}
+  .why .corollary{
+    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--teal);
+    border:1px dashed var(--teal-dim);border-radius:30px;padding:8px 16px 9px;
+  }
+  .why .corollary .sd{
+    width:7px;height:7px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 11px 2px rgba(63,224,200,.5);
+  }
+
+  /* ============ TEST-IN-PRACTICE inline panel ============ */
+  .practice{
+    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
+    padding:22px 26px 24px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(63,224,200,.04), transparent 55%),
+      rgba(17,14,9,.5);
+  }
+  .practice .beat-label{margin-bottom:12px}
+  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
+  .practice p b{color:var(--spore);font-weight:500}
+  .practice p em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:16px}
+  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ CONNECTS TO ============ */
+  .connects{margin-top:52px}
+  .connects h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .connects .sub{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:5px;
+  }
+  .web{position:relative;margin-top:8px}
+  .web svg{display:block;width:100%;height:auto}
+  .neighbours{position:absolute;inset:0;pointer-events:none}
+  .nb{
+    position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
+    display:flex;align-items:center;gap:9px;
+    padding:8px 14px 9px;border-radius:13px;
+    background:rgba(17,14,9,.82);backdrop-filter:blur(4px);
+    border:1px solid var(--hairline);
+    color:var(--ink);font-size:13px;letter-spacing:.005em;white-space:nowrap;
+    transition:border-color .3s,color .3s,background .3s,transform .3s;
+    cursor:pointer;text-decoration:none;
+  }
+  .nb .recipe-no{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--ink-faint);
+  }
+  .nb .sd{
+    width:8px;height:8px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 12px 2px rgba(255,179,71,.5);
+  }
+  .nb.teal .sd{background:var(--teal);box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 12px 2px rgba(63,224,200,.55)}
+  .nb:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9);transform:translate(-50%,-50%) scale(1.05)}
+  .nb.teal:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9)}
+  .nb:hover .sd{animation:throb 1s ease-in-out infinite}
+  .nb.soon{opacity:.62}
+  .nb.soon::after{
+    content:"soon";
+    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);
+    border:1px solid var(--ink-faint);border-radius:20px;
+    padding:2px 7px 3px;margin-left:4px;
+  }
+  .nb.soon:hover{opacity:1}
+  @keyframes throb{50%{transform:scale(1.5)}}
+  .origin-chip{
+    position:absolute;transform:translate(-50%,-50%);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 24px rgba(255,179,71,.4);white-space:nowrap;text-align:center;
+  }
+  .origin-chip small{
+    display:block;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:8.5px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--amber-dim);margin-top:3px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer.floor{
+    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  footer.floor .door{
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
+    text-shadow:0 0 22px rgba(255,179,71,.3);max-width:680px;
+  }
+  footer.floor .meta{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+
+  /* breathing glow on the diagram spore-tips */
+  @keyframes breathe{
+    0%,100%{opacity:.55}
+    50%{opacity:1}
+  }
+  .breathe{animation:breathe 4.2s ease-in-out infinite}
+
+  @media (max-width:860px){
+    .plates{grid-template-columns:1fr 1fr}
+    .plate.use{grid-column:1 / -1}
+  }
+  @media (max-width:780px){
+    .plates{grid-template-columns:1fr}
+    .plate.use{grid-column:1}
+    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
+    .move-rail .thread{display:none}
+    .step{padding:0}
+    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .neighbours .nb{font-size:11px;padding:6px 10px}
+    .prose p{font-size:14.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ BREADCRUMB ============ -->
+  <nav class="crumb">
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">WOW before strategy</span>
+  </nav>
+
+  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <header class="pat">
+    <div class="kicker">
+      <span class="spore-mark"></span>Recipe
+      <span class="pat-no">· business lane · phase: Intent · company layer</span>
+    </div>
+    <h1>WOW before <em>strategy</em></h1>
+    <p class="principle">The principle: <b>competence is the ceiling, not capability</b> — you can't envision what you've never used your own hands to build.</p>
+    <p class="essence">
+      Before the strategy offsite, put your people in a room and let each build <b>one real working thing</b>
+      with AI in an afternoon. The WOW creates demand no deck can — and because
+      <span class="sys">competence is the ceiling every later platform, governance and team-scale move is bounded by</span>,
+      this is the Intent-phase company move the rest of the transformation rests on. Strategy is the frame; experience is the fuel. If you must sequence them, fuel first.
+    </p>
+  </header>
+
+  <!-- ============ HERO PICTURE: podium-nodding room vs hands-building room ============ -->
+  <div class="hero-frame">
+    <svg viewBox="0 0 1080 392" role="img" aria-label="Left: a leader at a podium presenting an AI Vision 2027 slide while the audience politely nods — a floating stat reads 31% actually enthusiastic. Right: the same people at laptops, each screen showing a small working thing they built, one leaning over to show a colleague, captioned the WOW transfers peer-to-peer.">
+      <defs>
+        <radialGradient id="hwell" cx="76%" cy="50%" r="64%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".22"/>
+          <stop offset="45%" stop-color="#ffb347" stop-opacity=".07"/>
+          <stop offset="100%" stop-color="#ffb347" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="deckGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#39423f" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#5d6a68" stop-opacity=".8"/>
+        </linearGradient>
+        <linearGradient id="spreadGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#a86a1f" stop-opacity=".4"/>
+          <stop offset="60%" stop-color="#ffb347" stop-opacity=".9"/>
+          <stop offset="100%" stop-color="#9bffe9" stop-opacity=".95"/>
+        </linearGradient>
+        <radialGradient id="bldCore" cx="40%" cy="35%" r="70%">
+          <stop offset="0%" stop-color="#fff4e2"/>
+          <stop offset="45%" stop-color="#ffb347"/>
+          <stop offset="100%" stop-color="#2a1c06"/>
+        </radialGradient>
+        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <rect x="0" y="0" width="1080" height="392" fill="url(#hwell)"/>
+
+      <!-- ===== LEFT: podium + deck + nodding heads ===== -->
+      <g opacity=".95">
+        <text x="56" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#5d6a68">START WITH THE DECK</text>
+        <!-- the slide -->
+        <rect x="56" y="64" width="150" height="92" rx="6" fill="rgba(8,17,18,.55)" stroke="#5d6a68" stroke-width="1.2"/>
+        <line x1="70" y1="86" x2="180" y2="86" stroke="#6f8a85" stroke-width="2"/>
+        <line x1="70" y1="104" x2="160" y2="104" stroke="#4b5654" stroke-width="2"/>
+        <line x1="70" y1="120" x2="170" y2="120" stroke="#4b5654" stroke-width="2"/>
+        <text x="70" y="146" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">AI VISION 2027</text>
+        <!-- the speaker at the podium -->
+        <g stroke="#6f8a85" stroke-width="2" fill="none">
+          <circle cx="92" cy="206" r="9" fill="#39423f" stroke="#5d6a68"/>
+          <path d="M92,216 L92,250"/><path d="M92,224 L74,238"/><path d="M92,224 L110,238"/>
+          <rect x="82" y="252" width="20" height="14" rx="2" fill="rgba(93,106,104,.35)" stroke="#5d6a68"/>
+        </g>
+        <!-- the polite nodding audience: grey dotted arrows going nowhere -->
+        <g stroke="url(#deckGrad)" stroke-width="2" fill="none" stroke-dasharray="2 6">
+          <path d="M150,300 C200,300 240,296 300,296"/>
+          <path d="M150,318 C200,318 240,320 300,322"/>
+          <path d="M150,336 C200,338 240,344 300,348"/>
+        </g>
+        <g fill="#4b5654">
+          <circle cx="306" cy="296" r="6"/><circle cx="306" cy="322" r="6"/><circle cx="306" cy="348" r="6"/>
+        </g>
+        <text x="150" y="284" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#5d6a68" font-style="italic">they nodded · nothing changed</text>
+        <!-- floating stat -->
+        <g>
+          <rect x="232" y="60" width="150" height="40" rx="20" fill="rgba(8,17,18,.7)" stroke="#5d6a68" stroke-width="1"/>
+          <text x="248" y="78" font-family="'Fraunces',serif" font-size="16" fill="#9aa6a3" font-style="italic">31%</text>
+          <text x="292" y="78" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#6f8a85">actually</text>
+          <text x="292" y="92" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#6f8a85">enthusiastic</text>
+        </g>
+      </g>
+
+      <!-- ===== divider — the reversal axis ===== -->
+      <g>
+        <line x1="430" y1="56" x2="430" y2="340" stroke="rgba(255,179,71,.3)" stroke-width="1" stroke-dasharray="3 7"/>
+        <text x="430" y="44" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing="2.5" fill="#a86a1f">vs</text>
+      </g>
+
+      <!-- ===== RIGHT: the same people, hands on, WOW spreading ===== -->
+      <g>
+        <text x="470" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#ffb347">LET THEM BUILD A PIECE OF IT</text>
+
+        <!-- builder cluster: each a small glowing screen with a thing on it -->
+        <g>
+          <!-- person 1 (the one who built first — the origin WOW) -->
+          <circle cx="520" cy="150" r="20" fill="url(#bldCore)" filter="url(#hglow)"/>
+          <rect x="498" y="178" width="44" height="30" rx="4" fill="rgba(255,179,71,.14)" stroke="#ffb347" stroke-width="1.2"/>
+          <line x1="506" y1="188" x2="534" y2="188" stroke="#ffd99a" stroke-width="1.6"/>
+          <line x1="506" y1="196" x2="528" y2="196" stroke="#ffd99a" stroke-width="1.6"/>
+          <text x="520" y="226" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".12em" fill="#a86a1f">BUILT ONE THING</text>
+        </g>
+
+        <!-- the peer-to-peer threads spreading from the first builder outward -->
+        <g stroke="url(#spreadGrad)" fill="none" stroke-width="2.2" filter="url(#hglow)">
+          <path d="M540,150 C640,120 720,96 880,86"/>
+          <path d="M540,160 C660,162 780,160 940,156"/>
+          <path d="M540,176 C660,200 780,224 900,250"/>
+          <path d="M540,168 C620,196 700,260 800,318"/>
+        </g>
+        <!-- the colleague being shown -->
+        <g>
+          <circle cx="640" cy="118" r="13" fill="rgba(255,179,71,.22)" stroke="#ffb347" stroke-width="1"/>
+          <path d="M626,118 C620,112 620,124 626,120" stroke="#ffb347" stroke-width="1.4" fill="none"/>
+          <text x="660" y="100" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#ffd99a" font-style="italic">"show me how you did that"</text>
+        </g>
+        <!-- spore-nodes = colleagues who caught it -->
+        <g>
+          <circle cx="880" cy="86" r="6" fill="#ffd99a" filter="url(#hglow)"/>
+          <circle cx="940" cy="156" r="6.4" fill="#ffce85" filter="url(#hglow)"/>
+          <circle cx="900" cy="250" r="6" fill="#aeffee" filter="url(#hglow)" class="breathe"/>
+          <circle cx="800" cy="318" r="5.6" fill="#9bffe9" filter="url(#hglow)"/>
+        </g>
+        <!-- secondary anastomosis: peers passing it on, not back to leader -->
+        <g stroke="#ffb347" stroke-width="1" fill="none" opacity=".4">
+          <path d="M880,86 C920,110 940,130 940,156"/>
+          <path d="M940,156 C940,200 920,230 900,250"/>
+        </g>
+        <text x="1024" y="346" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="14" fill="#ffb347" font-style="italic">the WOW transfers peer-to-peer</text>
+      </g>
+
+      <!-- the pulse running outward along the main spreading thread -->
+      <circle r="3.4" fill="#ffd99a">
+        <animateMotion dur="4.6s" repeatCount="indefinite" path="M540,160 C660,162 780,160 940,156"/>
+        <animate attributeName="opacity" values="0;1;1;0" dur="4.6s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+    <div class="hero-cap">Deck → nodding. Hands → spreading. <b>You can't sell a future they've never touched.</b></div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ============ PROSE BLOCK 1 — THE REVERSED ARROW =========== -->
+  <!-- ============================================================ -->
+  <section class="prose">
+    <div class="sec-label">The reflex that fails · why this transformation is different</div>
+    <h2>Every past transformation rewarded the deck. <em>This one punishes it.</em></h2>
+
+    <p>
+      Digital, agile, cloud — every transformation you've run before was vision-led, and rightly so. A CEO could
+      picture a "digital company" through pure analogy, never having written a line of code, and the picture was
+      close enough to align around. So the reflex is hardwired: kick off with a vision, build the strategy, pick
+      the tools, drive adoption. <b>That order has worked your whole career.</b> The trouble is that agents quietly
+      broke the first link in the chain.
+    </p>
+
+    <p>
+      Say the words <em class="amber">"an agent that autonomously processes invoices across three systems"</em> to
+      someone who has never run one, and you get a polite nod over an empty space. The gap isn't knowledge a
+      slide could close — it's <b>experience</b>, and no deck bridges it. So the honest diagnosis after most AI
+      kickoffs is the most damning one a leader can write down: <em>they nodded, and nothing changed.</em> The
+      reflex didn't misfire; the reflex was the problem. The fix is to run the same four pieces in reverse —
+      the diagram below puts the two orders side by side.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 1 — THE REVERSED ARROW ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 372" role="img" aria-label="Top row, greyed out and labelled the reflex that fails for AI: vision then strategy then tools then adoption. Bottom row, lit and flowing: WOW then competence then sees own future then acts. Same four pieces, reversed order. A thin precondition node, psychological safety, sits under the whole bottom row.">
+      <defs>
+        <linearGradient id="d1-dead" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4b5654" stop-opacity=".7"/><stop offset="1" stop-color="#39423f" stop-opacity=".4"/></linearGradient>
+        <linearGradient id="d1-live" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a86a1f" stop-opacity=".5"/><stop offset="50" stop-color="#ffb347" stop-opacity=".9"/><stop offset="1" stop-color="#9bffe9" stop-opacity=".8"/></linearGradient>
+        <radialGradient id="d1-bead" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#fff4e2"/><stop offset=".55" stop-color="#ffb347"/><stop offset="1" stop-color="#a86a1f"/></radialGradient>
+        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME FOUR PIECES · THE ONLY DIFFERENCE IS WHERE YOU START</text>
+
+      <!-- ===== TOP ROW — the dead reflex ===== -->
+      <g opacity=".8">
+        <text x="40" y="66" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#5d6a68">THE REFLEX · FAILS FOR AI</text>
+        <line x1="150" y1="98" x2="980" y2="98" stroke="url(#d1-dead)" stroke-width="2" stroke-dasharray="3 6"/>
+        <g font-family="'Spline Sans',sans-serif" font-size="13" fill="#6f8a85" text-anchor="middle">
+          <g><circle cx="150" cy="98" r="15" fill="rgba(57,66,63,.5)" stroke="#5d6a68" stroke-width="1.2"/><text x="150" y="132">vision</text></g>
+          <g><circle cx="427" cy="98" r="15" fill="rgba(57,66,63,.5)" stroke="#5d6a68" stroke-width="1.2"/><text x="427" y="132">strategy</text></g>
+          <g><circle cx="704" cy="98" r="15" fill="rgba(57,66,63,.5)" stroke="#5d6a68" stroke-width="1.2"/><text x="704" y="132">tools</text></g>
+          <g><circle cx="980" cy="98" r="15" fill="rgba(57,66,63,.5)" stroke="#5d6a68" stroke-width="1.2"/><text x="980" y="132">adoption?</text></g>
+        </g>
+        <text x="980" y="78" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12.5" fill="#5d6a68">96% adopt · 4% ROI</text>
+      </g>
+
+      <!-- the reversal pivot -->
+      <g transform="translate(540,170)">
+        <path d="M-40,0 a40,40 0 1,1 80,0" fill="none" stroke="#ffb347" stroke-width="1.4" opacity=".7"/>
+        <polygon points="40,0 33,-7 47,-7" fill="#ffb347" opacity=".8"/>
+        <text x="0" y="-50" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".24em" fill="#ffb347">REVERSE THE ORDER</text>
+      </g>
+
+      <!-- ===== BOTTOM ROW — the live sequence ===== -->
+      <g>
+        <text x="40" y="244" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#ffb347">THE SEQUENCE THAT WORKS IN PRACTICE</text>
+        <line x1="150" y1="278" x2="980" y2="278" stroke="url(#d1-live)" stroke-width="2.4" filter="url(#d1-glow)"/>
+        <g text-anchor="middle">
+          <g><circle cx="150" cy="278" r="19" fill="url(#d1-bead)" filter="url(#d1-glow)"/><text x="150" y="316" font-family="'Spline Sans',sans-serif" font-size="13" fill="#fff4e2">WOW</text></g>
+          <g><circle cx="427" cy="278" r="19" fill="url(#d1-bead)" filter="url(#d1-glow)"/><text x="427" y="316" font-family="'Spline Sans',sans-serif" font-size="13" fill="#fff4e2">competence</text></g>
+          <g><circle cx="704" cy="278" r="19" fill="url(#d1-bead)" filter="url(#d1-glow)"/><text x="704" y="316" font-family="'Spline Sans',sans-serif" font-size="13" fill="#fff4e2">sees own future</text></g>
+          <g><circle cx="980" cy="278" r="19" fill="#0c2b2a" stroke="#9bffe9" stroke-width="1.4" filter="url(#d1-glow)"/>
+             <circle cx="980" cy="278" r="11" fill="#1d8d80"/><text x="980" y="316" font-family="'Spline Sans',sans-serif" font-size="13" fill="#9bffe9">acts</text></g>
+        </g>
+        <!-- pulse running the live thread -->
+        <circle r="3.2" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite" path="M150,278 L980,278"/><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+      </g>
+
+      <!-- precondition node under the whole live row -->
+      <g>
+        <rect x="150" y="340" width="830" height="22" rx="11" fill="rgba(255,179,71,.05)" stroke="rgba(255,179,71,.25)" stroke-dasharray="4 5"/>
+        <text x="565" y="355" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".18em" fill="#a86a1f">PRECONDITION · PSYCHOLOGICAL SAFETY — THE FLOOR THE WHOLE SEQUENCE STANDS ON</text>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 01</span>Standard change management runs vision → strategy → tools. For AI, <b>run it backwards</b> — WOW → competence → sees-own-future → acts — on a floor of safety.</div>
+  </div>
+
+  <!-- ============ LEDGER 1 — psychological safety caveat ============ -->
+  <div class="ledger">
+    <div class="tag">Named precondition · cited finding, not a coined law</div>
+    <p>
+      Safety as the floor under the sequence is well-supported as a <b>direction</b>: people won't risk a first
+      attempt where a failed experiment gets them blamed. The specific numbers come from one funded study —
+      <span class="src">Infosys / MIT Technology Review Insights, Dec 2025 — Infosys-funded research, directional</span>
+      (83% of 500 business leaders say psychological safety measurably affects AI-initiative success; only 39%
+      rate their own org's safety "very high"). Treat the direction as solid; treat the percentages as one survey, not an established norm.
+    </p>
+  </div>
+
+  <!-- ============ PROSE BLOCK 2 — the leader role flips ============ -->
+  <section class="prose">
+    <p>
+      Here's the part that stings a builder-leader most, because it demotes the move you're best at. Standing up
+      and telling people AI matters — the thing every change-management playbook tells you to do — has roughly
+      <b>zero direct effect</b> on whether they adopt it. What moves adoption is a colleague saying, in their own
+      words, how AI changed their Tuesday. Your encouragement isn't worthless; it's just <em>indirect</em>. You
+      don't push the change through the org. You set the conditions under which peers carry it for you. The diagram
+      below draws the two leader-shapes: the single thick arrow that bounces off, and the small forum the change spreads out of.
+    </p>
+
+    <p class="pull">
+      You don't drive AI adoption. <b>You create the conditions for peers to drive it</b> — and then get out of the thread's way.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 2 — PUSH → CONDITIONS ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 360" role="img" aria-label="Left: a single thick arrow from leader stabbing at org, labelled mandate slash deck, roughly zero percentage points. Right: leader feeds a small node labelled forum, from which many thin peer-to-peer threads branch across the org, labelled create conditions, peer influence carries it.">
+      <defs>
+        <radialGradient id="d2-leader" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#fff4e2"/><stop offset=".5" stop-color="#ffb347"/><stop offset="1" stop-color="#2a1c06"/></radialGradient>
+        <linearGradient id="d2-thread" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffb347" stop-opacity=".8"/><stop offset="1" stop-color="#9bffe9" stop-opacity=".6"/></linearGradient>
+        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE LEADER ROLE FLIPS · FROM PUSH TO CONDITIONS</text>
+
+      <!-- ===== LEFT — the mandate that bounces ===== -->
+      <g>
+        <text x="50" y="68" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#5d6a68">DIRECT PUSH</text>
+        <circle cx="92" cy="170" r="22" fill="url(#d2-leader)" filter="url(#d2-glow)" opacity=".7"/>
+        <text x="92" y="212" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">LEADER</text>
+        <!-- thick arrow stabbing the org wall -->
+        <line x1="120" y1="170" x2="300" y2="170" stroke="#5d6a68" stroke-width="9" opacity=".75"/>
+        <polygon points="300,170 286,160 286,180" fill="#5d6a68" opacity=".8"/>
+        <!-- the org wall it bounces off -->
+        <rect x="306" y="100" width="14" height="140" rx="4" fill="rgba(57,66,63,.6)" stroke="#5d6a68"/>
+        <!-- bounce-back ricochet -->
+        <path d="M300,166 C280,150 260,150 250,158" stroke="#5d6a68" stroke-width="2" fill="none" stroke-dasharray="3 5" opacity=".6"/>
+        <text x="170" y="150" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#6f8a85">mandate / deck</text>
+        <text x="180" y="252" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".14em" fill="#5d6a68">~0pp ON ADOPTION · ~2.2× RESISTANCE</text>
+      </g>
+
+      <!-- divider -->
+      <line x1="430" y1="70" x2="430" y2="300" stroke="rgba(255,179,71,.25)" stroke-width="1" stroke-dasharray="3 7"/>
+
+      <!-- ===== RIGHT — the forum that spreads ===== -->
+      <g>
+        <text x="470" y="68" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#ffb347">SET CONDITIONS · PEERS CARRY IT</text>
+
+        <!-- leader feeds the forum (thin, not a stab) -->
+        <circle cx="500" cy="170" r="18" fill="url(#d2-leader)" filter="url(#d2-glow)"/>
+        <text x="500" y="206" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">LEADER</text>
+        <path d="M518,170 C540,170 552,170 566,170" stroke="#ffb347" stroke-width="1.6" fill="none" opacity=".8"/>
+        <polygon points="566,170 558,165 558,175" fill="#ffb347" opacity=".8"/>
+
+        <!-- the forum node -->
+        <circle cx="592" cy="170" r="16" fill="rgba(255,179,71,.16)" stroke="#ffb347" stroke-width="1.4"/>
+        <text x="592" y="146" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#ffd99a" font-style="italic">forum</text>
+
+        <!-- many thin peer threads branching out across the org -->
+        <g stroke="url(#d2-thread)" stroke-width="1.6" fill="none" opacity=".85">
+          <path d="M608,168 C680,120 780,98 940,92"/>
+          <path d="M608,164 C700,150 820,140 960,138"/>
+          <path d="M608,172 C700,176 820,182 950,186"/>
+          <path d="M608,176 C690,210 800,236 930,250"/>
+          <path d="M608,180 C680,232 760,288 880,300"/>
+        </g>
+        <!-- anastomosis — peers passing it to each other, no central hub -->
+        <g stroke="#ffb347" stroke-width="1" fill="none" opacity=".35">
+          <path d="M940,92 C970,120 970,118 960,138"/>
+          <path d="M950,186 C940,216 920,238 930,250"/>
+        </g>
+        <!-- spore-tips -->
+        <g fill="#ffce85">
+          <circle cx="940" cy="92" r="5" filter="url(#d2-glow)"/>
+          <circle cx="960" cy="138" r="5.4" filter="url(#d2-glow)"/>
+          <circle cx="950" cy="186" r="5" fill="#aeffee" class="breathe" filter="url(#d2-glow)"/>
+          <circle cx="930" cy="250" r="5" filter="url(#d2-glow)"/>
+          <circle cx="880" cy="300" r="4.6" fill="#9bffe9" filter="url(#d2-glow)"/>
+        </g>
+        <text x="770" y="332" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".14em" fill="#ffb347">PEER INFLUENCE · +8.9pp HEAVY USE · +10.4pp FOR AGENTS</text>
+        <!-- pulse along one peer thread -->
+        <circle r="2.8" fill="#ffd99a"><animateMotion dur="5.4s" repeatCount="indefinite" path="M608,164 C700,150 820,140 960,138"/><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" repeatCount="indefinite"/></circle>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 02</span>The thick arrow bounces. <b>The forum spreads.</b> Your direct push is ~0pp; the threads peers run between themselves are what move the org.</div>
+  </div>
+
+  <!-- ============ LEDGER 2 — peer-influence source ============ -->
+  <div class="ledger">
+    <div class="tag">The peer-influence numbers · name the source genre</div>
+    <p>
+      The +8.9pp heavy-use / +10.4pp agents / ~0pp direct-leadership figures are from a
+      <span class="src">Microsoft Research academic study, Mar 2026</span> — call it "the Microsoft Research study,"
+      not "research shows." The <b>perception gap</b> (76% of executives believe staff are enthusiastic; 31% are —
+      leaders 2x off) is <span class="src">HBR / Lovich-BCG + Meier-Columbia, Nov 2025</span>. The mandate-resistance
+      multiplier and the 96%-adopt / 4%-ROI tools-first trap are directional reorderings from the same body of field reporting.
+    </p>
+  </div>
+
+  <!-- ============ PROSE BLOCK 3 — the dose, with the BCG caveat woven in ============ -->
+  <section class="prose">
+    <div class="sec-label">The dose · how much hands-on it actually takes</div>
+    <h2>A demo they <em>watch</em> doesn't take. A thing they <em>build</em> does.</h2>
+
+    <p>
+      The WOW is not a polished demo on a big screen — watching someone else's magic produces applause, not pull.
+      It's the person's own hands on the keyboard, building one small real thing, hitting the moment where the
+      output is genuinely theirs. And it takes a <b>meaningful dose</b> to get there: below some floor people
+      poke at it once, get a mediocre result, and quietly conclude AI "isn't there yet." Above the floor they
+      tip into regular use. In-person beats remote on every measure, because the WOW needs shared air and a
+      colleague leaning over to say <em class="amber">"wait, show me how you did that."</em>
+    </p>
+
+    <p>
+      How big is "meaningful"? A useful order-of-magnitude exists, but be careful how you carry it. A
+      <b>BCG consultancy-survey finding (directional, Jun 2025)</b> reports 79% of employees with five-plus hours
+      of hands-on time became regular users, versus 67% below — and that only about a third feel properly trained.
+      Take the <em>shape</em> of that: a real dose, not a lunch-and-learn. <b>Do not</b> turn it into a law that
+      "people need five hours" — your threshold depends on your people and your tools. The Mollick MBA experiment
+      points the same direction by a different route: a <em>compelling single experiment</em> (One Useful Thing, Jan 2026) in
+      which non-engineers built working startup prototypes in four days, and the management skills they already
+      had — delegating, judging output, explaining intent — turned out to be the exact AI skills. One cohort, one
+      instructor, unreplicated; persuasive, not proven.
+    </p>
+  </section>
+
+  <!-- ============ LEDGER 3 — BCG dose caveat ============ -->
+  <div class="ledger">
+    <div class="tag">The five-hour number · directional, not a dose law</div>
+    <p>
+      <span class="src">BCG, Jun 2025 — vendor / consultancy survey, treat as directional.</span>
+      79% of employees with 5+ hours hands-on became regular users vs 67% below; in-person beat online; only ~33%
+      said they were properly trained. <b>Useful as an order-of-magnitude — "give it a real dose, in person" — not
+      as a proven universal dose.</b> "People need five hours" is a coronation the data doesn't earn; your number depends on your people and tools.
+    </p>
+  </div>
+
+  <!-- ============ PROSE BLOCK 4 — competence creates pull → the compounding loop ============ -->
+  <section class="prose">
+    <p>
+      Then the interesting thing happens, and it's the whole reason to start here. People who've built one working
+      thing stop waiting to be told where AI fits. They go find their own high-value process — the report nobody
+      enjoys, the reconciliation that eats a Thursday — because <b>competence creates pull</b> (this shows up in the
+      field, e.g. a Nordic security-software org, where adoption stopped needing a champion once people had the skill). A person who has
+      built a piece of it can finally <em>imagine their own role redesigned around it</em>, which is the muscle that
+      separates AI high-performers from dabblers. The loop below is the engine: build · tell a peer · peer wants in ·
+      joins the next session · builds · tells a peer. Each turn the circle of competent builders widens — and strategy rides on top of it, written second.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="A closed loop running through the soil — WOW session, person builds a real thing, tells a peer, peer wants in, joins the next session, arrow back to the start. Across three passes the circle of competent builders grows visibly wider, with a faint outer ring labelled strategy written second on top of accumulated competence.">
+      <defs>
+        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffb347" stop-opacity=".85"/><stop offset="1" stop-color="#9bffe9" stop-opacity=".6"/></linearGradient>
+        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#fff4e2"/><stop offset=".55" stop-color="#ffb347"/><stop offset="1" stop-color="#a86a1f"/></radialGradient>
+        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE WOW COMPOUNDS · WHAT WIDENS BETWEEN PASSES</text>
+
+      <!-- ===== LEFT HALF: the loop through the soil ===== -->
+      <g transform="translate(40,56)">
+        <!-- faint outer ring: strategy, written second -->
+        <circle cx="210" cy="172" r="158" fill="none" stroke="rgba(255,179,71,.18)" stroke-width="1" stroke-dasharray="3 7"/>
+        <text x="210" y="26" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#a86a1f">STRATEGY · WRITTEN SECOND, ON ACCUMULATED COMPETENCE</text>
+
+        <!-- the loop -->
+        <circle cx="210" cy="180" r="118" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="500 60" stroke-linecap="round" transform="rotate(-90 210 180)"/>
+        <circle r="3.6" fill="#ffd99a">
+          <animateMotion dur="9s" repeatCount="indefinite" path="M210,62 a118,118 0 1,1 -0.1,0"/>
+          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- four beads round the loop -->
+        <g>
+          <circle cx="210" cy="62" r="21" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="210" y="67" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#2a1c06" font-weight="500">1</text>
+          <text x="210" y="44" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#fff4e2">builds a real thing</text>
+        </g>
+        <g>
+          <circle cx="328" cy="180" r="21" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="328" y="185" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#2a1c06" font-weight="500">2</text>
+          <text x="356" y="184" font-family="'Spline Sans',sans-serif" font-size="12" fill="#fff4e2">tells a peer</text>
+        </g>
+        <g>
+          <circle cx="210" cy="298" r="21" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="210" y="303" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#2a1c06" font-weight="500">3</text>
+          <text x="210" y="336" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#fff4e2">peer wants in</text>
+        </g>
+        <g>
+          <circle cx="92" cy="180" r="21" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="92" y="185" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#2a1c06" font-weight="500">4</text>
+          <text x="64" y="184" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12" fill="#fff4e2">joins next session</text>
+        </g>
+
+        <text x="210" y="176" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EACH PASS</text>
+        <text x="210" y="194" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#ffb347">the circle widens</text>
+      </g>
+
+      <!-- ===== RIGHT HALF: the widening circle across three passes ===== -->
+      <g transform="translate(560,76)">
+        <text x="0" y="0" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#5d6a68">COMPETENT BUILDERS · PASS BY PASS</text>
+
+        <!-- pass 1 — a couple of builders -->
+        <g transform="translate(60,80)">
+          <circle cx="0" cy="0" r="44" fill="none" stroke="rgba(255,179,71,.3)" stroke-width="1"/>
+          <circle cx="-12" cy="-6" r="6" fill="#ffb347" filter="url(#d3-glow)"/>
+          <circle cx="14" cy="8" r="6" fill="#ffb347" filter="url(#d3-glow)"/>
+          <text x="0" y="62" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#a86a1f">PASS 1</text>
+        </g>
+        <!-- arrow -->
+        <g transform="translate(132,80)"><path d="M0,0 L34,0" stroke="#ffb347" stroke-width="1.2" fill="none" opacity=".7"/><polygon points="34,0 26,-5 26,5" fill="#ffb347" opacity=".75"/></g>
+        <!-- pass 2 — wider -->
+        <g transform="translate(238,80)">
+          <circle cx="0" cy="0" r="62" fill="none" stroke="rgba(255,179,71,.45)" stroke-width="1.2"/>
+          <g fill="#ffce85" filter="url(#d3-glow)">
+            <circle cx="-22" cy="-14" r="6"/><circle cx="6" cy="-22" r="6"/><circle cx="22" cy="10" r="6"/><circle cx="-10" cy="20" r="6"/><circle cx="30" cy="-8" r="5"/>
+          </g>
+          <text x="0" y="82" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#ffb347">PASS 2</text>
+        </g>
+        <!-- arrow -->
+        <g transform="translate(322,80)"><path d="M0,0 L34,0" stroke="#9bffe9" stroke-width="1.2" fill="none" opacity=".7"/><polygon points="34,0 26,-5 26,5" fill="#9bffe9" opacity=".75"/></g>
+        <!-- pass 3 — widest, teal tips = it's now self-sustaining -->
+        <g transform="translate(440,82)">
+          <circle cx="0" cy="0" r="80" fill="none" stroke="url(#d3-ring)" stroke-width="1.6" filter="url(#d3-glow)"/>
+          <g filter="url(#d3-glow)">
+            <circle cx="-34" cy="-20" r="6" fill="#ffb347"/><circle cx="-6" cy="-38" r="6" fill="#ffce85"/><circle cx="26" cy="-26" r="6" fill="#ffb347"/>
+            <circle cx="44" cy="6" r="6" fill="#aeffee" class="breathe"/><circle cx="20" cy="34" r="6" fill="#9bffe9"/><circle cx="-18" cy="40" r="6" fill="#ffce85"/>
+            <circle cx="-46" cy="14" r="6" fill="#ffb347"/><circle cx="2" cy="2" r="5" fill="#9bffe9"/>
+          </g>
+          <text x="0" y="104" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#9bffe9">PASS 3 · SELF-SUSTAINING</text>
+        </g>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 03</span><em>Compound interest on a WOW.</em> Each pass widens the circle of people who can imagine their own role redesigned — and <b>strategy rides on top, written second</b>.</div>
+  </div>
+
+  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
+  <div class="plates">
+    <div class="plate use">
+      <div class="beat-label"><b>Use when</b></div>
+      <p class="body">
+        You're about to kick off the AI transformation and <span class="grey">your instinct is a strategy deck, a roadmap, a platform shortlist</span> —
+        or a skeptic won't move on your slides, or adoption stalled after a <b>tools rollout that nobody actually changed behaviour around</b>.
+      </p>
+    </div>
+    <div class="plate build">
+      <div class="beat-label"><b>Build</b></div>
+      <p class="body">
+        A <b>WOW session</b> where each person built one real thing — plus a <b>standing peer forum</b>:
+        voluntary, recurring, no mandate. The strategy comes second.
+      </p>
+    </div>
+    <div class="plate test">
+      <div class="beat-label"><b>Test</b></div>
+      <p class="body">
+        People build <em>unprompted</em>, and a skeptic flips on proof they made with their own hands.<br>
+        Not merely <em class="no">"96% adopted the tool."</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ CORE MOVES — actionable heart ============ -->
+  <section class="moves">
+    <div class="beat-label"><b>Core moves</b></div>
+    <div class="moves-head">
+      <h2>Run the sequence forwards</h2>
+      <span class="lede">WOW → competence → sees-own-future → acts. Same pieces as the deck — reversed.</span>
+    </div>
+
+    <div class="move-rail">
+      <div class="thread"></div>
+      <div class="step">
+        <div class="bead">1</div>
+        <h3>Open with the WOW</h3>
+        <p>Not a demo they watch — a thing they <b>build by hand</b>, in a few hours.</p>
+      </div>
+      <div class="step">
+        <div class="bead">2</div>
+        <h3>Give a real dose, in person</h3>
+        <p>A meaningful hands-on dose <b>beats a lunch-and-learn</b>. Same room.</p>
+      </div>
+      <div class="step">
+        <div class="bead">3</div>
+        <h3>Practice on real work</h3>
+        <p>Their actual reports, not toy tasks. <b>Competence creates pull.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">4</div>
+        <h3>Let peers carry it</h3>
+        <p>Make the forum, not the speech. <b>Peers spread the WOW.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">5</div>
+        <h3>Bring strategy second</h3>
+        <p>Now competent people <b>argue platforms from their own hands.</b></p>
+      </div>
+    </div>
+
+    <div class="compound">
+      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ffb347"/><stop offset="100%" stop-color="#3fe0c8"/>
+        </linearGradient></defs>
+        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
+          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
+        <polygon points="37,8 30,16 44,16" fill="#ffb347"/>
+        <circle cx="37" cy="37" r="6" fill="#ffb347" opacity=".25"/>
+        <circle r="3" fill="#ffd99a">
+          <animateMotion dur="5s" repeatCount="indefinite"
+            path="M37,11 a26,26 0 1,1 -0.1,0"/>
+        </circle>
+      </svg>
+      <div class="ctext">
+        <div class="cyc">build by hand<span class="arr">→</span>tell a peer<span class="arr">→</span>peer wants in<span class="arr">→</span>joins next session<span class="arr">→</span>repeat</div>
+        <p>The forum is the engine, not the speech: <b>compound interest on a WOW.</b> Each pass widens the circle of people who can imagine their own role redesigned — and the strategy you write later has competent people to run it.</p>
+      </div>
+    </div>
+
+    <!-- the Monday-move / no-permission aside -->
+    <p class="aside">
+      <b>Monday move: cancel the offsite, book a room.</b> Five willing people, real laptops, each builds one small real thing by the end — no slides, no roadmap, no goalposts.
+      <span class="mono">A calendar invite · a room · two hours · no budget · no platform contract · no board sign-off.</span>
+      Then ask one question — <b>"what would you build next?"</b> — and write down what they say. That list is your strategy input, and they wrote it, not you.
+    </p>
+  </section>
+
+  <!-- ============ TEST IN PRACTICE ============ -->
+  <section class="practice">
+    <div class="beat-label"><b>Test</b> · how you know it ran, not just played</div>
+    <p>
+      The signal that it took is people building <b>unprompted</b> — after a couple of hands-on sessions they start
+      without being told where to look. A skeptic — the rational professional, not a technophobe — flips when they
+      see <em>role-specific proof they made themselves</em>, never from another deck. And the WOW shows up second-hand:
+      a colleague says, in their own words, how watching a coworker use AI changed their mind. The negative test is the
+      tools-first trap dressed as success — <b>high adoption, no behaviour change</b> (96% adopt, 4% see ROI). If the
+      numbers look great and Tuesday looks identical, you shipped <em class="no">tools, not the WOW.</em>
+    </p>
+  </section>
+
+  <!-- ============ WHY — the conviction ============ -->
+  <section class="why">
+    <div class="beat-label"><b>Why</b></div>
+
+    <div class="principle-block">
+      <div class="principle-label">The principle</div>
+      <p class="principle-line">Competence is the <em>ceiling</em>, not capability. Strategy without competent people is governance of an abstraction.</p>
+    </div>
+
+    <p class="quote">"You can't envision what you've never experienced — so stop selling the future and let them build a piece of it."</p>
+    <p class="gloss">
+      The deck doesn't land because it can't: the perception gap (76% of executives believe staff are enthusiastic;
+      31% are) means leaders are reasoning about a room that isn't there. The mechanism underneath is
+      <b>mental-model formation</b> — a person who has built one working thing can finally picture their own role
+      redesigned around AI, and the people who redesign their workflow are the ones who become high performers
+      (a McKinsey consultancy survey, directional, puts them 2.8x more likely). You cannot deck your way to that mental model. You have to hand them the keyboard.
+    </p>
+    <p class="gloss">
+      The counter-evidence is real and resolves cleanly. Deloitte (consultancy, directional) finds formal-strategy
+      orgs report far higher implementation success — but strategy and experience are <b>complementary, not
+      competing</b>: strategy is the frame, experience is the fuel. Shopify's AI mandate worked because the CEO
+      already had the WOW in his own hands; the mandates that failed came from leaders who hadn't. So frame, then
+      fuel — and <em>if forced to sequence, fuel first.</em> Note the worst-case path too: a mandate without the
+      experience underneath buys you compliance and roughly 2.2x the resistance.
+    </p>
+    <div class="corollary"><span class="sd"></span>Frame, then fuel. If forced to sequence — fuel first.</div>
+  </section>
+
+  <!-- ============ CONNECTS TO — neighbour patterns ============ -->
+  <section class="connects">
+    <h2>Connects to</h2>
+    <div class="sub">Threads leaving this node · the pattern language</div>
+
+    <div class="web">
+      <svg viewBox="0 0 1080 240" aria-hidden="true">
+        <defs>
+          <linearGradient id="ct1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="ct2" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <circle cx="150" cy="120" r="30" fill="none" stroke="#ffb347" stroke-width="1.2" opacity=".5"/>
+        <circle cx="150" cy="120" r="11" fill="#ffb347" filter="url(#wglow)"/>
+        <circle cx="150" cy="120" r="46" fill="none" stroke="#ffb347" stroke-width=".7" opacity=".25"/>
+
+        <path id="cth1" d="M150,120 C380,72 560,66 760,70" stroke="url(#ct1)" stroke-width="2.2" fill="none"/>
+        <path id="cth2" d="M150,120 C380,170 560,176 760,180" stroke="url(#ct2)" stroke-width="2.2" fill="none"/>
+        <!-- anastomosis: the two threads bow toward each other mid-field (the shared soil) -->
+        <path d="M470,82 C520,120 520,128 470,168" stroke="#ffb347" stroke-width="1" fill="none" opacity=".28"/>
+
+        <circle r="2.8" fill="#ffd99a"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#cth1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#9bffe9"><animateMotion dur="5.6s" begin=".7s" repeatCount="indefinite"><mpath href="#cth2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.6s" begin=".7s" repeatCount="indefinite"/></circle>
+      </svg>
+
+      <div class="neighbours">
+        <div class="origin-chip" style="left:13.8%;top:50%">WOW before strategy<small>business · Intent · you are here</small></div>
+        <a class="nb"      href="competence-first.html" style="left:70.5%;top:29.2%"><span class="sd"></span>Competence first <span class="recipe-no">the thesis this implements</span></a>
+        <a class="nb teal" href="make-output-yours.html" style="left:70.5%;top:75%"><span class="sd"></span>Make output yours <span class="recipe-no">the WOW's substance</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="floor">
+    <span class="door">A door, not a destination — the cheapest move (a room, a couple of hours, five willing people) is also the only one that works. Everything expensive comes after, and competent people aim it better.</span>
+    <span class="meta">The Big Picture · Pattern Language</span>
+  </footer>
+
+</div>
+</body>
+</html>

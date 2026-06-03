@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amplify the system, not the output — Pattern · The Big Picture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-0:#05080a;
+    --soil-1:#080d10;
+    --soil-2:#0c1418;
+    --teal:#3fe0c8;
+    --teal-dim:#1d8d80;
+    --amber:#ffb347;
+    --amber-dim:#a86a1f;
+    --spore:#eafff9;
+    --ink:#cfe6e0;
+    --ink-dim:#6f8a85;
+    --ink-faint:#3b524e;
+    --hairline:rgba(63,224,200,.10);
+    --hairline-a:rgba(255,179,71,.12);
+    --grey:#5d6a68;
+    --grey-dim:#39423f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--soil-0);
+    font-family:'Spline Sans',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  /* atmospheric soil + light-well — business lane leans amber, recedes for the long read */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.11) 0%, transparent 46%),
+      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.06) 0%, transparent 44%),
+      linear-gradient(180deg, #2a1c06 0%, #14110a 10%, #05080a 42%, #04060a 100%);
+  }
+  /* grain / spore dust */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 64px;}
+
+  /* ============ BREADCRUMB ============ */
+  .crumb{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+    color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
+  }
+  .crumb a{color:var(--amber-dim);text-decoration:none;transition:color .25s}
+  .crumb a:hover{color:var(--amber)}
+  .crumb .here{color:var(--ink)}
+
+  /* ============ PATTERN HEADER (name + essence) ============ */
+  header.pat{padding:30px 0 8px;max-width:900px;}
+  .kicker{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--amber-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .kicker .spore-mark{
+    width:8px;height:8px;border-radius:50%;background:var(--amber);
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 14px 2px rgba(255,179,71,.6);
+    flex:none;
+  }
+  .kicker .pat-no{color:var(--ink-faint)}
+  header.pat h1{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(38px,6.6vw,64px);line-height:1.0;
+    color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
+  }
+  header.pat h1 em{font-style:italic;color:var(--amber);font-weight:400}
+  .principle{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
+  }
+  .principle b{color:var(--amber);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .essence{
+    font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:740px;
+  }
+  .essence b{color:var(--spore);font-weight:500}
+  .essence .scope{
+    font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.1em;
+    color:var(--amber);font-weight:500;
+  }
+
+  /* ============ HERO PICTURE ============ */
+  .hero-frame{
+    margin:30px 0 8px;border:1px solid var(--hairline-a);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(31,24,13,.5), rgba(5,8,10,.6));
+    position:relative;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(255,179,71,.04) inset;
+  }
+  .hero-frame svg{display:block;width:100%;height:auto}
+  .hero-cap{
+    position:absolute;left:18px;bottom:13px;z-index:3;
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
+    color:var(--ink-dim);text-transform:uppercase;
+  }
+  .hero-cap b{color:var(--amber)}
+
+  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
+  .prose{
+    margin-top:34px;max-width:760px;
+  }
+  .prose h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
+    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+  }
+  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .prose h2.amber em{color:var(--amber)}
+  .prose .sec-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+    margin-top:42px;
+  }
+  .prose .sec-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);
+    box-shadow:0 0 9px rgba(255,179,71,.55);flex:none;
+  }
+  .prose .sec-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
+  .prose p{
+    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
+    letter-spacing:.002em;
+  }
+  .prose p b{color:var(--spore);font-weight:500}
+  .prose p em{font-style:italic;color:var(--ink-dim)}
+  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p .mono{
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--amber);letter-spacing:.005em;
+  }
+  .prose p .mono.teal{color:var(--teal)}
+  .prose p .src{
+    display:block;margin-top:9px;
+    font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.04em;
+    color:var(--teal-dim);font-style:normal;
+  }
+  .prose .pull{
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--amber-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+    color:var(--ink);max-width:680px;
+  }
+  .prose .pull b{color:var(--amber);font-weight:500;font-style:normal}
+
+  /* ============ FRONTIER FLAG — the measurement-gap caveat, carried at every recurrence ============ */
+  .frontier{
+    margin:24px 0 6px;border:1px dashed var(--amber-dim);border-radius:13px;
+    padding:16px 20px 17px;max-width:760px;
+    background:radial-gradient(120% 150% at 0% 0%, rgba(255,179,71,.06), transparent 60%), rgba(8,15,17,.5);
+  }
+  .frontier .ftag{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--amber);display:flex;align-items:center;gap:9px;margin-bottom:9px;
+  }
+  .frontier .ftag::before{
+    content:"";width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+  }
+  .frontier p{font-size:13.5px;line-height:1.55;color:var(--ink-dim);margin:0}
+  .frontier p b{color:var(--spore);font-weight:500}
+  .frontier p em{font-style:italic;color:var(--amber)}
+
+  /* ============ NEW PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
+  .diagram{
+    margin:26px 0 6px;border:1px solid var(--hairline-a);border-radius:14px;overflow:hidden;
+    background:
+      radial-gradient(110% 130% at 8% 8%, rgba(255,179,71,.045), transparent 55%),
+      linear-gradient(180deg, rgba(20,17,10,.55), rgba(5,8,10,.65));
+    position:relative;
+    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(255,179,71,.03) inset;
+  }
+  .diagram svg{display:block;width:100%;height:auto}
+  .diagram .dcap{
+    padding:12px 20px 16px;border-top:1px solid var(--hairline-a);
+    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
+    color:var(--ink-dim);letter-spacing:.003em;
+    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  }
+  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
+  .diagram .dcap em{color:var(--amber);font-style:italic}
+  .diagram .dcap .num{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--amber-dim);margin-right:10px;
+  }
+
+  /* ============ RECIPE SECTION BEATS ============ */
+  .beat-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  }
+  .beat-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);flex:none;
+    box-shadow:0 0 9px rgba(255,179,71,.55);
+  }
+  .beat-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
+  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+
+  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
+  .plates{
+    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
+  }
+  .plate{
+    border:1px solid var(--hairline-a);border-radius:14px;padding:18px 20px 20px;
+    background:rgba(14,12,8,.5);backdrop-filter:blur(2px);position:relative;
+  }
+  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
+  .plate .body b{color:var(--spore);font-weight:500}
+  .plate .body .grey{color:var(--grey)}
+  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.06), transparent 55%),rgba(14,12,8,.5)}
+  .plate.test .body em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
+
+  /* ============ CORE MOVES ============ */
+  .moves{margin-top:46px}
+  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
+  .moves-head h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
+  .move-rail{
+    margin-top:20px;position:relative;
+    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+  }
+  .move-rail .thread{
+    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
+    background:linear-gradient(90deg,
+      rgba(255,179,71,0) 0%, rgba(63,224,200,.55) 8%,
+      rgba(63,224,200,.7) 42%, rgba(255,179,71,.7) 88%, rgba(255,179,71,0) 100%);
+  }
+  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
+  .step:first-child{padding-left:0}
+  .step .bead{
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
+    margin-bottom:13px;
+  }
+  /* moves 4 & 5 — the redesign + the re-run — tip into amber (the outcome side) */
+  .step:nth-child(5) .bead,
+  .step:nth-child(6) .bead{
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
+  }
+  .step h3{
+    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
+  }
+  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
+  .step p b{color:var(--ink);font-weight:500}
+
+  .compound{
+    margin-top:26px;border:1px solid rgba(255,179,71,.18);border-radius:14px;
+    padding:18px 22px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(255,179,71,.07), transparent 60%),
+      rgba(14,12,8,.55);
+    display:flex;align-items:center;gap:20px;
+  }
+  .compound .loop-ico{flex:none}
+  .compound .ctext{flex:1}
+  .compound .ctext .cyc{
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--amber);
+  }
+  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
+  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
+  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+
+  .aside{
+    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
+    border-left:2px solid var(--teal-dim);padding:2px 0 2px 15px;max-width:760px;
+  }
+  .aside b{color:var(--teal);font-weight:500}
+  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
+
+  /* ============ WHY ============ */
+  .why{
+    margin-top:46px;border:1px solid var(--hairline-a);border-radius:16px;
+    padding:26px 30px 28px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 90% 0%, rgba(255,179,71,.09), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(63,224,200,.05), transparent 55%),
+      rgba(13,11,8,.6);
+  }
+  .why .beat-label{margin-bottom:14px}
+  .why .principle-block{
+    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline-a);
+  }
+  .why .principle-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
+  }
+  .why .principle-line{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
+    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
+  }
+  .why .principle-line em{font-style:italic;color:var(--amber)}
+  .why .quote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--amber);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(255,179,71,.24);max-width:840px;
+  }
+  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
+  .why .gloss b{color:var(--spore);font-weight:500}
+  .why .gloss em{font-style:italic;color:var(--ink-dim)}
+  .why .gloss .src{font-family:'Spline Sans Mono',monospace;font-size:12px;color:var(--teal-dim);font-style:normal}
+  .why .gloss + .gloss{margin-top:12px}
+  .why .corollary{
+    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
+    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+  }
+  .why .corollary .sd{
+    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+  }
+
+  /* ============ TEST-IN-PRACTICE inline panel ============ */
+  .practice{
+    margin-top:34px;border:1px solid var(--hairline-a);border-radius:14px;
+    padding:22px 26px 24px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(63,224,200,.04), transparent 55%),
+      rgba(14,12,8,.5);
+  }
+  .practice .beat-label{margin-bottom:12px}
+  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
+  .practice p b{color:var(--spore);font-weight:500}
+  .practice p em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:16px}
+  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ CONNECTS TO ============ */
+  .connects{margin-top:52px}
+  .connects h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .connects .sub{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:5px;
+  }
+  .web{position:relative;margin-top:8px}
+  .web svg{display:block;width:100%;height:auto}
+  .neighbours{position:absolute;inset:0;pointer-events:none}
+  .nb{
+    position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
+    display:flex;align-items:center;gap:9px;
+    padding:8px 14px 9px;border-radius:13px;
+    background:rgba(14,12,8,.82);backdrop-filter:blur(4px);
+    border:1px solid var(--hairline-a);
+    color:var(--ink);font-size:13px;letter-spacing:.005em;white-space:nowrap;
+    transition:border-color .3s,color .3s,background .3s,transform .3s;
+    cursor:pointer;text-decoration:none;
+  }
+  .nb .recipe-no{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--ink-faint);
+  }
+  .nb .sd{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 12px 2px rgba(63,224,200,.55);
+  }
+  .nb.amber .sd{background:var(--amber);box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 12px 2px rgba(255,179,71,.5)}
+  .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
+  .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
+  .nb:hover .sd{animation:throb 1s ease-in-out infinite}
+  .nb.soon{opacity:.62}
+  .nb.soon::after{
+    content:"soon";
+    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);
+    border:1px solid var(--ink-faint);border-radius:20px;
+    padding:2px 7px 3px;margin-left:4px;
+  }
+  .nb.soon:hover{opacity:1}
+  @keyframes throb{50%{transform:scale(1.5)}}
+  .origin-chip{
+    position:absolute;transform:translate(-50%,-50%);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 24px rgba(255,179,71,.4);white-space:nowrap;text-align:center;
+  }
+  .origin-chip small{
+    display:block;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:8.5px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--amber-dim);margin-top:3px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer.floor{
+    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline-a);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  footer.floor .door{
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
+    text-shadow:0 0 22px rgba(255,179,71,.3);
+  }
+  footer.floor .meta{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+
+  /* breathing glow on the diagram spore-tips */
+  @keyframes breathe{
+    0%,100%{opacity:.55}
+    50%{opacity:1}
+  }
+  .breathe{animation:breathe 4.2s ease-in-out infinite}
+
+  @media (max-width:860px){
+    .plates{grid-template-columns:1fr 1fr}
+    .plate.use{grid-column:1 / -1}
+  }
+  @media (max-width:780px){
+    .plates{grid-template-columns:1fr}
+    .plate.use{grid-column:1}
+    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
+    .move-rail .thread{display:none}
+    .step{padding:0}
+    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .neighbours .nb{font-size:11px;padding:6px 10px}
+    .prose p{font-size:14.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ BREADCRUMB ============ -->
+  <nav class="crumb">
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Amplify the system, not the output</span>
+  </nav>
+
+  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <header class="pat">
+    <div class="kicker"><span class="spore-mark"></span>Recipe · business lane · Outcome → ⟲ <span class="pat-no">· the move after the per-task win lands</span></div>
+    <h1>Amplify the <em>system</em>, not the output</h1>
+    <p class="principle">The principle: <b>the productivity paradox</b> — individual AI gains are real and do not aggregate to institutional value without organizational change.</p>
+    <p class="essence">
+      Stop chasing the per-task speedup and start reading what it exposed. The agent isn't a worker —
+      it's an <b>X-ray of the system you were already running</b>. <span class="scope">Outcome phase · reaches company scope:</span> the discipline that turns
+      "people are faster" into "the institution works better."
+    </p>
+  </header>
+
+  <!-- ============ HERO PICTURE: same thread, two states — node bright / outcome flat → thread re-routed / outcome moves ============ -->
+  <div class="hero-frame">
+    <svg viewBox="0 0 1080 410" role="img" aria-label="One workflow drawn as a thread through the soil, in two states. Left: the agent node glows bright and fast on one step while a downstream handoff sits dark and clogged, and the outcome marker at the end of the thread has not moved. Right: the thread is re-routed around the clog, the handoff is now lit, the same agent node runs inside the better path, and the outcome marker is visibly further along.">
+      <defs>
+        <radialGradient id="hwell" cx="74%" cy="46%" r="64%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".22"/>
+          <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".06"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="hAgent" cx="38%" cy="32%" r="72%">
+          <stop offset="0%" stop-color="#eafff9"/>
+          <stop offset="45%" stop-color="#3fe0c8"/>
+          <stop offset="100%" stop-color="#0c2b2a"/>
+        </radialGradient>
+        <linearGradient id="hThreadDead" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".7"/>
+          <stop offset="42%" stop-color="#3fe0c8" stop-opacity=".55"/>
+          <stop offset="55%" stop-color="#39423f" stop-opacity=".85"/>
+          <stop offset="100%" stop-color="#39423f" stop-opacity=".6"/>
+        </linearGradient>
+        <linearGradient id="hThreadLive" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".75"/>
+          <stop offset="55%" stop-color="#3fe0c8" stop-opacity=".85"/>
+          <stop offset="100%" stop-color="#ffb347" stop-opacity=".95"/>
+        </linearGradient>
+        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <rect x="0" y="0" width="1080" height="410" fill="url(#hwell)"/>
+
+      <!-- ===== LEFT STATE: bright node, clogged handoff, flat outcome ===== -->
+      <g>
+        <text x="48" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#5d6a68">OUTPUT UP · OUTCOME FLAT</text>
+
+        <!-- the workflow thread, alive then dead at the clog -->
+        <path d="M70,150 C150,150 200,148 250,150" stroke="url(#hThreadDead)" stroke-width="3" fill="none"/>
+        <path d="M285,150 C330,150 360,152 400,150" stroke="#39423f" stroke-width="3" fill="none" stroke-dasharray="3 7" opacity=".7"/>
+        <path d="M400,150 C440,150 470,150 505,150" stroke="#39423f" stroke-width="3" fill="none" stroke-dasharray="3 7" opacity=".5"/>
+
+        <!-- step nodes -->
+        <circle cx="70" cy="150" r="6" fill="#1d8d80"/>
+        <!-- the agent — bright, fast, loud, on its one step -->
+        <circle cx="250" cy="150" r="20" fill="url(#hAgent)" filter="url(#hglow)"/>
+        <circle cx="250" cy="150" r="20" fill="none" stroke="#9bffe9" stroke-width="1" opacity=".6"/>
+        <text x="250" y="192" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#6f8a85">AGENT · FAST HERE</text>
+
+        <!-- the clogged, dark handoff downstream -->
+        <g>
+          <circle cx="400" cy="150" r="15" fill="rgba(57,66,63,.55)" stroke="#5d6a68" stroke-width="1.4"/>
+          <line x1="392" y1="142" x2="408" y2="158" stroke="#a86a1f" stroke-width="2"/>
+          <line x1="408" y1="142" x2="392" y2="158" stroke="#a86a1f" stroke-width="2"/>
+          <text x="400" y="192" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="1.5" fill="#a86a1f">CLOGGED HANDOFF</text>
+        </g>
+
+        <!-- outcome marker — hasn't moved -->
+        <line x1="505" y1="108" x2="505" y2="200" stroke="#5d6a68" stroke-width="1.2" stroke-dasharray="3 4"/>
+        <circle cx="505" cy="150" r="5" fill="#5d6a68"/>
+        <text x="505" y="222" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13" fill="#5d6a68" font-style="italic">outcome: unchanged</text>
+      </g>
+
+      <!-- divider -->
+      <line x1="540" y1="60" x2="540" y2="350" stroke="rgba(255,179,71,.16)" stroke-width="1"/>
+
+      <!-- ===== RIGHT STATE: thread re-routed, handoff lit, outcome moves ===== -->
+      <g>
+        <text x="585" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#ffb347">SAME AGENT · REDESIGNED THREAD</text>
+
+        <!-- the re-routed thread: bows up and around the old clog, ends in amber further along -->
+        <path d="M585,260 C660,260 700,258 740,258" stroke="#3fe0c8" stroke-width="3" fill="none"/>
+        <path d="M740,258 C800,258 820,180 880,168" stroke="url(#hThreadLive)" stroke-width="3" fill="none" filter="url(#hglow)"/>
+        <path d="M880,168 C940,158 980,150 1020,148" stroke="url(#hThreadLive)" stroke-width="3.2" fill="none" filter="url(#hglow)"/>
+
+        <!-- faint ghost of the old dead path it routed around -->
+        <path d="M740,258 C790,258 830,258 880,258" stroke="#39423f" stroke-width="2" fill="none" stroke-dasharray="2 8" opacity=".45"/>
+        <text x="800" y="288" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#3b524e">OLD CLOG · ROUTED AROUND</text>
+
+        <!-- the agent — unchanged, now running inside the better path -->
+        <circle cx="740" cy="258" r="20" fill="url(#hAgent)" filter="url(#hglow)"/>
+        <circle cx="740" cy="258" r="20" fill="none" stroke="#9bffe9" stroke-width="1" opacity=".6"/>
+        <text x="740" y="300" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#6f8a85">SAME AGENT</text>
+
+        <!-- the re-owned handoff, now lit -->
+        <g>
+          <circle cx="880" cy="168" r="13" fill="rgba(255,179,71,.16)" stroke="#ffb347" stroke-width="1.5"/>
+          <circle cx="880" cy="168" r="4" fill="#ffce85" filter="url(#hglow)"/>
+          <text x="880" y="138" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="1.5" fill="#ffb347">HANDOFF · NOW OWNED</text>
+        </g>
+
+        <!-- outcome marker — moved further along -->
+        <line x1="1020" y1="100" x2="1020" y2="196" stroke="#ffb347" stroke-width="1.4" stroke-dasharray="3 4"/>
+        <circle cx="1020" cy="148" r="6" fill="#ffb347" filter="url(#hglow)"/>
+        <text x="1020" y="218" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13" fill="#ffb347" font-style="italic">outcome: moved</text>
+
+        <!-- nutrient pulse running the live thread -->
+        <circle r="3.4" fill="#ffe0a8">
+          <animateMotion dur="4.4s" repeatCount="indefinite" path="M585,260 C660,260 700,258 740,258 C800,258 820,180 880,168 C940,158 980,150 1020,148"/>
+          <animate attributeName="opacity" values="0;1;1;0" dur="4.4s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+
+      <text x="540" y="386" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".2em" fill="#3b524e">THE WIN WAS REDESIGNING THE THREAD — NOT BRIGHTENING THE NODE.</text>
+    </svg>
+    <div class="hero-cap">The agent never changed. <b>The thread around it did</b> — and that's the only thing the outcome felt.</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ============ PROSE BLOCK 1 — THE AMPLIFIER MECHANISM ======= -->
+  <!-- ============================================================ -->
+  <section class="prose">
+    <div class="sec-label">The mechanism · what the speed actually did</div>
+    <h2>The agent didn't fail. It <em>told the truth</em>.</h2>
+
+    <p>
+      Here is the moment this pattern is for: the demo landed, individual people are visibly faster, the scrollback
+      is full of <em>"this is amazing"</em> — and then the number that was supposed to move, the funnel conversion or
+      the cycle time or the support-resolution rate, sits exactly where it was. The org feels busier and produces the
+      same. The reflex is to read the flat outcome as an AI failure and go shopping for a better model. That reflex is
+      the trap. <b>The system was the bottleneck; the agent just made the bottleneck run faster.</b>
+    </p>
+
+    <p>
+      A controlled UK government trial of a coding assistant, roughly a thousand civil servants, found exactly this:
+      individual time savings were real and measurable, and the organisation-level productivity improvement from the
+      deployment was zero. A separate survey of managers landed in the same place — the large majority reported no
+      change in their team's actual output. The gains were genuine. They simply did not <em>add up</em> to anything the
+      institution could spend. That is not a measurement error. That is the shape of the thing.
+      <span class="src">Source: UK government coding-assistant trial (N≈1,000 civil servants); managers' survey via Product Focus (N=677).</span>
+    </p>
+
+    <p class="pull">
+      A broken funnel plus a fast agent is just a funnel that fails faster. <b>The agent reveals and amplifies whatever system it enters.</b>
+    </p>
+
+    <p>
+      So flip the question. Instead of <em>"why didn't the agent move the number,"</em> ask <em>"what did the agent's
+      speed make visible?"</em> Where it stalled, where it asked twice for the same missing context, where it amplified
+      a handoff that was already broken — that is the system showing you its real shape, faster and louder than it ever
+      did at human speed. A leadership coach put the same observation a third way: AI doesn't replace leadership, it
+      exposes it. Three methodologically independent observers — a systems analyst, a survey of hundreds of product
+      orgs, and a coach — walked through three different doors and arrived at one claim. That convergence is why this is
+      a conviction, not a hunch. Below: the amplifier, drawn.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 1 — THE AMPLIFIER MECHANISM ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 470" role="img" aria-label="The amplifier mechanism in two rows. Top row: a healthy system box, the same agent added, both output and outcome rise. Bottom row: a broken system box with a clogged handoff inside it, the same agent added, output rises but the outcome stays flat and the break inside the box now glows, exposed.">
+      <defs>
+        <linearGradient id="d1-rise" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".4"/><stop offset="1" stop-color="#ffb347" stop-opacity=".9"/></linearGradient>
+        <linearGradient id="d1-flat" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5d6a68" stop-opacity=".7"/><stop offset="1" stop-color="#5d6a68" stop-opacity=".5"/></linearGradient>
+        <radialGradient id="d1-agent" cx="38%" cy="32%" r="72%"><stop offset="0" stop-color="#eafff9"/><stop offset=".45" stop-color="#3fe0c8"/><stop offset="1" stop-color="#0c2b2a"/></radialGradient>
+        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME AGENT · TWO SYSTEMS · ONE AMPLIFIES, ONE EXPOSES</text>
+
+      <!-- ===== TOP ROW: healthy system ===== -->
+      <g>
+        <text x="40" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#1d8d80">HEALTHY SYSTEM + AGENT</text>
+
+        <!-- input -->
+        <text x="44" y="132" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#6f8a85">INPUT</text>
+        <path d="M40,150 L120,150" stroke="#3fe0c8" stroke-width="2.4" fill="none" opacity=".7"/>
+        <polygon points="120,150 112,145 112,155" fill="#3fe0c8" opacity=".8"/>
+
+        <!-- system box, clean -->
+        <rect x="130" y="100" width="300" height="100" rx="12" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.4)" stroke-width="1.4"/>
+        <text x="280" y="126" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#1d8d80">SYSTEM</text>
+        <!-- clean internal flow -->
+        <g stroke="#3fe0c8" stroke-width="2" opacity=".55" fill="none">
+          <path d="M160,160 L220,160"/><path d="M250,160 L310,160"/><path d="M340,160 L400,160"/>
+        </g>
+        <circle cx="235" cy="160" r="5" fill="#1d8d80"/><circle cx="325" cy="160" r="5" fill="#1d8d80"/>
+        <!-- agent sits inside -->
+        <circle cx="190" cy="160" r="14" fill="url(#d1-agent)" filter="url(#d1-glow)"/>
+
+        <!-- output + outcome bars rise -->
+        <path d="M430,150 L500,150" stroke="#3fe0c8" stroke-width="2.4" fill="none" opacity=".7"/>
+        <polygon points="500,150 492,145 492,155" fill="#3fe0c8" opacity=".8"/>
+        <g transform="translate(520,108)">
+          <rect x="0" y="58" width="22" height="34" fill="#3fe0c8" opacity=".4"/>
+          <rect x="34" y="22" width="22" height="70" fill="url(#d1-rise)"/>
+          <text x="11" y="108" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#6f8a85">OUT</text>
+          <text x="45" y="108" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#ffb347">OUTCOME</text>
+          <path d="M12,52 L46,18" stroke="#ffb347" stroke-width="1.6" fill="none" opacity=".7"/>
+          <polygon points="46,18 40,26 49,25" fill="#ffb347" opacity=".8"/>
+        </g>
+        <text x="640" y="156" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#9bffe9">both rise — the system could carry the speed</text>
+      </g>
+
+      <line x1="40" y1="238" x2="1040" y2="238" stroke="rgba(255,179,71,.1)" stroke-width="1"/>
+
+      <!-- ===== BOTTOM ROW: broken system ===== -->
+      <g>
+        <text x="40" y="288" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#a86a1f">BROKEN SYSTEM + THE SAME AGENT</text>
+
+        <text x="44" y="346" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#6f8a85">INPUT</text>
+        <path d="M40,364 L120,364" stroke="#3fe0c8" stroke-width="2.4" fill="none" opacity=".7"/>
+        <polygon points="120,364 112,359 112,369" fill="#3fe0c8" opacity=".8"/>
+
+        <!-- system box with a clog inside, now glowing -->
+        <rect x="130" y="314" width="300" height="100" rx="12" fill="rgba(20,17,10,.6)" stroke="rgba(255,179,71,.45)" stroke-width="1.4"/>
+        <text x="280" y="340" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#a86a1f">SYSTEM · ONE STEP BROKEN</text>
+        <g stroke="#3fe0c8" stroke-width="2" opacity=".5" fill="none">
+          <path d="M160,374 L220,374"/>
+        </g>
+        <!-- the agent, fast, on the early step -->
+        <circle cx="190" cy="374" r="14" fill="url(#d1-agent)" filter="url(#d1-glow)"/>
+        <!-- the exposed clog, glowing amber -->
+        <g>
+          <circle cx="262" cy="374" r="13" fill="rgba(255,179,71,.14)" stroke="#ffb347" stroke-width="1.6" filter="url(#d1-glow)"/>
+          <line x1="255" y1="367" x2="269" y2="381" stroke="#ffb347" stroke-width="2"/>
+          <line x1="269" y1="367" x2="255" y2="381" stroke="#ffb347" stroke-width="2"/>
+          <text x="262" y="404" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".14em" fill="#ffb347">EXPOSED</text>
+        </g>
+        <!-- downstream still dead -->
+        <g stroke="#39423f" stroke-width="2" opacity=".7" fill="none" stroke-dasharray="3 6">
+          <path d="M290,374 L400,374"/>
+        </g>
+
+        <!-- output rises, outcome flat -->
+        <path d="M430,364 L500,364" stroke="#3fe0c8" stroke-width="2.4" fill="none" opacity=".7"/>
+        <polygon points="500,364 492,359 492,369" fill="#3fe0c8" opacity=".8"/>
+        <g transform="translate(520,322)">
+          <rect x="0" y="22" width="22" height="70" fill="#3fe0c8" opacity=".5"/>
+          <rect x="34" y="66" width="22" height="26" fill="url(#d1-flat)"/>
+          <text x="11" y="108" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3fe0c8">OUT</text>
+          <text x="45" y="108" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#5d6a68">OUTCOME</text>
+          <path d="M12,18 L46,66" stroke="#3fe0c8" stroke-width="1.6" fill="none" opacity=".7"/>
+          <polygon points="12,18 8,27 17,24" fill="#3fe0c8" opacity=".8"/>
+        </g>
+        <text x="640" y="370" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#ffce85">output up, outcome flat — and the break is now lit</text>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 01</span>Same agent, two systems. The healthy one carries the speed; the broken one <b>amplifies the output and exposes the clog</b>. <em>AI reveals and amplifies the system it enters.</em></div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 2 — tune the loudspeaker vs move the wall ============ -->
+  <section class="prose">
+    <div class="sec-label">The upgrade move · stop tuning the loudspeaker</div>
+    <h2>Tuning the prompt again is <em>tuning the loudspeaker</em>.</h2>
+
+    <p>
+      Once the gap is named, there are two places to put your effort, and almost everyone reaches for the wrong one.
+      You can tune the node — a cleverer prompt, a newer model, a tighter loop on the agent itself — and the output
+      will climb a little higher while the outcome stays exactly as flat as before. Or you can move up a level and
+      change the <b>system</b> the agent runs inside: re-own the handoff nobody owned, relocate the decision right
+      nobody held, open the data the agent could reach only a fraction of. The bottleneck the speed exposed is almost
+      never the step you automated.
+    </p>
+
+    <p>
+      This is the move with the evidence behind it. Stanford's review of fifty-one enterprise AI deployments put
+      <b>workflow redesign as the single biggest differentiator</b> between the deployments that captured value and the
+      ones that didn't — the high performers were roughly three times more likely to have redesigned the work around
+      the AI rather than bolting it onto the old flow. <span class="mono">Tune the node → output up, outcome flat.</span>
+      <span class="mono">Move the wall → outcome moves.</span> The arrow of effort has to travel from the loudspeaker to
+      the room. Below: where to aim it.
+      <span class="src">Source: Stanford review of 51 enterprise AI deployments.</span>
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 2 — THE UPGRADE MOVE (node vs thread) ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 400" role="img" aria-label="The upgrade move. On the left, a loop tightening on the agent node itself — better prompt, better model — the output climbs while the outcome stays flat, labelled polishing the loudspeaker. On the right, the intervention has moved up a level onto the workflow itself — a handoff re-owned, a decision right relocated — the agent is unchanged and the outcome is moving. The arrow of effort moves from the node to the thread.">
+      <defs>
+        <radialGradient id="d2-node" cx="38%" cy="32%" r="72%"><stop offset="0" stop-color="#eafff9"/><stop offset=".45" stop-color="#3fe0c8"/><stop offset="1" stop-color="#0c2b2a"/></radialGradient>
+        <linearGradient id="d2-live" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".7"/><stop offset="1" stop-color="#ffb347" stop-opacity=".95"/></linearGradient>
+        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">WHERE THE EFFORT GOES · THE NODE, OR THE THREAD IT RUNS IN</text>
+
+      <!-- ===== LEFT: polishing the loudspeaker ===== -->
+      <g>
+        <text x="60" y="76" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#5d6a68">EFFORT ON THE NODE</text>
+
+        <!-- the agent node with a tightening loop on itself -->
+        <circle cx="160" cy="190" r="26" fill="url(#d2-node)" filter="url(#d2-glow)"/>
+        <circle cx="160" cy="190" r="50" fill="none" stroke="#3fe0c8" stroke-width="1.6" stroke-dasharray="150 40" stroke-linecap="round" opacity=".6"/>
+        <circle cx="160" cy="190" r="62" fill="none" stroke="#3fe0c8" stroke-width=".8" stroke-dasharray="6 10" opacity=".35"/>
+        <text x="160" y="194" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".1em" fill="#05201f">AGENT</text>
+        <text x="160" y="270" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#6f8a85">better prompt · newer model</text>
+
+        <!-- twin bars: output up, outcome flat -->
+        <g transform="translate(280,140)">
+          <rect x="0" y="56" width="20" height="40" fill="#3fe0c8" opacity=".4"/>
+          <rect x="30" y="20" width="20" height="76" fill="#3fe0c8" opacity=".7"/>
+          <path d="M10,50 L40,16" stroke="#3fe0c8" stroke-width="1.4" fill="none" opacity=".7"/>
+          <polygon points="40,16 34,24 43,23" fill="#3fe0c8" opacity=".8"/>
+          <text x="20" y="112" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3fe0c8">OUTPUT ↑</text>
+        </g>
+        <g transform="translate(360,140)">
+          <rect x="0" y="58" width="20" height="38" fill="#5d6a68" opacity=".6"/>
+          <rect x="30" y="60" width="20" height="36" fill="#5d6a68" opacity=".55"/>
+          <line x1="10" y1="54" x2="44" y2="56" stroke="#5d6a68" stroke-width="1.4" stroke-dasharray="3 4"/>
+          <text x="20" y="112" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#5d6a68">OUTCOME —</text>
+        </g>
+
+        <text x="60" y="330" font-family="'Fraunces',serif" font-style="italic" font-size="16" fill="#5d6a68">"polishing the loudspeaker"</text>
+      </g>
+
+      <!-- centre: arrow of effort moving up a level -->
+      <g transform="translate(540,190)">
+        <path d="M-20,0 L60,0" stroke="url(#d2-live)" stroke-width="2" fill="none"/>
+        <polygon points="60,0 50,-6 50,6" fill="#ffb347"/>
+        <text x="20" y="-16" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#ffb347">MOVE UP</text>
+        <text x="20" y="-30" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#ffb347">A LEVEL</text>
+        <text x="20" y="24" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#6f8a85">node → thread</text>
+      </g>
+
+      <!-- ===== RIGHT: redesign the workflow ===== -->
+      <g>
+        <text x="650" y="76" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#ffb347">EFFORT ON THE THREAD</text>
+
+        <!-- the workflow thread re-routed; same agent node sits unchanged inside it -->
+        <path d="M650,210 C710,210 740,210 780,210" stroke="#3fe0c8" stroke-width="2.6" fill="none"/>
+        <path d="M780,210 C830,210 850,150 900,142" stroke="url(#d2-live)" stroke-width="2.6" fill="none" filter="url(#d2-glow)"/>
+        <path d="M900,142 C950,136 980,150 1010,176" stroke="url(#d2-live)" stroke-width="2.8" fill="none" filter="url(#d2-glow)"/>
+        <!-- ghost of old route -->
+        <path d="M780,210 C830,210 860,210 900,210" stroke="#39423f" stroke-width="1.6" fill="none" stroke-dasharray="2 8" opacity=".4"/>
+
+        <!-- same agent — unchanged -->
+        <circle cx="780" cy="210" r="18" fill="url(#d2-node)" filter="url(#d2-glow)"/>
+        <text x="780" y="245" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".1em" fill="#6f8a85">SAME AGENT</text>
+
+        <!-- the re-owned handoff -->
+        <circle cx="900" cy="142" r="12" fill="rgba(255,179,71,.16)" stroke="#ffb347" stroke-width="1.5"/>
+        <circle cx="900" cy="142" r="4" fill="#ffce85" filter="url(#d2-glow)"/>
+        <text x="900" y="120" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".12em" fill="#ffb347">HANDOFF RE-OWNED</text>
+
+        <!-- outcome marker moves -->
+        <circle cx="1010" cy="176" r="6" fill="#ffb347" filter="url(#d2-glow)"/>
+        <text x="1010" y="200" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#ffb347">OUTCOME ↑</text>
+
+        <text x="650" y="330" font-family="'Fraunces',serif" font-style="italic" font-size="16" fill="#ffb347">change the system, not the prompt</text>
+
+        <!-- nutrient pulse -->
+        <circle r="3.2" fill="#ffe0a8">
+          <animateMotion dur="4.2s" repeatCount="indefinite" path="M650,210 C710,210 740,210 780,210 C830,210 850,150 900,142 C950,136 980,150 1010,176"/>
+          <animate attributeName="opacity" values="0;1;1;0" dur="4.2s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 02</span>The effort arrow moves from the node to the thread. <b>Tuning the agent climbs the output; redesigning the workflow moves the outcome</b> — same agent, better system.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 3 — the compounding diagnostic + the open frontier ============ -->
+  <section class="prose">
+    <div class="sec-label">The compounding loop · the diagnostic sharpens</div>
+    <h2>Run it again and watch <em>the same gap</em>.</h2>
+
+    <p>
+      The redesign isn't a one-shot fix; it's the first turn of a loop. Ship the changed workflow, run the agent again,
+      and hold output beside outcome a second time. Either the gap narrows — you found the real bottleneck — or it
+      doesn't, in which case the next constraint just spoke. Both are wins, because either way the diagnosis got richer:
+      first you saw the obvious clog, then the deeper one the redesign uncovered. The loop closes through the work like
+      a thread closing through the soil — it loops without being a ring.
+    </p>
+
+    <p>
+      And here is where this pattern is deliberately, unfashionably honest. Everything above tells you to <em>watch the
+      outcome move</em> as your signal — and that signal has a known limit. There is no settled way to measure the
+      institutional payoff of an AI-amplified redesign. MIT's review found ninety-five percent of deployments showed no
+      measurable ROI; the playbook for how a traditional org becomes AI-native does not yet exist. So this pattern hands
+      you a discipline, not a scoreboard. Read the flag below carefully.
+      <span class="src">Source: MIT review of enterprise AI deployments.</span>
+    </p>
+  </section>
+
+  <!-- the open-frontier flag — caveat travels in prose AND on the diagram panel -->
+  <div class="frontier">
+    <div class="ftag">Open frontier · the caveat that travels</div>
+    <p>
+      <b>Measuring the institutional payoff of AI is an unsolved problem.</b> MIT found 95% of deployments show no
+      measurable ROI, and the transition playbook for becoming AI-native does not yet exist. A moved outcome is
+      <em>evidence the redesign helped</em> — not a calibrated ROI figure. This card observes the amplification effect
+      and redesigns around it; it does not, and cannot yet, quantify the total payoff. A leader who cites a clean
+      institutional ROI number here is selling a tool-shaped object.
+    </p>
+  </div>
+
+  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP (diagnosis gets richer) ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 430" role="img" aria-label="A four-beat compounding loop drawn as a thread closing through the soil rather than a ring — run the agent, hold output beside outcome, read the exposed bottleneck, redesign the workflow, and back to run the agent. Beside it, the diagnosis artefact gets visibly richer across passes: first the obvious clog, then the deeper one the redesign uncovered. The loop carries a tag reading measurement of total payoff equals open frontier; the loop still sharpens the system.">
+      <defs>
+        <linearGradient id="d3-thread" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/><stop offset="1" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#ffe0a8"/><stop offset=".55" stop-color="#ffb347"/><stop offset="1" stop-color="#a86a1f"/></radialGradient>
+        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE LOOP THAT SHARPENS THE SYSTEM · WHAT THE DIAGNOSIS LEARNS BETWEEN PASSES</text>
+
+      <!-- ===== LEFT: the loop drawn as a thread closing through soil (not a clean ring) ===== -->
+      <g transform="translate(40,52)">
+        <!-- an anastomosing thread that returns on itself without being a circle -->
+        <path d="M60,150 C60,70 160,60 220,90 C300,128 240,200 300,236 C250,300 110,290 70,236 C40,196 60,196 60,150 Z"
+              fill="none" stroke="url(#d3-thread)" stroke-width="2.2" stroke-linecap="round" opacity=".85"/>
+        <!-- breathing nutrient pulse riding the thread -->
+        <circle r="3.6" fill="#ffe0a8">
+          <animateMotion dur="9s" repeatCount="indefinite" path="M60,150 C60,70 160,60 220,90 C300,128 240,200 300,236 C250,300 110,290 70,236 C40,196 60,196 60,150 Z"/>
+          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- four beats -->
+        <g>
+          <circle cx="60" cy="150" r="20" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="60" y="155" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">1</text>
+          <text x="34" y="125" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Run the agent</text>
+        </g>
+        <g>
+          <circle cx="215" cy="78" r="20" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="215" y="83" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">2</text>
+          <text x="215" y="50" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Hold output beside outcome</text>
+        </g>
+        <g>
+          <circle cx="300" cy="236" r="20" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="300" y="241" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">3</text>
+          <text x="332" y="240" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Read the exposed bottleneck</text>
+        </g>
+        <g>
+          <circle cx="80" cy="270" r="20" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="80" y="275" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">4</text>
+          <text x="80" y="308" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Redesign the workflow</text>
+        </g>
+
+        <text x="170" y="178" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">LOOPS WITHOUT</text>
+        <text x="170" y="196" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#ffb347">being a ring</text>
+      </g>
+
+      <!-- ===== RIGHT: the diagnosis artefact getting richer across passes ===== -->
+      <g transform="translate(560,60)">
+        <!-- pass 1 — one clog named -->
+        <g>
+          <rect x="0" y="14" width="150" height="150" rx="8" fill="rgba(20,17,10,.7)" stroke="rgba(255,179,71,.22)"/>
+          <rect x="0" y="14" width="150" height="20" rx="6" fill="rgba(255,179,71,.10)"/>
+          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">DIAGNOSIS</text>
+          <text x="118" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">p1</text>
+          <g stroke="#ffb347" stroke-width="2.2"><line x1="12" y1="58" x2="120" y2="58"/></g>
+          <g stroke="#5d6a68" stroke-width="2" opacity=".4"><line x1="12" y1="80" x2="86" y2="80"/></g>
+          <text x="75" y="186" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#a86a1f">THE OBVIOUS CLOG</text>
+        </g>
+
+        <g transform="translate(160,84)"><path d="M0,0 L24,0" stroke="#ffb347" stroke-width="1.2" fill="none" opacity=".7"/><polygon points="24,0 16,-5 16,5" fill="#ffb347" opacity=".75"/></g>
+
+        <!-- pass 2 — clog fixed, deeper one found -->
+        <g transform="translate(190,0)">
+          <rect x="0" y="0" width="150" height="178" rx="8" fill="rgba(20,17,10,.85)" stroke="url(#d3-thread)" stroke-width="1.5" filter="url(#d3-glow)"/>
+          <rect x="0" y="0" width="150" height="20" rx="6" fill="rgba(255,179,71,.16)"/>
+          <text x="10" y="15" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">DIAGNOSIS</text>
+          <text x="118" y="15" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">p2</text>
+          <!-- fixed (dimmed, struck) + deeper one freshly named -->
+          <g stroke="#1d8d80" stroke-width="2" opacity=".5"><line x1="12" y1="42" x2="120" y2="42"/></g>
+          <line x1="12" y1="42" x2="120" y2="42" stroke="#1d8d80" stroke-width="1" opacity=".7"/>
+          <g stroke="#9bffe9" stroke-width="2" opacity=".75"><line x1="12" y1="66" x2="104" y2="66"/></g>
+          <g stroke="#ffb347" stroke-width="2.2"><line x1="12" y1="92" x2="132" y2="92"/><line x1="12" y1="116" x2="110" y2="116"/></g>
+          <text x="75" y="160" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#ffb347">THE DEEPER ONE, NOW VISIBLE</text>
+        </g>
+
+        <!-- legend -->
+        <g transform="translate(0,220)">
+          <rect x="0" y="0" width="14" height="3" fill="#ffb347"/>
+          <text x="22" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#a86a1f">BOTTLENECK NAMED THIS PASS</text>
+          <rect x="0" y="14" width="14" height="3" fill="#1d8d80"/>
+          <text x="22" y="18" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#1d8d80">FIXED LAST PASS</text>
+        </g>
+
+        <!-- the open-frontier tag, carried ON the diagram -->
+        <g transform="translate(0,250)">
+          <rect x="0" y="0" width="430" height="58" rx="9" fill="rgba(20,17,10,.6)" stroke="#a86a1f" stroke-width="1" stroke-dasharray="5 4"/>
+          <circle cx="18" cy="20" r="5" fill="#ffb347" filter="url(#d3-glow)"/>
+          <text x="34" y="17" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#ffb347">MEASUREMENT OF TOTAL PAYOFF = OPEN FRONTIER</text>
+          <text x="34" y="36" font-family="'Spline Sans',sans-serif" font-size="11" fill="#cfe6e0">A moved outcome is evidence, not a calibrated ROI figure.</text>
+          <text x="34" y="51" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#ffce85">The loop still sharpens the system.</text>
+        </g>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 03</span><em>The diagnosis compounds — the loop loops without being a ring.</em> Each pass names a deeper bottleneck. <b>Measuring the total payoff stays an open frontier; sharpening the system does not.</b></div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 4 — what "it worked" actually looks like ============ -->
+  <section class="prose">
+    <div class="sec-label teal">What "it worked" actually means · in practice</div>
+    <h2>The test is <em>"oh — THAT was the bottleneck,"</em> not <em>"the demo looked great."</em></h2>
+
+    <p>
+      Recognition is the eval. The redesign worked when someone who owns the work says <em class="amber">"oh — THAT
+      was the real bottleneck,"</em> not when someone who doesn't says <em>"the demo looked great."</em> The
+      sterner test: the redesign survives the agent being removed. If the workflow is better even on a bad-agent day,
+      you fixed the system; if it collapses the moment the loudspeaker is unplugged, you optimised the output and left
+      the system intact. And the negative test is the honest one — <b>if the only thing that improved is adoption,
+      usage, or per-task speed and the outcome is flat, you polished a tool-shaped object.</b> The primary product of
+      that spending is the experience of having spent it.
+    </p>
+  </section>
+
+  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
+  <div class="plates">
+    <div class="plate use">
+      <div class="beat-label"><b>Use when</b></div>
+      <p class="body">
+        You shipped the agent, <b>the per-task time dropped</b>, and the quarterly outcome number
+        <span class="grey">— conversion, cycle time, resolution rate —</span> didn't move. The org feels busier and
+        produces the same.
+      </p>
+    </div>
+    <div class="plate build">
+      <div class="beat-label"><b>Build</b></div>
+      <p class="body">
+        A <b>diagnosis written down</b> (the bottleneck named as a system property), a <b>workflow redesign</b>
+        (sequence / ownership / decision-right changed), and a before/after the next leader can inherit.
+      </p>
+    </div>
+    <div class="plate test">
+      <div class="beat-label teal"><b>Test</b></div>
+      <p class="body">
+        The owner says <em>"THAT was the bottleneck."</em><br>
+        Not a stranger saying <em class="no">"the demo looked great."</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ CORE MOVES — actionable heart ============ -->
+  <section class="moves">
+    <div class="beat-label"><b>Core moves</b></div>
+    <div class="moves-head">
+      <h2>The action, in sequence</h2>
+      <span class="lede">You stop reading output as the result; you read it as a diagnostic.</span>
+    </div>
+
+    <div class="move-rail">
+      <div class="thread"></div>
+      <div class="step">
+        <div class="bead">1</div>
+        <h3>Watch what didn't move</h3>
+        <p>Hold the speedup next to the outcome. <b>The widening gap is the signal.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">2</div>
+        <h3>Read the agent as an X-ray</h3>
+        <p>Where it stalled or asked twice — <b>that's the system's real shape.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">3</div>
+        <h3>Locate the bottleneck</h3>
+        <p>The unowned handoff, the undecidable call. <b>Not the step you automated.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">4</div>
+        <h3>Redesign the workflow</h3>
+        <p>Change ownership and sequence. <b>Move the wall, not the prompt.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">5</div>
+        <h3>Re-run, watch the gap</h3>
+        <p>It narrows, or the next constraint speaks. <b>Either way it compounds.</b></p>
+      </div>
+    </div>
+
+    <div class="compound">
+      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
+        </linearGradient></defs>
+        <path d="M14,40 C14,22 30,16 42,22 C56,29 50,46 60,52 C50,66 22,64 14,52 C8,44 14,46 14,40 Z"
+              fill="none" stroke="url(#lg)" stroke-width="2.4" stroke-linecap="round"/>
+        <polygon points="14,40 9,48 19,47" fill="#ffb347"/>
+        <circle r="3" fill="#ffe0a8">
+          <animateMotion dur="5s" repeatCount="indefinite"
+            path="M14,40 C14,22 30,16 42,22 C56,29 50,46 60,52 C50,66 22,64 14,52 C8,44 14,46 14,40 Z"/>
+        </circle>
+      </svg>
+      <div class="ctext">
+        <div class="cyc">run<span class="arr">→</span>hold output beside outcome<span class="arr">→</span>read the bottleneck<span class="arr">→</span>redesign<span class="arr">→</span>repeat</div>
+        <p>Then it's a discipline, not a panic: <b>the diagnosis gets richer every pass.</b> First the obvious clog, then the deeper one the redesign uncovered — the same read you reuse on every deployment from now on.</p>
+      </div>
+    </div>
+
+    <!-- the Monday-move / no-permission aside -->
+    <p class="aside">
+      <b>Monday move — no platform, budget, or sign-off.</b> Pick one agent already in use on your team.
+      <span class="mono">Write the per-task time it saved next to the team outcome it was meant to lift · spend 15 min naming where the agent stalled or repeated itself · that's the bottleneck.</span>
+      It's all observation of tools already running. You arrive at any later buy-in conversation with a diagnosis, not a hunch.
+    </p>
+  </section>
+
+  <!-- ============ WHY — the conviction ============ -->
+  <section class="why">
+    <div class="beat-label"><b>Why</b></div>
+
+    <div class="principle-block">
+      <div class="principle-label">The principle</div>
+      <p class="principle-line">The <em>productivity paradox</em> — individual AI gains are real, and do not aggregate to institutional value without organizational change.</p>
+    </div>
+
+    <p class="quote">"The agent's first gift isn't speed — it's an X-ray of the system you were already running."</p>
+    <p class="gloss">
+      The agent's most valuable output isn't the work — it's the diagnosis. AI does not fix a system; it reveals and
+      amplifies whatever system it enters. So the per-task speedup everyone celebrates is the <em>least</em> interesting
+      result; the interesting result is what the speed made visible about the system you were already running.
+      <span class="src">Fifteen-plus independent sources converge here; Stanford's 51 deployments put workflow redesign as the #1 differentiator — high performers ~3× more likely to redesign.</span>
+    </p>
+    <p class="gloss">
+      <b>And here is the open frontier, stated plainly: measuring the institutional payoff is an unsolved problem.</b>
+      MIT found 95% of deployments show no measurable ROI, and the transition playbook for becoming AI-native does not
+      yet exist. So this pattern deliberately does <em>not</em> hand you a metric. It hands you a discipline — read the
+      output as a diagnostic, redesign the system, watch the outcome — and is honest that the scoreboard for that work
+      is still being invented. A moved outcome is evidence the redesign helped, never a calibrated ROI figure.
+    </p>
+    <div class="corollary"><span class="sd"></span>A fast agent on a broken funnel is a funnel that fails faster.</div>
+  </section>
+
+  <!-- ============ CONNECTS TO — neighbour patterns ============ -->
+  <section class="connects">
+    <h2>Connects to</h2>
+    <div class="sub">Threads leaving this node · the pattern language</div>
+
+    <div class="web">
+      <svg viewBox="0 0 1080 300" aria-hidden="true">
+        <defs>
+          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <circle cx="150" cy="150" r="30" fill="none" stroke="#ffb347" stroke-width="1.2" opacity=".5"/>
+        <circle cx="150" cy="150" r="11" fill="#ffb347" filter="url(#wglow)"/>
+        <circle cx="150" cy="150" r="46" fill="none" stroke="#ffb347" stroke-width=".7" opacity=".25"/>
+
+        <path id="th1" d="M150,150 C360,80 540,68 760,72" stroke="url(#t1)" stroke-width="2.2" fill="none"/>
+        <path id="th2" d="M150,150 C380,150 560,150 760,150" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
+        <path id="th3" d="M150,150 C360,222 540,236 760,236" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
+
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+      </svg>
+
+      <div class="neighbours">
+        <div class="origin-chip" style="left:13.8%;top:50%">Amplify the system<small>business · Outcome → ⟲ · you are here</small></div>
+        <a class="nb"             href="design-the-filter.html" style="left:74%;top:24%"><span class="sd"></span>Design the filter <span class="recipe-no">upstream · what the agent can reach</span></a>
+        <a class="nb amber"       href="agent-builds-agent.html" style="left:74%;top:50%"><span class="sd"></span>Agent builds agent <span class="recipe-no">software-lane twin</span></a>
+        <a class="nb"             href="share-a-slice.html" style="left:74%;top:78.7%"><span class="sd"></span>Share a slice <span class="recipe-no">carry the redesign across the org</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="floor">
+    <span class="door">The agent didn't fail you — it told you the truth about the system. The redesign is yours to make.</span>
+    <span class="meta">The Big Picture · Pattern Language</span>
+  </footer>
+
+</div>
+</body>
+</html>

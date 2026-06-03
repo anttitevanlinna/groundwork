@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Route each gap to its home — Pattern · The Big Picture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-0:#05080a;
+    --soil-1:#080d10;
+    --soil-2:#0c1418;
+    --teal:#3fe0c8;
+    --teal-dim:#1d8d80;
+    --amber:#ffb347;
+    --amber-dim:#a86a1f;
+    --spore:#eafff9;
+    --ink:#cfe6e0;
+    --ink-dim:#6f8a85;
+    --ink-faint:#3b524e;
+    --hairline:rgba(63,224,200,.10);
+    --grey:#5d6a68;
+    --grey-dim:#39423f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--soil-0);
+    font-family:'Spline Sans',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  /* atmospheric soil + light-well — recedes for the long read */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
+      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
+      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+  }
+  /* grain / spore dust */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 64px;}
+
+  /* ============ BREADCRUMB ============ */
+  .crumb{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+    color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
+  }
+  .crumb a{color:var(--teal-dim);text-decoration:none;transition:color .25s}
+  .crumb a:hover{color:var(--teal)}
+  .crumb .here{color:var(--ink)}
+
+  /* ============ PATTERN HEADER (name + essence) ============ */
+  header.pat{padding:30px 0 8px;max-width:900px;}
+  .kicker{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--teal-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .kicker .spore-mark{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 14px 2px rgba(63,224,200,.6);
+    flex:none;
+  }
+  .kicker .pat-no{color:var(--ink-faint)}
+  header.pat h1{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(40px,7vw,68px);line-height:.98;
+    color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
+  }
+  header.pat h1 em{font-style:italic;color:var(--teal);font-weight:400}
+  .principle{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
+  }
+  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .essence{
+    font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:720px;
+  }
+  .essence b{color:var(--spore);font-weight:500}
+
+  /* ============ HERO PICTURE ============ */
+  .hero-frame{
+    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(13,31,32,.5), rgba(5,8,10,.6));
+    position:relative;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.04) inset;
+  }
+  .hero-frame svg{display:block;width:100%;height:auto}
+  .hero-cap{
+    position:absolute;left:18px;bottom:13px;z-index:3;
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
+    color:var(--ink-dim);text-transform:uppercase;
+  }
+  .hero-cap b{color:var(--teal)}
+
+  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
+  .prose{
+    margin-top:34px;max-width:760px;
+  }
+  .prose h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
+    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+  }
+  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .prose h2.amber em{color:var(--amber)}
+  .prose .sec-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+    margin-top:42px;
+  }
+  .prose .sec-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
+  }
+  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .prose p{
+    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
+    letter-spacing:.002em;
+  }
+  .prose p b{color:var(--spore);font-weight:500}
+  .prose p em{font-style:italic;color:var(--ink-dim)}
+  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p .mono{
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
+  }
+  .prose p .mono.amber{color:var(--amber)}
+  .prose .pull{
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+    color:var(--ink);max-width:680px;
+  }
+  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
+
+  /* ============ PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
+  .diagram{
+    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+    background:
+      radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
+      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
+    position:relative;
+    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
+  }
+  .diagram svg{display:block;width:100%;height:auto}
+  .diagram .dcap{
+    padding:12px 20px 16px;border-top:1px solid var(--hairline);
+    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
+    color:var(--ink-dim);letter-spacing:.003em;
+    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  }
+  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
+  .diagram .dcap .num{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
+  }
+
+  /* ============ RECIPE SECTION BEATS ============ */
+  .beat-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  }
+  .beat-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.6);
+  }
+  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+
+  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
+  .plates{
+    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
+  }
+  .plate{
+    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
+    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
+  }
+  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
+  .plate .body b{color:var(--spore);font-weight:500}
+  .plate .body .grey{color:var(--grey)}
+  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
+  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
+
+  /* ============ CORE MOVES ============ */
+  .moves{margin-top:46px}
+  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
+  .moves-head h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
+  .move-rail{
+    margin-top:20px;position:relative;
+    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+  }
+  .move-rail .thread{
+    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
+    background:linear-gradient(90deg,
+      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
+      rgba(63,224,200,.7) 50%, rgba(255,179,71,.65) 94%, rgba(255,179,71,0) 100%);
+  }
+  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
+  .step:first-child{padding-left:0}
+  .step .bead{
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
+    margin-bottom:13px;
+  }
+  .step:nth-child(6) .bead{
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
+  }
+  .step h3{
+    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
+  }
+  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
+  .step p b{color:var(--ink);font-weight:500}
+
+  .compound{
+    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
+    padding:18px 22px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.07), transparent 60%),
+      rgba(8,17,18,.55);
+    display:flex;align-items:center;gap:20px;
+  }
+  .compound .loop-ico{flex:none}
+  .compound .ctext{flex:1}
+  .compound .ctext .cyc{
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
+  }
+  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
+  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
+  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+
+  .aside{
+    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
+    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+  }
+  .aside b{color:var(--amber);font-weight:500}
+  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
+
+  /* ============ WHY ============ */
+  .why{
+    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
+    padding:26px 30px 28px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
+      rgba(7,14,15,.6);
+  }
+  .why .beat-label{margin-bottom:14px}
+  .why .principle-block{
+    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
+  }
+  .why .principle-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
+  }
+  .why .principle-line{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
+    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
+  }
+  .why .principle-line em{font-style:italic;color:var(--teal)}
+  .why .quote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--teal);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(63,224,200,.26);max-width:840px;
+  }
+  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
+  .why .gloss b{color:var(--spore);font-weight:500}
+  .why .gloss em{font-style:italic;color:var(--ink-dim)}
+  .why .gloss + .gloss{margin-top:12px}
+  .why .corollary{
+    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
+    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+  }
+  .why .corollary .sd{
+    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+  }
+
+  /* ============ TEST-IN-PRACTICE inline panel ============ */
+  .practice{
+    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
+    padding:22px 26px 24px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
+      rgba(8,15,17,.5);
+  }
+  .practice .beat-label{margin-bottom:12px}
+  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
+  .practice p b{color:var(--spore);font-weight:500}
+  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
+  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ CONNECTS TO ============ */
+  .connects{margin-top:52px}
+  .connects h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .connects .sub{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:5px;
+  }
+  .web{position:relative;margin-top:8px}
+  .web svg{display:block;width:100%;height:auto}
+  .neighbours{position:absolute;inset:0;pointer-events:none}
+  .nb{
+    position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
+    display:flex;align-items:center;gap:9px;
+    padding:8px 14px 9px;border-radius:13px;
+    background:rgba(8,15,17,.82);backdrop-filter:blur(4px);
+    border:1px solid var(--hairline);
+    color:var(--ink);font-size:13px;letter-spacing:.005em;white-space:nowrap;
+    transition:border-color .3s,color .3s,background .3s,transform .3s;
+    cursor:pointer;text-decoration:none;
+  }
+  .nb .recipe-no{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--ink-faint);
+  }
+  .nb .sd{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 12px 2px rgba(63,224,200,.55);
+  }
+  .nb.amber .sd{background:var(--amber);box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 12px 2px rgba(255,179,71,.5)}
+  .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
+  .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
+  .nb:hover .sd{animation:throb 1s ease-in-out infinite}
+  .nb.soon{opacity:.62}
+  .nb.soon::after{
+    content:"soon";
+    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);
+    border:1px solid var(--ink-faint);border-radius:20px;
+    padding:2px 7px 3px;margin-left:4px;
+  }
+  .nb.soon:hover{opacity:1}
+  @keyframes throb{50%{transform:scale(1.5)}}
+  .origin-chip{
+    position:absolute;transform:translate(-50%,-50%);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 24px rgba(63,224,200,.4);white-space:nowrap;text-align:center;
+  }
+  .origin-chip small{
+    display:block;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:8.5px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--teal-dim);margin-top:3px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer.floor{
+    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  footer.floor .door{
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
+    text-shadow:0 0 22px rgba(255,179,71,.3);
+  }
+  footer.floor .meta{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+
+  /* breathing glow on the diagram spore-tips */
+  @keyframes breathe{
+    0%,100%{opacity:.55}
+    50%{opacity:1}
+  }
+  .breathe{animation:breathe 4.2s ease-in-out infinite}
+
+  @media (max-width:860px){
+    .plates{grid-template-columns:1fr 1fr}
+    .plate.use{grid-column:1 / -1}
+  }
+  @media (max-width:780px){
+    .plates{grid-template-columns:1fr}
+    .plate.use{grid-column:1}
+    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
+    .move-rail .thread{display:none}
+    .step{padding:0}
+    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .neighbours .nb{font-size:11px;padding:6px 10px}
+    .prose p{font-size:14.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ BREADCRUMB ============ -->
+  <nav class="crumb">
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Route each gap to its home</span>
+  </nav>
+
+  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <header class="pat">
+    <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· software lane · Absorption phase · the dispatcher after the loop closes</span></div>
+    <h1>Route each gap to its <em>home</em></h1>
+    <p class="principle">The principle: <b>the loop closes when the lesson ships</b> — but only to the home where it'll fire.</p>
+    <p class="essence">
+      Take the gaps a two-run compare handed you and send each one to the right home —
+      <b>memory, a sharper verifier, or a new skill</b> — instead of pouring all of them
+      into a skill because skills feel like the answer. The home you pick decides whether
+      the lesson ever fires when you need it. It's a private fifteen-minute pass, but it's
+      also <b>the dispatcher a company-scale context layer either institutionalises or drowns under</b>:
+      prevention in memory, detection in CI, reuse in skills — or one undifferentiated pile.
+    </p>
+  </header>
+
+  <!-- ============ HERO PICTURE: skill-funnel trap (left) vs routed-to-three-homes (right) ============ -->
+  <div class="hero-frame">
+    <svg viewBox="0 0 1080 432" role="img" aria-label="On the left, four loose diagnosed gaps all sucked into a single skill funnel — the trap. On the right, the same four gaps sorted onto three diverging threads to three distinct homes: memory, a sharper verifier, and a new skill, with one memory-bound rule struck through to show subtraction is routing too.">
+      <defs>
+        <radialGradient id="hwell" cx="74%" cy="46%" r="64%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".18"/>
+          <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".07"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="trapGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#5d6a68" stop-opacity=".7"/>
+          <stop offset="100%" stop-color="#39423f" stop-opacity=".25"/>
+        </linearGradient>
+        <linearGradient id="memGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".35"/><stop offset="100%" stop-color="#9bffe9" stop-opacity=".9"/></linearGradient>
+        <linearGradient id="verGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".35"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".9"/></linearGradient>
+        <linearGradient id="skiGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a86a1f" stop-opacity=".35"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".95"/></linearGradient>
+        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <rect x="0" y="0" width="1080" height="432" fill="url(#hwell)"/>
+
+      <!-- ===== LEFT: the trap — four loose gaps poured into one skill funnel ===== -->
+      <g>
+        <text x="40" y="38" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#5d6a68">THE LAZY MOVE · EVERYTHING → ONE SKILL</text>
+        <!-- four loose, undifferentiated gaps -->
+        <g font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">
+          <g><rect x="40" y="64" width="170" height="30" rx="9" fill="rgba(93,106,104,.12)" stroke="#5d6a68" stroke-width="1"/><text x="54" y="84">gap · unsigned webhook</text></g>
+          <g><rect x="40" y="104" width="170" height="30" rx="9" fill="rgba(93,106,104,.12)" stroke="#5d6a68" stroke-width="1"/><text x="54" y="124">gap · contract broke</text></g>
+          <g><rect x="40" y="144" width="170" height="30" rx="9" fill="rgba(93,106,104,.12)" stroke="#5d6a68" stroke-width="1"/><text x="54" y="164">gap · re-explained scaffold</text></g>
+          <g><rect x="40" y="184" width="170" height="30" rx="9" fill="rgba(93,106,104,.12)" stroke="#5d6a68" stroke-width="1"/><text x="54" y="204">gap · stale Mongo rule</text></g>
+        </g>
+        <!-- the tempting funnel sucking all of them to one file -->
+        <g stroke="url(#trapGrad)" stroke-width="2" fill="none">
+          <path d="M210,79 C280,120 300,190 330,224"/>
+          <path d="M210,119 C280,150 305,200 330,228"/>
+          <path d="M210,159 C280,180 305,210 330,232"/>
+          <path d="M210,199 C285,210 310,222 330,236"/>
+        </g>
+        <polygon points="330,205 386,205 360,262 356,262" fill="rgba(93,106,104,.16)" stroke="#5d6a68" stroke-width="1.2"/>
+        <text x="358" y="232" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#5d6a68">→ new</text>
+        <text x="358" y="246" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#5d6a68">skill</text>
+        <text x="358" y="296" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#5d6a68">one pile · fires nothing</text>
+        <text x="40" y="372" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#5d6a68" font-style="italic">a rule isn't a skill · a missing check isn't a rule</text>
+      </g>
+
+      <!-- the divider / decision -->
+      <g>
+        <line x1="470" y1="64" x2="470" y2="392" stroke="rgba(63,224,200,.16)" stroke-width="1" stroke-dasharray="3 7"/>
+        <circle cx="470" cy="138" r="13" fill="rgba(8,17,18,.85)" stroke="#3fe0c8" stroke-width="1.2" filter="url(#hglow)"/>
+        <text x="470" y="142" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#3fe0c8">?</text>
+        <text x="470" y="170" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#1d8d80">ASK EACH GAP</text>
+      </g>
+
+      <!-- ===== RIGHT: the real move — sorted onto three diverging threads to three homes ===== -->
+      <g>
+        <text x="540" y="38" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#3fe0c8">THE REAL MOVE · EACH GAP → WHERE IT FIRES</text>
+
+        <!-- the three diverging threads from the decision node -->
+        <path d="M484,138 C600,110 700,96 900,92"  stroke="url(#memGrad)" stroke-width="2.4" fill="none" filter="url(#hglow)"/>
+        <path d="M484,138 C620,170 720,196 900,200" stroke="url(#verGrad)" stroke-width="2.4" fill="none" filter="url(#hglow)"/>
+        <path d="M484,138 C600,230 700,300 900,316" stroke="url(#skiGrad)" stroke-width="2.4" fill="none" filter="url(#hglow)"/>
+
+        <!-- HOME 1 — memory -->
+        <g>
+          <rect x="900" y="62" width="160" height="62" rx="11" fill="rgba(8,17,18,.78)" stroke="url(#memGrad)" stroke-width="1.4"/>
+          <text x="916" y="84" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#9bffe9">CLAUDE.local.md</text>
+          <text x="916" y="102" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfe6e0">memory</text>
+          <text x="916" y="117" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".1em" fill="#1d8d80">PREVENTS UPSTREAM</text>
+          <circle cx="1048" cy="76" r="3.6" fill="#aeffee" class="breathe"/>
+        </g>
+        <!-- HOME 2 — sharper verifier -->
+        <g>
+          <rect x="900" y="170" width="160" height="62" rx="11" fill="rgba(8,17,18,.78)" stroke="url(#verGrad)" stroke-width="1.4"/>
+          <text x="916" y="192" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#3fe0c8">verifier.sh</text>
+          <text x="916" y="210" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfe6e0">sharper verifier</text>
+          <text x="916" y="225" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".1em" fill="#1d8d80">CATCHES MID-RUN</text>
+          <circle cx="1048" cy="184" r="3.6" fill="#5cffe6" class="breathe"/>
+        </g>
+        <!-- HOME 3 — new skill -->
+        <g>
+          <rect x="900" y="286" width="160" height="62" rx="11" fill="rgba(8,17,18,.78)" stroke="url(#skiGrad)" stroke-width="1.4"/>
+          <text x="916" y="308" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#ffb347">~/.claude/skills/</text>
+          <text x="916" y="326" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#fff4e2">new skill</text>
+          <text x="916" y="341" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".1em" fill="#a86a1f">REUSES NEXT RUN</text>
+          <circle cx="1048" cy="300" r="3.6" fill="#ffce85" class="breathe"/>
+        </g>
+
+        <!-- the struck-through rule — subtraction is routing too -->
+        <g>
+          <rect x="556" y="362" width="290" height="30" rx="9" fill="rgba(168,106,31,.07)" stroke="rgba(168,106,31,.5)" stroke-width="1" stroke-dasharray="4 5"/>
+          <text x="572" y="382" font-family="'Spline Sans Mono',monospace" font-size="11.5" fill="#a86a1f" text-decoration="line-through">- stale rule the diagnosis killed</text>
+          <text x="556" y="416" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12.5" fill="#a86a1f">routing includes subtraction · cut, don't only add</text>
+        </g>
+
+        <!-- nutrient pulse running the memory thread -->
+        <circle r="3.2" fill="#aeffee">
+          <animateMotion dur="4.6s" repeatCount="indefinite" path="M484,138 C600,110 700,96 900,92"/>
+          <animate attributeName="opacity" values="0;1;1;0" dur="4.6s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+    </svg>
+    <div class="hero-cap">The funnel is the trap. <b>Three gaps want three homes</b> — and one of them is a rule you delete.</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
+  <!-- ============================================================ -->
+  <section class="prose">
+    <div class="sec-label">The mechanism · how the lesson finds its home</div>
+    <h2>A rule, a check, and a skill are <em>three different times</em>.</h2>
+
+    <p>
+      You ran the same task twice — once un-packaged, once packaged — and the contrast handed you a fistful of things
+      the run didn't anticipate: a rule the agent never had, a check that would have fired mid-run if it existed,
+      a move you keep re-explaining every session. The trap the source curriculum names outright is what happens next.
+      You pour all of them into a new skill, because <b>a skill feels like the satisfying artefact to ship</b>. But a rule
+      isn't a skill, and a missing check isn't a rule. The three homes the source sorts gaps into — memory, a sharper
+      verifier, a new skill — are not a tidiness exercise. They are <b>three different times a lesson can act</b>: a rule acts
+      <em>before</em> the run, a verifier acts <em>during</em> it, a skill acts on the <em>next</em> run of this shape.
+    </p>
+
+    <p>
+      So the routing question is really a timing question. Ask each gap one thing and the answer falls out.
+      <em class="teal">Would a rule have prevented this before the run started?</em> — then its home is memory; the agent should
+      have had the habit from cold start. <em class="teal">Would a check firing while the run was still going have caught it?</em>
+      — then it wants a sharper verifier, because rules prevent, they don't catch. <em class="teal">Will I re-perform this exact
+      move on the next task of this shape?</em> — then, and only then, it earns a skill. Route a lesson to the wrong time and
+      it never fires when you need it. The diagram below feeds one gap toward all three homes and lights up exactly one.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 1 — ONE GAP, THREE CANDIDATE HOMES, ONE FIRES ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 432" role="img" aria-label="A single diagnosed gap at the centre fed toward all three candidate homes in parallel. Memory asks whether a rule would have prevented it before the run, the verifier asks whether a check would have caught it during the run, and the skill asks whether the move will recur next run. Exactly one home lights up; the other two read 'files it where it won't fire.'">
+      <defs>
+        <radialGradient id="d1-core" cx="40%" cy="35%" r="70%"><stop offset="0%" stop-color="#eafff9"/><stop offset="45%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#0c2b2a"/></radialGradient>
+        <linearGradient id="d1-live" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".4"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".95"/></linearGradient>
+        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME GAP · THREE HOMES · THE QUESTION YOU ASK DECIDES WHERE THE LESSON ACTS</text>
+
+      <!-- the single gap at the centre-left -->
+      <circle cx="150" cy="216" r="26" fill="url(#d1-core)" filter="url(#d1-glow)"/>
+      <circle cx="150" cy="216" r="26" fill="none" stroke="#9bffe9" stroke-width="1" opacity=".6"/>
+      <text x="150" y="262" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#6f8a85">ONE GAP</text>
+      <text x="150" y="278" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85" font-style="italic">"contract broke"</text>
+
+      <!-- three parallel branches to the three candidate homes -->
+      <!-- branch to MEMORY (dim — doesn't fire here) -->
+      <path d="M176,200 C320,140 440,110 560,104" stroke="rgba(93,106,104,.4)" stroke-width="1.8" fill="none" stroke-dasharray="5 6"/>
+      <!-- branch to VERIFIER (lights up) -->
+      <path d="M176,216 C320,216 440,216 560,216" stroke="url(#d1-live)" stroke-width="2.6" fill="none" filter="url(#d1-glow)"/>
+      <!-- branch to SKILL (dim) -->
+      <path d="M176,232 C320,292 440,322 560,328" stroke="rgba(93,106,104,.4)" stroke-width="1.8" fill="none" stroke-dasharray="5 6"/>
+
+      <!-- HOME A — memory (dimmed) -->
+      <g opacity=".5">
+        <rect x="560" y="74" width="440" height="62" rx="11" fill="rgba(8,17,18,.55)" stroke="#39423f" stroke-width="1"/>
+        <text x="580" y="100" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em" fill="#5d6a68">MEMORY · CLAUDE.local.md</text>
+        <text x="580" y="120" font-family="'Spline Sans',sans-serif" font-size="13" fill="#6f8a85" font-style="italic">"Would a rule have prevented this before the run?"</text>
+        <text x="980" y="100" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#5d6a68">NO →</text>
+        <text x="980" y="120" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="11" fill="#5d6a68">files it where it won't fire</text>
+      </g>
+
+      <!-- HOME B — sharper verifier (LIGHTS UP) -->
+      <g>
+        <rect x="560" y="184" width="440" height="64" rx="11" fill="rgba(63,224,200,.08)" stroke="url(#d1-live)" stroke-width="1.8" filter="url(#d1-glow)"/>
+        <text x="580" y="210" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em" fill="#3fe0c8">SHARPER VERIFIER · verifier.sh</text>
+        <text x="580" y="230" font-family="'Spline Sans',sans-serif" font-size="13" fill="#eafff9" font-style="italic">"Would a check have caught this during the run?"</text>
+        <text x="980" y="220" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".12em" fill="#3fe0c8">YES · IT FIRES HERE</text>
+        <circle cx="978" cy="200" r="4" fill="#aeffee" class="breathe"/>
+      </g>
+
+      <!-- HOME C — new skill (dimmed) -->
+      <g opacity=".5">
+        <rect x="560" y="298" width="440" height="62" rx="11" fill="rgba(8,17,18,.55)" stroke="#39423f" stroke-width="1"/>
+        <text x="580" y="324" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em" fill="#5d6a68">NEW SKILL · ~/.claude/skills/</text>
+        <text x="580" y="344" font-family="'Spline Sans',sans-serif" font-size="13" fill="#6f8a85" font-style="italic">"Will I re-perform this move next run?"</text>
+        <text x="980" y="324" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#5d6a68">NO →</text>
+        <text x="980" y="344" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="11" fill="#5d6a68">files it where it won't fire</text>
+      </g>
+
+      <text x="40" y="406" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">PREVENT (BEFORE) · DETECT (DURING) · REUSE (NEXT) — THREE TIMES A LESSON CAN ACT. THE SOURCE'S THREE-WAY SORT, A CONVERGENT PRACTITIONER PATTERN — KEEP OPEN TO A FOURTH HOME.</text>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 01</span>Same gap, three candidate homes. <b>The question you ask decides where the lesson acts</b> — exactly one fires; the other two file it where it won't.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 2 — the collapse, and the upgrade out of it ============ -->
+  <section class="prose">
+    <p>
+      The framing is load-bearing, so be precise about it. Memory holds what prevents, a verifier holds what detects, a skill
+      holds what you'll reuse — the source curriculum's three-way sort, drawn from a convergent practitioner pattern read off
+      the encode end of Armin Ronacher's reference / <span class="mono">plan.md</span> / verifier trio, with the
+      prevent / detect / reuse timing as this card's gloss on why it works. <b>One honest caveat:</b> it's the source's
+      sort, not an official Claude Code taxonomy or a measured law — useful, well-worn, and open to a fourth home.
+      What is observed: lessons filed in the wrong place stop firing.
+    </p>
+
+    <p class="pull">
+      A rule that prevents a mistake upstream does <b>more, cheaper work</b> than a skill that re-catches it every run.
+    </p>
+
+    <div class="sec-label">The upgrade move · from skill-funnel collapse to routed map</div>
+    <h2>Stop pouring. <em>Sort, then file.</em></h2>
+
+    <p>
+      The comfortable collapse is to make everything a skill — it feels productive, and it fires nothing, because most of
+      what you learned wasn't a reusable move. The upgrade is two beats. First, <b>hold the gaps as a list before routing any
+      of them</b> — three, maybe four, dominant first; don't reach for the fix on the first gap. The source caps this
+      deliberately: pick the three that cost the most. Over-routing is its own failure; a long catalogue produces noise, not a
+      loop. Then tag each gap with the prevent / catch / reuse question and <b>actually file it in its home</b> — including the
+      one move that struck through, because deleting a stale rule is routing too. The diagram below walks the diagonal.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 2 — SKILL-FUNNEL COLLAPSE → ROUTED MAP ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 396" role="img" aria-label="A three-step diagonal. Step one: every gap funnelled into one skill — feels productive, fires nothing. Step two: each gap tagged with its home by the prevent-catch-reuse question — now legible. Step three: each gap filed in its home with one rule struck through — each lesson now acts at its right time.">
+      <defs>
+        <linearGradient id="d2-collapse" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5d6a68" stop-opacity=".5"/><stop offset="1" stop-color="#39423f" stop-opacity=".2"/></linearGradient>
+        <linearGradient id="d2-routed" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".55"/><stop offset="1" stop-color="#ffb347" stop-opacity=".4"/></linearGradient>
+        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">ROUTING IS WHAT TURNS A GAP LIST INTO A LOOP</text>
+
+      <!-- STEP 1 — collapse -->
+      <g transform="translate(40,64)">
+        <text x="0" y="0" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#5d6a68">① EVERY GAP → ONE SKILL</text>
+        <g stroke="url(#d2-collapse)" stroke-width="1.8" fill="none">
+          <path d="M14,40 C90,60 110,120 126,150"/>
+          <path d="M14,72 C90,90 112,130 126,154"/>
+          <path d="M14,104 C92,118 112,140 126,158"/>
+          <path d="M14,136 C95,148 114,150 126,162"/>
+        </g>
+        <g fill="#5d6a68">
+          <circle cx="12" cy="40" r="4"/><circle cx="12" cy="72" r="4"/><circle cx="12" cy="104" r="4"/><circle cx="12" cy="136" r="4"/>
+        </g>
+        <polygon points="126,138 178,138 152,196 150,196" fill="rgba(93,106,104,.14)" stroke="#5d6a68" stroke-width="1.1"/>
+        <text x="152" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#5d6a68">skill</text>
+        <text x="90" y="232" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12" fill="#5d6a68">feels productive ·</text>
+        <text x="90" y="250" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12" fill="#5d6a68">fires nothing</text>
+      </g>
+
+      <!-- arrow 1 -->
+      <g transform="translate(266,196)">
+        <path d="M0,0 L44,0" stroke="#3fe0c8" stroke-width="1.4" fill="none" opacity=".7"/>
+        <polygon points="44,0 35,-6 35,6" fill="#3fe0c8" opacity=".8"/>
+        <text x="22" y="-12" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#3fe0c8">TAG</text>
+      </g>
+
+      <!-- STEP 2 — tagged / legible -->
+      <g transform="translate(360,64)">
+        <text x="0" y="0" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#9bffe9">② TAG EACH WITH ITS HOME</text>
+        <g font-family="'Spline Sans Mono',monospace" font-size="10.5">
+          <g><rect x="0" y="24" width="200" height="28" rx="8" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.3)"/><text x="12" y="42" fill="#cfe6e0">webhook</text><text x="190" y="42" text-anchor="end" fill="#9bffe9">memory</text></g>
+          <g><rect x="0" y="60" width="200" height="28" rx="8" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.3)"/><text x="12" y="78" fill="#cfe6e0">contract</text><text x="190" y="78" text-anchor="end" fill="#3fe0c8">verifier</text></g>
+          <g><rect x="0" y="96" width="200" height="28" rx="8" fill="rgba(255,179,71,.06)" stroke="rgba(255,179,71,.3)"/><text x="12" y="114" fill="#cfe6e0">scaffold move</text><text x="190" y="114" text-anchor="end" fill="#ffb347">skill</text></g>
+          <g><rect x="0" y="132" width="200" height="28" rx="8" fill="rgba(168,106,31,.06)" stroke="rgba(168,106,31,.3)" stroke-dasharray="4 4"/><text x="12" y="150" fill="#a86a1f">Mongo rule</text><text x="190" y="150" text-anchor="end" fill="#a86a1f">cut</text></g>
+        </g>
+        <text x="100" y="200" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12" fill="#9bffe9">prevent · catch · reuse · cut</text>
+        <text x="100" y="218" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12" fill="#6f8a85">now legible</text>
+      </g>
+
+      <!-- arrow 2 -->
+      <g transform="translate(606,196)">
+        <path d="M0,0 L44,0" stroke="#ffb347" stroke-width="1.4" fill="none" opacity=".7"/>
+        <polygon points="44,0 35,-6 35,6" fill="#ffb347" opacity=".8"/>
+        <text x="22" y="-12" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#ffb347">FILE</text>
+      </g>
+
+      <!-- STEP 3 — filed, each at its right time -->
+      <g transform="translate(700,64)">
+        <text x="0" y="0" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#ffb347">③ FILE EACH IN ITS HOME</text>
+        <g filter="url(#d2-glow)">
+          <rect x="0" y="24" width="320" height="28" rx="8" fill="rgba(8,17,18,.78)" stroke="url(#d2-routed)" stroke-width="1.3"/>
+        </g>
+        <text x="12" y="42" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#9bffe9">CLAUDE.local.md</text>
+        <text x="310" y="42" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#1d8d80">before run</text>
+
+        <rect x="0" y="60" width="320" height="28" rx="8" fill="rgba(8,17,18,.78)" stroke="rgba(63,224,200,.4)" stroke-width="1.3"/>
+        <text x="12" y="78" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#3fe0c8">verifier.sh</text>
+        <text x="310" y="78" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#1d8d80">during run</text>
+
+        <rect x="0" y="96" width="320" height="28" rx="8" fill="rgba(8,17,18,.78)" stroke="rgba(255,179,71,.4)" stroke-width="1.3"/>
+        <text x="12" y="114" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#ffb347">~/.claude/skills/</text>
+        <text x="310" y="114" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#a86a1f">next run</text>
+
+        <!-- the struck-through cut -->
+        <rect x="0" y="132" width="320" height="28" rx="8" fill="rgba(168,106,31,.05)" stroke="rgba(168,106,31,.45)" stroke-width="1" stroke-dasharray="4 5"/>
+        <text x="12" y="150" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#a86a1f" text-decoration="line-through">- stale Mongo rule</text>
+        <text x="310" y="150" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#a86a1f">subtraction</text>
+
+        <text x="160" y="200" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12" fill="#3fe0c8">each lesson now acts at its right time</text>
+      </g>
+
+      <text x="40" y="384" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">SUBTRACTION IS ROUTING TOO · A RULES FILE THAT ONLY GROWS HAS STOPPED BEING READ HONESTLY</text>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 02</span>The comfortable collapse fires nothing. <b>Routing is what turns a gap list into a loop</b> — file each gap where it acts, the cut included.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 3 — the compounding loop intro ============ -->
+  <section class="prose">
+    <p>
+      Why does subtraction count as routing? Because an instrument calibrates by removing as much as by adding. The two-run
+      contrast often shows a rule in <span class="mono">./CLAUDE.local.md</span> that didn't fire, didn't help, or no longer
+      matches how you work — <em>we use Mongo</em> when you switched to Postgres months ago. <b>A gap can be negative</b>: the
+      absence the loop wants is a rule removed, not added. Delete it in place, with the deletion visible in git history. The
+      source calls this compound-by-subtraction, and names the opposite as a failure mode — addition-only compounding, where
+      a student only ever adds rules and never cuts one. A rules file that only grows is a file that's stopped being read honestly.
+    </p>
+
+    <div class="sec-label">The compounding loop · leaner and fuller each pass</div>
+    <h2>Each lap the file is <em>both</em> fuller and leaner.</h2>
+
+    <p>
+      The picture below closes the thread. Two runs surface gaps; you route each to its home; you cut the stale rule the
+      diagnosis killed; you ship the lesson; the next run inherits the sharpened memory, the sharper verifier, and the new
+      skill — and surfaces new, subtler gaps to route again. Notice the rules file across passes: hash marks added, some
+      struck out, and the gaps getting quieter each lap. This is the named principle doing its work — <b>the loop closes when
+      the lesson ships, to the home where it fires</b>. Ship it to the wrong time and the lap doesn't close; the same gap
+      surfaces again next run, wearing a different hat.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP (diagnose → route → ship → re-run) ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="A closed loop — two runs surface gaps, route each to its home, cut the stale rule, ship the lesson, the next run inherits memory plus verifier plus skill and surfaces new subtler gaps to route again — with the rules file across three passes shown both fuller and leaner, and the gaps getting quieter.">
+      <defs>
+        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/><stop offset="1" stop-color="#ffb347" stop-opacity=".6"/></linearGradient>
+        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#9bffe9"/><stop offset=".55" stop-color="#3fe0c8"/><stop offset="1" stop-color="#1d8d80"/></radialGradient>
+        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE LOOP CLOSES WHEN THE LESSON SHIPS · TO THE HOME WHERE IT FIRES</text>
+
+      <!-- ===== LEFT HALF: the loop ===== -->
+      <g transform="translate(40,60)">
+        <circle cx="210" cy="170" r="132" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="540 60" stroke-linecap="round" transform="rotate(-90 210 170)"/>
+        <circle r="3.6" fill="#aeffee">
+          <animateMotion dur="9s" repeatCount="indefinite" path="M210,38 a132,132 0 1,1 -0.1,0"/>
+          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
+        </circle>
+
+        <g>
+          <circle cx="210" cy="38" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="210" y="43" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">1</text>
+          <text x="210" y="16" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Two runs surface gaps</text>
+        </g>
+        <g>
+          <circle cx="342" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="342" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">2</text>
+          <text x="374" y="166" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Route to its home</text>
+          <text x="374" y="182" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#1d8d80">memory / verifier / skill</text>
+        </g>
+        <g>
+          <circle cx="210" cy="302" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="210" y="307" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">3</text>
+          <text x="210" y="340" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Cut the stale rule · ship</text>
+        </g>
+        <g>
+          <circle cx="78" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="78" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">4</text>
+          <text x="46" y="162" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Next run inherits</text>
+          <text x="46" y="178" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#1d8d80">subtler gaps surface</text>
+        </g>
+
+        <text x="210" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EVERY LAP</text>
+        <text x="210" y="184" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">quieter gaps</text>
+      </g>
+
+      <!-- ===== RIGHT HALF: the rules file fuller AND leaner across passes ===== -->
+      <g transform="translate(548,68)">
+        <!-- pass 1 -->
+        <g>
+          <rect x="0" y="14" width="150" height="200" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.22)"/>
+          <rect x="0" y="14" width="150" height="20" rx="6" fill="rgba(63,224,200,.10)"/>
+          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">CLAUDE.local.md</text>
+          <text x="118" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v1</text>
+          <g stroke="#6f8a85" stroke-width="2" opacity=".55">
+            <line x1="12" y1="58" x2="92" y2="58"/>
+            <line x1="12" y1="78" x2="130" y2="78"/>
+            <line x1="12" y1="98" x2="72" y2="98"/>
+          </g>
+          <text x="75" y="240" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#5d6a68">PASS 1</text>
+        </g>
+
+        <g transform="translate(158,114)">
+          <path d="M0,0 L22,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
+          <polygon points="22,0 14,-5 14,5" fill="#3fe0c8" opacity=".75"/>
+        </g>
+
+        <!-- pass 2 — added AND one struck -->
+        <g transform="translate(184,0)">
+          <rect x="0" y="14" width="150" height="220" rx="8" fill="rgba(8,17,18,.78)" stroke="rgba(63,224,200,.35)"/>
+          <rect x="0" y="14" width="150" height="20" rx="6" fill="rgba(63,224,200,.14)"/>
+          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">CLAUDE.local.md</text>
+          <text x="118" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v2</text>
+          <g stroke="#9bffe9" stroke-width="2" opacity=".75">
+            <line x1="12" y1="58" x2="120" y2="58"/>
+            <line x1="12" y1="78" x2="100" y2="78"/>
+            <line x1="12" y1="118" x2="128" y2="118"/>
+            <line x1="12" y1="138" x2="106" y2="138"/>
+          </g>
+          <!-- struck-out rule (the cut) -->
+          <g stroke="#a86a1f" stroke-width="2" opacity=".7">
+            <line x1="12" y1="98" x2="112" y2="98"/>
+            <line x1="10" y1="98" x2="114" y2="98" stroke-width="1"/>
+          </g>
+          <!-- added in amber -->
+          <g stroke="#ffb347" stroke-width="2" opacity=".8">
+            <line x1="12" y1="178" x2="118" y2="178"/>
+          </g>
+          <text x="75" y="252" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#9bffe9">PASS 2 · ± BOTH</text>
+        </g>
+
+        <g transform="translate(342,124)">
+          <path d="M0,0 L22,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
+          <polygon points="22,0 14,-5 14,5" fill="#3fe0c8" opacity=".75"/>
+        </g>
+
+        <!-- pass 3 — fuller and leaner -->
+        <g transform="translate(368,0)">
+          <rect x="0" y="0" width="150" height="260" rx="8" fill="rgba(8,17,18,.85)" stroke="url(#d3-ring)" stroke-width="1.5" filter="url(#d3-glow)"/>
+          <rect x="0" y="0" width="150" height="20" rx="6" fill="rgba(255,179,71,.16)"/>
+          <text x="10" y="15" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">CLAUDE.local.md</text>
+          <text x="118" y="15" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v3</text>
+          <g stroke="#ffb347" stroke-width="2.2">
+            <line x1="12" y1="40" x2="130" y2="40"/>
+            <line x1="12" y1="60" x2="112" y2="60"/>
+          </g>
+          <g stroke="#9bffe9" stroke-width="2" opacity=".8">
+            <line x1="12" y1="84" x2="138" y2="84"/>
+            <line x1="12" y1="104" x2="112" y2="104"/>
+            <line x1="12" y1="124" x2="130" y2="124"/>
+            <line x1="12" y1="144" x2="100" y2="144"/>
+            <line x1="12" y1="164" x2="120" y2="164"/>
+          </g>
+          <!-- another cut -->
+          <g stroke="#a86a1f" stroke-width="2" opacity=".55">
+            <line x1="12" y1="188" x2="96" y2="188"/>
+            <line x1="10" y1="188" x2="98" y2="188" stroke-width="1"/>
+          </g>
+          <text x="75" y="280" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#ffb347">PASS 3 · FULLER + LEANER</text>
+        </g>
+
+        <!-- legend -->
+        <g transform="translate(0,300)">
+          <rect x="0" y="0" width="14" height="3" fill="#ffb347"/>
+          <text x="22" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">RULES THAT EARNED THEIR KEEP</text>
+          <rect x="0" y="14" width="14" height="3" fill="#9bffe9"/>
+          <text x="22" y="18" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">SCAFFOLDING · STILL USEFUL</text>
+          <g stroke="#a86a1f" stroke-width="2" opacity=".7"><line x1="0" y1="29" x2="14" y2="29"/><line x1="-1" y1="29" x2="15" y2="29" stroke-width="1"/></g>
+          <text x="22" y="32" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">CUT BY THE DIAGNOSIS · SUBTRACTION</text>
+        </g>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 03</span><em>Each lap the file is both fuller and leaner.</em> The loop closes only when the lesson ships <b>to the home where it fires</b>; the gaps get quieter every pass.</div>
+  </div>
+
+  <!-- ============ TEST-IN-PRACTICE inline panel ============ -->
+  <div class="practice">
+    <div class="beat-label amber"><b>Test · how you know the routing worked</b></div>
+    <p>
+      Each gap has <b>exactly one named home</b>, and you can say in one sentence why that home and not the other two —
+      <em>"this is memory because a rule would've prevented it, not a check that would've caught it."</em> If a gap resists
+      the question, it's doing two jobs; split it.
+    </p>
+    <p>
+      At least one gap routed to memory as a <b>deletion</b> — git history shows a rule cut, not only rules added. Pure
+      accretion means you skipped subtraction. And <em class="no">not everything became a skill</em>: if all your gaps ended up
+      in one new <span style="font-family:'Spline Sans Mono',monospace;font-size:13px;color:#3fe0c8">SKILL.md</span>, you collapsed
+      the routing — re-sort.
+    </p>
+    <p>
+      The skill you <em>did</em> author moves to catch its gap: its <span style="font-family:'Spline Sans Mono',monospace;font-size:13px;color:#3fe0c8">description</span>
+      ends with an <b>outcome, not a topic</b>. If it reads like a documentation page describing the gap, it's mis-routed —
+      that gap was probably a rule. (Skill-as-documentation is the source's named diagnostic, a practitioner teaching
+      observation about why loops stall — not a measured rate.)
+    </p>
+  </div>
+
+  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
+  <div class="plates">
+    <div class="plate use">
+      <div class="beat-label amber"><b>Use when</b></div>
+      <p class="body">
+        You've diagnosed two runs of the same task, you hold <span class="grey">a fistful of gaps</span> — and your
+        instinct is to pour <b>all of them into a new skill</b>, because skills feel like the answer. Recurs at every loop
+        closure: after a two-run compare, after a CI red the loop should've caught.
+      </p>
+    </div>
+    <div class="plate build">
+      <div class="beat-label"><b>Build</b></div>
+      <p class="body">
+        <b>A routed gap map</b> — a short ranked list (M6 scrollback, optionally durable in <span style="font-family:'Spline Sans Mono',monospace;font-size:12px">observations/</span>)
+        where each gap is tagged with its home and <b>actually filed there</b>, one stale rule cut in place.
+      </p>
+    </div>
+    <div class="plate test">
+      <div class="beat-label"><b>Test</b></div>
+      <p class="body">
+        One named home per gap, one sentence of why.<br>
+        <em>At least one rule deleted in git history.</em><br>
+        <em class="no">Not everything a skill.</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ CORE MOVES — actionable heart ============ -->
+  <section class="moves">
+    <div class="beat-label"><b>Core moves</b></div>
+    <div class="moves-head">
+      <h2>The action, in sequence</h2>
+      <span class="lede">A flat gap list becomes three routed lessons, each filed where it fires.</span>
+    </div>
+
+    <div class="move-rail">
+      <div class="thread"></div>
+      <div class="step">
+        <div class="bead">1</div>
+        <h3>Hold the gaps as a list</h3>
+        <p>Don't fix the first one. <b>Lay three or four out flat</b>, dominant first — route as a set.</p>
+      </div>
+      <div class="step">
+        <div class="bead">2</div>
+        <h3>Would a rule have prevented it?</h3>
+        <p>A habit it should've had cold. <b>→ memory.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">3</div>
+        <h3>Would a check have caught it?</h3>
+        <p>Something that fires mid-run. <b>→ sharper verifier.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">4</div>
+        <h3>Will I re-perform this move?</h3>
+        <p>A reusable move, not the rule. <b>→ new skill.</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">5</div>
+        <h3>Cut the rule it killed</h3>
+        <p>Delete the stale one in place. <b>Subtraction is routing.</b></p>
+      </div>
+    </div>
+
+    <div class="compound">
+      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
+        </linearGradient></defs>
+        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
+          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
+        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
+        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
+        <circle r="3" fill="#aeffee">
+          <animateMotion dur="5s" repeatCount="indefinite"
+            path="M37,11 a26,26 0 1,1 -0.1,0"/>
+        </circle>
+      </svg>
+      <div class="ctext">
+        <div class="cyc">prevent (before)<span class="arr">→</span>detect (during)<span class="arr">→</span>reuse (next)<span class="arr">→</span>cut what's stale</div>
+        <p>Three different times a lesson can fire. <b>Route it to the wrong time and it never fires at all</b> — which is why the satisfying skill funnel is the wrong default.</p>
+      </div>
+    </div>
+
+    <!-- the Monday-move / no-permission aside -->
+    <p class="aside">
+      <b>Monday move:</b> open the last task you ran more than once — or the last CI red your loop should've caught. List the
+      gaps, three at most, dominant first. Ask each one the prevent / catch / reuse question, file it where it lands, then
+      cut one stale rule while you're in there.
+      <span class="mono">./CLAUDE.local.md is gitignored · verifier is your own repo · skill ships to ~/.claude/skills/ · no platform · no budget · no sign-off · ~15 min.</span>
+    </p>
+  </section>
+
+  <!-- ============ WHY — the conviction ============ -->
+  <section class="why">
+    <div class="beat-label"><b>Why</b></div>
+
+    <div class="principle-block">
+      <div class="principle-label">The principle</div>
+      <p class="principle-line">The loop closes when the lesson <em>ships</em> — but only to the home where it'll act.</p>
+    </div>
+
+    <p class="quote">"A rule, a check, and a skill are three different times a lesson can fire — route it to the wrong time and it never fires at all."</p>
+    <p class="gloss">
+      The counterintuitive part: the satisfying artefact is the wrong default. A skill is the <b>heaviest</b> of the three
+      homes — a move you'll re-invoke — so it feels like the serious place to put a lesson, which is precisely why
+      undisciplined engineers route everything there. But a rule that prevents a mistake upstream does more, cheaper work
+      than a skill that re-catches it every run; and a check that fires mid-run protects you in ways no rule can.
+    </p>
+    <p class="gloss">
+      The three homes aren't a tidiness exercise — they're three different <em>times</em> a lesson can act: a rule before
+      the run, a verifier during it, a skill on the next run of this shape. <b>Route a lesson to the wrong time and it never
+      fires when you need it.</b> The deletion arm matters for the same reason — an instrument calibrates by subtraction as
+      much as addition, and a rules file that only grows is a file that's stopped being read honestly. (The three homes are
+      the source's three-way sort — a convergent practitioner pattern, not an official Claude Code taxonomy — and stay open
+      to a fourth home.)
+    </p>
+    <div class="corollary"><span class="sd"></span>Skills feel like the answer · which is exactly why the loop stalls.</div>
+  </section>
+
+  <!-- ============ CONNECTS TO — neighbour patterns ============ -->
+  <section class="connects">
+    <h2>Connects to</h2>
+    <div class="sub">Threads leaving this node · the pattern language</div>
+
+    <div class="web">
+      <svg viewBox="0 0 1080 320" aria-hidden="true">
+        <defs>
+          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".6"/></linearGradient>
+          <linearGradient id="t5" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#6f8a85" stop-opacity=".5"/></linearGradient>
+          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <circle cx="150" cy="160" r="30" fill="none" stroke="#3fe0c8" stroke-width="1.2" opacity=".5"/>
+        <circle cx="150" cy="160" r="11" fill="#3fe0c8" filter="url(#wglow)"/>
+        <circle cx="150" cy="160" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
+
+        <path id="th1" d="M150,160 C360,72 540,54 760,58"  stroke="url(#t1)" stroke-width="2.2" fill="none"/>
+        <path id="th2" d="M150,160 C380,118 560,112 760,114" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
+        <path id="th3" d="M150,160 C380,168 560,168 760,170" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
+        <path id="th4" d="M150,160 C380,212 560,224 760,226" stroke="url(#t4)" stroke-width="2.2" fill="none"/>
+        <path id="th5" d="M150,160 C360,268 540,288 760,290" stroke="url(#t5)" stroke-width="1.6" stroke-dasharray="4 6" fill="none"/>
+
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".5s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5.6s" begin=".9s" repeatCount="indefinite"><mpath href="#th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.6s" begin=".9s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.3s" repeatCount="indefinite"><mpath href="#th4"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.3s" repeatCount="indefinite"/></circle>
+      </svg>
+
+      <div class="neighbours">
+        <div class="origin-chip" style="left:13.8%;top:50%">Route each gap to its home<small>software · Absorption · you are here</small></div>
+        <a class="nb"      href="failure-mode-diagnosis.html"    style="left:74%;top:18.1%"><span class="sd"></span>Diagnose the failure mode <span class="recipe-no">prerequisite</span></a>
+        <a class="nb"      href="three-block-memory.html"        style="left:74%;top:35.6%"><span class="sd"></span>Three-block memory <span class="recipe-no">upstream lens</span></a>
+        <a class="nb"      href="verifier-shaped-to-failure.html" style="left:74%;top:53.1%"><span class="sd"></span>Shape the verifier to the failure <span class="recipe-no">a home, done right</span></a>
+        <a class="nb amber" href="session-shaper-authoring.html" style="left:74%;top:70.6%"><span class="sd"></span>Author the skill in conversation <span class="recipe-no">a home, done right</span></a>
+        <a class="nb"      href="compound-from-evidence.html"    style="left:74%;top:88.1%"><span class="sd"></span>Compound from evidence <span class="recipe-no">the memory engine</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="floor">
+    <span class="door">The Absorption dispatcher: where each lesson lives decides whether a company's context layer accumulates the right knowledge in the right places — or drowns under one undifferentiated pile of "skills."</span>
+    <span class="meta">The Big Picture · Pattern Language</span>
+  </footer>
+
+</div>
+</body>
+</html>

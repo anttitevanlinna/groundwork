@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Did it move the needle? — Pattern · The Big Picture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-0:#05080a;
+    --soil-1:#080d10;
+    --soil-2:#0c1418;
+    --teal:#3fe0c8;
+    --teal-dim:#1d8d80;
+    --amber:#ffb347;
+    --amber-dim:#a86a1f;
+    --spore:#eafff9;
+    --ink:#cfe6e0;
+    --ink-dim:#6f8a85;
+    --ink-faint:#3b524e;
+    --hairline:rgba(63,224,200,.10);
+    --grey:#5d6a68;
+    --grey-dim:#39423f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--soil-0);
+    font-family:'Spline Sans',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  /* business lane → amber leads the light-well; theme recedes for the long read */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.10) 0%, transparent 46%),
+      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.06) 0%, transparent 44%),
+      linear-gradient(180deg, #2a1d06 0%, #14110a 10%, #05080a 42%, #04060a 100%);
+  }
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 64px;}
+
+  /* ============ BREADCRUMB ============ */
+  .crumb{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+    color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
+  }
+  .crumb a{color:var(--amber-dim);text-decoration:none;transition:color .25s}
+  .crumb a:hover{color:var(--amber)}
+  .crumb .here{color:var(--ink)}
+
+  /* ============ PATTERN HEADER ============ */
+  header.pat{padding:30px 0 8px;max-width:900px;}
+  .kicker{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--amber-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .kicker .spore-mark{
+    width:8px;height:8px;border-radius:50%;background:var(--amber);
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 14px 2px rgba(255,179,71,.55);
+    flex:none;
+  }
+  .kicker .pat-no{color:var(--ink-faint)}
+  header.pat h1{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(38px,6.6vw,64px);line-height:.99;
+    color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
+  }
+  header.pat h1 em{font-style:italic;color:var(--amber);font-weight:400}
+  .principle{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
+  }
+  .principle b{color:var(--amber);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .essence{
+    font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:730px;
+  }
+  .essence b{color:var(--spore);font-weight:500}
+
+  /* ============ HERO PICTURE ============ */
+  .hero-frame{
+    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(31,24,13,.5), rgba(5,8,10,.6));
+    position:relative;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(255,179,71,.04) inset;
+  }
+  .hero-frame svg{display:block;width:100%;height:auto}
+  .hero-cap{
+    position:absolute;left:18px;bottom:13px;z-index:3;
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
+    color:var(--ink-dim);text-transform:uppercase;
+  }
+  .hero-cap b{color:var(--amber)}
+
+  /* ============ READING PROSE ============ */
+  .prose{margin-top:34px;max-width:760px;}
+  .prose h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
+    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+  }
+  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .prose h2.amber em{color:var(--amber)}
+  .prose .sec-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+    margin-top:42px;
+  }
+  .prose .sec-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);
+    box-shadow:0 0 9px rgba(255,179,71,.55);flex:none;
+  }
+  .prose .sec-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
+  .prose p{
+    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;letter-spacing:.002em;
+  }
+  .prose p b{color:var(--spore);font-weight:500}
+  .prose p em{font-style:italic;color:var(--ink-dim)}
+  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .prose p .mono{
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
+  }
+  .prose p .mono.amber{color:var(--amber)}
+  .prose .pull{
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--amber-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+    color:var(--ink);max-width:680px;
+  }
+  .prose .pull b{color:var(--amber);font-weight:500;font-style:normal}
+
+  /* ============ PROCESS DIAGRAMS ============ */
+  .diagram{
+    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+    background:
+      radial-gradient(110% 130% at 8% 8%, rgba(255,179,71,.05), transparent 55%),
+      linear-gradient(180deg, rgba(17,14,10,.55), rgba(5,8,10,.65));
+    position:relative;
+    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(255,179,71,.03) inset;
+  }
+  .diagram svg{display:block;width:100%;height:auto}
+  .diagram .dcap{
+    padding:12px 20px 16px;border-top:1px solid var(--hairline);
+    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
+    color:var(--ink-dim);letter-spacing:.003em;
+    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  }
+  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
+  .diagram .dcap .num{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--amber-dim);margin-right:10px;
+  }
+
+  /* ============ RECIPE SECTION BEATS ============ */
+  .beat-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  }
+  .beat-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);flex:none;
+    box-shadow:0 0 9px rgba(255,179,71,.55);
+  }
+  .beat-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
+  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+
+  .plates{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;}
+  .plate{
+    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
+    background:rgba(15,13,9,.5);backdrop-filter:blur(2px);position:relative;
+  }
+  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
+  .plate .body b{color:var(--spore);font-weight:500}
+  .plate .body .grey{color:var(--grey)}
+  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.06), transparent 55%),rgba(15,13,9,.5)}
+  .plate.test .body em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
+
+  /* ============ CORE MOVES ============ */
+  .moves{margin-top:46px}
+  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
+  .moves-head h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
+  .move-rail{
+    margin-top:20px;position:relative;
+    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+  }
+  .move-rail .thread{
+    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
+    background:linear-gradient(90deg,
+      rgba(255,179,71,0) 0%, rgba(168,106,31,.5) 6%,
+      rgba(255,179,71,.7) 50%, rgba(63,224,200,.6) 94%, rgba(63,224,200,0) 100%);
+  }
+  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
+  .step:first-child{padding-left:0}
+  .step .bead{
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
+    margin-bottom:13px;
+  }
+  .step:nth-child(6) .bead{
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
+  }
+  .step h3{font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;}
+  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
+  .step p b{color:var(--ink);font-weight:500}
+
+  .compound{
+    margin-top:26px;border:1px solid rgba(255,179,71,.18);border-radius:14px;
+    padding:18px 22px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgba(255,179,71,.07), transparent 60%),
+      rgba(17,14,10,.55);
+    display:flex;align-items:center;gap:20px;
+  }
+  .compound .loop-ico{flex:none}
+  .compound .ctext{flex:1}
+  .compound .ctext .cyc{
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--amber);
+  }
+  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
+  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
+  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+
+  .aside{
+    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
+    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+  }
+  .aside b{color:var(--amber);font-weight:500}
+  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
+
+  /* ============ WHY ============ */
+  .why{
+    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
+    padding:26px 30px 28px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 90% 0%, rgba(255,179,71,.08), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(63,224,200,.05), transparent 55%),
+      rgba(15,13,9,.6);
+  }
+  .why .beat-label{margin-bottom:14px}
+  .why .principle-block{margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);}
+  .why .principle-label{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
+  }
+  .why .principle-line{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
+    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
+  }
+  .why .principle-line em{font-style:italic;color:var(--amber)}
+  .why .quote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(21px,3vw,29px);line-height:1.22;color:var(--amber);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(255,179,71,.24);max-width:860px;
+  }
+  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
+  .why .gloss b{color:var(--spore);font-weight:500}
+  .why .gloss em{font-style:italic;color:var(--ink-dim)}
+  .why .gloss + .gloss{margin-top:12px}
+  .why .corollary{
+    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
+    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+  }
+  .why .corollary .sd{
+    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+  }
+
+  /* ============ TEST-IN-PRACTICE inline panel ============ */
+  .practice{
+    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
+    padding:22px 26px 24px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
+      rgba(15,13,9,.5);
+  }
+  .practice .beat-label{margin-bottom:12px}
+  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
+  .practice p b{color:var(--spore);font-weight:500}
+  .practice p em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:16px}
+  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+
+  /* ============ CONNECTS TO ============ */
+  .connects{margin-top:52px}
+  .connects h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
+  }
+  .connects .sub{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:5px;
+  }
+  .web{position:relative;margin-top:8px}
+  .web svg{display:block;width:100%;height:auto}
+  .neighbours{position:absolute;inset:0;pointer-events:none}
+  .nb{
+    position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
+    display:flex;align-items:center;gap:9px;
+    padding:8px 14px 9px;border-radius:13px;
+    background:rgba(15,13,9,.82);backdrop-filter:blur(4px);
+    border:1px solid var(--hairline);
+    color:var(--ink);font-size:13px;letter-spacing:.005em;white-space:nowrap;
+    transition:border-color .3s,color .3s,background .3s,transform .3s;
+    cursor:pointer;text-decoration:none;
+  }
+  .nb .recipe-no{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--ink-faint);
+  }
+  .nb .sd{
+    width:8px;height:8px;border-radius:50%;background:var(--amber);flex:none;
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 12px 2px rgba(255,179,71,.5);
+  }
+  .nb.teal .sd{background:var(--teal);box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 12px 2px rgba(63,224,200,.55)}
+  .nb:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9);transform:translate(-50%,-50%) scale(1.05)}
+  .nb.teal:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9)}
+  .nb:hover .sd{animation:throb 1s ease-in-out infinite}
+  .nb.soon{opacity:.62}
+  .nb.soon::after{
+    content:"soon";
+    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);
+    border:1px solid var(--ink-faint);border-radius:20px;
+    padding:2px 7px 3px;margin-left:4px;
+  }
+  .nb.soon:hover{opacity:1}
+  @keyframes throb{50%{transform:scale(1.5)}}
+  .origin-chip{
+    position:absolute;transform:translate(-50%,-50%);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 24px rgba(255,179,71,.4);white-space:nowrap;text-align:center;
+  }
+  .origin-chip small{
+    display:block;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:8.5px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--amber-dim);margin-top:3px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer.floor{
+    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  }
+  footer.floor .door{
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
+    text-shadow:0 0 22px rgba(255,179,71,.3);
+  }
+  footer.floor .meta{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+
+  @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
+  .breathe{animation:breathe 4.2s ease-in-out infinite}
+
+  @media (max-width:860px){
+    .plates{grid-template-columns:1fr 1fr}
+    .plate.use{grid-column:1 / -1}
+  }
+  @media (max-width:780px){
+    .plates{grid-template-columns:1fr}
+    .plate.use{grid-column:1}
+    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
+    .move-rail .thread{display:none}
+    .step{padding:0}
+    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .neighbours .nb{font-size:11px;padding:6px 10px}
+    .prose p{font-size:14.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ BREADCRUMB ============ -->
+  <nav class="crumb">
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Did it move the needle?</span>
+  </nav>
+
+  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <header class="pat">
+    <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· business lane · Outcome → ⟲ · the read that decides if a win became value</span></div>
+    <h1>Did it move the <em>needle</em>?</h1>
+    <p class="principle">The principle: <b>the productivity paradox</b> — the individual high does not aggregate into institutional value on its own.</p>
+    <p class="essence">
+      You can feel the AI working — yet nothing moves where the business keeps score. So stop measuring usage and
+      <b>read the system instead</b>: did it get healthier, or just faster at being what it was? The institutional return
+      itself has <b>no validated method today</b> — name that plainly, hand over honest proxies, and refuse the fake number.
+    </p>
+  </header>
+
+  <!-- ============ HERO PICTURE: two gauges — adoption pinned, outcome flat ============ -->
+  <div class="hero-frame">
+    <svg viewBox="0 0 1080 392" role="img" aria-label="Two gauges over the soil. Left, labelled Adoption, the needle pinned near full and glowing. Right, labelled Outcome, the needle flat at zero. A faint amber thread between them carries the tag 'the amplifier — same input, no movement, the system underneath didn't change.'">
+      <defs>
+        <radialGradient id="hwell" cx="22%" cy="46%" r="62%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".22"/>
+          <stop offset="45%" stop-color="#ffb347" stop-opacity=".07"/>
+          <stop offset="100%" stop-color="#ffb347" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="gAdopt" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#a86a1f" stop-opacity=".4"/>
+          <stop offset="100%" stop-color="#ffb347" stop-opacity=".95"/>
+        </linearGradient>
+        <linearGradient id="gFlat" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#39423f" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#5d6a68" stop-opacity=".85"/>
+        </linearGradient>
+        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <rect x="0" y="0" width="1080" height="392" fill="url(#hwell)"/>
+
+      <!-- ===== LEFT GAUGE — Adoption, pinned ===== -->
+      <g transform="translate(258,210)">
+        <text x="0" y="-150" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2.5" fill="#ffb347">ADOPTION</text>
+        <!-- arc -->
+        <path d="M-120,0 A120,120 0 0,1 120,0" fill="none" stroke="rgba(255,179,71,.18)" stroke-width="14"/>
+        <path d="M-120,0 A120,120 0 0,1 120,0" fill="none" stroke="url(#gAdopt)" stroke-width="14" stroke-linecap="round" stroke-dasharray="350 380"/>
+        <!-- ticks -->
+        <g stroke="#a86a1f" stroke-width="2" opacity=".5">
+          <line x1="-120" y1="0" x2="-104" y2="0"/>
+          <line x1="0" y1="-120" x2="0" y2="-104"/>
+          <line x1="120" y1="0" x2="104" y2="0"/>
+        </g>
+        <!-- needle pinned near full -->
+        <g filter="url(#hglow)">
+          <line x1="0" y1="0" x2="98" y2="-58" stroke="#ffce85" stroke-width="3.4" stroke-linecap="round"/>
+          <circle cx="0" cy="0" r="8" fill="#ffb347"/>
+        </g>
+        <circle cx="110" cy="-66" r="5" fill="#ffe0a8" filter="url(#hglow)"/>
+        <text x="0" y="34" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="15" fill="#ffce85">everyone's using it</text>
+        <text x="0" y="58" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#a86a1f">SEAT-COUNT · PROMPTS · LOGINS</text>
+      </g>
+
+      <!-- ===== THE AMPLIFIER THREAD between the gauges ===== -->
+      <g>
+        <path d="M392,176 C470,158 610,158 688,176" fill="none" stroke="rgba(255,179,71,.5)" stroke-width="1.6" stroke-dasharray="5 7"/>
+        <text x="540" y="150" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".22em" fill="#ffb347">THE AMPLIFIER</text>
+        <text x="540" y="200" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12.5" fill="#6f8a85">same input · no movement —</text>
+        <text x="540" y="218" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12.5" fill="#6f8a85">the system underneath didn't change</text>
+        <circle r="3" fill="#ffe0a8">
+          <animateMotion dur="5s" repeatCount="indefinite" path="M392,176 C470,158 610,158 688,176"/>
+          <animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+
+      <!-- ===== RIGHT GAUGE — Outcome, flat ===== -->
+      <g transform="translate(822,210)">
+        <text x="0" y="-150" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2.5" fill="#5d6a68">OUTCOME</text>
+        <path d="M-120,0 A120,120 0 0,1 120,0" fill="none" stroke="rgba(93,106,104,.18)" stroke-width="14"/>
+        <path d="M-120,0 A120,120 0 0,1 120,0" fill="none" stroke="url(#gFlat)" stroke-width="14" stroke-linecap="round" stroke-dasharray="6 374"/>
+        <g stroke="#39423f" stroke-width="2" opacity=".6">
+          <line x1="-120" y1="0" x2="-104" y2="0"/>
+          <line x1="0" y1="-120" x2="0" y2="-104"/>
+          <line x1="120" y1="0" x2="104" y2="0"/>
+        </g>
+        <!-- needle flat at zero (pointing hard left) -->
+        <g>
+          <line x1="0" y1="0" x2="-110" y2="-2" stroke="#5d6a68" stroke-width="3.4" stroke-linecap="round"/>
+          <circle cx="0" cy="0" r="8" fill="#5d6a68"/>
+        </g>
+        <circle cx="-118" cy="-2" r="4" fill="#5d6a68"/>
+        <text x="0" y="34" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="15" fill="#6f8a85">P&amp;L · cycle time · result — flat</text>
+        <text x="0" y="58" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#39423f">WHERE THE BUSINESS KEEPS SCORE</text>
+      </g>
+
+      <text x="540" y="376" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".2em" fill="#3b524e">THE GAP THE WHOLE CARD NAMES · THE PERSONAL HIGH NEVER REACHED THE INSTITUTIONAL LEDGER</text>
+    </svg>
+    <div class="hero-cap">The tool went in. <b>The needle didn't move</b> — because AI amplifies the system, it doesn't replace it.</div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
+  <!-- ============================================================ -->
+  <section class="prose">
+    <div class="sec-label">The mechanism · why usage and return come apart</div>
+    <h2>High adoption with flat outcomes isn't a failure. <em>It's the default.</em></h2>
+
+    <p>
+      Here's the uncomfortable thing every dashboard hides: the metric your vendor hands you is the one that
+      <b>always goes up</b>. Logins, prompts, percent-of-staff-using-it — adoption is engineered to climb,
+      because climbing is what makes the renewal easy. It is not return. And when you put a controlled trial
+      behind the feeling, the feeling stops paying. The UK Government's GOV.UK Copilot trial — a <b>controlled
+      experiment with around a thousand civil servants</b>, not a satisfaction survey — found zero productivity
+      improvement from deploying the tool. Economic research lines up behind it: NBER reports 89% of managers
+      saw no change; Goldman finds no economy-wide relationship, with real gains in only two zones, customer
+      service and coding.
+    </p>
+
+    <p>
+      So the read most leaders run — "people feel faster, demos land, therefore we got a return" — is exactly
+      backwards. The individual high is real. It just doesn't aggregate. A research synthesis across more than
+      fifteen independent sources (Stanford, the controlled Copilot trial, NBER, Goldman, Faros AI across ten
+      thousand developers) keeps converging on the same wall: <b>individual productivity does not roll up into
+      institutional value on its own.</b> The practitioner Will Manidis named the failure mode bluntly in early
+      2026 — a <em>"tool-shaped object"</em>: software that produces the <em>experience</em> of productivity without
+      the substance. As he put it, "the primary product of that spending is the experience of spending it." A
+      vanity dashboard is the tool-shaped object one level up — a number that feels like measurement and measures
+      nothing.
+    </p>
+
+    <p class="pull">
+      AI doesn't move the needle. <b>It amplifies whatever the needle was already pointing at.</b>
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 1 — USAGE ≠ RETURN (one funnel, two readings) ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 432" role="img" aria-label="One funnel read two ways. Top path: a tool bolted on, throughput rises, the adoption gauge climbs. Bottom path: the same funnel, the outcome gauge stays flat. A thread between them reads: AI amplified the funnel; nobody fixed the funnel.">
+      <defs>
+        <linearGradient id="d1-amber" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a86a1f" stop-opacity=".3"/><stop offset="1" stop-color="#ffb347" stop-opacity=".85"/></linearGradient>
+        <linearGradient id="d1-grey" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#39423f" stop-opacity=".2"/><stop offset="1" stop-color="#5d6a68" stop-opacity=".8"/></linearGradient>
+        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">ONE FUNNEL · TWO READINGS · USAGE CLIMBS WHILE OUTCOME HOLDS FLAT</text>
+
+      <!-- the shared funnel in the middle -->
+      <g transform="translate(0,0)">
+        <text x="200" y="74" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#6f8a85">THE WORK · UNCHANGED</text>
+        <!-- funnel shape -->
+        <path d="M80,100 L320,100 L266,196 L266,300 L134,300 L134,196 Z" fill="rgba(255,179,71,.05)" stroke="rgba(255,179,71,.25)" stroke-width="1.4"/>
+        <!-- the bolted-on tool -->
+        <rect x="150" y="120" width="100" height="30" rx="8" fill="rgba(255,179,71,.12)" stroke="#ffb347" stroke-width="1.2"/>
+        <text x="200" y="139" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".06em" fill="#ffce85">AI TOOL · BOLTED ON</text>
+        <text x="200" y="180" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12.5" fill="#6f8a85">same roles · same hand-offs</text>
+        <text x="200" y="200" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12.5" fill="#6f8a85">same decisions, just faster</text>
+        <text x="200" y="330" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#a86a1f">NOTHING REDESIGNED</text>
+      </g>
+
+      <!-- TOP path → adoption climbs -->
+      <g>
+        <path d="M320,140 C480,120 600,96 760,90" fill="none" stroke="url(#d1-amber)" stroke-width="2.4" filter="url(#d1-glow)"/>
+        <polygon points="760,90 749,85 750,96" fill="#ffb347"/>
+        <text x="520" y="84" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#ffce85">throughput up → more output</text>
+        <!-- mini adoption gauge -->
+        <g transform="translate(880,98)">
+          <path d="M-58,0 A58,58 0 0,1 58,0" fill="none" stroke="rgba(255,179,71,.18)" stroke-width="8"/>
+          <path d="M-58,0 A58,58 0 0,1 58,0" fill="none" stroke="url(#d1-amber)" stroke-width="8" stroke-linecap="round" stroke-dasharray="168 184"/>
+          <line x1="0" y1="0" x2="48" y2="-30" stroke="#ffce85" stroke-width="2.6" stroke-linecap="round"/>
+          <circle cx="0" cy="0" r="5" fill="#ffb347"/>
+          <text x="0" y="26" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#ffb347">ADOPTION ↑</text>
+        </g>
+      </g>
+
+      <!-- BOTTOM path → outcome flat -->
+      <g>
+        <path d="M320,260 C480,280 600,300 760,306" fill="none" stroke="url(#d1-grey)" stroke-width="2.2"/>
+        <polygon points="760,306 749,301 749,312" fill="#5d6a68"/>
+        <text x="520" y="332" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#6f8a85">the broken steps just run faster</text>
+        <!-- mini outcome gauge, flat -->
+        <g transform="translate(880,300)">
+          <path d="M-58,0 A58,58 0 0,1 58,0" fill="none" stroke="rgba(93,106,104,.18)" stroke-width="8"/>
+          <path d="M-58,0 A58,58 0 0,1 58,0" fill="none" stroke="url(#d1-grey)" stroke-width="8" stroke-linecap="round" stroke-dasharray="4 348"/>
+          <line x1="0" y1="0" x2="-52" y2="-1" stroke="#5d6a68" stroke-width="2.6" stroke-linecap="round"/>
+          <circle cx="0" cy="0" r="5" fill="#5d6a68"/>
+          <text x="0" y="26" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#5d6a68">OUTCOME — FLAT</text>
+        </g>
+      </g>
+
+      <!-- the splitting thread -->
+      <g>
+        <text x="540" y="392" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="15" fill="#ffb347">AI amplified the funnel. Nobody fixed the funnel.</text>
+        <text x="540" y="416" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#3b524e">A FASTER VERSION OF A BROKEN PROCESS IS NOT A RETURN — IT IS A FLAG.</text>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 01</span>Same funnel, two readings. The tool makes usage climb; the outcome holds flat — because <b>nobody redesigned the work in between</b>.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 2 — read the amplifier ============ -->
+  <section class="prose">
+    <p>
+      So if the tool can't be your scoreboard, what can? Read the <b>amplifier, not the tool.</b> The honest
+      question is not "how much did the agent produce" but "did the underlying system get <em>healthier</em>, or
+      just faster at being what it already was?" Two practitioners frame this better than any metric. Pawel Brodzinski
+      and the Cutler / TBM school put it as: "AI does not fix the funnel. It reveals and amplifies whatever version of
+      the funnel you are already operating." Barry O'Reilly's version is sharper still — "AI doesn't replace leadership.
+      It exposes it." If the system underneath is sound, the tool compounds it. If it's broken, the tool makes it fail
+      faster. Klarna walked exactly that arc: aggressive AI subtraction, then a reversal when the system underneath
+      couldn't carry it. The amplifier read is the first honest proxy — directional, not a return figure, but real.
+    </p>
+
+    <div class="sec-label teal">The upgrade move · from vanity dashboard to honest proxies</div>
+    <h2 class="amber">Replace the scoreboard with three proxies — and <em>one open frontier you refuse to fake.</em></h2>
+
+    <p>
+      Here is where the discipline lives, and where it gets genuinely hard. There is no validated method for
+      institutional AI ROI — <b>open frontier, no validated method exists today; the transition playbook for becoming
+      AI-native does not yet exist.</b> Saying that out loud is not a confession of failure; it is the most defensible
+      thing on the page. The temptation is to paper the gap with a precise-looking ROI percentage. Resist it: a
+      fabricated return figure is the tool-shaped-object trap one level up — a number that delivers the experience of
+      measurement without the substance, and faking one to warn against faking would be self-refuting. So you swap the
+      seat-count dashboard for three labelled <em>proxies</em>, each a directional read and none claiming to be
+      validated return: the <b>amplifier read</b> (healthier or just faster?), the <b>workflow-redesign signal</b>
+      (did the flow change, or only the speed?), and the <b>absorption rate</b> (how much of the real work has the
+      system actually reached?). Then a fourth panel, drawn open on purpose: institutional ROI — the question you
+      decline to answer with a fake.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 2 — THE HONEST-PROXY PANEL ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="A struck-through seat-count dashboard labelled tool-shaped object, replaced by three labelled proxy nodes — amplifier read, workflow-redesign signal, absorption rate — plus a fourth node drawn open and dashed: institutional ROI, open frontier, no validated method exists today.">
+      <defs>
+        <linearGradient id="d2-amber" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".5"/><stop offset="1" stop-color="#ffb347" stop-opacity=".5"/></linearGradient>
+        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">DROP THE SCOREBOARD · KEEP THREE PROXIES · LEAVE THE FRONTIER OPEN ON PURPOSE</text>
+
+      <!-- LEFT: the struck-through vanity dashboard -->
+      <g transform="translate(40,72)">
+        <rect x="0" y="0" width="300" height="156" rx="10" fill="rgba(93,106,104,.06)" stroke="rgba(93,106,104,.3)" stroke-dasharray="4 4"/>
+        <text x="16" y="26" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em" fill="#5d6a68">ADOPTION DASHBOARD</text>
+        <g font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#5d6a68">
+          <text x="16" y="58">seat-count · 94% of staff</text>
+          <text x="16" y="86">prompts / day · climbing</text>
+          <text x="16" y="114">logins · all green</text>
+        </g>
+        <!-- struck through -->
+        <line x1="12" y1="70" x2="240" y2="46" stroke="#a86a1f" stroke-width="2" opacity=".8"/>
+        <text x="16" y="146" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">↳ TOOL-SHAPED OBJECT · MEASURES THE TOOL</text>
+      </g>
+
+      <!-- transformation arrow -->
+      <g transform="translate(360,150)">
+        <path d="M0,0 L52,0" stroke="#3fe0c8" stroke-width="1.4" fill="none" opacity=".7"/>
+        <polygon points="52,0 42,-6 42,6" fill="#3fe0c8" opacity=".8"/>
+        <text x="26" y="-12" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3fe0c8">SWAP</text>
+      </g>
+
+      <!-- RIGHT: three proxy nodes + one open frontier -->
+      <g transform="translate(440,60)">
+        <text x="0" y="6" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#3fe0c8">THE PROXY PANEL · EACH A DIRECTIONAL READ, NOT A RETURN FIGURE</text>
+
+        <!-- proxy 1 -->
+        <g transform="translate(0,24)">
+          <rect x="0" y="0" width="600" height="56" rx="10" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.3)"/>
+          <circle cx="28" cy="28" r="8" fill="#3fe0c8" filter="url(#d2-glow)"/>
+          <text x="52" y="24" font-family="'Spline Sans',sans-serif" font-size="14" fill="#eafff9" font-weight="500">Amplifier read</text>
+          <text x="52" y="44" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12.5" fill="#6f8a85">healthier, or just faster at being what it was?</text>
+          <text x="588" y="33" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".14em" fill="#1d8d80">PROXY</text>
+        </g>
+        <!-- proxy 2 -->
+        <g transform="translate(0,92)">
+          <rect x="0" y="0" width="600" height="56" rx="10" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.3)"/>
+          <circle cx="28" cy="28" r="8" fill="#3fe0c8" filter="url(#d2-glow)"/>
+          <text x="52" y="24" font-family="'Spline Sans',sans-serif" font-size="14" fill="#eafff9" font-weight="500">Workflow-redesign signal</text>
+          <text x="52" y="44" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12.5" fill="#6f8a85">did the flow change — roles, hand-offs — or only the speed?</text>
+          <text x="588" y="33" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".14em" fill="#1d8d80">PROXY</text>
+        </g>
+        <!-- proxy 3 -->
+        <g transform="translate(0,160)">
+          <rect x="0" y="0" width="600" height="56" rx="10" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.3)"/>
+          <circle cx="28" cy="28" r="8" fill="#3fe0c8" filter="url(#d2-glow)"/>
+          <text x="52" y="24" font-family="'Spline Sans',sans-serif" font-size="14" fill="#eafff9" font-weight="500">Absorption rate</text>
+          <text x="52" y="44" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12.5" fill="#6f8a85">how much of the real work has the system actually reached?</text>
+          <text x="588" y="33" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".14em" fill="#1d8d80">PROXY</text>
+        </g>
+
+        <!-- the OPEN FRONTIER node — dashed, deliberately unfilled -->
+        <g transform="translate(0,232)">
+          <rect x="0" y="0" width="600" height="74" rx="10" fill="none" stroke="url(#d2-amber)" stroke-width="1.6" stroke-dasharray="7 7"/>
+          <circle cx="28" cy="37" r="8" fill="none" stroke="#ffb347" stroke-width="1.6" stroke-dasharray="3 3"/>
+          <text x="52" y="30" font-family="'Spline Sans',sans-serif" font-size="14" fill="#ffce85" font-weight="500">Institutional ROI</text>
+          <text x="52" y="50" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".06em" fill="#ffb347">OPEN FRONTIER — NO VALIDATED METHOD EXISTS TODAY</text>
+          <text x="52" y="66" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="11.5" fill="#6f8a85">the transition playbook for becoming AI-native does not yet exist · left open on purpose</text>
+        </g>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 02</span>Three proxies replace the vanity dashboard; the fourth node stays <b>open on purpose</b> — honesty drawn as a deliberate gap, not a number to fabricate.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 3 — redesign + absorption ============ -->
+  <section class="prose">
+    <p>
+      Of the three proxies, the <b>workflow-redesign signal</b> is the one with the most behind it. Stanford's read
+      across 51 enterprise deployments found the single factor separating orgs that captured institutional value from
+      those that didn't was whether the <em>workflow itself</em> changed — roles, hand-offs, decisions — not whether a
+      tool got bolted onto the old one. High performers were roughly three times more likely to have redesigned. And
+      the kicker: <b>no org captured institutional value with zero organizational change.</b> So treat "we redesigned how
+      this work flows" as a leading proxy for return, and treat "we made the old steps faster" as a warning — the
+      faster-broken-thing in disguise.
+    </p>
+
+    <p>
+      The third proxy is blunter and easier to read on a Monday: the <b>absorption rate</b> — how much of your real work
+      has the system actually reached. Today's agents touch only a thin slice of the enterprise; the research puts
+      agent access at roughly 20% of enterprise data, with training and cross-system integration the pieces most
+      consistently missing from whole-product readiness. So a <em>rising</em> absorption rate — more of the real surface
+      entering the loop, surviving contact, getting trusted — is honest evidence the value is institutionalizing rather
+      than visiting one demo. It is still a proxy, a directional read and not a return figure, but it is one you can
+      point at without lying. The compounding picture below is what "rising absorption" actually looks like as a loop.
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP (absorption rising) ============ -->
+  <div class="diagram">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="A closed loop through the soil — work enters the loop, the agent touches a slice, the slice survives contact and earns trust, more of the real surface enters next pass — with the absorbed slice visibly widening across passes one, two and three.">
+      <defs>
+        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/><stop offset="1" stop-color="#ffb347" stop-opacity=".6"/></linearGradient>
+        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#ffe0a8"/><stop offset=".55" stop-color="#ffb347"/><stop offset="1" stop-color="#a86a1f"/></radialGradient>
+        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">ABSORPTION RISING · MORE OF THE REAL WORK ENTERS THE LOOP EACH PASS</text>
+
+      <!-- ===== LEFT HALF: the loop ===== -->
+      <g transform="translate(40,60)">
+        <circle cx="200" cy="170" r="130" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="540 60" stroke-linecap="round" transform="rotate(-90 200 170)"/>
+        <circle r="3.6" fill="#ffe0a8">
+          <animateMotion dur="9s" repeatCount="indefinite" path="M200,40 a130,130 0 1,1 -0.1,0"/>
+          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
+        </circle>
+
+        <g>
+          <circle cx="200" cy="40" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="200" y="45" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">1</text>
+          <text x="200" y="20" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">Real work enters</text>
+        </g>
+        <g>
+          <circle cx="330" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="330" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">2</text>
+          <text x="362" y="173" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">Agent touches a slice</text>
+        </g>
+        <g>
+          <circle cx="200" cy="300" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="200" y="305" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">3</text>
+          <text x="200" y="338" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">Survives contact · earns trust</text>
+        </g>
+        <g>
+          <circle cx="70" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
+          <text x="70" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">4</text>
+          <text x="38" y="166" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">More of the surface</text>
+          <text x="38" y="182" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">enters next pass</text>
+        </g>
+
+        <text x="200" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EACH PASS</text>
+        <text x="200" y="184" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#ffb347">absorbs more</text>
+      </g>
+
+      <!-- ===== RIGHT HALF: the absorbed slice widening across passes ===== -->
+      <g transform="translate(560,70)">
+        <text x="0" y="6" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#6f8a85">THE ABSORBED SLICE OF REAL WORK · WIDENING</text>
+
+        <!-- pass 1 — thin slice -->
+        <g transform="translate(0,28)">
+          <circle cx="60" cy="60" r="56" fill="rgba(8,17,18,.7)" stroke="rgba(255,179,71,.22)"/>
+          <path d="M60,60 L60,4 A56,56 0 0,1 96,18 Z" fill="rgba(255,179,71,.4)"/>
+          <text x="60" y="138" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">PASS 1 · THIN SLICE</text>
+        </g>
+        <!-- arrow -->
+        <g transform="translate(128,88)"><path d="M0,0 L30,0" stroke="#ffb347" stroke-width="1.2" fill="none" opacity=".7"/><polygon points="30,0 22,-5 22,5" fill="#ffb347" opacity=".75"/></g>
+        <!-- pass 2 — wider -->
+        <g transform="translate(168,28)">
+          <circle cx="60" cy="60" r="56" fill="rgba(8,17,18,.78)" stroke="rgba(255,179,71,.35)"/>
+          <path d="M60,60 L60,4 A56,56 0 0,1 110,82 Z" fill="rgba(255,179,71,.5)"/>
+          <text x="60" y="138" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">PASS 2 · WIDER</text>
+        </g>
+        <!-- arrow -->
+        <g transform="translate(296,88)"><path d="M0,0 L30,0" stroke="#ffb347" stroke-width="1.2" fill="none" opacity=".7"/><polygon points="30,0 22,-5 22,5" fill="#ffb347" opacity=".75"/></g>
+        <!-- pass 3 — most -->
+        <g transform="translate(336,28)">
+          <circle cx="60" cy="60" r="56" fill="rgba(8,17,18,.85)" stroke="url(#d3-ring)" stroke-width="1.5" filter="url(#d3-glow)"/>
+          <path d="M60,60 L60,4 A56,56 0 1,1 18,98 Z" fill="rgba(255,179,71,.6)"/>
+          <text x="60" y="138" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#ffb347">PASS 3 · MORE OF THE REAL SURFACE</text>
+        </g>
+
+        <!-- the honest read -->
+        <text x="240" y="200" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#ffb347">The widening IS the honest signal —</text>
+        <text x="240" y="222" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12.5" fill="#6f8a85">a directional proxy, not a single ROI figure.</text>
+        <text x="240" y="252" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".16em" fill="#3b524e">AGENTS REACH ~20% OF ENTERPRISE DATA TODAY · RISING IS THE READ</text>
+      </g>
+    </svg>
+    <div class="dcap"><span class="num">Process diagram · 03</span>The institutional-value signal is the <b>slice widening</b> — more of the real work in the loop, surviving contact, earning trust — a proxy, not a return figure.</div>
+  </div>
+
+  <!-- ============ PROSE BLOCK 4 — what Test actually means ============ -->
+  <section class="prose">
+    <div class="sec-label">What "Test" actually means · in practice</div>
+    <h2>The test that matters is <em>"that's the real question, honestly answered."</em></h2>
+
+    <p>
+      You'll know the read is honest, not theatre, when someone who knows the business cold — a CFO, an ops lead —
+      looks at the panel and says <em class="amber">"yes, that's the real question, and that's an honest answer"</em> —
+      <b>not</b> <em class="teal">"great, the number went up."</em> Run two negative tests against it. First: if your
+      headline metric is still seat-adoption or prompt-count, you measured usage, not return — you're holding a
+      tool-shaped object. Second, and this is the one the card exists to prevent: if any cell on the panel claims a
+      <em>validated institutional-ROI figure</em>, the caveat didn't travel, and you've fabricated the exact thing you
+      set out to warn against. Open frontier means open frontier — no validated method exists today; the transition
+      playbook for becoming AI-native does not yet exist. The panel passes when a high score on the old process with no
+      redesign reads as a <b>flag</b>, not a win.
+    </p>
+  </section>
+
+  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
+  <div class="plates">
+    <div class="plate use">
+      <div class="beat-label"><b>Use when</b></div>
+      <p class="body">
+        You can feel the AI working — <span class="grey">people are faster, demos land</span> — and yet nothing shows
+        up where the business keeps score. The board asks <b>"what did the AI investment return?"</b> and you have
+        adoption dashboards, not outcomes.
+      </p>
+    </div>
+    <div class="plate build">
+      <div class="beat-label teal"><b>Build</b></div>
+      <p class="body">
+        A <b>proxy panel, not an ROI number</b> — amplifier read, redesign signal, absorption rate, each labelled a
+        proxy — plus an explicit <b>"what we can't yet measure"</b> line: the institutional return as an open frontier.
+      </p>
+    </div>
+    <div class="plate test">
+      <div class="beat-label"><b>Test</b></div>
+      <p class="body">
+        Someone who knows the business says <em>"that's the real question, honestly answered."</em><br>
+        Not <em class="no">"great, the number went up."</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ CORE MOVES ============ -->
+  <section class="moves">
+    <div class="beat-label"><b>Core moves</b></div>
+    <div class="moves-head">
+      <h2>The action, in sequence</h2>
+      <span class="lede">Stop measuring usage. Start reading the system.</span>
+    </div>
+
+    <div class="move-rail">
+      <div class="thread"></div>
+      <div class="step">
+        <div class="bead">1</div>
+        <h3>Drop the seat-count scoreboard</h3>
+        <p>Adoption always climbs. <b>It is not return.</b> Name it out loud.</p>
+      </div>
+      <div class="step">
+        <div class="bead">2</div>
+        <h3>Read the amplifier, not the tool</h3>
+        <p>Healthier, or <b>just faster</b> at being what it was?</p>
+      </div>
+      <div class="step">
+        <div class="bead">3</div>
+        <h3>Hunt for workflow redesign</h3>
+        <p>Did the flow change, or <b>only the speed?</b></p>
+      </div>
+      <div class="step">
+        <div class="bead">4</div>
+        <h3>Watch the absorption rate</h3>
+        <p>How much of the <b>real work</b> has it reached?</p>
+      </div>
+      <div class="step">
+        <div class="bead">5</div>
+        <h3>Name the frontier; refuse the fake</h3>
+        <p>No validated method yet — <b>say so plainly.</b></p>
+      </div>
+    </div>
+
+    <div class="compound">
+      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ffb347"/><stop offset="100%" stop-color="#3fe0c8"/>
+        </linearGradient></defs>
+        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
+          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
+        <polygon points="37,8 30,16 44,16" fill="#ffb347"/>
+        <circle cx="37" cy="37" r="6" fill="#ffb347" opacity=".25"/>
+        <circle r="3" fill="#ffe0a8">
+          <animateMotion dur="5s" repeatCount="indefinite" path="M37,11 a26,26 0 1,1 -0.1,0"/>
+        </circle>
+      </svg>
+      <div class="ctext">
+        <div class="cyc">drop usage<span class="arr">→</span>read the amplifier<span class="arr">→</span>look for redesign<span class="arr">→</span>watch absorption<span class="arr">→</span>name the frontier</div>
+        <p>The proxies are <b>directional reads, not return figures</b> — and the institutional ledger stays an open frontier on purpose, because faking it is the exact trap this read exists to catch.</p>
+      </div>
+    </div>
+
+    <!-- the Monday-move / no-permission aside -->
+    <p class="aside">
+      <b>Monday move:</b> open whatever AI dashboard you show leadership and label each metric <span class="mono">usage</span> or <span class="mono">outcome</span> — most are usage.
+      Then ask the team running your most-used workflow one question: <span class="mono amber">"did we redesign how this work flows, or make the old steps faster?"</span>
+      Their answer is your first honest proxy reading — no platform, no budget, no sign-off, no tooling required.
+    </p>
+  </section>
+
+  <!-- ============ WHY ============ -->
+  <section class="why">
+    <div class="beat-label"><b>Why</b></div>
+
+    <div class="principle-block">
+      <div class="principle-label">The principle</div>
+      <p class="principle-line">The <em>productivity paradox</em> — the individual high doesn't aggregate into institutional value on its own.</p>
+    </div>
+
+    <p class="quote">"High adoption with flat outcomes isn't a failure — it's the default. AI doesn't move the needle; it amplifies whatever the needle was already pointing at."</p>
+    <p class="gloss">
+      The mechanism is mundane and total: a tool sits on top of an existing system and amplifies it. Healthy system,
+      the tool compounds it; broken system, the tool makes it fail faster — Klarna ran exactly that arc, subtracting
+      hard and then reversing. <b>Usage metrics measure the tool; outcomes measure the system; the two come apart
+      precisely because the org didn't redesign in between.</b> That's why anything that measures the individual high
+      will always overstate the business return.
+    </p>
+    <p class="gloss">
+      And the reason institutional ROI resists measurement isn't laziness — it's that <em>the playbook for turning a
+      traditional org AI-native does not exist yet</em>, so there's no validated baseline to measure return against.
+      Open frontier — no validated method exists today. The builder-leader's edge is to say so plainly and read the
+      proxies, while the market sells dashboards that feel like answers. A "we don't know yet, here's why, here's the
+      proxy" read beats a fabricated one every time it meets a CFO who can do arithmetic.
+    </p>
+    <div class="corollary"><span class="sd"></span>AI doesn't fix the funnel. It reveals and amplifies the one you're already running.</div>
+  </section>
+
+  <!-- ============ CONNECTS TO ============ -->
+  <section class="connects">
+    <h2>Connects to</h2>
+    <div class="sub">Threads leaving this node · the pattern language</div>
+
+    <div class="web">
+      <svg viewBox="0 0 1080 300" aria-hidden="true">
+        <defs>
+          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#a86a1f" stop-opacity=".6"/></linearGradient>
+          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <circle cx="150" cy="150" r="30" fill="none" stroke="#ffb347" stroke-width="1.2" opacity=".5"/>
+        <circle cx="150" cy="150" r="11" fill="#ffb347" filter="url(#wglow)"/>
+        <circle cx="150" cy="150" r="46" fill="none" stroke="#ffb347" stroke-width=".7" opacity=".25"/>
+
+        <path id="th1" d="M150,150 C360,74 540,56 760,62" stroke="url(#t1)" stroke-width="2.2" fill="none"/>
+        <path id="th2" d="M150,150 C380,150 560,150 760,150" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
+        <path id="th3" d="M150,150 C360,226 540,244 760,240" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
+
+        <circle r="2.8" fill="#ffe0a8"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+      </svg>
+
+      <div class="neighbours">
+        <div class="origin-chip" style="left:13.8%;top:50%">Did it move the needle?<small>business lane · you are here</small></div>
+        <a class="nb" href="redesign-what-ai-revealed.html" style="left:74%;top:20.7%" title="The move once the amplifier read shows a broken system"><span class="sd"></span>Redesign what the AI revealed</a>
+        <a class="nb teal" href="design-the-filter.html" style="left:74%;top:50%" title="How you decide which slice of work the agent should touch"><span class="sd"></span>Design the filter</a>
+        <a class="nb" href="cross-to-company.html" style="left:74%;top:80%"><span class="sd"></span>Cross to company</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="floor">
+    <span class="door">An honest "we don't know yet, here's the proxy" beats a fabricated dashboard — and it's the read that licenses real redesign budget.</span>
+    <span class="meta">The Big Picture · Pattern Language</span>
+  </footer>
+
+</div>
+</body>
+</html>
