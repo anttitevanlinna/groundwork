@@ -407,6 +407,8 @@
 
   .wp{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 80px}
   .wp-cover{padding:90px 0 30px;border-bottom:1px solid var(--hairline)}
+  .wp-back{display:inline-block;margin-bottom:20px;font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--spore);text-decoration:none;border-bottom:1px solid rgba(255,179,71,.35);padding-bottom:2px;opacity:.85;transition:opacity .2s,border-color .2s}
+  .wp-back:hover{opacity:1;border-color:var(--spore)}
   .wp-cover .eyebrow{font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:var(--teal-dim)}
   .wp-cover h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(44px,8vw,84px);line-height:.96;color:var(--spore);letter-spacing:-.02em;margin:16px 0 0}
   .wp-cover h1 em{font-style:italic;color:var(--teal)}
@@ -437,6 +439,7 @@
 <body>
 <div class="wp">
 <header class="wp-cover">
+  <a class="wp-back" href="index.html">← The Big Picture — open the canvas</a>
   <div class="eyebrow">The Big Picture · Field Guide</div>
   <h1>A personal operating system for the <em>builder-leader</em></h1>
   <p class="ns">Personal agents are easy. The wall is team &amp; company. This is the system that gets you across.</p>
@@ -13491,9 +13494,10 @@
     </p>
 
     <p>
-      Five independent research streams — legal, cross-industry, security, finance, software — all find the same pattern:
-      access to AI is high and rising (54–95% of organisations have something deployed); autonomous trust is stuck at 5–22%.
-      The gaps are enormous: 61 points in legal, 80 in cross-industry, 66 in security. This is not a slow adoption curve.
+      Across domains — legal, cross-industry, security, finance, software — the same pattern recurs widely enough to be
+      beyond doubt: access to AI is high and rising; autonomous <em>production</em> trust lags far behind, and the gap
+      is large and consistent everywhere it's been looked at. (We won't put survey-grade numbers on it we can't yet stand
+      behind — the shape is what's certain.) This is not a slow adoption curve.
       It's an org-learning bottleneck. <b>The bottleneck is not access. It is the absence of a protocol for building
       observed competence between pilot and deploy.</b> The autonomy ladder is that protocol, made explicit and auditable.
     </p>
@@ -13991,10 +13995,10 @@
     <p class="quote">"The move is not to jump from rung 1 to rung 6. The move is to earn the next rung."</p>
 
     <p class="gloss">
-      Five independent research streams — legal, cross-industry, security, finance, task-specific software —
-      all find the same structural gap between access and autonomous trust. The numbers vary by domain
-      but the shape is constant: organisations that have AI deployed (54–95%) vastly outnumber those that trust it
-      to act autonomously (5–22%). The gap is not ignorance. It's the absence of a protocol for building evidence
+      Across domains — legal, cross-industry, security, finance, task-specific software —
+      the same structural gap recurs between access and autonomous trust. The shape is constant:
+      organisations that have AI deployed vastly outnumber those that trust it
+      to act autonomously. The gap is not ignorance. It's the absence of a protocol for building evidence
       between "it demos well" and "it acts in production." The autonomy ladder makes that evidence-building explicit,
       step by step, artefact by artefact.
     </p>
@@ -15828,10 +15832,10 @@
 
     <p class="gloss">
       There is a wide gap between the number of organisations that have rolled out AI access and the number where
-      it has reached genuine production trust — five independent datasets across legal, finance, security,
-      cross-industry and enterprise contexts all show the same structure: widespread access, rare production
-      readiness, gaps consistently over 35 percentage points. (Source: domain-convergence.md, Pattern 47 — the
-      Access-Trust Gap cross-domain meta-pattern.) The bottleneck is organisational, not computational.
+      it has reached genuine production trust: broad access, rare production readiness. The same structure shows up
+      across domains — legal, finance, security, enterprise — widely enough that the pattern is not in doubt, even
+      though we won't put a survey-grade number on the spread we can't yet stand behind. The bottleneck is
+      organisational, not computational.
       <b>This card is the mechanism for crossing it</b> — one person, one slice, one absorption plan at a time.
     </p>
 

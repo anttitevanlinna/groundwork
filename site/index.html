@@ -49,6 +49,8 @@
   .orient .headline strong{color:var(--spore);}
   .orient .click-cue{font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal-dim);display:flex;align-items:center;gap:6px;justify-content:flex-end;}
   .orient .click-cue::before{content:"";display:block;width:18px;height:1px;background:var(--teal-dim);opacity:.6;}
+  .orient .read-all{margin-top:8px;font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--spore);text-decoration:none;border-bottom:1px solid rgba(255,179,71,.35);padding-bottom:2px;align-self:flex-end;transition:border-color .2s,opacity .2s;opacity:.85;}
+  .orient .read-all:hover{opacity:1;border-color:var(--spore);}
 
   /* ===== CANVAS ===== */
   .canvas{position:relative;min-height:0;}
@@ -202,6 +204,7 @@
     <div class="orient">
       <span class="headline"><strong>Two lanes, one six-step loop.</strong> Every bright dot is a deep how-to page — click any node to open it.</span>
       <span class="click-cue">Personal → Team → Company — the loop climbs</span>
+      <a class="read-all" href="whitepaper.html">Or read the whole field guide, end to end →</a>
     </div>
   </header>
 
