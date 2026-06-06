@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mine the plan for rules — Pattern · The Big Picture</title>
+<title>Mine the plan for rules — Groundwork</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Spline+Sans:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
     --soil-0:#05080a;
@@ -23,6 +23,12 @@
     --hairline:rgba(63,224,200,.10);
     --grey:#5d6a68;
     --grey-dim:#39423f;
+    /* DNS / network accents — a discrete, addressable palette distinct from spillway+violin */
+    --wire:#7fb4ff;
+    --wire-dim:#3a5e9e;
+    --wire-faint:#1f3257;
+    --nx:#ff6a6a;
+    --nx-dim:#8a2f2f;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -35,15 +41,13 @@
     position:relative;
     overflow-x:hidden;
   }
-  /* atmospheric soil + light-well — recedes for the long read */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
+      radial-gradient(120% 70% at 88% 2%, rgba(127,180,255,.08) 0%, transparent 46%),
       radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
       linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
   }
-  /* grain / spore dust */
   body::after{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
@@ -51,7 +55,7 @@
 
   .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 64px;}
 
-  /* ============ BREADCRUMB ============ */
+  /* breadcrumb (theme-kept) */
   .crumb{
     font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
     color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
@@ -60,39 +64,38 @@
   .crumb a:hover{color:var(--teal)}
   .crumb .here{color:var(--ink)}
 
-  /* ============ PATTERN HEADER (name + essence) ============ */
-  header.pat{padding:30px 0 8px;max-width:900px;}
-  .kicker{
-    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
-    text-transform:uppercase;color:var(--teal-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  /* ============ HEADER — DNS query-string opener (frame-native, not the .kicker chassis) ============ */
+  header.zone{padding:34px 0 8px;max-width:920px;}
+  .query-line{
+    font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.06em;
+    color:var(--wire-dim);display:inline-flex;align-items:center;gap:11px;flex-wrap:wrap;
+    border:1px solid var(--wire-faint);border-radius:30px;padding:7px 15px 8px;
+    background:rgba(31,50,87,.16);
   }
-  .kicker .spore-mark{
-    width:8px;height:8px;border-radius:50%;background:var(--teal);
-    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 14px 2px rgba(63,224,200,.6);
-    flex:none;
+  .query-line .q-dot{
+    width:8px;height:8px;border-radius:50%;background:var(--wire);flex:none;
+    box-shadow:0 0 0 3px rgba(127,180,255,.12),0 0 13px 2px rgba(127,180,255,.55);
   }
-  .kicker .pat-no{color:var(--ink-faint)}
-  header.pat h1{
+  .query-line .q-rec{color:var(--wire)}
+  .query-line .q-arr{color:var(--ink-faint)}
+  .query-line .q-no{color:var(--ink-faint)}
+  header.zone h1{
     font-family:'Fraunces',serif;font-weight:400;font-size:clamp(40px,7vw,68px);line-height:.98;
-    color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
+    color:var(--spore);letter-spacing:-.015em;margin:18px 0 0;
   }
-  header.pat h1 em{font-style:italic;color:var(--teal);font-weight:400}
-  .principle{
+  header.zone h1 em{font-style:italic;color:var(--teal);font-weight:400}
+  .standfirst{
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
+    font-size:19px;line-height:1.36;color:var(--ink-dim);margin-top:14px;letter-spacing:.003em;max-width:740px;
   }
-  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
-  .essence{
-    font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:720px;
-  }
-  .essence b{color:var(--spore);font-weight:500}
+  .standfirst b{color:var(--wire);font-weight:500;font-style:normal;letter-spacing:.005em}
 
-  /* ============ HERO PICTURE ============ */
+  /* ============ HERO — split resolver lookup (DISCRETE / BINARY; no flow imagery) ============ */
   .hero-frame{
-    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
-    background:linear-gradient(180deg, rgba(13,31,32,.5), rgba(5,8,10,.6));
+    margin:32px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(13,22,38,.5), rgba(5,8,10,.6));
     position:relative;
-    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.04) inset;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(127,180,255,.05) inset;
   }
   .hero-frame svg{display:block;width:100%;height:auto}
   .hero-cap{
@@ -100,214 +103,218 @@
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
     color:var(--ink-dim);text-transform:uppercase;
   }
-  .hero-cap b{color:var(--teal)}
+  .hero-cap b{color:var(--wire)}
 
-  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
-  .prose{
-    margin-top:34px;max-width:760px;
-  }
+  /* ============ PROSE (typography kept; section markers re-keyed to the wire accent) ============ */
+  .prose{margin-top:40px;max-width:760px;}
   .prose h2{
     font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
     letter-spacing:-.012em;line-height:1.08;margin-top:14px;
   }
   .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
-  .prose h2.amber em{color:var(--amber)}
-  .prose .sec-label{
+  .sec-label{
     font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
     text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
-    margin-top:42px;
+    margin-top:46px;
   }
-  .prose .sec-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
-    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
+  .sec-label::before{
+    content:"";width:6px;height:6px;border-radius:2px;background:var(--wire-dim);
+    box-shadow:0 0 9px rgba(127,180,255,.6);flex:none;
   }
-  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .sec-label.nx::before{background:var(--nx-dim);box-shadow:0 0 9px rgba(255,106,106,.5);border-radius:50%}
   .prose p{
-    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
-    letter-spacing:.002em;
+    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;letter-spacing:.002em;
   }
   .prose p b{color:var(--spore);font-weight:500}
   .prose p em{font-style:italic;color:var(--ink-dim)}
-  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
-  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
-  .prose p .mono{
-    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
+  .prose .mono{
+    font-family:'Spline Sans Mono',monospace;font-size:13px;color:var(--wire);letter-spacing:.005em;
+    white-space:nowrap;
   }
-  .prose p .mono.amber{color:var(--amber)}
+  .prose .mono.nx{color:var(--nx);font-weight:500}
+  .prose .mono.zone{color:var(--teal)}
   .prose .pull{
-    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
+    margin:24px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--wire-dim);
     font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
     color:var(--ink);max-width:680px;
   }
-  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
+  .prose .pull b{color:var(--wire);font-weight:500;font-style:normal}
 
-  /* ============ PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
-  .diagram{
-    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+  /* ============ RESOLUTION RADIUS — a TWO-option scope choice (NOT a three-bin table) ============ */
+  .radius{
+    margin-top:30px;display:grid;grid-template-columns:1fr 1fr;gap:18px;
+  }
+  .zone-card{
+    border:1px solid var(--hairline);border-radius:14px;padding:20px 22px 22px;
     background:
-      radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
-      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
+      radial-gradient(120% 130% at 0% 0%, rgba(127,180,255,.06), transparent 58%),
+      rgba(8,15,17,.5);
     position:relative;
-    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
   }
-  .diagram svg{display:block;width:100%;height:auto}
-  .diagram .dcap{
-    padding:12px 20px 16px;border-top:1px solid var(--hairline);
-    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
-    color:var(--ink-dim);letter-spacing:.003em;
-    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  .zone-card .zhead{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--wire-dim);display:flex;align-items:center;gap:8px;
   }
-  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
-  .diagram .dcap .num{
-    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
-    letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
+  .zone-card .zhead::before{
+    content:"";width:7px;height:7px;border-radius:50%;background:var(--wire);flex:none;
+    box-shadow:0 0 0 3px rgba(127,180,255,.12),0 0 11px 2px rgba(127,180,255,.5);
   }
+  .zone-card .zpath{
+    font-family:'Spline Sans Mono',monospace;font-size:14.5px;color:var(--teal);
+    margin-top:11px;letter-spacing:.005em;
+  }
+  .zone-card .zwhat{font-size:14px;line-height:1.5;color:var(--ink);margin-top:10px}
+  .zone-card .zwhat b{color:var(--spore);font-weight:500}
+  .zone-card .zscope{
+    margin-top:13px;font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+  .zone-card .zscope b{color:var(--wire);font-weight:500}
 
-  /* ============ RECIPE SECTION BEATS ============ */
-  .beat-label{
-    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
-    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
-  }
-  .beat-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
-    box-shadow:0 0 9px rgba(63,224,200,.6);
-  }
-  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
-  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
-
-  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
-  .plates{
-    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
-  }
-  .plate{
-    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
-    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
-  }
-  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
-  .plate .body b{color:var(--spore);font-weight:500}
-  .plate .body .grey{color:var(--grey)}
-  .plate .body .mono{font-family:'Spline Sans Mono',monospace;font-size:12px;color:var(--teal);letter-spacing:.005em}
-  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
-  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
-  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
-
-  /* ============ CORE MOVES ============ */
-  .moves{margin-top:46px}
-  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px;flex-wrap:wrap}
-  .moves-head h2{
-    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
-  }
-  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
-  .move-rail{
-    margin-top:20px;position:relative;
-    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
-  }
-  .move-rail .thread{
-    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
-    background:linear-gradient(90deg,
-      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
-      rgba(63,224,200,.7) 50%, rgba(255,179,71,.65) 94%, rgba(255,179,71,0) 100%);
-  }
-  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
-  .step:first-child{padding-left:0}
-  .step .bead{
-    width:42px;height:42px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
-    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
-    margin-bottom:13px;
-  }
-  .step:nth-child(6) .bead{
-    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
-  }
-  .step h3{
-    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
-  }
-  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
-  .step p b{color:var(--ink);font-weight:500}
-
-  .compound{
-    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
-    padding:18px 22px;position:relative;overflow:hidden;
+  /* the dead-letter callout — NXDOMAIN, the third location that is NOT a third bin but a failure */
+  .nxdomain{
+    margin-top:18px;border:1px dashed var(--nx-dim);border-radius:14px;
+    padding:18px 22px 20px;position:relative;overflow:hidden;
     background:
-      radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.07), transparent 60%),
-      rgba(8,17,18,.55);
-    display:flex;align-items:center;gap:20px;
+      radial-gradient(130% 150% at 100% 0%, rgba(255,106,106,.06), transparent 55%),
+      rgba(15,8,8,.45);
   }
-  .compound .loop-ico{flex:none}
-  .compound .ctext{flex:1}
-  .compound .ctext .cyc{
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
+  .nxdomain .nlabel{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--nx);display:flex;align-items:center;gap:9px;
   }
-  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
-  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
-  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+  .nxdomain .nlabel::before{
+    content:"";width:7px;height:7px;border-radius:50%;background:var(--nx);flex:none;
+    box-shadow:0 0 0 3px rgba(255,106,106,.1),0 0 11px 2px rgba(255,106,106,.45);
+  }
+  .nxdomain p{font-size:14.5px;line-height:1.55;color:var(--ink);margin-top:11px;max-width:700px}
+  .nxdomain p b{color:var(--spore);font-weight:500}
+  .nxdomain .mono{font-family:'Spline Sans Mono',monospace;font-size:13px;color:var(--nx);white-space:nowrap}
 
-  .aside{
-    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
-    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+  /* ============ THE WIRING BEAT — the @import record (the most-skipped beat) ============ */
+  .wire-beat{
+    margin-top:30px;border:1px solid rgba(127,180,255,.22);border-radius:16px;
+    overflow:hidden;position:relative;
+    background:
+      radial-gradient(130% 150% at 100% 0%, rgba(127,180,255,.08), transparent 55%),
+      rgba(7,12,20,.6);
   }
-  .aside b{color:var(--amber);font-weight:500}
-  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
+  .wire-beat .wb-top{
+    padding:20px 26px 4px;
+  }
+  .wire-beat .wb-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--wire);display:flex;align-items:center;gap:9px;
+  }
+  .wire-beat .wb-label::before{
+    content:"";width:7px;height:7px;border-radius:2px;background:var(--wire);flex:none;
+    box-shadow:0 0 0 3px rgba(127,180,255,.12),0 0 11px 2px rgba(127,180,255,.5);
+  }
+  .wire-beat .wb-top p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:13px;max-width:720px}
+  .wire-beat .wb-top p b{color:var(--spore);font-weight:500}
+  .wire-beat .codeblock{
+    margin:18px 0 0;padding:18px 26px 22px;border-top:1px solid var(--wire-faint);
+    background:linear-gradient(180deg, rgba(5,8,14,.4), rgba(5,8,10,.7));
+    font-family:'Spline Sans Mono',monospace;font-size:13px;line-height:1.85;color:var(--ink-dim);
+    overflow-x:auto;
+  }
+  .wire-beat .codeblock .cmt{color:var(--ink-faint)}
+  .wire-beat .codeblock .file{color:var(--ink)}
+  .wire-beat .codeblock .imp{color:var(--wire);font-weight:500}
+  .wire-beat .codeblock .imp .at{color:var(--teal)}
+  .wire-beat .codeblock .pub{color:var(--teal)}
 
-  /* ============ WHY ============ */
+  /* ============ COLD-START-RECITE TEST (frame-native, not the .practice chassis) ============ */
+  .recite{
+    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
+    padding:24px 28px 26px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(127,180,255,.05), transparent 55%),
+      rgba(8,13,17,.5);
+  }
+  .recite .r-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--wire-dim);display:flex;align-items:center;gap:9px;margin-bottom:14px;
+  }
+  .recite .r-label::before{
+    content:"";width:7px;height:7px;border-radius:2px;background:var(--wire-dim);flex:none;
+    box-shadow:0 0 9px rgba(127,180,255,.5);
+  }
+  .recite p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:11px;max-width:740px}
+  .recite p b{color:var(--spore);font-weight:500}
+  .recite .verdict{
+    margin-top:18px;display:flex;gap:14px;flex-wrap:wrap;
+  }
+  .recite .v{
+    flex:1;min-width:220px;border-radius:12px;padding:14px 16px 15px;
+    font-size:13.5px;line-height:1.5;color:var(--ink);
+  }
+  .recite .v .vtag{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;display:block;margin-bottom:7px;
+  }
+  .recite .v.ok{border:1px solid rgba(63,224,200,.22);background:rgba(8,17,18,.5)}
+  .recite .v.ok .vtag{color:var(--teal)}
+  .recite .v.ok b{color:var(--spore);font-weight:500}
+  .recite .v.fail{border:1px dashed var(--nx-dim);background:rgba(15,8,8,.4)}
+  .recite .v.fail .vtag{color:var(--nx)}
+  .recite .v.fail b{color:var(--spore);font-weight:500}
+
+  /* ============ WHY — belief block (frame-native) ============ */
   .why{
     margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
-    padding:26px 30px 28px;position:relative;overflow:hidden;
+    padding:28px 30px 30px;position:relative;overflow:hidden;
     background:
-      radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
-      radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
-      rgba(7,14,15,.6);
+      radial-gradient(130% 150% at 90% 0%, rgba(127,180,255,.08), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(63,224,200,.05), transparent 55%),
+      rgba(7,12,16,.62);
   }
-  .why .beat-label{margin-bottom:14px}
-  .why .principle-block{
-    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
+  .why .w-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;margin-bottom:16px;
   }
-  .why .principle-label{
-    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
-    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
+  .why .w-label::before{
+    content:"";width:7px;height:7px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.55);
   }
-  .why .principle-line{
-    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
-    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
-  }
-  .why .principle-line em{font-style:italic;color:var(--teal)}
   .why .quote{
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--teal);letter-spacing:.004em;
+    font-size:clamp(23px,3.2vw,31px);line-height:1.18;color:var(--teal);letter-spacing:.004em;
     text-shadow:0 0 30px rgba(63,224,200,.26);max-width:840px;
   }
-  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
+  .why .gloss{font-size:14.5px;line-height:1.62;color:var(--ink);margin-top:18px;max-width:760px}
   .why .gloss b{color:var(--spore);font-weight:500}
   .why .gloss em{font-style:italic;color:var(--ink-dim)}
   .why .gloss + .gloss{margin-top:12px}
-  .why .corollary{
-    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
-    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
-  }
-  .why .corollary .sd{
-    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
-    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
-  }
 
-  /* ============ SYSTEMIC-SCOPE inline panel ============ */
-  .practice{
-    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
-    padding:22px 26px 24px;
+  /* ============ MONDAY — frame-native delivery prompt (NOT the chassis door/coda) ============ */
+  .deliver{
+    margin-top:40px;border:1px solid rgba(127,180,255,.2);border-radius:16px;
+    padding:24px 28px 26px;position:relative;overflow:hidden;
     background:
-      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
-      rgba(8,15,17,.5);
+      radial-gradient(120% 140% at 100% 100%, rgba(127,180,255,.07), transparent 55%),
+      rgba(7,11,18,.6);
   }
-  .practice .beat-label{margin-bottom:12px}
-  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:820px}
-  .practice p b{color:var(--spore);font-weight:500}
-  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
+  .deliver .d-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--wire);display:flex;align-items:center;gap:9px;margin-bottom:14px;
+  }
+  .deliver .d-label::before{
+    content:"";width:8px;height:8px;border-radius:50%;background:var(--wire);flex:none;
+    box-shadow:0 0 0 3px rgba(127,180,255,.12),0 0 13px 2px rgba(127,180,255,.55);
+  }
+  .deliver p{font-size:15.5px;line-height:1.62;color:var(--ink);max-width:740px}
+  .deliver p + p{margin-top:13px}
+  .deliver p b{color:var(--spore);font-weight:500}
+  .deliver .mono{font-family:'Spline Sans Mono',monospace;font-size:13px;color:var(--wire);white-space:nowrap}
+  .deliver .mono.zone{color:var(--teal)}
+  .deliver .tab-note{
+    margin-top:16px;font-family:'Fraunces',serif;font-style:italic;font-size:17px;color:var(--wire);
+    text-shadow:0 0 22px rgba(127,180,255,.28);
+  }
 
-  /* ============ CONNECTS TO ============ */
-  .connects{margin-top:52px}
+  /* ============ CONNECTS TO (theme-kept web grammar; wire-accented) ============ */
+  .connects{margin-top:54px}
   .connects h2{
     font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
   }
@@ -315,7 +322,7 @@
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
     color:var(--ink-faint);margin-top:5px;
   }
-  .web{position:relative;margin-top:8px}
+  .web{position:relative;margin-top:10px}
   .web svg{display:block;width:100%;height:auto}
   .neighbours{position:absolute;inset:0;pointer-events:none}
   .nb{
@@ -335,658 +342,325 @@
     width:8px;height:8px;border-radius:50%;background:var(--teal);flex:none;
     box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 12px 2px rgba(63,224,200,.55);
   }
-  .nb.amber .sd{background:var(--amber);box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 12px 2px rgba(255,179,71,.5)}
+  .nb.wire .sd{background:var(--wire);box-shadow:0 0 0 3px rgba(127,180,255,.12),0 0 12px 2px rgba(127,180,255,.5)}
   .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
-  .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
+  .nb.wire:hover{border-color:var(--wire);color:#eef4ff;background:rgba(12,20,38,.9)}
   .nb:hover .sd{animation:throb 1s ease-in-out infinite}
-  .nb.soon{opacity:.62}
-  .nb.soon::after{
-    content:"soon";
-    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--ink-faint);
-    border:1px solid var(--ink-faint);border-radius:20px;
-    padding:2px 7px 3px;margin-left:4px;
-  }
-  .nb.soon:hover{opacity:1}
   @keyframes throb{50%{transform:scale(1.5)}}
   .origin-chip{
     position:absolute;transform:translate(-50%,-50%);
     font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
-    text-shadow:0 0 24px rgba(63,224,200,.4);white-space:nowrap;text-align:center;
+    text-shadow:0 0 24px rgba(127,180,255,.4);white-space:nowrap;text-align:center;
   }
   .origin-chip small{
     display:block;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:8.5px;
-    letter-spacing:.24em;text-transform:uppercase;color:var(--teal-dim);margin-top:3px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--wire-dim);margin-top:3px;
   }
 
-  /* ============ FOOTER ============ */
-  footer.floor{
-    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
+  /* footer (build strips it; frame-native closer) */
+  footer.dns-floor{
+    margin-top:48px;padding-top:18px;border-top:1px solid var(--hairline);
     display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   }
-  footer.floor .door{
-    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
-    text-shadow:0 0 22px rgba(255,179,71,.3);
+  footer.dns-floor .sign{
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--wire);
+    text-shadow:0 0 22px rgba(127,180,255,.3);
   }
-  footer.floor .meta{
+  footer.dns-floor .meta{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--ink-faint);
   }
 
-  /* breathing glow on the diagram spore-tips */
-  @keyframes breathe{
-    0%,100%{opacity:.55}
-    50%{opacity:1}
-  }
+  @keyframes breathe{0%,100%{opacity:.5}50%{opacity:1}}
   .breathe{animation:breathe 4.2s ease-in-out infinite}
 
-  @media (max-width:860px){
-    .plates{grid-template-columns:1fr 1fr}
-    .plate.use{grid-column:1 / -1}
-  }
   @media (max-width:780px){
-    .plates{grid-template-columns:1fr}
-    .plate.use{grid-column:1}
-    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
-    .move-rail .thread{display:none}
-    .step{padding:0}
-    .compound{flex-direction:column;align-items:flex-start;gap:14px}
-    .neighbours .nb{font-size:11px;padding:6px 10px}
+    .radius{grid-template-columns:1fr}
+    .recite .v{min-width:0}
     .prose p{font-size:14.5px}
+    .prose .mono{white-space:normal}
   }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <!-- ============ BREADCRUMB ============ -->
+  <!-- breadcrumb -->
   <nav class="crumb">
-    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Mine the plan for rules</span>
+    <a href="index.html">&larr; The Big Picture</a>
+    &nbsp;/&nbsp; <span class="here">Mine the plan for rules</span>
   </nav>
 
-  <!-- ============ PATTERN NAME + ESSENCE ============ -->
-  <header class="pat">
-    <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· software · Absorption · the harvest after a real plan session</span></div>
-    <h1>Mine the plan <em>for rules</em></h1>
-    <p class="principle">The principle: <b>structure is persuasive</b> — a plan looks like a decision even when it's a draft, which is exactly why the reasoning you used to shape it is worth more than the plan.</p>
-    <p class="essence">
-      Right after you approve a plan and before you touch the diff, read the session back and
-      <b>harvest the decisions you made</b> into a small file the next plan reads cold — so the judgement
-      that usually evaporates with the tab becomes a rule that fires next time, and at company scale becomes
-      the spec a backlog-triage agent reads.
-    </p>
+  <!-- header -->
+  <header class="zone">
+    <span class="query-line">
+      <span class="q-dot"></span>
+      <span>cold session</span>
+      <span class="q-arr">resolves</span>
+      <span class="q-rec">rule?</span>
+      <span class="q-arr">&rarr;</span>
+      <span class="q-no">A&nbsp;record, or NXDOMAIN</span>
+    </span>
+    <h1>Mine the plan for <em>rules</em></h1>
+    <p class="standfirst">The plan was dictation. The rules it contained are already in the transcript &mdash; the only question is whether you <b>publish</b> them to a zone a session can reach, or leave them in a notebook no resolver ever queries.</p>
   </header>
 
-  <!-- ============ HERO PICTURE: scrollback → three threads → located file ============ -->
-  <div class="hero-frame">
-    <svg viewBox="0 0 1080 420" role="img" aria-label="A just-finished plan session in a terminal on the left — plan, two push-backs, a branch-walk, an approve — with three faint threads pulling the shaping decisions out of it into a small markdown file on the right, one rule shown mid-rewrite, the file tagged auto-loads.">
+  <!-- HERO: split resolver lookup — DISCRETE / BINARY. No water, no flow. -->
+  <figure class="hero-frame">
+    <svg viewBox="0 0 1080 470" role="img" aria-label="A cold-start session sends one query that splits two ways: it resolves to authoritative records in two zone files, or returns NXDOMAIN against a notes folder.">
       <defs>
-        <radialGradient id="hwell" cx="78%" cy="46%" r="64%">
-          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".2"/>
-          <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".07"/>
-          <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
+        <linearGradient id="plan-rule-extract__wireGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#1f3257"/>
+          <stop offset=".5" stop-color="#7fb4ff"/>
+          <stop offset="1" stop-color="#3fe0c8"/>
+        </linearGradient>
+        <linearGradient id="plan-rule-extract__nxGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#1f3257"/>
+          <stop offset="1" stop-color="#ff6a6a"/>
+        </linearGradient>
+        <radialGradient id="plan-rule-extract__node" cx="35%" cy="30%" r="75%">
+          <stop offset="0" stop-color="#bcd6ff"/>
+          <stop offset=".55" stop-color="#7fb4ff"/>
+          <stop offset="1" stop-color="#3a5e9e"/>
         </radialGradient>
-        <linearGradient id="threadG" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#1d8d80" stop-opacity=".35"/>
-          <stop offset="55%" stop-color="#3fe0c8" stop-opacity=".85"/>
-          <stop offset="100%" stop-color="#9bffe9" stop-opacity=".95"/>
-        </linearGradient>
-        <linearGradient id="fileEdge" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#3fe0c8" stop-opacity=".5"/>
-          <stop offset="1" stop-color="#ffb347" stop-opacity=".35"/>
-        </linearGradient>
-        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        <radialGradient id="plan-rule-extract__nodeTeal" cx="35%" cy="30%" r="75%">
+          <stop offset="0" stop-color="#9bffe9"/>
+          <stop offset=".55" stop-color="#3fe0c8"/>
+          <stop offset="1" stop-color="#1d8d80"/>
+        </radialGradient>
+        <filter id="plan-rule-extract__glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="4" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
       </defs>
-      <rect x="0" y="0" width="1080" height="420" fill="url(#hwell)"/>
 
-      <!-- LEFT: the scrollback of a just-finished plan session -->
-      <text x="44" y="36" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.4" fill="#5d6a68">PLAN SESSION · JUST APPROVED · ABOUT TO EVAPORATE</text>
-      <rect x="44" y="52" width="392" height="330" rx="12" fill="rgba(8,17,18,.62)" stroke="rgba(63,224,200,.16)" stroke-width="1"/>
-      <g font-family="'Spline Sans Mono',monospace" font-size="11" fill="#6f8a85">
-        <text x="62" y="84"><tspan fill="#3fe0c8">›</tspan> plan: split checkout off the epic</text>
-        <text x="62" y="112"><tspan fill="#a86a1f">⤺ push-back</tspan> &#8220;flag the migration as soft&#8221;</text>
-        <text x="62" y="140"><tspan fill="#a86a1f">⤺ push-back</tspan> &#8220;no — this repo wants tests first&#8221;</text>
-        <text x="62" y="168"><tspan fill="#3fe0c8">⌥ branch-walk</tspan> step 3 &#8594; 4 &#8594; 5 reviewed</text>
-        <text x="62" y="196"><tspan fill="#9bffe9">✓ approved</tspan> — ready to execute</text>
+      <!-- the querying session (the cold-start origin) -->
+      <g font-family="'Spline Sans Mono', monospace">
+        <rect x="40" y="200" width="172" height="70" rx="10" fill="rgba(31,50,87,.18)" stroke="#3a5e9e" stroke-width="1"/>
+        <circle cx="64" cy="226" r="5" fill="#7fb4ff" filter="url(#plan-rule-extract__glow)"/>
+        <text x="80" y="230" font-size="13" fill="#eafff9">cold start</text>
+        <text x="56" y="252" font-size="10.5" fill="#6f8a85" letter-spacing="1.5">new session &middot; query</text>
       </g>
-      <!-- the buried shaping decisions, faint dots in the scroll -->
+
+      <!-- the discrete query packet — a dashed ADDRESS lookup, not a stream -->
+      <g stroke-dasharray="2 7" stroke-linecap="round">
+        <!-- branch up to the resolved zones -->
+        <path d="M212 224 C 320 224, 360 150, 470 150" fill="none" stroke="url(#plan-rule-extract__wireGrad)" stroke-width="2.4"/>
+        <path d="M212 240 C 330 240, 380 290, 470 290" fill="none" stroke="url(#plan-rule-extract__wireGrad)" stroke-width="2.4"/>
+        <!-- branch down to the dead letter -->
+        <path d="M212 252 C 330 252, 380 400, 470 400" fill="none" stroke="url(#plan-rule-extract__nxGrad)" stroke-width="2.4"/>
+      </g>
+
+      <!-- the split marker (the resolver fork — a discrete decision point) -->
       <g>
-        <circle cx="70" cy="232" r="3.4" fill="#3fe0c8" opacity=".8"/>
-        <text x="84" y="236" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#6f8a85" font-style="italic">what made this plan-able</text>
-        <circle cx="70" cy="262" r="3.4" fill="#3fe0c8" opacity=".8"/>
-        <text x="84" y="266" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#6f8a85" font-style="italic">how I factored it</text>
-        <circle cx="70" cy="292" r="3.4" fill="#ffb347" opacity=".85"/>
-        <text x="84" y="296" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#6f8a85" font-style="italic">the default I rejected for this repo</text>
-      </g>
-      <text x="62" y="352" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#5d6a68" font-style="italic">close the tab &#8594; the judgement is gone</text>
-
-      <!-- THREE THREADS pulling the decisions out -->
-      <g stroke="url(#threadG)" stroke-width="2.2" fill="none" filter="url(#hglow)">
-        <path d="M76,232 C300,224 470,150 690,150"/>
-        <path d="M76,262 C300,270 470,214 690,214"/>
-        <path d="M76,292 C300,316 470,300 690,300"/>
-      </g>
-      <text x="372" y="248" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3fe0c8" transform="rotate(-8 372 248)">HARVEST</text>
-
-      <!-- RIGHT: the located file -->
-      <g filter="url(#hglow)">
-        <rect x="690" y="96" width="346" height="248" rx="12" fill="rgba(8,17,18,.82)" stroke="url(#fileEdge)" stroke-width="1.6"/>
-      </g>
-      <rect x="690" y="96" width="214" height="26" rx="6" fill="rgba(63,224,200,.14)"/>
-      <text x="706" y="114" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing=".04em" fill="#3fe0c8">./CLAUDE.local.md</text>
-
-      <!-- rule 1 -->
-      <text x="706" y="150" font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#9bffe9"># this task wanted plan mode because</text>
-      <text x="720" y="170" font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#cfe6e0">it crossed checkout + billing + the migration</text>
-      <!-- rule 2 — mid-rewrite -->
-      <text x="706" y="198" font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#9bffe9"># before plan mode, factor like this:</text>
-      <text x="720" y="218" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#5d6a68" text-decoration="line-through">pick tasks that span multiple files</text>
-      <text x="720" y="236" font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#ffb347">split when one branch can ship without the rest</text>
-      <!-- rule 3 -->
-      <text x="706" y="264" font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#9bffe9"># default rejected here:</text>
-      <text x="720" y="284" font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#cfe6e0">code-first — this repo wants tests first</text>
-
-      <!-- the firing tag -->
-      <g>
-        <rect x="706" y="304" width="150" height="26" rx="13" fill="rgba(63,224,200,.10)" stroke="#3fe0c8" stroke-width="1"/>
-        <circle cx="722" cy="317" r="4" fill="#aeffee" class="breathe"/>
-        <text x="734" y="321" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".08em" fill="#3fe0c8">auto-loads ✓</text>
-      </g>
-      <text x="872" y="321" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#6f8a85" font-style="italic">fires next session, cold</text>
-
-      <!-- pulse running the harvest thread -->
-      <circle r="3.2" fill="#aeffee">
-        <animateMotion dur="4.6s" repeatCount="indefinite" path="M76,262 C300,270 470,214 690,214"/>
-        <animate attributeName="opacity" values="0;1;1;0" dur="4.6s" repeatCount="indefinite"/>
-      </circle>
-
-      <text x="690" y="372" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">THE PLAN EVAPORATES · THE RULES YOU USED TO SHAPE IT DON'T.</text>
-    </svg>
-    <div class="hero-cap">The plan and the diff get shipped. <b>The judgement gets saved</b> — to a file that reads itself back next time.</div>
-  </div>
-
-  <!-- ============================================================ -->
-  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
-  <!-- ============================================================ -->
-  <section class="prose">
-    <div class="sec-label">The mechanism · the part you already paid for</div>
-    <h2>The plan was the cheap bit. <em>The reasoning was the expensive one.</em></h2>
-
-    <p>
-      Watch where the attention actually goes in a planning session. Not into the plan text — Claude drafts that
-      in seconds. It goes into the <b>decisions you make against the draft</b>: this task is worth planning and that one
-      isn't; split the checkout work off the epic so one branch ships alone; flag the migration step as soft; reject
-      the code-first default because <em>this</em> repo wants tests first. That judgement is the costly part, and it's
-      the part that evaporates fastest. The moment you hit approve, all of it lives only in a transcript you will
-      almost certainly never re-read.
-    </p>
-
-    <p>
-      The honest tell is the gap the curriculum names plainly: <b>templates stay generic; this file carries your rules.</b>
-      A blank task-shaping template gives you tidy advice nobody's actual working style ever matched — &#8220;pick tasks that span
-      multiple files,&#8221; that sort of thing. The rules you really used to shape <em>this</em> task on <em>this</em> codebase
-      only exist in the scrollback until you pull them out. The move isn't to write a playbook from a blank page. It's
-      recognition, not authoring: the judgement is already on the screen, sorted into chat. You just sort it into a file.
-    </p>
-  </section>
-
-  <!-- ============ DIAGRAM 1 — MECHANISM: scroll → sorted threads ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 440" role="img" aria-label="Top: a plan session as one undifferentiated scroll with the shaping decisions buried in the chat. Bottom: the same session with three rules pulled out as distinct labelled threads — what made this plan-able, how I factored it, the default I rejected for this repo.">
-      <defs>
-        <linearGradient id="d1-scroll" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5d6a68" stop-opacity=".5"/><stop offset="1" stop-color="#5d6a68" stop-opacity=".15"/></linearGradient>
-        <linearGradient id="d1-teal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".4"/><stop offset="1" stop-color="#3fe0c8" stop-opacity=".9"/></linearGradient>
-        <linearGradient id="d1-amber" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a86a1f" stop-opacity=".4"/><stop offset="1" stop-color="#ffb347" stop-opacity=".9"/></linearGradient>
-        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.4" fill="#3b524e">SAME DECISIONS · BURIED IN CHAT vs. NAMED AS RULES</text>
-
-      <!-- TOP: undifferentiated scroll -->
-      <text x="40" y="68" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#5d6a68">BEFORE · ONE SCROLL · JUDGEMENT BURIED</text>
-      <g stroke="url(#d1-scroll)" stroke-width="6" stroke-linecap="round">
-        <line x1="48" y1="92" x2="900" y2="92"/>
-        <line x1="48" y1="110" x2="820" y2="110"/>
-        <line x1="48" y1="128" x2="940" y2="128"/>
-        <line x1="48" y1="146" x2="760" y2="146"/>
-        <line x1="48" y1="164" x2="900" y2="164"/>
-      </g>
-      <!-- the three decisions hiding in the scroll, dim -->
-      <g>
-        <circle cx="220" cy="92" r="5" fill="#3fe0c8" opacity=".55"/>
-        <circle cx="540" cy="128" r="5" fill="#3fe0c8" opacity=".55"/>
-        <circle cx="380" cy="164" r="5" fill="#ffb347" opacity=".6"/>
-      </g>
-      <text x="960" y="132" font-family="'Spline Sans',sans-serif" font-size="12" fill="#5d6a68" font-style="italic" text-anchor="end">three decisions,</text>
-      <text x="960" y="150" font-family="'Spline Sans',sans-serif" font-size="12" fill="#5d6a68" font-style="italic" text-anchor="end">lost in the noise</text>
-
-      <!-- the sort -->
-      <g transform="translate(540,200)">
-        <path d="M0,-12 L0,28" stroke="#3fe0c8" stroke-width="1.4" fill="none" opacity=".7"/>
-        <polygon points="0,28 -6,18 6,18" fill="#3fe0c8" opacity=".8"/>
-        <text x="0" y="10" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".24em" fill="#3fe0c8">SORT · DON'T REWRITE THE WORK</text>
+        <circle cx="320" cy="235" r="9" fill="none" stroke="#7fb4ff" stroke-width="1.5"/>
+        <circle cx="320" cy="235" r="3" fill="#7fb4ff" class="breathe"/>
       </g>
 
-      <!-- BOTTOM: three named threads -->
-      <text x="40" y="266" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#3fe0c8">AFTER · THREE THREADS · NAMED &amp; SAVED</text>
+      <!-- ZONE 1: laptop-wide authoritative zone -> resolves -->
+      <g font-family="'Spline Sans Mono', monospace">
+        <rect x="470" y="110" width="280" height="80" rx="11" fill="rgba(8,17,18,.6)" stroke="#1d8d80" stroke-width="1.2"/>
+        <text x="492" y="140" font-size="13.5" fill="#3fe0c8">~/.claude/CLAUDE.md</text>
+        <text x="492" y="162" font-size="10" fill="#6f8a85" letter-spacing="1.5">LAPTOP-WIDE ZONE</text>
+        <!-- the resolved record badge -->
+        <g transform="translate(700,150)">
+          <circle r="22" fill="url(#plan-rule-extract__nodeTeal)" filter="url(#plan-rule-extract__glow)"/>
+          <text y="5" font-size="11" font-weight="500" fill="#05080a" text-anchor="middle">A</text>
+        </g>
+      </g>
 
-      <g filter="url(#d1-glow)">
-        <path d="M60,300 C320,300 560,300 1010,300" stroke="url(#d1-teal)" stroke-width="2.6" fill="none"/>
-        <path d="M60,352 C320,352 560,352 1010,352" stroke="url(#d1-teal)" stroke-width="2.6" fill="none"/>
-        <path d="M60,404 C320,404 560,404 1010,404" stroke="url(#d1-amber)" stroke-width="2.6" fill="none"/>
+      <!-- ZONE 2: repo subdomain -> resolves -->
+      <g font-family="'Spline Sans Mono', monospace">
+        <rect x="470" y="250" width="280" height="80" rx="11" fill="rgba(8,17,18,.6)" stroke="#1d8d80" stroke-width="1.2"/>
+        <text x="492" y="280" font-size="13.5" fill="#3fe0c8">./CLAUDE.local.md</text>
+        <text x="492" y="302" font-size="10" fill="#6f8a85" letter-spacing="1.5">REPO SUBDOMAIN</text>
+        <g transform="translate(700,290)">
+          <circle r="22" fill="url(#plan-rule-extract__nodeTeal)" filter="url(#plan-rule-extract__glow)"/>
+          <text y="5" font-size="11" font-weight="500" fill="#05080a" text-anchor="middle">A</text>
+        </g>
       </g>
-      <g>
-        <circle cx="60" cy="300" r="6" fill="#9bffe9" filter="url(#d1-glow)"/>
-        <circle cx="60" cy="352" r="6" fill="#9bffe9" filter="url(#d1-glow)"/>
-        <circle cx="60" cy="404" r="6" fill="#ffb347" filter="url(#d1-glow)"/>
+
+      <!-- DEAD LETTER: the notes folder -> NXDOMAIN -->
+      <g font-family="'Spline Sans Mono', monospace">
+        <rect x="470" y="365" width="280" height="72" rx="11" fill="rgba(15,8,8,.5)" stroke="#8a2f2f" stroke-width="1.2" stroke-dasharray="5 4"/>
+        <text x="492" y="394" font-size="13" fill="#ff8a8a">~/notes/shaping.md</text>
+        <text x="492" y="415" font-size="10" fill="#8a5a5a" letter-spacing="1.5">NOT AUTO-LOADED</text>
+        <g transform="translate(700,401)">
+          <circle r="22" fill="none" stroke="#8a2f2f" stroke-width="1.4" stroke-dasharray="4 4"/>
+          <line x1="-9" y1="-9" x2="9" y2="9" stroke="#ff6a6a" stroke-width="1.6"/>
+          <line x1="9" y1="-9" x2="-9" y2="9" stroke="#ff6a6a" stroke-width="1.6"/>
+        </g>
       </g>
-      <g font-family="'Spline Sans',sans-serif" font-size="14" fill="#eafff9">
-        <text x="80" y="296">what made this <tspan fill="#3fe0c8" font-style="italic" font-family="'Fraunces',serif">plan-able</tspan></text>
-        <text x="80" y="348">how I <tspan fill="#3fe0c8" font-style="italic" font-family="'Fraunces',serif">factored</tspan> it</text>
-        <text x="80" y="400">the default I <tspan fill="#ffb347" font-style="italic" font-family="'Fraunces',serif">rejected</tspan> for this repo</text>
+
+      <!-- the returned answers, addressed back to the right -->
+      <g font-family="'Spline Sans Mono', monospace" font-size="11.5">
+        <text x="800" y="155" fill="#3fe0c8">&rarr; record found</text>
+        <text x="800" y="295" fill="#3fe0c8">&rarr; record found</text>
+        <text x="800" y="406" fill="#ff6a6a">&rarr; NXDOMAIN</text>
       </g>
-      <g font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#3b524e" text-anchor="end">
-        <text x="1010" y="290">→ A RULE</text>
-        <text x="1010" y="342">→ A RULE</text>
-        <text x="1010" y="394">→ A RULE</text>
+
+      <!-- the verdict strip -->
+      <g font-family="'Fraunces', serif" font-style="italic">
+        <text x="800" y="135" font-size="13" fill="#6f8a85">published</text>
+        <text x="800" y="386" font-size="13" fill="#8a5a5a">captured only</text>
       </g>
     </svg>
-    <div class="dcap"><span class="num">Process diagram · 01</span><b>The decisions didn't change</b> — they got named and saved, instead of evaporating with the tab. The move buys durable shaping, not new content.</div>
+    <figcaption class="hero-cap">Fig. &mdash; one query, two fates: a <b>published</b> rule resolves; a captured-only rule returns NXDOMAIN</figcaption>
+  </figure>
+
+  <!-- PROSE -->
+  <div class="prose">
+
+    <div class="sec-label">The query that fires cold</div>
+    <h2>Every session opens with a <em>lookup</em></h2>
+    <p>Each time a session starts, the agent runs something close to a DNS lookup: it reads the files that auto-load, takes whatever records are present, and begins from there. A rule in <span class="mono zone">~/.claude/CLAUDE.md</span> &mdash; the laptop-wide zone &mdash; resolves in every session on the machine. A rule in <span class="mono zone">./CLAUDE.local.md</span> resolves only when this repo is the working directory: the authoritative zone for that one subdomain. But a rule sitting in a notes folder &mdash; <span class="mono">~/notes/task-shaping.md</span>, <span class="mono">~/.claude/memory/planning-rules.md</span> &mdash; returns <b>NXDOMAIN</b>. No record found. The session starts cold. The rule existed on disk; it was never published to a zone any query reaches.</p>
+    <p>That is the failure this card addresses. Not forgetting to capture &mdash; <b>publishing without checking that the record resolves.</b> A rule can be captured the moment you write it down and stay unpublished forever, and the gap between those two states is invisible until a cold session needs it and comes back empty-handed.</p>
+
+    <div class="sec-label">The publishing window</div>
+    <h2>The session after a plan is the <em>dictation room</em></h2>
+    <p>A plan session produces something more valuable than the plan: the reasoning you used to shape it. You decided this task was worth planning and that one wasn't. You split the checkout work off the epic because one branch could ship independently of the migration. You pushed back on code-first because <em>this</em> repo runs tests first. That judgement is already dictated &mdash; it sits in the scrollback. The plan was the cheap output; the shaping decisions are the expensive content, and they evaporate fastest.</p>
+    <p>So enter <b>after the plan is approved, while the tab is still open.</b> You are not authoring here. You are recognising. The rule is already in the chat; your job is only to <em>address</em> it. Scan the session for the three to five moments where you pushed back, split something, or rejected a default that wouldn't survive this codebase. Write each as a rule &mdash; short, specific, pointing at a moment. <em>&ldquo;Split when one branch can ship without the rest&rdquo;</em> beats <em>&ldquo;prefer small tasks.&rdquo;</em> The first traces to a decision; the second is a template wearing a name.</p>
+
+    <div class="pull">A plan session is a recognition room, not a writing room. The rule was decided live &mdash; you are only naming the address it should resolve at.</div>
+
+    <div class="sec-label">The resolution radius</div>
+    <h2>Pick the <em>zone</em> the rule should resolve in</h2>
+    <p>Once the rules are drafted, the question is scope: <b>where should this rule resolve?</b> There are two authoritative answers &mdash; not a sorting table, just a radius choice. A rule resolves machine-wide or it resolves for one repo, and you pick which.</p>
   </div>
 
-  <!-- ============ PROSE BLOCK 2 — rewrite the generic one ============ -->
-  <section class="prose">
-    <p>
-      Once the three-to-five rules are on the page, do the one thing that separates a real harvest from a tidy summary:
-      <b>rewrite or reject at least one before you save it.</b> The rule that arrives generic is the one that needs your
-      hand on it. &#8220;Pick tasks that span multiple files&#8221; came from nowhere in particular — it's the kind of advice a
-      template would have given you for free. So either make it name a moment from <em>this</em> session (you split
-      checkout off the epic because one branch could ship without the migration) or cut it. The pause where Claude
-      hands you the draft and you push back is not friction; it <b>is the engagement step.</b> A rule you can't trace to
-      a moment in the scrollback is generic by definition.
-    </p>
-
-    <p class="pull">
-      The rule that arrives generic is the one that needs your hand on it. <b>Name a moment from this session, or cut it.</b>
-    </p>
-
-    <div class="sec-label">The location decision · from disk to firing</div>
-    <h2>Where it lives is <em>when it fires</em> — not a folder preference.</h2>
-
-    <p>
-      Here is where most attempts quietly fail, and it feels like progress while it does. You harvest beautiful rules,
-      save them to a notes folder, and feel done. But the dimension that matters isn't tidiness — it's <b>when the rules fire.</b>
-      Two paths auto-load at cold start: <span class="mono">~/.claude/CLAUDE.md</span> fires anywhere on this laptop;
-      <span class="mono">./CLAUDE.local.md</span> fires only when this repo is open. Anywhere else — a notes folder,
-      <span class="mono">~/.claude/memory/task-shaping.md</span> — sits silently on disk until something reads it. And if
-      you pick one of those non-auto-load paths, you have to wire the import yourself: <span class="mono">@~/.claude/memory/task-shaping.md</span>
-      added to a file that <em>does</em> auto-load. Naming a path is not the same as wiring it. That import line is what
-      makes &#8220;fires anywhere on this laptop&#8221; actually fire — and it's the move's most-skipped beat.
-    </p>
-  </section>
-
-  <!-- ============ DIAGRAM 2 — UPGRADE: ephemeral → located → firing ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 400" role="img" aria-label="Three states of the same rule. State one: spoken once in a session, gone at close. State two: written to a notes folder, on disk but read never — the silent trap. State three: at CLAUDE.local.md or import-wired, auto-loads at cold start and actually shapes the next plan.">
-      <defs>
-        <linearGradient id="d2-fade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9bffe9" stop-opacity=".6"/><stop offset="1" stop-color="#9bffe9" stop-opacity="0"/></linearGradient>
-        <linearGradient id="d2-file" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".4"/><stop offset="1" stop-color="#ffb347" stop-opacity=".3"/></linearGradient>
-        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.4" fill="#3b524e">SAME RULE · THREE STATES · ONLY ONE FIRES</text>
-
-      <!-- STATE 1 — ephemeral -->
-      <g>
-        <text x="64" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".2em" fill="#5d6a68">1 · EPHEMERAL</text>
-        <g opacity=".9"><rect x="64" y="92" width="244" height="40" rx="13" fill="rgba(63,224,200,.10)" stroke="rgba(155,255,233,.4)"/>
-          <text x="80" y="117" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">&#8220;split checkout off the epic&#8221;</text></g>
-        <g opacity=".4"><rect x="84" y="148" width="224" height="40" rx="13" fill="rgba(63,224,200,.06)" stroke="rgba(155,255,233,.2)"/>
-          <text x="100" y="173" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#6f8a85" font-style="italic">spoken once&#8230;</text></g>
-        <line x1="64" y1="214" x2="312" y2="214" stroke="url(#d2-fade)" stroke-width="1.4"/>
-        <text x="64" y="236" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12.5" fill="#5d6a68">close the tab → gone</text>
-        <text x="64" y="300" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#5d6a68">READS: NEVER</text>
-      </g>
-
-      <!-- arrow -->
-      <g transform="translate(330,150)"><path d="M0,0 L40,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".6"/><polygon points="40,0 32,-5 32,5" fill="#3fe0c8" opacity=".7"/></g>
-
-      <!-- STATE 2 — located but inert (the silent trap) -->
-      <g>
-        <text x="396" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".2em" fill="#a86a1f">2 · LOCATED · INERT</text>
-        <rect x="396" y="92" width="220" height="150" rx="10" fill="rgba(8,17,18,.7)" stroke="rgba(168,106,31,.5)" stroke-dasharray="5 5"/>
-        <rect x="396" y="92" width="220" height="22" rx="6" fill="rgba(255,179,71,.10)"/>
-        <text x="410" y="108" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#a86a1f">~/…/notes/task-shaping.md</text>
-        <g stroke="#6f8a85" stroke-width="2" opacity=".5">
-          <line x1="412" y1="138" x2="560" y2="138"/><line x1="412" y1="158" x2="590" y2="158"/>
-          <line x1="412" y1="178" x2="540" y2="178"/><line x1="412" y1="198" x2="586" y2="198"/>
-        </g>
-        <!-- a session arriving and missing it -->
-        <text x="396" y="266" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">NEXT SESSION →</text>
-        <path d="M396,278 C440,278 470,278 500,278" stroke="#a86a1f" stroke-width="1.2" stroke-dasharray="3 4" fill="none" opacity=".7"/>
-        <text x="512" y="282" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#a86a1f" font-style="italic">no @import → walks right past</text>
-        <text x="396" y="318" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#a86a1f">READS: NEVER · feels like progress</text>
-      </g>
-
-      <!-- arrow -->
-      <g transform="translate(636,150)"><path d="M0,0 L40,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".6"/><polygon points="40,0 32,-5 32,5" fill="#3fe0c8" opacity=".7"/></g>
-
-      <!-- STATE 3 — firing -->
-      <g>
-        <text x="702" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".2em" fill="#3fe0c8">3 · FIRING</text>
-        <g filter="url(#d2-glow)"><rect x="702" y="92" width="320" height="150" rx="10" fill="rgba(8,17,18,.8)" stroke="url(#d2-file)" stroke-width="1.6"/></g>
-        <rect x="702" y="92" width="320" height="22" rx="6" fill="rgba(63,224,200,.14)"/>
-        <text x="716" y="108" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#3fe0c8">./CLAUDE.local.md  ·  or  @import-wired</text>
-        <g stroke="#9bffe9" stroke-width="2" opacity=".8">
-          <line x1="718" y1="138" x2="900" y2="138"/><line x1="718" y1="158" x2="980" y2="158"/>
-          <line x1="718" y1="178" x2="930" y2="178"/>
-        </g>
-        <g stroke="#ffb347" stroke-width="2.2"><line x1="718" y1="200" x2="960" y2="200"/></g>
-        <!-- cold-start sessions hitting the file -->
-        <g stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".75">
-          <path d="M666,128 C684,128 692,128 702,128"/>
-          <path d="M666,167 C684,167 692,167 702,167"/>
-          <path d="M666,206 C684,206 692,206 702,206"/>
-        </g>
-        <g font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".16em" fill="#6f8a85" text-anchor="end">
-          <text x="662" y="131">MON →</text><text x="662" y="170">TUE →</text><text x="662" y="209">WED →</text>
-        </g>
-        <circle cx="1008" cy="104" r="4" fill="#aeffee" class="breathe"/>
-        <text x="702" y="282" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#3fe0c8" font-style="italic">auto-loads cold → shapes the next plan</text>
-        <text x="702" y="318" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3fe0c8">READS: EVERY SESSION</text>
-      </g>
-
-      <text x="40" y="378" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">LOCATION IS A LOADING DECISION. ONLY THE THIRD STATE ACTUALLY SHAPES THE NEXT PLAN.</text>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 02</span>State two is the silent trap: <b>a rule on disk with no @import is a rule the agent never reads</b> — capture without firing isn't capture.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 3 — name the horizon, don't build it ============ -->
-  <section class="prose">
-    <p>
-      One last beat, and it's a discipline more than an action: <b>name the leverage horizon, then stop.</b> Ask Claude how
-      this same file could drive automated task-splitting later, and you'll hear three plausible shapes — a Slack thread
-      that triages an incoming request, a GitHub issue event that pre-factors the work, a once-a-sprint read of the
-      backlog. Ask for the <em>shapes</em>, not the code. These are named possibility shapes the file could later drive,
-      not capabilities anyone is building or claiming today; today is capture, application is downstream. It's the same
-      &#8220;approve, don't execute&#8221; restraint you just used on the plan, applied one layer up: save the rule, don't ship
-      the bot. If you started writing the Slack triage, the move overshot. (And the runtime, when one of these does ship,
-      is an external app or workflow calling an agent — not Claude Code living inside Slack.)
-    </p>
-
-    <div class="sec-label">The compounding loop · what changes between passes</div>
-    <h2>Each planning session makes the next one <em>cheaper to read</em>.</h2>
-
-    <p>
-      The diagram below closes the thread. You run a plan session; you mine the rules; you rewrite the generic one; you
-      save it to a firing location. Then the next plan opens <b>with the file already in context</b> — so it arrives
-      pre-shaped, the agent needs fewer push-backs to land, and the new decisions you do make become the next harvest.
-      This is the Block-1 move at the planning grain: observation becomes a rule. We borrow the framing from
-      <em>Huryn's three-block memory — a frame for naming what you've built, not a template to fill in</em> — to say
-      what this file collects. Each lap, the task-shaping file carries more rules and the next plan starts further along.
-      Boring on the first session; dominant by the tenth.
-    </p>
-  </section>
-
-  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 420" role="img" aria-label="A closed five-beat loop — plan session runs, mine the rules, rewrite the generic one, save to a firing location, next plan opens pre-shaped — with the task-shaping file visibly densifying across passes one, two and three.">
-      <defs>
-        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/><stop offset="1" stop-color="#ffb347" stop-opacity=".6"/></linearGradient>
-        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#9bffe9"/><stop offset=".55" stop-color="#3fe0c8"/><stop offset="1" stop-color="#1d8d80"/></radialGradient>
-        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.4" fill="#3b524e">COMPOUND INTEREST ON A TASK-SHAPING FILE · WHAT CHANGES BETWEEN PASSES</text>
-
-      <!-- LEFT: the loop -->
-      <g transform="translate(40,60)">
-        <circle cx="200" cy="170" r="132" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="560 60" stroke-linecap="round" transform="rotate(-90 200 170)"/>
-        <circle r="3.6" fill="#aeffee">
-          <animateMotion dur="10s" repeatCount="indefinite" path="M200,38 a132,132 0 1,1 -0.1,0"/>
-          <animate attributeName="opacity" values=".3;1;1;.3" dur="10s" repeatCount="indefinite"/>
-        </circle>
-
-        <!-- five beats -->
-        <g><circle cx="200" cy="38" r="21" fill="url(#d3-bead)" filter="url(#d3-glow)"/><text x="200" y="43" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">1</text><text x="200" y="18" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#eafff9">Plan session runs</text></g>
-        <g><circle cx="326" cy="120" r="21" fill="url(#d3-bead)" filter="url(#d3-glow)"/><text x="326" y="125" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">2</text><text x="354" y="118" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#eafff9">Mine the rules</text></g>
-        <g><circle cx="278" cy="288" r="21" fill="url(#d3-bead)" filter="url(#d3-glow)"/><text x="278" y="293" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">3</text><text x="306" y="312" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#eafff9">Rewrite the generic one</text></g>
-        <g><circle cx="122" cy="288" r="21" fill="url(#d3-bead)" filter="url(#d3-glow)"/><text x="122" y="293" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">4</text><text x="100" y="312" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#eafff9">Save where it fires</text></g>
-        <g><circle cx="74" cy="120" r="21" fill="url(#d3-bead)" filter="url(#d3-glow)"/><text x="74" y="125" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">5</text><text x="46" y="118" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#eafff9">Next plan pre-shaped</text></g>
-
-        <text x="200" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EACH LAP</text>
-        <text x="200" y="184" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">starts further along</text>
-      </g>
-
-      <!-- RIGHT: the file densifying across passes -->
-      <g transform="translate(540,68)">
-        <!-- pass 1 — thin -->
-        <g>
-          <rect x="0" y="14" width="156" height="200" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.22)"/>
-          <rect x="0" y="14" width="156" height="20" rx="6" fill="rgba(63,224,200,.10)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">CLAUDE.local.md</text>
-          <text x="146" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v1</text>
-          <g stroke="#6f8a85" stroke-width="2" opacity=".55"><line x1="12" y1="58" x2="94" y2="58"/><line x1="12" y1="78" x2="136" y2="78"/><line x1="12" y1="98" x2="74" y2="98"/></g>
-          <text x="78" y="240" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#5d6a68">PASS 1 · 1 SESSION</text>
-        </g>
-        <g transform="translate(166,114)"><path d="M0,0 L24,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/><polygon points="24,0 16,-5 16,5" fill="#3fe0c8" opacity=".75"/></g>
-
-        <!-- pass 2 — denser -->
-        <g transform="translate(196,0)">
-          <rect x="0" y="14" width="156" height="220" rx="8" fill="rgba(8,17,18,.78)" stroke="rgba(63,224,200,.35)"/>
-          <rect x="0" y="14" width="156" height="20" rx="6" fill="rgba(63,224,200,.14)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">CLAUDE.local.md</text>
-          <text x="146" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v2</text>
-          <g stroke="#9bffe9" stroke-width="2" opacity=".75"><line x1="12" y1="58" x2="116" y2="58"/><line x1="12" y1="78" x2="136" y2="78"/><line x1="12" y1="98" x2="94" y2="98"/><line x1="12" y1="118" x2="128" y2="118"/><line x1="12" y1="138" x2="104" y2="138"/></g>
-          <g stroke="#ffb347" stroke-width="2" opacity=".75"><line x1="12" y1="158" x2="122" y2="158"/><line x1="12" y1="178" x2="88" y2="178"/></g>
-          <text x="78" y="252" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#9bffe9">PASS 2 · DENSER</text>
-        </g>
-        <g transform="translate(362,124)"><path d="M0,0 L24,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/><polygon points="24,0 16,-5 16,5" fill="#3fe0c8" opacity=".75"/></g>
-
-        <!-- pass 3 — load-bearing -->
-        <g transform="translate(392,0)">
-          <rect x="0" y="0" width="156" height="262" rx="8" fill="rgba(8,17,18,.85)" stroke="url(#d3-ring)" stroke-width="1.5" filter="url(#d3-glow)"/>
-          <rect x="0" y="0" width="156" height="20" rx="6" fill="rgba(255,179,71,.16)"/>
-          <text x="10" y="15" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">CLAUDE.local.md</text>
-          <text x="146" y="15" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v3</text>
-          <g stroke="#ffb347" stroke-width="2.2"><line x1="12" y1="40" x2="134" y2="40"/><line x1="12" y1="60" x2="116" y2="60"/></g>
-          <g stroke="#9bffe9" stroke-width="2" opacity=".8"><line x1="12" y1="84" x2="142" y2="84"/><line x1="12" y1="104" x2="116" y2="104"/><line x1="12" y1="124" x2="134" y2="124"/><line x1="12" y1="144" x2="106" y2="144"/><line x1="12" y1="164" x2="124" y2="164"/><line x1="12" y1="184" x2="134" y2="184"/><line x1="12" y1="204" x2="100" y2="204"/><line x1="12" y1="224" x2="122" y2="224"/></g>
-          <text x="78" y="282" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#ffb347">PASS 3 · PRE-SHAPES</text>
-        </g>
-
-        <!-- legend -->
-        <g transform="translate(0,300)">
-          <rect x="0" y="0" width="14" height="3" fill="#ffb347"/><text x="22" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#a86a1f">RULES THAT EARNED THEIR KEEP</text>
-          <rect x="0" y="14" width="14" height="3" fill="#9bffe9"/><text x="22" y="18" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#1d8d80">SCAFFOLDING · STILL USEFUL</text>
-        </g>
-      </g>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 03</span><em>Each planning session makes the next one cheaper to read</em> — but only if the rules get saved where they fire.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 4 — what Test actually means ============ -->
-  <section class="prose">
-    <div class="sec-label amber">What "Test" actually means · in practice</div>
-    <h2 class="amber">The test is whether you can <em>name the moment</em>.</h2>
-
-    <p>
-      The check isn't &#8220;does this read well&#8221; — a stranger would call any tidy rule file polished. The check is
-      whether you can read each rule aloud and <b>name the session moment that produced it.</b> If you can't, it's
-      generic, and generic is exactly the thing a blank template hands you for free. Run the same test on the firing
-      mechanism: the file is at an auto-load path, or you can point at the <span class="mono">@import</span> line that
-      wires it in — otherwise it's a rule you wrote and the agent will never read. And the last check is a restraint
-      check: you named at least one automation shape <em>and didn't build it.</em> If you started writing the Slack bot,
-      the move overshot into application — these are downstream shapes you name, not a bot you build in this move.
-    </p>
-  </section>
-
-  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
-  <div class="plates">
-    <div class="plate use">
-      <div class="beat-label amber"><b>Use when</b></div>
-      <p class="body">
-        You <b>just ran a real plan session</b> — plan, push-backs, a branch-walk, an approve — and you're about to close
-        the tab for the diff. The shaping judgement is sitting in the <span class="grey">scrollback, about to evaporate.</span>
-        Loudest when you notice you're factoring the <b>same kind of task the same way</b> and re-explaining it from scratch.
-      </p>
+  <!-- RESOLUTION RADIUS: a TWO-option scope choice (NOT a three-bin sort) -->
+  <div class="radius">
+    <div class="zone-card">
+      <div class="zhead">Authoritative zone</div>
+      <div class="zpath">~/.claude/CLAUDE.md</div>
+      <div class="zwhat">Resolves in <b>every session on this machine.</b> Rules that hold across repositories: how you want plans structured, what makes a task worth plan mode, your defaults for splitting work.</div>
+      <div class="zscope">radius: <b>laptop-wide</b></div>
     </div>
-    <div class="plate build">
-      <div class="beat-label"><b>Build</b></div>
-      <p class="body">
-        A task-shaping <span class="mono">.md</span> file at a location you chose, its <b>loading mechanism deliberate</b> —
-        auto-loaded, or <span class="mono">@import</span>-wired. Each rule traces to a session moment; at least one rewritten
-        in your own words.
-      </p>
-    </div>
-    <div class="plate test">
-      <div class="beat-label"><b>Test</b></div>
-      <p class="body">
-        You can <em>name the moment</em> behind every rule.<br>
-        Not just <em class="no">"reads well."</em><br>
-        And it fires next session — proven, not assumed.
-      </p>
+    <div class="zone-card">
+      <div class="zhead">Repo subdomain</div>
+      <div class="zpath">./CLAUDE.local.md</div>
+      <div class="zwhat">Resolves <b>only when this directory is open.</b> Rules bound to this codebase: the test-first requirement, the branch conventions, the edge cases this service keeps hitting.</div>
+      <div class="zscope">radius: <b>this repo only</b></div>
     </div>
   </div>
 
-  <!-- ============ CORE MOVES — actionable heart ============ -->
-  <section class="moves">
-    <div class="beat-label"><b>Core moves</b></div>
-    <div class="moves-head">
-      <h2>The action, in sequence</h2>
-      <span class="lede">Recognition, not authoring — the judgement's already on the screen.</span>
-    </div>
+  <!-- the dead letter: NXDOMAIN is not a third bin, it is the failure mode -->
+  <div class="nxdomain">
+    <div class="nlabel">The dead letter</div>
+    <p>Anywhere else <b>resolves never.</b> A file that doesn't sit in one of those two auto-load paths &mdash; and isn't explicitly imported into one &mdash; doesn't exist at session start. It is the IP address you wrote in your notebook: correct, reachable in theory, invisible to every resolver that matters. The cold session asks for the rule and gets <span class="mono">NXDOMAIN</span> back.</p>
+  </div>
 
-    <div class="move-rail">
-      <div class="thread"></div>
-      <div class="step">
-        <div class="bead">1</div>
-        <h3>Read the session back</h3>
-        <p>Ask Claude to surface <b>3&#8211;5 rules</b> from what you actually did.</p>
-      </div>
-      <div class="step">
-        <div class="bead">2</div>
-        <h3>Rewrite the generic one</h3>
-        <p>Name a moment from this session, <b>or cut it.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">3</div>
-        <h3>Choose where it fires</h3>
-        <p>Auto-load path, or anywhere — <b>location is loading.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">4</div>
-        <h3>Wire the import</h3>
-        <p>Off the auto-load path? <b>The @import is what fires it.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">5</div>
-        <h3>Name the horizon, stop</h3>
-        <p>The shapes, not the code. <b>Capture, don't automate.</b></p>
-      </div>
+  <!-- THE WIRING BEAT: the @import record — the most-skipped beat -->
+  <div class="wire-beat">
+    <div class="wb-top">
+      <div class="wb-label">The most-skipped beat &mdash; wire the record</div>
+      <p>If you want the rule in a separate file &mdash; because you have many, or you're building toward a shared kit &mdash; you can keep it there. But then you <b>must wire the import.</b> An <span style="font-family:'Spline Sans Mono',monospace;color:var(--teal)">@</span>-reference inside an auto-load file is the delegation record: <em>for this zone, look up that file.</em> <b>Naming a path is not the same as wiring it</b> &mdash; the import line is the beat that most looks like a detail and most often gets skipped, and it is the one that turns a note into a published record.</p>
     </div>
+    <div class="codeblock">
+<span class="cmt"># the rule lives in its own file (fine) — but on its own it is NXDOMAIN</span><br>
+<span class="file">~/.claude/memory/task-shaping.md</span>&nbsp;&nbsp;<span class="cmt"># not auto-loaded</span><br>
+<br>
+<span class="cmt"># wire it into the zone that resolves — one line publishes the record:</span><br>
+<span class="cmt"># inside</span> <span class="file">~/.claude/CLAUDE.md</span><br>
+<span class="imp"><span class="at">@</span>~/.claude/memory/task-shaping.md</span>&nbsp;&nbsp;<span class="pub">&rarr; now resolves at cold start</span>
+    </div>
+  </div>
 
-    <div class="compound">
-      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
-        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/></linearGradient></defs>
-        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4" stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
-        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
-        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
-        <circle r="3" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite" path="M37,11 a26,26 0 1,1 -0.1,0"/></circle>
-      </svg>
-      <div class="ctext">
-        <div class="cyc">plan runs<span class="arr">→</span>mine<span class="arr">→</span>rewrite the generic one<span class="arr">→</span>save where it fires<span class="arr">→</span>next plan pre-shaped</div>
-        <p>Then it's a habit, not a chore: <b>compound interest on a task-shaping file.</b> Each lap leaves the next plan starting further along — fewer push-backs to land the work you'd have shaped from scratch.</p>
+  <div class="prose">
+    <div class="sec-label nx">How you know it fired</div>
+    <h2>Verify in a <em>fresh</em> session, not in your head</h2>
+    <p>The test is blunt, and it must run in a session that has loaded <em>nothing</em> from this one. Open a new session in the relevant directory and ask the agent to describe the constraints it's working under for plan-mode tasks. Make it recite. If it reads back the rules you just wrote, the record resolves &mdash; the rule is published. If it starts from a blank baseline, you have NXDOMAIN: the rule is on disk somewhere, but in no zone the session queries. Believing it resolved is not the same as watching it resolve.</p>
+  </div>
+
+  <!-- COLD-START-RECITE TEST -->
+  <div class="recite">
+    <div class="r-label">Test &mdash; cold-start recite</div>
+    <p><b>Open a fresh session. Ask the agent to state its plan-mode constraints before you give it any.</b> Two outcomes, and only one of them means you shipped:</p>
+    <div class="verdict">
+      <div class="v ok">
+        <span class="vtag">recites the rule</span>
+        <b>Resolves.</b> The record is published. The rule will fire on every cold start in this radius, with no prompting from you.
+      </div>
+      <div class="v fail">
+        <span class="vtag">blank baseline</span>
+        <b>NXDOMAIN.</b> Captured, not published. The rule is on disk in the wrong place &mdash; move it to a zone file, or wire the <span style="font-family:'Spline Sans Mono',monospace">@import</span>.
       </div>
     </div>
+  </div>
 
-    <!-- the Monday-move / no-permission aside -->
-    <p class="aside">
-      <b>Monday move:</b> after your next real plan session — once you've approved and <b>before</b> you execute — don't close the tab.
-      Ask Claude for 3&#8211;5 task-shaping rules from what you did, rewrite the generic one, and save to a firing path.
-      <span class="mono">Your own session · your own file · ./CLAUDE.local.md is gitignored · no platform · no budget · no sign-off · ~10 min.</span>
-      The work is already done — you're just keeping the part that usually evaporates.
-    </p>
-  </section>
+  <div class="prose">
+    <div class="sec-label">Why this is the delivery problem</div>
+    <h2>Capture <em>feels</em> like the work; it isn't</h2>
+    <p>Rules are cheap to write. The trap is that writing the rule down <em>feels</em> like the work is done &mdash; so most practitioners treat capture as the terminal step and stop one move short. DNS makes the error legible: you can have perfect knowledge of the correct address and still be unreachable, because knowing an IP and publishing it to a zone any query can find are <b>genuinely different steps.</b> Capture is knowing the address. Delivery is publishing the record. The whole card lives in that gap.</p>
+  </div>
 
-  <!-- ============ WHY — the conviction ============ -->
-  <section class="why">
-    <div class="beat-label"><b>Why</b></div>
+  <!-- WHY / belief -->
+  <div class="why">
+    <div class="w-label">Why &mdash; the belief underneath</div>
+    <div class="quote">A rule that resolves is infrastructure. A rule that doesn't is a note to yourself.</div>
+    <p class="gloss">A move only counts when it crosses the wall &mdash; and a rule crosses the wall the moment a session other than the one that wrote it can reach it. Until then it is private knowledge wearing the costume of leverage. <b>The delivery step is the give-it-away step</b>, scaled down to a single file: publish the record and every future session inherits it for free; leave it captured and you re-decide it cold, every time, forever.</p>
+    <p class="gloss">This is why recognition beats authoring in the plan room. The expensive thinking already happened; refusing to publish it is the most common way to <em>feel</em> productive while delivering nothing.</p>
+  </div>
 
-    <div class="principle-block">
-      <div class="principle-label">The principle</div>
-      <p class="principle-line">Structure is <em>persuasive</em> — a plan looks like a decision even when it's a draft. So keep the reasoning, not the draft.</p>
-    </div>
+  <!-- MONDAY: frame-native delivery prompt -->
+  <div class="deliver">
+    <div class="d-label">This week &mdash; deliver one record</div>
+    <p>Take the <b>last rule you captured</b> &mdash; from a plan session, a push-back, a sprint retro, wherever it landed. Ask two questions: <em>where does it live,</em> and <em>will it fire next time?</em></p>
+    <p>If it sits in <span class="mono zone">~/.claude/CLAUDE.md</span> or <span class="mono zone">./CLAUDE.local.md</span> already, it resolves &mdash; you're done. If it lives anywhere else, decide its radius and move it there, or add the <span class="mono">@import</span> that wires it into a file that auto-loads. Then open a fresh session and make it recite. <b>Delivery, not capture.</b></p>
+    <p class="tab-note">The tab is about to close. Publish the record before it does.</p>
+  </div>
 
-    <p class="quote">"The plan evaporates; the rules you used to shape it shouldn't."</p>
-    <p class="gloss">
-      The counterintuitive bit: the valuable artefact isn't the plan, and it isn't the diff — it's the <b>rules you used
-      to shape them.</b> A blank task-shaping template produces tidy generic advice nobody's working style ever matched.
-      A file mined from a real session produces rules that <b>recognise the next task</b> because they were born from the
-      last one. Same observation→rule move you'd make on any session, run at the planning grain.
-    </p>
-    <p class="gloss">
-      And the location discipline is where most attempts quietly die. A rule that doesn't auto-load, or isn't
-      <span style="font-family:'Spline Sans Mono',monospace;color:#3fe0c8">@import</span>-wired, is a rule that fires
-      <em>never</em> — which feels like progress and isn't. Capture without firing isn't capture.
-    </p>
-    <div class="corollary"><span class="sd"></span>The plan evaporates; the rules you used to shape it shouldn't.</div>
-  </section>
-
-  <!-- ============ SYSTEMIC LINE — personal → team → company (surfaced) ============ -->
-  <section class="practice">
-    <div class="beat-label amber"><b>Where this sits · personal → team → company</b></div>
-    <p>
-      At <b>personal scope</b> this is the harvest that turns one planning session's judgement into a firing rule.
-      At <b>team scope</b> the same task-shaping file becomes a shared spec — how your team factors work, written down
-      instead of re-explained. At <b>company scope</b> it's the steady spec a backlog-triage agent reads on every Slack
-      thread, issue event, or sprint cadence — so <b>how the org factors work stops living in each engineer's head</b>
-      and becomes a guardrail the whole intake runs against. (Positioning, not a coined law — and those automation shapes
-      stay named, not built, until that's a downstream conversation.)
-    </p>
-  </section>
-
-  <!-- ============ CONNECTS TO — neighbour patterns ============ -->
+  <!-- CONNECTS TO -->
   <section class="connects">
     <h2>Connects to</h2>
-    <div class="sub">Threads leaving this node · the pattern language</div>
-
+    <div class="sub">// the neighbour web</div>
     <div class="web">
-      <svg viewBox="0 0 1080 300" aria-hidden="true">
+      <svg viewBox="0 0 1080 300" role="img" aria-label="This card sits between the cards that grow rules and the cards that route them; links drawn as resolution paths.">
         <defs>
-          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
-          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="plan-rule-extract__webA" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#3fe0c8" stop-opacity=".55"/>
+            <stop offset="1" stop-color="#7fb4ff" stop-opacity=".15"/>
+          </linearGradient>
+          <linearGradient id="plan-rule-extract__webB" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#7fb4ff" stop-opacity=".5"/>
+            <stop offset="1" stop-color="#7fb4ff" stop-opacity=".12"/>
+          </linearGradient>
         </defs>
-
-        <circle cx="150" cy="150" r="30" fill="none" stroke="#3fe0c8" stroke-width="1.2" opacity=".5"/>
-        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#wglow)"/>
-        <circle cx="150" cy="150" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
-
-        <path id="th1" d="M150,150 C360,82 540,66 760,70" stroke="url(#t1)" stroke-width="2.2" fill="none"/>
-        <path id="th2" d="M150,150 C380,150 560,150 760,150" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
-        <path id="th3" d="M150,150 C360,222 540,236 760,236" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
-
-        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+        <path d="M540 150 C 360 90, 270 80, 175 96" fill="none" stroke="url(#plan-rule-extract__webA)" stroke-width="1.6" stroke-dasharray="2 7"/>
+        <path d="M540 150 C 360 210, 270 224, 175 210" fill="none" stroke="url(#plan-rule-extract__webA)" stroke-width="1.6" stroke-dasharray="2 7"/>
+        <path d="M540 150 C 720 90, 820 80, 905 100" fill="none" stroke="url(#plan-rule-extract__webB)" stroke-width="1.6" stroke-dasharray="2 7"/>
+        <path d="M540 150 C 720 210, 820 222, 905 206" fill="none" stroke="url(#plan-rule-extract__webB)" stroke-width="1.6" stroke-dasharray="2 7"/>
+        <circle cx="540" cy="150" r="6" fill="#7fb4ff" filter="url(#plan-rule-extract__glow)"/>
       </svg>
-
       <div class="neighbours">
-        <div class="origin-chip" style="left:13.8%;top:50%">Mine the plan for rules<small>software · Absorption · you are here</small></div>
-        <a class="nb"       href="plan-read-two-passes.html" style="left:74%;top:23.3%"><span class="sd"></span>Read the plan in two passes <span class="recipe-no">upstream sibling</span></a>
-        <a class="nb"       href="compound-from-evidence.html" style="left:74%;top:50%"><span class="sd"></span>Compound from evidence <span class="recipe-no">the general engine</span></a>
-        <a class="nb amber" href="three-block-memory.html" style="left:74%;top:78.7%"><span class="sd"></span>Three-block memory <span class="recipe-no">the naming lens</span></a>
+        <div class="origin-chip" style="left:50%;top:50%;">Mine the plan for rules<small>YOU ARE HERE</small></div>
+        <a class="nb" href="compound-from-evidence.html" style="left:16%;top:32%;">
+          <span class="sd"></span><span>compound the rule from evidence</span>
+          <span class="recipe-no">grows it</span>
+        </a>
+        <a class="nb" href="plan-read-two-passes.html" style="left:16%;top:70%;">
+          <span class="sd"></span><span>read the plan in two passes</span>
+          <span class="recipe-no">before this</span>
+        </a>
+        <a class="nb wire" href="three-block-memory.html" style="left:84%;top:33%;">
+          <span class="sd"></span><span>what a cold start can reach</span>
+          <span class="recipe-no">the resolver</span>
+        </a>
+        <a class="nb wire" href="team-kit-promotion.html" style="left:84%;top:69%;">
+          <span class="sd"></span><span>wire a shared kit via @import</span>
+          <span class="recipe-no">the record</span>
+        </a>
       </div>
+    </div>
+    <div class="prose" style="margin-top:22px">
+      <p style="font-size:14px;color:var(--ink-dim)"><b style="color:var(--ink)">compound-from-evidence</b> <em>grows</em> the rule &mdash; it calibrates and subtracts a rule from what sessions actually do. This card is orthogonal: it assumes the rule already exists and <b style="color:var(--spore)">delivers it to where it fires.</b> Compound makes the rule worth having; this one makes it reachable. Reading the plan in two passes happens upstream, before approval; you enter here once the plan is signed and the tab is about to close.</p>
     </div>
   </section>
 
-  <!-- ============ FOOTER ============ -->
-  <footer class="floor">
-    <span class="door">A door, not a destination — the rule file is yours, gitignored and private. No platform, no vendor, no permission required.</span>
-    <span class="meta">The Big Picture · Pattern Language</span>
+  <!-- footer (stripped at build) -->
+  <footer class="dns-floor">
+    <span class="sign">Publish the record, and the next cold start inherits your judgement for free.</span>
+    <span class="meta">Groundwork &middot; &copy; 2026 Bosser Oy</span>
   </footer>
 
 </div>

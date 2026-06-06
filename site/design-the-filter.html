@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Design the filter, not the review — Pattern · The Big Picture</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pour the Sill — Design the Filter</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Spline+Sans:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+  /* ===================================================================
+     THEME TOKENS (kept — the coherence skin, from theme-tokens.css)
+     =================================================================== */
   :root{
     --soil-0:#05080a;
     --soil-1:#080d10;
@@ -35,299 +38,249 @@
     position:relative;
     overflow-x:hidden;
   }
-  /* atmospheric soil + light-well — business lane, amber-led, recedes for the long read */
+  /* atmospheric soil + light-well — recedes for the long read */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.11) 0%, transparent 46%),
-      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.05) 0%, transparent 44%),
-      linear-gradient(180deg, #2a1c08 0%, #16110a 10%, #07060a 42%, #04060a 100%);
+      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
+      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
+      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
   }
   /* grain / spore dust */
   body::after{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
   }
-
   .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 30px 64px;}
 
-  /* ============ BREADCRUMB ============ */
+  /* breadcrumb (theme) */
   .crumb{
     font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
     color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
   }
-  .crumb a{color:var(--amber-dim);text-decoration:none;transition:color .25s}
-  .crumb a:hover{color:var(--amber)}
+  .crumb a{color:var(--teal-dim);text-decoration:none;transition:color .25s}
+  .crumb a:hover{color:var(--teal)}
   .crumb .here{color:var(--ink)}
 
-  /* ============ PATTERN HEADER (name + essence) ============ */
-  header.pat{padding:30px 0 8px;max-width:900px;}
-  .kicker{
-    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
-    text-transform:uppercase;color:var(--amber-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-  }
-  .kicker .spore-mark{
-    width:8px;height:8px;border-radius:50%;background:var(--amber);
-    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 14px 2px rgba(255,179,71,.6);
-    flex:none;
-  }
-  .kicker .pat-no{color:var(--ink-faint)}
-  header.pat h1{
-    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(38px,6.4vw,62px);line-height:.99;
-    color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
-  }
-  header.pat h1 em{font-style:italic;color:var(--amber);font-weight:400}
-  .principle{
-    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
-  }
-  .principle b{color:var(--amber);font-weight:500;font-style:normal;letter-spacing:.005em}
-  .essence{
-    font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:740px;
-  }
-  .essence b{color:var(--spore);font-weight:500}
-  .essence .sys{color:var(--amber);font-weight:500}
+  /* anchor / link styling + spore-glow (theme) */
+  a.spore{color:var(--teal);text-decoration:none;border-bottom:1px solid var(--teal-dim);transition:color .25s,border-color .25s,text-shadow .25s}
+  a.spore:hover{color:var(--spore);border-color:var(--teal);text-shadow:0 0 12px rgba(63,224,200,.5)}
 
-  /* ============ HERO PICTURE ============ */
+  /* hero / diagram frame primitives (theme) */
   .hero-frame{
     margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
-    background:linear-gradient(180deg, rgba(31,24,13,.45), rgba(5,8,10,.6));
+    background:linear-gradient(180deg, rgba(13,31,32,.5), rgba(5,8,10,.6));
     position:relative;
-    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(255,179,71,.04) inset;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.04) inset;
   }
   .hero-frame svg{display:block;width:100%;height:auto}
   .hero-cap{
-    position:absolute;left:18px;bottom:13px;z-index:3;
-    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
-    color:var(--ink-dim);text-transform:uppercase;
+    position:absolute;left:18px;bottom:13px;z-index:3;right:18px;
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.13em;
+    color:var(--ink-dim);text-transform:uppercase;line-height:1.5;
   }
   .hero-cap b{color:var(--amber)}
 
-  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
-  .prose{
-    margin-top:34px;max-width:760px;
+  /* epistemic fencing (KEPT — groundedness discipline) */
+  .src{
+    font-family:'Spline Sans Mono',monospace;font-size:11px;line-height:1.55;
+    color:var(--ink-dim);border-left:2px solid var(--teal-dim);
+    padding:3px 0 3px 13px;margin-top:14px;max-width:720px;letter-spacing:.004em;
   }
-  .prose h2{
+  .src b{color:var(--ink);font-weight:500}
+  .cav{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.55;
+    color:var(--amber);border-left:2px solid var(--amber-dim);
+    padding:3px 0 3px 13px;margin-top:12px;max-width:720px;letter-spacing:.01em;
+  }
+  .cav b{color:#ffd9a0;font-weight:500}
+
+  /* ===================================================================
+     FRAME-NATIVE CLASSES (new — the morning-glory spillway skeleton)
+     =================================================================== */
+
+  /* pattern header */
+  header.crest{padding:34px 0 8px;max-width:920px;}
+  .label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--teal-dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .label .drop{
+    width:8px;height:8px;border-radius:50%;background:var(--amber);
+    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 14px 2px rgba(255,179,71,.55);flex:none;
+  }
+  .label .no{color:var(--ink-faint)}
+  header.crest h1{
+    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(40px,7.4vw,70px);line-height:.97;
+    color:var(--spore);letter-spacing:-.018em;margin:15px 0 0;
+  }
+  header.crest h1 em{font-style:italic;color:var(--amber);font-weight:400}
+  .stake{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:19px;line-height:1.36;color:var(--ink-dim);margin-top:14px;max-width:760px;letter-spacing:.003em;
+  }
+  .stake b{color:var(--teal);font-weight:500;font-style:normal}
+
+  /* the linear reading body — sill-prose */
+  .sill-prose{margin-top:36px;max-width:760px;}
+  .sill-prose h2{
     font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
-    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+    letter-spacing:-.012em;line-height:1.08;
   }
-  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
-  .prose h2.amber em{color:var(--amber)}
-  .prose .sec-label{
+  .sill-prose h2 em{font-style:italic;color:var(--amber);font-weight:400}
+  .marker{
     font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
     text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
-    margin-top:42px;
+    margin-top:48px;
   }
-  .prose .sec-label::before{
+  .marker::before{
     content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);
     box-shadow:0 0 9px rgba(255,179,71,.55);flex:none;
   }
-  .prose .sec-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
-  .prose p{
-    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
-    letter-spacing:.002em;
+  .marker.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
+  .sill-prose p{
+    font-size:15.5px;line-height:1.64;color:var(--ink);margin-top:16px;letter-spacing:.002em;
   }
-  .prose p b{color:var(--spore);font-weight:500}
-  .prose p em{font-style:italic;color:var(--ink-dim)}
-  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
-  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
-  .prose p .mono{
+  .sill-prose p b{color:var(--spore);font-weight:500}
+  .sill-prose p em{font-style:italic;color:var(--ink-dim)}
+  .sill-prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .sill-prose p .mono{
     font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
   }
-  .prose p .mono.amber{color:var(--amber)}
-  .prose .pull{
-    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--amber-dim);
-    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
-    color:var(--ink);max-width:680px;
+  .waterline{
+    margin:24px 0 8px;padding:4px 0 4px 20px;border-left:2px solid var(--amber);
+    font-family:'Fraunces',serif;font-style:italic;font-size:19px;line-height:1.4;
+    color:var(--ink);max-width:700px;
   }
-  .prose .pull b{color:var(--amber);font-weight:500;font-style:normal}
+  .waterline b{color:var(--amber);font-weight:500;font-style:normal}
 
-  /* labelled source / caveat strip — carries real epistemic content, not decoration */
-  .srcnote{
-    margin:20px 0 4px;border:1px dashed var(--amber-dim);border-radius:12px;
-    padding:14px 18px 15px;max-width:760px;
-    background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 60%), rgba(8,15,17,.4);
-  }
-  .srcnote .tag{
-    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;
-    color:var(--amber);display:inline-flex;align-items:center;gap:8px;
-  }
-  .srcnote .tag::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber);flex:none;
-    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 10px 2px rgba(255,179,71,.45);
-  }
-  .srcnote p{font-size:13px;line-height:1.55;color:var(--ink-dim);margin-top:9px}
-  .srcnote p b{color:var(--ink);font-weight:500}
-  .srcnote p .fig{font-family:'Spline Sans Mono',monospace;font-size:12px;color:var(--amber)}
-
-  /* ============ PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
-  .diagram{
-    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+  /* THE SILL COURSES — moves laid as poured concrete courses, one above another */
+  .courses{margin-top:30px;display:flex;flex-direction:column;gap:14px;}
+  .course{
+    position:relative;border:1px solid var(--hairline);border-radius:13px;
+    padding:20px 22px 21px 26px;overflow:hidden;
     background:
-      radial-gradient(110% 130% at 8% 8%, rgba(255,179,71,.05), transparent 55%),
-      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
-    position:relative;
-    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(255,179,71,.03) inset;
+      radial-gradient(130% 160% at 0% 0%, rgba(255,179,71,.045), transparent 58%),
+      linear-gradient(180deg, rgba(8,17,18,.6), rgba(5,8,10,.55));
   }
-  .diagram svg{display:block;width:100%;height:auto}
-  .diagram .dcap{
-    padding:12px 20px 16px;border-top:1px solid var(--hairline);
-    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
-    color:var(--ink-dim);letter-spacing:.003em;
-    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  /* the poured edge — a sill line on the left of each course */
+  .course::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:linear-gradient(180deg, var(--amber-dim), var(--amber), var(--amber-dim));
+    box-shadow:0 0 14px 1px rgba(255,179,71,.35);
   }
-  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
-  .diagram .dcap .num{
-    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
-    letter-spacing:.26em;text-transform:uppercase;color:var(--amber-dim);margin-right:10px;
+  .course .ct{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--amber-dim);
   }
+  .course h3{
+    font-family:'Fraunces',serif;font-weight:400;font-size:20px;color:var(--spore);
+    line-height:1.2;margin-top:7px;letter-spacing:-.005em;
+  }
+  .course h3 em{font-style:italic;color:var(--amber)}
+  .course p{font-size:14.5px;line-height:1.56;color:var(--ink);margin-top:11px;}
+  .course p b{color:var(--spore);font-weight:500}
+  .course p em{font-style:italic;color:var(--ink-dim)}
+  .course p .mono{font-family:'Spline Sans Mono',monospace;font-size:13px;color:var(--teal)}
 
-  /* ============ RECIPE SECTION BEATS ============ */
-  .beat-label{
-    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
-    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  /* GAUGE NOTE — the scalar-where-it-exists aside */
+  .gauge-note{
+    margin-top:18px;border:1px dashed var(--teal-dim);border-radius:12px;
+    padding:16px 20px 18px;background:rgba(8,17,18,.45);max-width:760px;
   }
-  .beat-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);flex:none;
-    box-shadow:0 0 9px rgba(255,179,71,.55);
+  .gauge-note .gh{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--teal-dim);margin-bottom:9px;
   }
-  .beat-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
-  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+  .gauge-note p{font-size:14px;line-height:1.58;color:var(--ink);}
+  .gauge-note p b{color:var(--spore);font-weight:500}
+  .gauge-note p em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:15px}
 
-  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
-  .plates{
-    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
-  }
-  .plate{
-    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
-    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
-  }
-  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
-  .plate .body b{color:var(--spore);font-weight:500}
-  .plate .body .grey{color:var(--grey)}
-  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.06), transparent 55%),rgba(8,15,17,.5)}
-  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
-  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
-
-  /* ============ CORE MOVES ============ */
-  .moves{margin-top:46px}
-  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
-  .moves-head h2{
-    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
-  }
-  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
-  .move-rail{
-    margin-top:20px;position:relative;
-    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
-  }
-  .move-rail .thread{
-    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
-    background:linear-gradient(90deg,
-      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
-      rgba(63,224,200,.7) 42%, rgba(255,179,71,.7) 90%, rgba(255,179,71,0) 100%);
-  }
-  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
-  .step:first-child{padding-left:0}
-  .step .bead{
-    width:42px;height:42px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
-    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
-    margin-bottom:13px;
-  }
-  .step:nth-child(5) .bead,
-  .step:nth-child(6) .bead{
-    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
-  }
-  .step h3{
-    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
-  }
-  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
-  .step p b{color:var(--ink);font-weight:500}
-
-  .compound{
-    margin-top:26px;border:1px solid rgba(255,179,71,.18);border-radius:14px;
-    padding:18px 22px;position:relative;overflow:hidden;
+  /* DOES THE SILL HOLD — test as a set of waterline checks */
+  .holds{
+    margin-top:36px;border:1px solid var(--hairline);border-radius:15px;
+    padding:24px 28px 26px;
     background:
-      radial-gradient(120% 140% at 100% 0%, rgba(255,179,71,.07), transparent 60%),
-      rgba(8,17,18,.55);
-    display:flex;align-items:center;gap:20px;
+      radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.06), transparent 56%),
+      rgba(8,15,17,.5);
   }
-  .compound .loop-ico{flex:none}
-  .compound .ctext{flex:1}
-  .compound .ctext .cyc{
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--amber);
+  .holds .marker{margin-top:0;margin-bottom:6px}
+  .holds .check{
+    display:flex;gap:14px;align-items:flex-start;margin-top:16px;
   }
-  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
-  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
-  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+  .holds .check .lvl{
+    flex:none;margin-top:3px;width:11px;height:11px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 60%, #1d8d80);
+    box-shadow:0 0 10px 1px rgba(63,224,200,.5);
+  }
+  .holds .check p{font-size:14.5px;line-height:1.55;color:var(--ink);}
+  .holds .check p b{color:var(--spore);font-weight:500}
+  .holds .check p em{font-style:italic;color:var(--ink-dim)}
+  .holds .neg{
+    margin-top:20px;padding-top:16px;border-top:1px dashed var(--hairline);
+    font-size:14px;line-height:1.55;color:var(--ink-dim);
+  }
+  .holds .neg b{color:var(--amber);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
 
-  .aside{
-    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
-    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
-  }
-  .aside b{color:var(--amber);font-weight:500}
-  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
-
-  /* ============ WHY ============ */
-  .why{
+  /* WHY — the conviction, set as the town that decided in concrete */
+  .why-bed{
     margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
-    padding:26px 30px 28px;position:relative;overflow:hidden;
+    padding:28px 32px 30px;position:relative;overflow:hidden;
     background:
-      radial-gradient(130% 150% at 90% 0%, rgba(255,179,71,.09), transparent 55%),
+      radial-gradient(130% 150% at 90% 0%, rgba(255,179,71,.07), transparent 55%),
       radial-gradient(100% 120% at 0% 100%, rgba(63,224,200,.05), transparent 55%),
       rgba(7,14,15,.6);
   }
-  .why .beat-label{margin-bottom:14px}
-  .why .principle-block{
-    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
-  }
-  .why .principle-label{
-    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
-    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
-  }
-  .why .principle-line{
-    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
-    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
-  }
-  .why .principle-line em{font-style:italic;color:var(--amber)}
-  .why .quote{
+  .why-bed .marker{margin-top:0;margin-bottom:18px}
+  .conviction{
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:clamp(20px,2.9vw,28px);line-height:1.22;color:var(--amber);letter-spacing:.004em;
-    text-shadow:0 0 30px rgba(255,179,71,.24);max-width:860px;
+    font-size:clamp(22px,3.1vw,30px);line-height:1.22;color:var(--amber);
+    text-shadow:0 0 30px rgba(255,179,71,.22);max-width:840px;
   }
-  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
-  .why .gloss b{color:var(--spore);font-weight:500}
-  .why .gloss em{font-style:italic;color:var(--ink-dim)}
-  .why .gloss + .gloss{margin-top:12px}
-  .why .corollary{
-    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
-    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+  .why-bed .read{font-size:14.5px;line-height:1.62;color:var(--ink);margin-top:18px;max-width:760px}
+  .why-bed .read b{color:var(--spore);font-weight:500}
+  .why-bed .read em{font-style:italic;color:var(--ink-dim)}
+  .recode{
+    margin-top:22px;padding:16px 20px;border-radius:12px;
+    border:1px solid rgba(63,224,200,.18);
+    background:radial-gradient(120% 150% at 100% 0%, rgba(63,224,200,.06), transparent 60%), rgba(8,17,18,.55);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16.5px;line-height:1.42;
+    color:var(--ink);max-width:760px;
   }
-  .why .corollary .sd{
-    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
-    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
-  }
+  .recode b{color:var(--teal);font-weight:500;font-style:normal}
 
-  /* ============ TEST-IN-PRACTICE inline panel ============ */
-  .practice{
-    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
-    padding:22px 26px 24px;
+  /* MONDAY — three lines of concrete */
+  .monday{
+    margin-top:34px;border:1px solid var(--hairline);border-radius:15px;
+    padding:24px 28px 26px;
     background:
-      radial-gradient(120% 140% at 0% 0%, rgba(63,224,200,.04), transparent 55%),
+      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),
       rgba(8,15,17,.5);
   }
-  .practice .beat-label{margin-bottom:12px}
-  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
-  .practice p b{color:var(--spore);font-weight:500}
-  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
-  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+  .monday .marker{margin-top:0;margin-bottom:6px}
+  .monday .open{font-size:15px;line-height:1.6;color:var(--ink);margin-top:8px;max-width:760px}
+  .monday .open b{color:var(--spore);font-weight:500}
+  .pours{margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .pour{
+    position:relative;border:1px solid var(--hairline);border-radius:12px;
+    padding:16px 16px 18px;background:rgba(8,17,18,.5);
+  }
+  .pour .pn{
+    font-family:'Fraunces',serif;font-size:26px;color:var(--amber);line-height:1;font-weight:400;
+    text-shadow:0 0 18px rgba(255,179,71,.3);
+  }
+  .pour h4{font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--teal);margin-top:10px;font-weight:500}
+  .pour p{font-size:13px;line-height:1.5;color:var(--ink-dim);margin-top:8px}
+  .pour p b{color:var(--ink);font-weight:500}
+  .monday .seal{
+    margin-top:18px;font-family:'Fraunces',serif;font-style:italic;font-size:15.5px;
+    line-height:1.45;color:var(--ink);max-width:740px;
+  }
+  .monday .seal b{color:var(--amber);font-weight:500;font-style:normal}
 
-  /* ============ CONNECTS TO ============ */
-  .connects{margin-top:52px}
+  /* CONNECTS TO — neighbour web (theme web primitives, frame-native chips) */
+  .connects{margin-top:54px}
   .connects h2{
     font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
   }
@@ -359,799 +312,287 @@
   .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
   .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
   .nb:hover .sd{animation:throb 1s ease-in-out infinite}
-  .nb.soon{opacity:.62}
-  .nb.soon::after{
-    content:"soon";
-    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--ink-faint);
-    border:1px solid var(--ink-faint);border-radius:20px;
-    padding:2px 7px 3px;margin-left:4px;
-  }
-  .nb.soon:hover{opacity:1}
   @keyframes throb{50%{transform:scale(1.5)}}
   .origin-chip{
     position:absolute;transform:translate(-50%,-50%);
     font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
-    text-shadow:0 0 24px rgba(255,179,71,.4);white-space:nowrap;text-align:center;
+    text-shadow:0 0 24px rgba(255,179,71,.35);white-space:nowrap;text-align:center;
   }
   .origin-chip small{
     display:block;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:8.5px;
     letter-spacing:.24em;text-transform:uppercase;color:var(--amber-dim);margin-top:3px;
   }
 
-  /* ============ FOOTER ============ */
-  footer.floor{
-    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
-    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  /* frame-native closer (NOT the chassis door-footer) */
+  footer.gate{
+    margin-top:50px;padding-top:22px;border-top:1px solid var(--hairline);
   }
-  footer.floor .door{
-    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
-    text-shadow:0 0 22px rgba(255,179,71,.3);
+  footer.gate .home{
+    font-family:'Fraunces',serif;font-style:italic;font-size:clamp(19px,2.6vw,24px);
+    line-height:1.34;color:var(--spore);max-width:680px;
   }
-  footer.floor .meta{
-    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--ink-faint);
+  footer.gate .home b{color:var(--amber);font-style:normal;font-weight:500;text-shadow:0 0 22px rgba(255,179,71,.3)}
+  footer.gate .meta{
+    margin-top:18px;font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;gap:18px;flex-wrap:wrap;
   }
 
-  /* breathing glow on the diagram spore-tips */
-  @keyframes breathe{
-    0%,100%{opacity:.55}
-    50%{opacity:1}
-  }
+  @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
   .breathe{animation:breathe 4.2s ease-in-out infinite}
 
-  @media (max-width:860px){
-    .plates{grid-template-columns:1fr 1fr}
-    .plate.use{grid-column:1 / -1}
-  }
   @media (max-width:780px){
-    .plates{grid-template-columns:1fr}
-    .plate.use{grid-column:1}
-    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
-    .move-rail .thread{display:none}
-    .step{padding:0}
-    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .pours{grid-template-columns:1fr}
+    .sill-prose p{font-size:14.5px}
     .neighbours .nb{font-size:11px;padding:6px 10px}
-    .prose p{font-size:14.5px}
   }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <!-- ============ BREADCRUMB ============ -->
-  <nav class="crumb">
-    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Design the filter, not the review</span>
-  </nav>
+  <!-- BREADCRUMB -->
+  <nav class="crumb"><a href="index.html">&larr; The Big Picture</a> &nbsp;/&nbsp; <span class="here">Design the Filter</span></nav>
 
-  <!-- ============ PATTERN NAME + ESSENCE ============ -->
-  <header class="pat">
-    <div class="kicker"><span class="spore-mark"></span>Recipe · business lane · phase: Absorption · L4</div>
-    <h1>Design the <em>filter</em>, not the review</h1>
-    <p class="principle">The principle: <b>review differently, don't review harder</b> — the bottleneck is structural, not attentional.</p>
-    <p class="essence">
-      When your agents produce more than any human can read, stop being the reviewer and
-      <b>become the designer of the thing that reviews</b> — a system that hands you the slice
-      worth reading. <span class="sys">It is the same filter a company must build for individual
-      AI gains to add up to shipped institutional value, not an unread pile.</span>
-    </p>
+  <!-- HEADER -->
+  <header class="crest">
+    <div class="label"><span class="drop"></span> The Field Guide <span class="no">&middot; design-the-filter</span></div>
+    <h1>Pour the Sill,<br>Don't <em>Read the Flood</em></h1>
+    <p class="stake">When your agents out-produce reading, "review it all" quietly becomes the plan — and it is a losing one. The town that survives a flood it cannot watch <b>decided, in concrete, what it would let pass</b>. So do you: you stop being the watchman and become the engineer who poured the rim.</p>
   </header>
 
-  <!-- ============ HERO PICTURE: firehose → layered filter → calm trickle ============ -->
-  <div class="hero-frame">
-    <svg viewBox="0 0 1080 392" role="img" aria-label="A firehose of agent output hits a layered filter — a first-pass agent reviewer then a severity sieve — and emerges as a thin sharp trickle of a few high-severity items reaching a calm human, who stands beside the design of the sieve with a hand on a threshold dial.">
+  <!-- HERO: continuous / analogue — graded amber water overflowing the bell-mouth lip -->
+  <figure class="hero-frame">
+    <svg viewBox="0 0 1080 470" role="img" aria-labelledby="dtf__herotitle">
+      <title id="dtf__herotitle">A morning-glory spillway: a still amber reservoir below a concrete sill; only the graded sheet above the lip crests and falls down the bell-mouth throat, while one engineer stands at the gate, hand on the rim.</title>
       <defs>
-        <radialGradient id="hwell" cx="22%" cy="50%" r="68%">
-          <stop offset="0%" stop-color="#5d6a68" stop-opacity=".22"/>
-          <stop offset="50%" stop-color="#39423f" stop-opacity=".08"/>
-          <stop offset="100%" stop-color="#39423f" stop-opacity="0"/>
-        </radialGradient>
-        <linearGradient id="hose" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#5d6a68" stop-opacity=".85"/>
-          <stop offset="100%" stop-color="#5d6a68" stop-opacity=".25"/>
+        <!-- graded amber water sheet -->
+        <linearGradient id="dtf__water" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stop-color="#0a0d0c"/>
+          <stop offset="42%" stop-color="#1a140a"/>
+          <stop offset="74%" stop-color="#7a4f18"/>
+          <stop offset="92%" stop-color="#ffb347"/>
+          <stop offset="100%" stop-color="#ffe0a8"/>
         </linearGradient>
-        <linearGradient id="trickle" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".5"/>
-          <stop offset="100%" stop-color="#ffb347" stop-opacity=".95"/>
+        <!-- the overflowing sheet above the sill -->
+        <linearGradient id="dtf__sheet" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffe7bd"/>
+          <stop offset="40%" stop-color="#ffb347"/>
+          <stop offset="100%" stop-color="rgba(168,106,31,0)"/>
         </linearGradient>
-        <radialGradient id="humanCore" cx="40%" cy="35%" r="70%">
-          <stop offset="0%" stop-color="#fff4e2"/>
-          <stop offset="45%" stop-color="#ffb347"/>
-          <stop offset="100%" stop-color="#2b1c08"/>
+        <!-- the throat falling -->
+        <linearGradient id="dtf__throat" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffcf86"/>
+          <stop offset="100%" stop-color="rgba(13,20,18,0)"/>
+        </linearGradient>
+        <radialGradient id="dtf__glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="rgba(255,179,71,.5)"/>
+          <stop offset="100%" stop-color="rgba(255,179,71,0)"/>
         </radialGradient>
-        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        <filter id="dtf__soft" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="6"/>
         </filter>
       </defs>
-      <rect x="0" y="0" width="1080" height="392" fill="url(#hwell)"/>
 
-      <!-- LEFT: the firehose of agent output -->
-      <text x="40" y="34" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#5d6a68">AGENT OUTPUT · MORE THAN ANYONE CAN READ</text>
-      <g stroke="url(#hose)" fill="none" stroke-width="2">
-        <path d="M30,120 C140,150 250,150 360,176"/>
-        <path d="M30,150 C140,170 250,170 360,186"/>
-        <path d="M30,180 C140,188 250,188 360,196"/>
-        <path d="M30,210 C140,206 250,206 360,206"/>
-        <path d="M30,240 C140,224 250,224 360,216"/>
-        <path d="M30,270 C140,242 250,242 360,226"/>
-        <path d="M30,300 C140,260 250,260 360,236"/>
-        <path d="M30,90  C140,132 250,132 360,166"/>
-      </g>
-      <g fill="#4b5654">
-        <rect x="44" y="96"  width="20" height="14" rx="2"/><rect x="44" y="126" width="20" height="14" rx="2"/>
-        <rect x="44" y="156" width="20" height="14" rx="2"/><rect x="44" y="186" width="20" height="14" rx="2"/>
-        <rect x="44" y="216" width="20" height="14" rx="2"/><rect x="44" y="246" width="20" height="14" rx="2"/>
-        <rect x="44" y="276" width="20" height="14" rx="2"/>
-      </g>
-      <text x="40" y="350" font-family="'Spline Sans',sans-serif" font-size="14" fill="#5d6a68" font-style="italic">drafts · PRs · memos · clause analyses</text>
-
-      <!-- MIDDLE: the layered filter — first-pass agent reviewer, then severity sieve -->
-      <g>
-        <!-- layer 1: first-pass agent reviewer -->
-        <rect x="380" y="70" width="34" height="252" rx="14" fill="rgba(13,28,28,.7)" stroke="#3fe0c8" stroke-width="1.3"/>
-        <g stroke="#3fe0c8" stroke-width="1.6" opacity=".75">
-          <line x1="388" y1="104" x2="406" y2="104"/><line x1="388" y1="132" x2="406" y2="132"/>
-          <line x1="388" y1="160" x2="406" y2="160"/><line x1="388" y1="188" x2="406" y2="188"/>
-          <line x1="388" y1="216" x2="406" y2="216"/><line x1="388" y1="244" x2="406" y2="244"/>
-          <line x1="388" y1="272" x2="406" y2="272"/>
-        </g>
-        <text x="397" y="56" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#3fe0c8">AGENT FIRST-PASS</text>
-
-        <!-- layer 2: severity sieve, fewer slots -->
-        <rect x="470" y="116" width="34" height="160" rx="14" fill="rgba(31,24,13,.7)" stroke="#ffb347" stroke-width="1.4"/>
-        <g stroke="#ffb347" stroke-width="1.8" opacity=".85">
-          <line x1="478" y1="150" x2="496" y2="150"/><line x1="478" y1="196" x2="496" y2="196"/>
-          <line x1="478" y1="242" x2="496" y2="242"/>
-        </g>
-        <text x="487" y="102" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#ffb347">SEVERITY SIEVE</text>
-
-        <!-- catch pile under the sieve — logged, not read -->
-        <g fill="#39423f" opacity=".7">
-          <circle cx="430" cy="338" r="3.4"/><circle cx="445" cy="345" r="3"/><circle cx="460" cy="338" r="3.4"/>
-          <circle cx="475" cy="346" r="3"/><circle cx="490" cy="338" r="3.4"/><circle cx="505" cy="345" r="3"/>
-          <circle cx="438" cy="352" r="2.6"/><circle cx="468" cy="352" r="2.6"/><circle cx="498" cy="352" r="2.6"/>
-        </g>
-        <text x="468" y="372" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="1.5" fill="#3b524e">LOGGED · NOT READ</text>
+      <!-- reservoir: vast still graded water, sitting BELOW the rim -->
+      <rect x="0" y="150" width="1080" height="320" fill="url(#dtf__water)"/>
+      <!-- faint churn lines in the held reservoir (the unread flood) -->
+      <g stroke="rgba(255,179,71,.10)" stroke-width="1.4" fill="none">
+        <path d="M0,250 q90,-12 180,0 t180,0 t180,0 t180,0 t180,0"/>
+        <path d="M0,300 q90,12 180,0 t180,0 t180,0 t180,0 t180,0"/>
+        <path d="M0,355 q90,-10 180,0 t180,0 t180,0 t180,0 t180,0"/>
+        <path d="M0,410 q90,10 180,0 t180,0 t180,0 t180,0 t180,0"/>
       </g>
 
-      <!-- RIGHT: the thin sharp trickle to a calm human at the dial -->
-      <g>
-        <text x="600" y="34" text-anchor="start" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#ffb347">THE SLICE WORTH READING</text>
-        <g stroke="url(#trickle)" fill="none" stroke-width="2.6" filter="url(#hglow)">
-          <path d="M504,168 C620,160 740,150 980,150"/>
-          <path d="M504,196 C620,196 740,200 980,200"/>
-          <path d="M504,224 C620,232 740,246 980,250"/>
-        </g>
-        <g>
-          <circle cx="980" cy="150" r="6" fill="#aeffee" filter="url(#hglow)"/>
-          <circle cx="980" cy="200" r="6.4" fill="#ffce85" filter="url(#hglow)"/>
-          <circle cx="980" cy="250" r="6" fill="#ffb347" filter="url(#hglow)"/>
-        </g>
-        <text x="996" y="154" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#3fe0c8">high-sev</text>
-        <text x="996" y="204" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#ffce85">high-sev</text>
-        <text x="996" y="254" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#ffb347">low-conf</text>
-
-        <!-- the human, calm, beside the DESIGN — hand on the threshold dial -->
-        <circle cx="700" cy="312" r="18" fill="url(#humanCore)" filter="url(#hglow)"/>
-        <text x="700" y="350" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#a86a1f">DESIGNER</text>
-        <!-- threshold dial -->
-        <g transform="translate(770,308)">
-          <circle cx="0" cy="0" r="16" fill="rgba(8,17,18,.8)" stroke="#ffb347" stroke-width="1.2"/>
-          <line x1="0" y1="0" x2="9" y2="-9" stroke="#ffb347" stroke-width="1.8" stroke-linecap="round"/>
-          <circle cx="0" cy="0" r="2.2" fill="#ffb347"/>
-          <text x="0" y="32" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing="1.5" fill="#a86a1f">THRESHOLD</text>
-        </g>
-        <line x1="718" y1="312" x2="754" y2="310" stroke="#a86a1f" stroke-width="1" opacity=".6"/>
+      <!-- the bell-mouth: an inverted trumpet rim, drawn as the load-bearing line -->
+      <g transform="translate(660,168)">
+        <!-- soft glow at the lip -->
+        <ellipse cx="0" cy="0" rx="180" ry="58" fill="url(#dtf__glow)" filter="url(#dtf__soft)" opacity=".7"/>
+        <!-- outer concrete rim -->
+        <ellipse cx="0" cy="0" rx="150" ry="46" fill="none" stroke="#c9d6d2" stroke-width="3"/>
+        <!-- inner throat opening -->
+        <ellipse cx="0" cy="6" rx="96" ry="28" fill="#070b0d" stroke="rgba(201,214,210,.5)" stroke-width="1.5"/>
+        <!-- the graded sheet of water cresting the lip and pouring down the throat -->
+        <path d="M-150,0 a150,46 0 0 0 300,0 a96,28 0 0 1 -96,22 l-12,150 a30,12 0 0 1 -84,0 l-12,-150 a96,28 0 0 1 -96,-22 Z"
+              fill="url(#dtf__sheet)" opacity=".82"/>
+        <path d="M-70,28 l-8,150 a26,10 0 0 0 156,0 l-8,-150 a90,26 0 0 1 -140,0 Z"
+              fill="url(#dtf__throat)" opacity=".7"/>
+        <!-- thin sharp ribbon: only the volume ABOVE the sill crosses -->
+        <path d="M-150,-2 a150,46 0 0 1 300,0" fill="none" stroke="#ffe7bd" stroke-width="2.4" opacity=".9"/>
       </g>
 
-      <!-- nutrient pulse riding the surviving slice -->
-      <circle r="3.4" fill="#ffce85">
-        <animateMotion dur="4.6s" repeatCount="indefinite" path="M504,196 C620,196 740,200 980,200"/>
-        <animate attributeName="opacity" values="0;1;1;0" dur="4.6s" repeatCount="indefinite"/>
-      </circle>
+      <!-- the operator: the engineer who POURED the sill, at the gate, hand on the rim, NOT in the river -->
+      <g transform="translate(232,196)" stroke="#cfe6e0" stroke-width="2.4" fill="none" stroke-linecap="round">
+        <!-- gate / sill-edge the engineer stands on -->
+        <line x1="-40" y1="118" x2="120" y2="118" stroke="#7e8e8a" stroke-width="3"/>
+        <line x1="120" y1="118" x2="172" y2="118" stroke="#c9d6d2" stroke-width="3"/>
+        <circle cx="40" cy="22" r="13"/>
+        <line x1="40" y1="35" x2="40" y2="84"/>
+        <!-- arm resting on the rim's edge, not braced against a flood -->
+        <line x1="40" y1="50" x2="86" y2="64"/>
+        <line x1="40" y1="52" x2="8" y2="78"/>
+        <line x1="40" y1="84" x2="22" y2="118"/>
+        <line x1="40" y1="84" x2="58" y2="118"/>
+        <!-- hand glow at the rim -->
+        <circle cx="90" cy="66" r="5" fill="#ffb347" stroke="none" class="breathe"/>
+      </g>
+
+      <!-- the sill line: the fixed concrete decision, the load-bearing horizontal -->
+      <line x1="0" y1="150" x2="510" y2="150" stroke="#c9d6d2" stroke-width="2" opacity=".55" stroke-dasharray="2 7"/>
     </svg>
-    <div class="hero-cap">You don't drink from the firehose. <b>You build the sieve</b> — and stand beside its dial.</div>
-  </div>
+    <figcaption class="hero-cap">The reservoir holds everything. Only the sheet <b>above the sill</b> crests &mdash; you don't read the flood, you pour the rim that decides what crosses.</figcaption>
+  </figure>
 
-  <!-- ============================================================ -->
-  <!-- ============ PROSE BLOCK 1 — THE WALL ====================== -->
-  <!-- ============================================================ -->
-  <section class="prose">
-    <div class="sec-label">Use when · the wall you keep hitting</div>
-    <h2>Your agents now <em>out-produce</em> your ability to read.</h2>
-
-    <p>
-      An agent — or a small swarm of them — drafts briefings, contract-clause analyses, customer memos, PRs,
-      faster than anyone downstream can absorb. Throughput climbs; shipping stays flat. A manager asks
-      <em class="amber">"are we actually faster?"</em> and the honest answer is <b>"individually yes, together no."</b>
-      The instinct in the room is to review harder — and there are exactly three ways to review harder, all of
-      which fail, and they fail <b>structurally, not for lack of diligence.</b> Read everything: doesn't scale.
-      Sample randomly: misses the small slice that's wrong, because errors cluster in edge cases, not evenly.
-      Trust and ship: works until it doesn't. The wall has a name even if nobody says it out loud — the
-      <em>absorption bottleneck.</em>
-    </p>
-
-    <p class="pull">
-      The instinct is to review <b>harder</b>, not to review <b>differently</b>. But the bottleneck is structural, not attentional.
-    </p>
-
-    <p>
-      The reframe is the whole move: <b>your job is no longer to read the 100% — it's to build the thing that hands
-      you the slice worth reading.</b> Name, out loud, the share you currently believe is wrong; that number is the
-      target your filter exists to find. Below is the mechanism drawn rather than asserted — the same input arriving
-      at one overwhelmed human in the top lane, and the same input entering a filter in the bottom lane.
-    </p>
+  <!-- ============ SITUATION (the trap) ============ -->
+  <section class="sill-prose">
+    <div class="marker teal">The situation</div>
+    <h2>The river got bigger. You're still holding the same bucket.</h2>
+    <p>Use this when your agents produce more than any human can read, and <em>review it all</em> has quietly become the plan. You feel it as a queue that won't drain &mdash; an agent, or a small swarm, drafts the memos, the clause analyses, the PRs, faster than the people downstream can absorb them. So you do the obvious thing harder: read everything, or sample at random, or trust-and-ship until something bites.</p>
+    <p>All three fail, and they fail <b>structurally</b>, not for lack of grit. Read-everything doesn't scale. Sample-randomly misses the wrong slice &mdash; errors cluster in the edge cases, not evenly across the pile. Trust-and-ship works right up until it doesn't. The failure mode this card owns has a name, and the name is <b>volume</b>.</p>
+    <p class="src"><b>CircleCI 2026 State of Software Delivery</b> &mdash; observed workflow runs, not a survey (8M+ PRs across 5,000+ teams): workflow runs up 59% year over year while median throughput to <span class="mono" style="color:var(--ink-dim)">main</span> fell 7%. Generation surged; delivery sagged.</p>
+    <p class="src"><b>Rob Bowley</b>'s reading of that same dataset is the line that stings: only ~1 in 20 teams scaled both. The other nineteen are reviewing harder &mdash; standing at the riverbank with a bigger river and the same bucket. <span style="color:var(--ink-faint)">(practitioner reading, attributed to Bowley, not to CircleCI directly)</span></p>
   </section>
 
-  <!-- ============ DIAGRAM 1 — SAME VOLUME, DIFFERENT LOAD ON THE HUMAN ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 440" role="img" aria-label="Two lanes. Top: 100% of output flows straight at one overwhelmed human (read-everything). Bottom: the same 100% enters a first-pass agent reviewer, then a severity tier, and only a thin high-severity slice reaches a calm human; the rest is logged, not read. The input did not shrink — the human's reading did.">
-      <defs>
-        <linearGradient id="d1-grey" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5d6a68" stop-opacity=".8"/><stop offset="1" stop-color="#5d6a68" stop-opacity=".5"/></linearGradient>
-        <linearGradient id="d1-amber" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".4"/><stop offset="1" stop-color="#ffb347" stop-opacity=".9"/></linearGradient>
-        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME 100% OF OUTPUT · TWO LANES · DIFFERENT LOAD ON THE HUMAN</text>
-
-      <!-- ===== TOP LANE: read-everything ===== -->
-      <g>
-        <text x="40" y="68" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#5d6a68">LANE A · REVIEW HARDER</text>
-        <text x="40" y="200" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em" fill="#5d6a68">100%</text>
-        <!-- full flood straight at the human -->
-        <g stroke="url(#d1-grey)" fill="none" stroke-width="2">
-          <path d="M90,118 C400,118 620,128 820,138"/>
-          <path d="M90,138 C400,138 620,142 820,146"/>
-          <path d="M90,158 C400,158 620,156 820,154"/>
-          <path d="M90,178 C400,178 620,170 820,162"/>
-          <path d="M90,198 C400,198 620,184 820,170"/>
-          <path d="M90,218 C400,218 620,198 820,178"/>
-          <path d="M90,238 C400,238 620,212 820,186"/>
-        </g>
-        <!-- overwhelmed human -->
-        <circle cx="850" cy="160" r="20" fill="rgba(93,106,104,.4)" stroke="#5d6a68" stroke-width="1.4"/>
-        <text x="850" y="164" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="13" fill="#cfe6e0">!</text>
-        <!-- backlog stacking behind the human -->
-        <g fill="#4b5654" opacity=".8">
-          <rect x="884" y="120" width="60" height="6" rx="2"/><rect x="884" y="132" width="74" height="6" rx="2"/>
-          <rect x="884" y="144" width="52" height="6" rx="2"/><rect x="884" y="180" width="68" height="6" rx="2"/>
-          <rect x="884" y="192" width="80" height="6" rx="2"/><rect x="884" y="204" width="58" height="6" rx="2"/>
-        </g>
-        <text x="850" y="262" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#5d6a68">reads everything → drowns</text>
-      </g>
-
-      <!-- divider -->
-      <line x1="40" y1="288" x2="1040" y2="288" stroke="rgba(255,179,71,.14)" stroke-width="1" stroke-dasharray="4 7"/>
-
-      <!-- ===== BOTTOM LANE: design-the-filter ===== -->
-      <g>
-        <text x="40" y="318" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#ffb347">LANE B · REVIEW DIFFERENTLY</text>
-        <text x="40" y="372" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em" fill="#6f8a85">100%</text>
-        <!-- same full input entering the first-pass reviewer -->
-        <g stroke="url(#d1-grey)" fill="none" stroke-width="2" opacity=".7">
-          <path d="M90,338 C200,338 280,360 360,372"/>
-          <path d="M90,356 C200,356 280,366 360,378"/>
-          <path d="M90,374 C200,374 280,374 360,384"/>
-          <path d="M90,392 C200,392 280,382 360,390"/>
-          <path d="M90,410 C200,410 280,396 360,396"/>
-        </g>
-        <!-- first-pass agent reviewer -->
-        <rect x="362" y="350" width="30" height="64" rx="12" fill="rgba(13,28,28,.7)" stroke="#3fe0c8" stroke-width="1.3"/>
-        <text x="377" y="338" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".06em" fill="#3fe0c8">AGENT</text>
-        <text x="377" y="430" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".1em" fill="#1d8d80">finds · ranks</text>
-        <!-- severity tier -->
-        <rect x="470" y="362" width="30" height="40" rx="11" fill="rgba(31,24,13,.7)" stroke="#ffb347" stroke-width="1.4"/>
-        <text x="485" y="350" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".06em" fill="#ffb347">SEV</text>
-        <!-- the rest logged, not read -->
-        <g fill="#39423f" opacity=".7">
-          <circle cx="430" cy="430" r="3"/><circle cx="446" cy="424" r="2.6"/><circle cx="462" cy="430" r="3"/>
-          <circle cx="478" cy="424" r="2.6"/><circle cx="494" cy="430" r="3"/>
-        </g>
-        <text x="525" y="430" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".1em" fill="#3b524e">logged, not read</text>
-        <!-- thin slice to the calm human -->
-        <g stroke="url(#d1-amber)" fill="none" stroke-width="2.6" filter="url(#d1-glow)">
-          <path d="M500,378 C640,376 740,372 820,372"/>
-          <path d="M500,386 C640,388 740,392 820,392"/>
-        </g>
-        <circle cx="850" cy="382" r="20" fill="rgba(255,179,71,.22)" stroke="#ffb347" stroke-width="1.4"/>
-        <text x="850" y="386" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#fff4e2">✓</text>
-        <text x="850" y="424" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#ffb347">reads the slice → steers</text>
-      </g>
-
-      <!-- the key label -->
-      <text x="540" y="278" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="15" fill="#ffce85">the input didn't shrink — the human's reading did.</text>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 01</span>Same volume, different load. The filter doesn't read less by reading faster; <b>it reads less by reading only what survived the sieve</b>.</div>
-  </div>
-
-  <!-- ============ SOURCE NOTE — CircleCI report (label travels) ============ -->
-  <div class="srcnote">
-    <span class="tag">Where the numbers come from · the genre matters</span>
-    <p>
-      The platform-scale figures behind this — workflow runs up <span class="fig">+59% YoY</span>, median
-      main-branch throughput <span class="fig">−7%</span>, only about <span class="fig">1 in 20 teams</span>
-      scaling both generation and delivery — come from the <b>CircleCI 2026 State of Software Delivery report,
-      which analysed 8M+ PRs across 5,000+ teams.</b> That is a report on <b>observed workflow runs, not a
-      survey.</b> The "1 in 20 / 95%-fail" framing is practitioner Rob Bowley's reading of the same dataset —
-      attribute it to him, not to CircleCI directly.
-    </p>
-  </div>
-
-  <!-- ============ PROSE BLOCK 2 — the reviewer → designer shift ============ -->
-  <section class="prose">
-    <div class="sec-label">The L4 shift · from reviewer to system-designer</div>
-    <h2>Stop being the gate. <em>Start building it.</em></h2>
-
-    <p>
-      Here is the human-job change at the heart of this card, and it is genuinely a change of role, not a change
-      of effort. The reviewer sits at the <b>end of the pipe</b>, reads what arrives, and draws authority from diligence —
-      a posture that breaks the moment volume doubles. The filter-designer sits <b>above the pipe</b>, sets the
-      severity policy and the first-pass reviewer, and draws authority from the system — a posture that scales
-      <em>with</em> volume instead of against it. That is the L4 move: you stop being the gate and start building
-      the thing that gates. The picture below puts the two postures side by side so the shift is visible, not just
-      described.
-    </p>
+  <!-- ============ THE FRAME / ROLE CHANGE ============ -->
+  <section class="sill-prose">
+    <div class="marker">The move &mdash; a role change before a technique</div>
+    <h2>The dam doesn't <em>read</em> the river</h2>
+    <p>Go look at how a town survives a flood it cannot watch in person. Below a reservoir sits a <b>morning-glory spillway</b> &mdash; a great concrete bell-mouth, an inverted trumpet planted in the water. For most of the year it does nothing. The water sits below its rim and the structure is, to all appearances, asleep.</p>
+    <p>Then the snowmelt comes, the level climbs, and the instant it crosses the lip the bell-mouth <em>lets through</em> everything above that line and drops it down the throat, away from the town. Nobody is on duty deciding. No engineer reads each inch of rising water and votes. The decision was made <em class="amber">years ago, in concrete</em> &mdash; in the height of the sill and the flare of the mouth.</p>
+    <div class="waterline">You are not the night-shift watchman reading the gauge. You are <b>the engineer who poured the sill</b> &mdash; and the analogy, not an assertion, is what changes your job.</div>
+    <p>Your work stops being <em>review the output</em> and becomes <b>build the thing that decides what reaches you</b>. The watchman scales with attention, and attention is the one resource multiplication eats alive. The sill scales with water it never sees. That is a reviewer turning into a system-designer &mdash; not by decree, but because the spillway has no role for a reader.</p>
   </section>
 
-  <!-- ============ DIAGRAM 2 — REVIEWER → SYSTEM-DESIGNER ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 380" role="img" aria-label="Left: human as reviewer, sitting at the end of the pipe, reading everything, authority equals diligence, breaks at volume. Right: human as filter-designer, sitting above the pipe, setting the severity policy and the first-pass reviewer, authority equals the system, scales with volume. The arrow between them: the L4 shift — you stop being the gate and start building it.">
-      <defs>
-        <linearGradient id="d2-pipe" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5d6a68" stop-opacity=".7"/><stop offset="1" stop-color="#5d6a68" stop-opacity=".2"/></linearGradient>
-        <linearGradient id="d2-sys" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".5"/><stop offset="1" stop-color="#ffb347" stop-opacity=".5"/></linearGradient>
-        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE HUMAN JOB · REVIEWER → SYSTEM-DESIGNER</text>
-
-      <!-- LEFT: human as reviewer, at the end of the pipe -->
-      <g>
-        <text x="40" y="70" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#5d6a68">HUMAN AS REVIEWER</text>
-        <!-- the pipe, human at its mouth -->
-        <rect x="40" y="120" width="240" height="48" rx="10" fill="rgba(93,106,104,.10)" stroke="rgba(93,106,104,.4)"/>
-        <g stroke="url(#d2-pipe)" stroke-width="2" fill="none">
-          <line x1="52" y1="134" x2="268" y2="134"/><line x1="52" y1="144" x2="268" y2="144"/>
-          <line x1="52" y1="154" x2="268" y2="154"/>
-        </g>
-        <circle cx="300" cy="144" r="20" fill="rgba(93,106,104,.35)" stroke="#5d6a68" stroke-width="1.4"/>
-        <text x="300" y="148" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="12" fill="#cfe6e0">!</text>
-        <text x="300" y="184" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" font-style="italic" fill="#5d6a68">at the end of the pipe</text>
-        <!-- attributes -->
-        <g font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#8aa09b">
-          <text x="40" y="226">· reads everything</text>
-          <text x="40" y="250">· authority = diligence</text>
-          <text x="40" y="274" fill="#5d6a68">· breaks at volume</text>
-        </g>
-        <!-- volume-snap mark -->
-        <text x="40" y="312" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".1em" fill="#5d6a68">VOLUME ↑ → THROUGHPUT ✗</text>
-      </g>
-
-      <!-- ARROW: the L4 shift -->
-      <g transform="translate(470,144)">
-        <path d="M0,0 L84,0" stroke="#ffb347" stroke-width="1.6" fill="none" opacity=".8"/>
-        <polygon points="84,0 72,-7 72,7" fill="#ffb347" opacity=".85"/>
-        <text x="42" y="-16" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#ffb347">THE L4 SHIFT</text>
-        <text x="42" y="26" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12.5" fill="#6f8a85">stop being the gate</text>
-        <text x="42" y="44" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12.5" fill="#6f8a85">start building it</text>
-      </g>
-
-      <!-- RIGHT: human as filter-designer, above the pipe -->
-      <g>
-        <text x="600" y="70" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#ffb347">HUMAN AS FILTER-DESIGNER</text>
-        <!-- designer above -->
-        <circle cx="630" cy="118" r="18" fill="rgba(255,179,71,.22)" stroke="#ffb347" stroke-width="1.4" filter="url(#d2-glow)"/>
-        <text x="630" y="122" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#fff4e2">◆</text>
-        <!-- the system the designer sets, drawn below them -->
-        <g filter="url(#d2-glow)">
-          <rect x="600" y="170" width="380" height="120" rx="12" fill="rgba(8,17,18,.7)" stroke="url(#d2-sys)" stroke-width="1.5"/>
-        </g>
-        <!-- control lines from designer down into the system -->
-        <g stroke="#ffb347" stroke-width="1" fill="none" opacity=".6">
-          <path d="M630,136 C630,150 680,158 720,170"/>
-          <path d="M630,136 C630,150 820,158 860,170"/>
-        </g>
-        <text x="618" y="194" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#3fe0c8">first-pass reviewer →  finds · verifies · ranks</text>
-        <text x="618" y="222" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#ffb347">severity policy →  thresholds · routing</text>
-        <text x="618" y="250" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#9bffe9">upstream spec →  narrows what's generated</text>
-        <text x="618" y="278" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".06em" fill="#6f8a85">the human sets these once, then tunes</text>
-        <!-- attribute -->
-        <text x="600" y="318" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".1em" fill="#ffb347">VOLUME ↑ → SYSTEM ABSORBS ✓</text>
-      </g>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 02</span>The reviewer's authority is diligence; <b>the designer's authority is the system</b>. Only one of them scales when volume doubles.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 3 — the agent-evaluates-agent layer + its evidence ============ -->
-  <section class="prose">
-    <p>
-      The load-bearing move inside that system is the one with the hardest evidence behind it: put a <b>first-pass
-      agent reviewer in front of yourself.</b> Have an agent review the agent's output before any human sees it —
-      find issues, verify to filter its own false positives, rank by severity. This is the agent-evaluates-agent
-      move, and it is not a leap of faith. The reason you can let a machine filter on your behalf is that, measured,
-      it sits surprisingly close to a human reviewer.
-    </p>
-
-    <p>
-      One caution about a trap right next to it: don't route everything to a human equally, but don't over-alert
-      either. <b>Tier by severity and suppress the low-value alerts</b> — but know that a per-item filter returning
-      PASS is not proof the thing is clean. Building these cards, my own groundedness reviewer passed a chart of
-      steadily <em>rising</em> scores twice before a head-to-head comparison caught what it actually was: numbers
-      I'd fabricated, never measured. The rule that came out of that miss is sharp now — <b>a concrete figure with
-      no source is a BLOCK, and mislabelling what a source <em>is</em> counts as drift even when the number is
-      right.</b> An alert that fires on everything is a second firehose; a filter that passes everything is worse —
-      it's a firehose wearing a clipboard.
-    </p>
+  <!-- ============ BUILD (pour the sill — the moves, as poured concrete courses) ============ -->
+  <section class="sill-prose">
+    <div class="marker">What to build &mdash; pour the sill</div>
+    <h2>Three courses of <em>concrete</em></h2>
   </section>
 
-  <!-- ============ SOURCE NOTE — LLM-as-judge (label + blind-spot travel) ============ -->
-  <div class="srcnote">
-    <span class="tag">The judge figure · cited evidence, with its blind-spot</span>
-    <p>
-      <span class="fig">~80–85% agreement</span> between an LLM judge and human judgment, at roughly a
-      <span class="fig">500x–5000x cost cut</span>, is <b>cited evidence</b> — academic (arXiv) plus practitioner
-      analysis. The honest framing: human-to-human agreement is itself only about <span class="fig">~81%</span>, so
-      the judge <b>approaches human-parity; it does not exceed a verified ground truth.</b> The pattern is emerging,
-      not settled, and it carries a known blind-spot — <b>the reviewer can hallucinate.</b> State the figure with its
-      source genre and its blind-spot, never as a production guarantee.
-    </p>
+  <div class="courses">
+    <div class="course">
+      <div class="ct">Course 1 &middot; set the height</div>
+      <h3>Name the share you think is wrong &mdash; <em>let that set the rim</em></h3>
+      <p>Your reviewable slice is small; the rest is overflow you've been bailing by hand. Don't engineer to a tidy percentage you can't defend &mdash; name the <b>order of magnitude</b> (single digits) that would actually matter, and let it fix the height of the sill. The rim's height is a decision, not a measurement.</p>
+    </div>
+
+    <div class="course">
+      <div class="ct">Course 2 &middot; pour the bell-mouth</div>
+      <h3>Put a <em>first-pass agent</em> in front of yourself</h3>
+      <p>Have an agent review the agent's output before any human looks: find issues, verify to drop its own false positives, rank by severity. <b>That agent is the bell-mouth, not you.</b> But carry the blind spot out loud &mdash; the reviewer can hallucinate, and a bell-mouth that's miscast passes the wrong water with total confidence.</p>
+      <p class="cav"><b>Stop here.</b> Whether <em>this</em> judge earns the trust to filter on your behalf is not this card's question. Measure it in <a class="spore" href="benchmark-the-judge.html">benchmark-the-judge</a> &mdash; benchmark it there before you let it pour.</p>
+      <p class="src"><b>LLM-as-judge</b> runs ~80&ndash;85% agreement with human judgment at a 500&times;&ndash;5000&times; cost cut &mdash; and humans agree with each other only ~81% of the time, so the judge approaches human-parity, it does not exceed a verified truth. <span style="color:var(--ink-faint)">(academic + practitioner sources; emerging, not settled)</span></p>
+    </div>
+
+    <div class="course">
+      <div class="ct">Course 3 &middot; bias the deafness</div>
+      <h3>Set the sill <em>non-linear</em>, biased to under-react</h3>
+      <p>A spillway is deliberately <b>deaf to small rises</b> &mdash; it has to be, or it would dump on every spring shower and the town would learn to ignore it. Tier by severity the same way: ignore the low-value alerts, let only the high-severity or low-confidence items cross the rim. Bias hard toward not-reacting to the small, hard toward catching the large. <em>A filter that cries flood at a drizzle is one you'll route around within a week.</em></p>
+    </div>
   </div>
 
-  <!-- ============ PROSE BLOCK 4 — the scalar gate + constrain upstream ============ -->
-  <section class="prose">
-    <p>
-      Two more moves finish the system, and knowing <em>when</em> each applies is the skill. Where a single honest
-      number can stand in for judgment — latency, conversion, training loss — <b>use it: the filter is the metric.</b>
-      Run many candidates, look only at the ones that moved the number. But most business judgment has no honest
-      scalar — marketing quality, legal accuracy, strategic fit — and the failure here is to <em>fake</em> one. Where
-      no scalar exists, don't invent it; fall back to the agent first-pass and the severity tiers. And before any of
-      that runs, <b>constrain generation upstream</b> — a spec, a brief, a defined behavioural contract — so the
-      filter has less to do. A filter is cheaper when generation isn't firing in every direction at once.
-    </p>
+  <!-- the scalar gauge distinction -->
+  <div class="gauge-note">
+    <div class="gh">Where a real gauge exists &mdash; and where it doesn't</div>
+    <p>Some work carries an honest scalar: latency, conversion, training loss. There the filter <em>is</em> the number &mdash; run many candidates, look only at the ones that moved it. Most business judgment has no such gauge (marketing quality, legal accuracy, strategic fit). <b>Don't paint a gauge on the wall to feel rigorous</b> &mdash; fall back to the bell-mouth and the severity sill. A painted gauge floods the town on a clear day.</p>
+  </div>
 
-    <p>
-      Worth naming honestly: the full stack — <em>constrain → agent first-pass → tiered human review</em> — is a
-      direction, not a finished recipe.
-    </p>
-
-    <div class="srcnote">
-      <span class="tag">The full stack · a hypothesis, not a proven recipe</span>
-      <p>
-        The combined three-layer stack (constrain, then agent first-pass, then tiered human review) is <b>an
-        untested combination — the source's own hypothesis,</b> assembled from three individually-evidenced
-        strategies. It echoes the way healthcare runs tiered review, with AI-era additions on top. <b>Nobody has
-        built all three layers together yet.</b> Treat the combo as a target to aim at, not a guarantee to deploy.
-      </p>
+  <!-- ============ TEST (does the sill hold) ============ -->
+  <section class="holds">
+    <div class="marker teal">The test &mdash; does the sill hold?</div>
+    <div class="check">
+      <span class="lvl"></span>
+      <p>You read <b>dramatically less</b> than your agents produce, and you can say <em>which slice you read and why it was that slice</em> &mdash; not "I skim it all."</p>
     </div>
+    <div class="check">
+      <span class="lvl"></span>
+      <p>When something breaks in production, you can point to where it sat <b>below the rim</b> &mdash; a recall gap you can name and raise the sill against, not a vague dread. <em>(If you can't name where the bell-mouth would have missed, you don't have a filter, you have hope.)</em></p>
+    </div>
+    <div class="check">
+      <span class="lvl"></span>
+      <p>A colleague can read your severity policy and predict what reaches a human without asking you &mdash; <b>the rim's height lives in a file, not in your head</b>.</p>
+    </div>
+    <p class="neg"><b>Negative test:</b> if you're still opening every PR "just to be safe," the concrete never set and the watchman never went home.</p>
   </section>
 
-  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP (filter tightens on every miss) ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 420" role="img" aria-label="A closed loop: output runs, the filter surfaces a slice, the human reviews the slice, something breaks that the filter missed, that miss becomes a new severity rule or sharpened threshold, then back to output runs with the filter visibly tighter. Alongside, the severity policy file densifies across passes one, two and three — its edge-case recall climbing each cycle.">
-      <defs>
-        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/>
-          <stop offset="1" stop-color="#ffb347" stop-opacity=".7"/>
-        </linearGradient>
-        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%">
-          <stop offset="0" stop-color="#ffe0a8"/>
-          <stop offset=".55" stop-color="#ffb347"/>
-          <stop offset="1" stop-color="#a86a1f"/>
-        </radialGradient>
-        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
+  <!-- ============ WHY (the belief) ============ -->
+  <section class="why-bed">
+    <div class="marker">Why this is the move</div>
+    <p class="conviction">95% accuracy at overwhelming volume is <em style="font-style:normal">worse</em> than 80% accuracy at a volume you can actually read.</p>
+    <p class="read">Review is a <b>flow constraint, not an attention problem</b> &mdash; so the fix is a structure you pour, not effort you add. When generation roughly doubles and each unit carries more issues, the review burden <em>multiplies</em>, it doesn't add &mdash; and you cannot out-attention multiplication. No watchman reads a flood. The town that survives is the one that decided, in advance and in concrete, what it would let pass and what it would catch. That decision is your absorption capacity. Without it, faster generation isn't progress; it's just a higher river behind the same bucket.</p>
+    <div class="recode">The watchman's care is a <b>fixed cost per inch of river</b>. Multiply the river and meticulousness-per-unit can't keep up &mdash; the sill scales, the watchman doesn't. Your accuracy was never the asset. Your <b>clearance rate</b> was.</div>
+  </section>
 
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE FILTER LEARNS FROM WHAT IT LET THROUGH · EDGE-CASE RECALL CLIMBS</text>
-
-      <!-- ===== LEFT HALF: the loop ===== -->
-      <g transform="translate(40,60)">
-        <!-- the ring -->
-        <circle cx="200" cy="170" r="130" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="540 60" stroke-linecap="round" transform="rotate(-90 200 170)"/>
-        <!-- breathing pulse on the ring -->
-        <circle r="3.6" fill="#ffce85">
-          <animateMotion dur="9s" repeatCount="indefinite" path="M200,40 a130,130 0 1,1 -0.1,0"/>
-          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
-        </circle>
-
-        <!-- four beads -->
-        <g>
-          <circle cx="200" cy="40" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="200" y="45" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">1</text>
-          <text x="200" y="20" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">Output runs</text>
-        </g>
-        <g>
-          <circle cx="330" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="330" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">2</text>
-          <text x="362" y="173" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">Filter surfaces a slice</text>
-        </g>
-        <g>
-          <circle cx="200" cy="300" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="200" y="305" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">3</text>
-          <text x="200" y="338" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">A miss breaks in prod</text>
-        </g>
-        <g>
-          <circle cx="70" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="70" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">4</text>
-          <text x="38" y="166" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">Miss → new rule</text>
-          <text x="38" y="182" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">/ tighter threshold</text>
-        </g>
-
-        <!-- centre label -->
-        <text x="200" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EVERY PASS</text>
-        <text x="200" y="184" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#ffb347">tighter sieve</text>
-      </g>
-
-      <!-- ===== RIGHT HALF: the severity policy densifying across passes ===== -->
-      <g transform="translate(540,68)">
-
-        <!-- pass 1 — thin -->
-        <g>
-          <rect x="0" y="14" width="160" height="200" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(255,179,71,.22)"/>
-          <rect x="0" y="14" width="160" height="20" rx="6" fill="rgba(255,179,71,.10)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">severity.md</text>
-          <text x="120" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v1</text>
-          <g stroke="#6f8a85" stroke-width="2" opacity=".55">
-            <line x1="12" y1="58" x2="98" y2="58"/>
-            <line x1="12" y1="78" x2="140" y2="78"/>
-            <line x1="12" y1="98" x2="78" y2="98"/>
-          </g>
-          <text x="80" y="240" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#5d6a68">PASS 1 · NAIVE</text>
-        </g>
-
-        <!-- arrow -->
-        <g transform="translate(170,114)">
-          <path d="M0,0 L26,0" stroke="#ffb347" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="26,0 18,-5 18,5" fill="#ffb347" opacity=".75"/>
-        </g>
-
-        <!-- pass 2 — denser -->
-        <g transform="translate(200,0)">
-          <rect x="0" y="14" width="160" height="220" rx="8" fill="rgba(8,17,18,.78)" stroke="rgba(255,179,71,.35)"/>
-          <rect x="0" y="14" width="160" height="20" rx="6" fill="rgba(255,179,71,.14)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">severity.md</text>
-          <text x="120" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v2</text>
-          <g stroke="#9bffe9" stroke-width="2" opacity=".75">
-            <line x1="12" y1="58" x2="120" y2="58"/>
-            <line x1="12" y1="78" x2="140" y2="78"/>
-            <line x1="12" y1="98" x2="98" y2="98"/>
-            <line x1="12" y1="118" x2="132" y2="118"/>
-            <line x1="12" y1="138" x2="108" y2="138"/>
-          </g>
-          <!-- newly added edge-case rules from misses -->
-          <g stroke="#ffb347" stroke-width="2" opacity=".8">
-            <line x1="12" y1="158" x2="126" y2="158"/>
-            <line x1="12" y1="178" x2="92" y2="178"/>
-          </g>
-          <text x="80" y="252" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#9bffe9">PASS 2 · +EDGE CASES</text>
-        </g>
-
-        <!-- arrow -->
-        <g transform="translate(370,124)">
-          <path d="M0,0 L26,0" stroke="#ffb347" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="26,0 18,-5 18,5" fill="#ffb347" opacity=".75"/>
-        </g>
-
-        <!-- pass 3 — sharp (the misses that became rules, amber) -->
-        <g transform="translate(400,0)">
-          <rect x="0" y="0" width="160" height="260" rx="8" fill="rgba(8,17,18,.85)" stroke="url(#d3-ring)" stroke-width="1.5" filter="url(#d3-glow)"/>
-          <rect x="0" y="0" width="160" height="20" rx="6" fill="rgba(255,179,71,.16)"/>
-          <text x="10" y="15" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">severity.md</text>
-          <text x="120" y="15" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v3</text>
-          <!-- rules earned from real misses (amber, bright) -->
-          <g stroke="#ffb347" stroke-width="2.2">
-            <line x1="12" y1="40" x2="138" y2="40"/>
-            <line x1="12" y1="60" x2="120" y2="60"/>
-          </g>
-          <g stroke="#9bffe9" stroke-width="2" opacity=".8">
-            <line x1="12" y1="84" x2="146" y2="84"/>
-            <line x1="12" y1="104" x2="120" y2="104"/>
-            <line x1="12" y1="124" x2="138" y2="124"/>
-            <line x1="12" y1="144" x2="110" y2="144"/>
-            <line x1="12" y1="164" x2="128" y2="164"/>
-            <line x1="12" y1="184" x2="138" y2="184"/>
-            <line x1="12" y1="204" x2="104" y2="204"/>
-            <line x1="12" y1="224" x2="126" y2="224"/>
-          </g>
-          <text x="80" y="280" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#ffb347">PASS 3 · HIGH RECALL</text>
-        </g>
-
-        <!-- legend -->
-        <g transform="translate(0,300)">
-          <rect x="0" y="0" width="14" height="3" fill="#ffb347"/>
-          <text x="22" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">RULES EARNED FROM REAL MISSES</text>
-          <rect x="0" y="14" width="14" height="3" fill="#9bffe9"/>
-          <text x="22" y="18" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">STARTING POLICY · STILL USEFUL</text>
-        </g>
-      </g>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 03</span><em>The filter learns from what it let through.</em> Each production miss becomes a rule; <b>edge-case recall climbs every cycle</b> — the system improves, not the effort.</div>
-  </div>
-
-  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
-  <div class="plates">
-    <div class="plate use">
-      <div class="beat-label"><b>Use when</b></div>
-      <p class="body">
-        Agents produce <span class="grey">drafts, memos, clause analyses, PRs</span> faster than people downstream
-        can absorb — throughput up, shipping flat — and you catch yourself planning to
-        <b>"just review it all."</b>
-      </p>
-    </div>
-    <div class="plate build">
-      <div class="beat-label teal"><b>Build</b></div>
-      <p class="body">
-        A <b>review system, not a habit</b>: a first-pass reviewer prompt, a severity policy in a file,
-        a routing rule, a scalar gate where one honestly exists.
-      </p>
-    </div>
-    <div class="plate test">
-      <div class="beat-label teal"><b>Test</b></div>
-      <p class="body">
-        A colleague reads your policy and <em>predicts what reaches a human</em> — without asking you.<br>
-        Not <em class="no">"I skim it all."</em>
-      </p>
-    </div>
-  </div>
-
-  <!-- ============ CORE MOVES — actionable heart ============ -->
-  <section class="moves">
-    <div class="beat-label"><b>Core moves</b></div>
-    <div class="moves-head">
-      <h2>The action, in sequence</h2>
-      <span class="lede">What changes = who does the reading, and how much of it is a machine.</span>
-    </div>
-
-    <div class="move-rail">
-      <div class="thread"></div>
-      <div class="step">
-        <div class="bead">1</div>
-        <h3>Reframe the job</h3>
-        <p>Stop reviewing the 100%. <b>Build what surfaces the slice.</b></p>
+  <!-- ============ MONDAY (three lines of concrete) ============ -->
+  <section class="monday">
+    <div class="marker">Monday</div>
+    <p class="open">Take <b>one agent output</b> you produced this week. Do not review it. Instead, pour three lines of concrete &mdash; your first sill.</p>
+    <div class="pours">
+      <div class="pour">
+        <div class="pn">1</div>
+        <h4>Set the rim</h4>
+        <p>The one severity that would <b>actually hurt</b> if it shipped. That sets the height.</p>
       </div>
-      <div class="step">
-        <div class="bead">2</div>
-        <h3>Agent goes first</h3>
-        <p>Reviewer agent finds · verifies · <b>ranks before you look.</b></p>
+      <div class="pour">
+        <div class="pn">2</div>
+        <h4>Pour the check</h4>
+        <p>One check &mdash; a prompt to another agent, a grep, a threshold &mdash; that <b>catches that one thing</b> and nothing smaller.</p>
       </div>
-      <div class="step">
-        <div class="bead">3</div>
-        <h3>Tier by severity</h3>
-        <p>Only high-sev / low-conf reaches you. <b>Suppress the rest.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">4</div>
-        <h3>Use a scalar if real</h3>
-        <p>One honest number? <b>Read only the winners.</b> Don't fake one.</p>
-      </div>
-      <div class="step">
-        <div class="bead">5</div>
-        <h3>Constrain upstream</h3>
-        <p>A spec narrows generation. <b>The filter handles less.</b></p>
+      <div class="pour">
+        <div class="pn">3</div>
+        <h4>Let the rest cross</h4>
+        <p>Everything else: <b>would I really have caught it by reading anyway?</b> If not, let it through.</p>
       </div>
     </div>
-
-    <div class="compound">
-      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
-        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
-        </linearGradient></defs>
-        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
-          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
-        <polygon points="37,8 30,16 44,16" fill="#ffb347"/>
-        <circle cx="37" cy="37" r="6" fill="#ffb347" opacity=".25"/>
-        <circle r="3" fill="#ffce85">
-          <animateMotion dur="5s" repeatCount="indefinite"
-            path="M37,11 a26,26 0 1,1 -0.1,0"/>
-        </circle>
-      </svg>
-      <div class="ctext">
-        <div class="cyc">output runs<span class="arr">→</span>filter surfaces<span class="arr">→</span>a miss breaks<span class="arr">→</span>tighten the threshold<span class="arr">→</span>repeat</div>
-        <p>Then it's a system, not a chore: <b>the filter learns from what it let through.</b> Each production miss becomes a new rule — edge-case recall climbs every pass, the effort doesn't.</p>
-      </div>
-    </div>
-
-    <!-- the Monday-move / no-permission aside -->
-    <p class="aside">
-      <b>Monday move:</b> take one agent output you produced this week. Don't review it — write three lines instead.
-      <span class="mono">(1) the one severity that would actually hurt if it shipped · (2) one check — a prompt, a grep, a threshold — that catches that one thing · (3) everything else: would I really have caught it by reading?</span>
-      That three-line note is your first severity policy. No platform, no budget, no sign-off — a reviewer is a prompt and a policy is a text file.
-    </p>
+    <p class="seal">Those three lines are your first sill. You've stopped standing at the riverbank and started <b>building the thing that decides what crosses.</b></p>
   </section>
 
-  <!-- ============ WHY — the conviction ============ -->
-  <section class="why">
-    <div class="beat-label"><b>Why</b></div>
-
-    <div class="principle-block">
-      <div class="principle-label">The principle</div>
-      <p class="principle-line">Design the <em>filter</em>, not the review. The human moves from reading output to engineering what surfaces it.</p>
-    </div>
-
-    <p class="quote">"When agents generate faster than you can read, reviewing harder is rearranging the queue. The move is to build the thing that hands you the 5% worth reading."</p>
-
-    <div class="srcnote" style="margin-top:18px">
-      <span class="tag">The "5%" · illustrative, not measured</span>
-      <p>
-        The <b>5% / 95% split is illustrative</b> — drawn from the CircleCI "1 in 20 teams scale both" finding and
-        the aviation "&lt;10% of flights trigger an alert" benchmark. The real share worth reviewing depends on your
-        domain and how your errors cluster; treat it as <b>the order of magnitude a filter aims for (single-digit
-        percent), not a number to engineer to.</b> Errors cluster in edge cases, so the figure that matters is the
-        filter's edge-case recall, not the headline percentage.
-      </p>
-    </div>
-
-    <p class="gloss">
-      Here is the counterintuitive part a CTO can't easily argue with: <b>95% accuracy at overwhelming volume can be
-      worse than 80% accuracy at a digestible volume,</b> because the volume is what defeats you, not the error rate.
-      The compound math is the proof — when output volume roughly doubles and each unit carries more issues, the
-      review burden <em>multiplies</em> rather than adds. You cannot out-attention multiplication. It is the same shift
-      manufacturing made a century ago: from inspecting every widget to statistical process control. <b>You don't watch
-      the line; you design the line that watches itself.</b>
-    </p>
-    <p class="gloss">
-      And here is the subtler mechanism. The reason "buy AI, deploy agents, individual productivity rises" so often
-      fails to show up in company numbers is partly this: <b>the org drowns reviewing what individuals generate.</b>
-      The team that designs the filter absorbs; the team that doesn't accumulates work-in-progress that never ships.
-      The filter <em>is</em> the absorption capacity — without it, faster generation is just a bigger pile.
-    </p>
-    <div class="corollary"><span class="sd"></span>The volume is what defeats you. Not the error rate.</div>
-  </section>
-
-  <!-- ============ TEST — in practice ============ -->
-  <section class="practice">
-    <div class="beat-label teal"><b>Test</b> · how you KNOW the filter works, not just runs</div>
-    <p>
-      You read <b>dramatically less</b> than your agents produce, and you can say <em>which</em> slice you read and why
-      it was that slice — not "I skim it all." When something breaks in production, you can name it as a
-      <b>recall gap</b> — the filter missed an edge case — and tune for it, rather than feeling a vague unease.
-      <em>If you can't name where the filter would have missed, you don't have a filter — you have hope.</em>
-    </p>
-    <p>
-      The negative test is the sharp one: <b>if you're still opening every PR or every draft "just to be safe,"</b> the
-      filter exists on paper and the review habit never died. A real filter changes what you do on Monday morning, not
-      just what's written in a doc.
-    </p>
-  </section>
-
-  <!-- ============ CONNECTS TO — neighbour patterns ============ -->
+  <!-- ============ CONNECTS TO ============ -->
   <section class="connects">
     <h2>Connects to</h2>
-    <div class="sub">Threads leaving this node · the pattern language</div>
-
+    <div class="sub">The neighbour web &mdash; downstream of the rim</div>
     <div class="web">
-      <svg viewBox="0 0 1080 300" aria-hidden="true">
+      <svg viewBox="0 0 1080 300" role="img" aria-labelledby="dtf__webtitle">
+        <title id="dtf__webtitle">Design the Filter sits at the centre; gradient-stroked spines run to benchmark-the-judge and share-a-slice.</title>
         <defs>
-          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
-          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="dtf__spine1" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="rgba(255,179,71,.7)"/>
+            <stop offset="100%" stop-color="rgba(63,224,200,.5)"/>
+          </linearGradient>
+          <linearGradient id="dtf__spine2" x1="1" y1="0" x2="0" y2="0">
+            <stop offset="0%" stop-color="rgba(255,179,71,.7)"/>
+            <stop offset="100%" stop-color="rgba(63,224,200,.5)"/>
+          </linearGradient>
         </defs>
-
-        <circle cx="150" cy="150" r="30" fill="none" stroke="#ffb347" stroke-width="1.2" opacity=".5"/>
-        <circle cx="150" cy="150" r="11" fill="#ffb347" filter="url(#wglow)"/>
-        <circle cx="150" cy="150" r="46" fill="none" stroke="#ffb347" stroke-width=".7" opacity=".25"/>
-
-        <path id="th1" d="M150,150 C360,86 540,72 760,76"  stroke="url(#t1)" stroke-width="2.2" fill="none"/>
-        <path id="th2" d="M150,150 C380,150 560,150 760,150" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
-        <path id="th3" d="M150,150 C360,214 540,228 760,228" stroke="url(#t3)" stroke-width="1.6" stroke-dasharray="4 6" fill="none"/>
-
-        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+        <!-- spines (anastomosis: they fan from the rim, do not close a loop) -->
+        <path d="M540,150 C400,150 300,90 200,82" fill="none" stroke="url(#dtf__spine2)" stroke-width="2"/>
+        <path d="M540,150 C700,150 800,210 890,220" fill="none" stroke="url(#dtf__spine1)" stroke-width="2"/>
+        <!-- faint continuing hyphae — no terminus -->
+        <path d="M200,82 C150,78 110,96 70,130" fill="none" stroke="rgba(63,224,200,.18)" stroke-width="1.4"/>
+        <path d="M890,220 C950,228 990,212 1020,180" fill="none" stroke="rgba(255,179,71,.18)" stroke-width="1.4"/>
+        <circle cx="540" cy="150" r="6" fill="#ffb347"/>
+        <circle cx="540" cy="150" r="13" fill="none" stroke="rgba(255,179,71,.35)" stroke-width="1.5"/>
       </svg>
-
       <div class="neighbours">
-        <div class="origin-chip" style="left:13.8%;top:50%">Design the filter<small>business · absorption · you are here</small></div>
-        <a class="nb" href="benchmark-the-judge.html" style="left:74%;top:25.3%"><span class="sd"></span>Benchmark the judge <span class="recipe-no">upstream · earn the authority</span></a>
-        <a class="nb" href="share-a-slice.html" style="left:74%;top:50%"><span class="sd"></span>Share a slice <span class="recipe-no">downstream · surface to a teammate</span></a>
-        <a class="nb amber" href="redesign-what-ai-revealed.html" style="left:74%;top:76%"><span class="sd"></span>Redesign what AI revealed <span class="recipe-no">org · the next bottleneck</span></a>
+        <div class="origin-chip" style="left:50%;top:50%;">Design the Filter<small>You pour the rim</small></div>
+        <a class="nb amber" href="benchmark-the-judge.html" style="left:18.5%;top:27%;">
+          <span class="sd"></span> Benchmark the Judge <span class="recipe-no">R5</span>
+        </a>
+        <a class="nb" href="share-a-slice.html" style="left:82.4%;top:73%;">
+          <span class="sd"></span> Share a Slice <span class="recipe-no">R7</span>
+        </a>
       </div>
     </div>
+    <p class="src" style="margin-top:18px"><b>Upstream:</b> before you trust the bell-mouth to filter, <a class="spore" href="benchmark-the-judge.html">benchmark-the-judge</a> &mdash; that's where you earn the trust to let it pour. <b>Downstream:</b> the thin calm stream that does crest still has to reach the right person &mdash; handing that trickle to a named teammate is <a class="spore" href="share-a-slice.html">share-a-slice</a>'s job, not this card's. Here, you build the sill.</p>
   </section>
 
-  <!-- ============ FOOTER ============ -->
-  <footer class="floor">
-    <span class="door">A door, not a destination — the filter is yours to design. No platform, no vendor, no permission required to start.</span>
-    <span class="meta">The Big Picture · Pattern Language</span>
+  <!-- ============ FRAME-NATIVE CLOSER (not the chassis door-footer) ============ -->
+  <footer class="gate">
+    <p class="home">No watchman reads a flood; the town that survives <b>decided in concrete</b> what it would let pass. Pour the rim &mdash; then go home.</p>
+    <div class="meta">
+      <span>Groundwork &middot; The Field Guide</span>
+      <span>&copy; 2026 Bosser Oy</span>
+      <span>design-the-filter</span>
+    </div>
   </footer>
 
 </div>

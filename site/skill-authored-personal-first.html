@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ship the skill to yourself first — Pattern · The Big Picture</title>
+<title>Cut your own hand first — Pattern · The Big Picture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -307,6 +307,48 @@
   .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
   .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
 
+  /* ============ MONDAY MOVE — the closing call to action ============ */
+  .tonight{
+    margin-top:34px;border:1px solid rgba(255,179,71,.22);border-radius:16px;
+    padding:26px 30px 28px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 0% 0%, rgba(255,179,71,.08), transparent 55%),
+      radial-gradient(120% 130% at 100% 100%, rgba(63,224,200,.05), transparent 55%),
+      rgba(7,14,15,.62);
+  }
+  .tonight .beat-label{margin-bottom:6px}
+  .tonight h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);
+    letter-spacing:-.01em;line-height:1.1;margin-top:8px;
+  }
+  .tonight h2 em{font-style:italic;color:var(--amber);font-weight:400}
+  .tonight .lede{font-size:14px;line-height:1.55;color:var(--ink-dim);margin-top:10px;max-width:680px}
+  .tonight ol{margin:20px 0 4px;padding:0;list-style:none;counter-reset:step;max-width:720px}
+  .tonight li{
+    position:relative;padding:0 0 16px 46px;counter-increment:step;
+    font-size:14.5px;line-height:1.55;color:var(--ink);
+  }
+  .tonight li:last-child{padding-bottom:0}
+  .tonight li::before{
+    content:counter(step);position:absolute;left:0;top:-2px;
+    width:30px;height:30px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:14px;font-weight:500;color:var(--soil-0);
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
+    box-shadow:0 0 0 3px rgba(5,8,10,1), 0 0 12px 2px rgba(63,224,200,.4);
+  }
+  .tonight li:nth-child(4)::before{
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+    box-shadow:0 0 0 3px rgba(5,8,10,1), 0 0 12px 2px rgba(255,179,71,.4);
+  }
+  .tonight li b{color:var(--spore);font-weight:500}
+  .tonight li .mono{font-family:'Spline Sans Mono',monospace;font-size:12.5px;color:var(--teal)}
+  .tonight .close{
+    margin-top:20px;padding-top:18px;border-top:1px dashed var(--hairline);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16.5px;line-height:1.4;color:var(--ink);
+  }
+  .tonight .close b{color:var(--amber);font-weight:500;font-style:normal}
+
   /* ============ CONNECTS TO ============ */
   .connects{margin-top:52px}
   .connects h2{
@@ -402,37 +444,48 @@
 
   <!-- ============ BREADCRUMB ============ -->
   <nav class="crumb">
-    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Ship the skill to yourself first</span>
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Cut your own hand first</span>
   </nav>
 
   <!-- ============ PATTERN NAME + ESSENCE ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· lane: software · phase: Absorption · personal-first</span></div>
-    <h1>Ship the skill to <em>yourself first</em></h1>
+    <h1>Cut your own <em>hand first</em></h1>
     <p class="principle">The principle: <b>Your codebase teaches the skill, not the manual.</b></p>
     <p class="essence">
-      Author a reusable skill <b>by conversation</b> — one question at a time, answered from your own repo —
-      then install it to your <b>own</b> <span style="font-family:'Spline Sans Mono',monospace;font-size:14px;color:var(--teal)">~/.claude/skills/</span>
-      and run it on the thing you just built, so you arrive at the team with <b>evidence, not a draft</b>.
+      A knifemaker who has never carried their own blade is selling you a guess. <b>Forge a reusable skill by
+      conversation</b> — answered from your own repo, not a manual — then carry it on your own bench: install it to
+      <span style="font-family:'Spline Sans Mono',monospace;font-size:14px;color:var(--teal)">~/.claude/skills/</span>
+      and run it on the thing you just built, so you arrive at the team with <b>evidence, not eloquence</b>.
     </p>
   </header>
 
-  <!-- ============ HERO PICTURE: conversation in → personal-scope skill → loops back onto the feature ============ -->
+  <!-- ============ HERO PICTURE: the maker's bench — steel forged into a working blade, carried before it's sold ============ -->
   <div class="hero-frame">
-    <svg viewBox="0 0 1080 400" role="img" aria-label="Left: the agent asks one question, the engineer answers one line from the codebase. Centre: the resulting SKILL.md glows at personal scope. Right: a thread loops back from the skill onto the very feature it was just invoked on — proven before it's pitched.">
+    <svg viewBox="0 0 1080 400" role="img" aria-label="A knifemaker's bench. Left: raw steel — the conventions only your repo carries — drawn out by the forge of one-question-at-a-time conversation. Centre: the working blade, a SKILL.md at personal scope, glowing on the maker's own bench. Right: the blade is carried daily and cut with on the feature you just built — nicked, edge-tested, proven — before it ever leaves the shop. A faint mycelial thread runs under the bench: each cut feeds the next forging.">
       <defs>
-        <radialGradient id="hwell" cx="50%" cy="44%" r="62%">
+        <radialGradient id="hwell" cx="50%" cy="46%" r="64%">
           <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".10"/>
-          <stop offset="48%" stop-color="#3fe0c8" stop-opacity=".05"/>
+          <stop offset="46%" stop-color="#3fe0c8" stop-opacity=".05"/>
           <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
         </radialGradient>
-        <linearGradient id="h-file" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#3fe0c8" stop-opacity=".5"/>
-          <stop offset="1" stop-color="#ffb347" stop-opacity=".35"/>
+        <linearGradient id="h-steel" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#5d6a68" stop-opacity=".55"/>
+          <stop offset="1" stop-color="#39423f" stop-opacity=".3"/>
         </linearGradient>
-        <linearGradient id="h-loop" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stop-color="#3fe0c8" stop-opacity=".85"/>
-          <stop offset="1" stop-color="#9bffe9" stop-opacity=".4"/>
+        <linearGradient id="h-blade" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#1d8d80" stop-opacity=".5"/>
+          <stop offset=".55" stop-color="#3fe0c8" stop-opacity=".95"/>
+          <stop offset="1" stop-color="#9bffe9" stop-opacity=".9"/>
+        </linearGradient>
+        <linearGradient id="h-edge" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#ffe0a8" stop-opacity=".9"/>
+          <stop offset="1" stop-color="#ffb347" stop-opacity=".55"/>
+        </linearGradient>
+        <linearGradient id="h-soilthread" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#3fe0c8" stop-opacity="0"/>
+          <stop offset=".5" stop-color="#1d8d80" stop-opacity=".5"/>
+          <stop offset="1" stop-color="#ffb347" stop-opacity=".4"/>
         </linearGradient>
         <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
           <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
@@ -440,214 +493,263 @@
       </defs>
       <rect x="0" y="0" width="1080" height="400" fill="url(#hwell)"/>
 
-      <!-- ===== LEFT: the authoring conversation — ONE question, ONE answer ===== -->
-      <text x="56" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#1d8d80">AUTHOR BY CONVERSATION · ONE QUESTION AT A TIME</text>
-
-      <!-- agent question -->
-      <text x="56" y="84" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">CLAUDE ASKS</text>
-      <rect x="56" y="92" width="300" height="50" rx="11" fill="rgba(63,224,200,.07)" stroke="rgba(63,224,200,.28)"/>
-      <text x="72" y="113" font-family="'Spline Sans',sans-serif" font-size="13" fill="#eafff9">How do you actually test here —</text>
-      <text x="72" y="131" font-family="'Spline Sans',sans-serif" font-size="13" fill="#eafff9">real DB, or a mock?</text>
-
-      <!-- your one-line answer from the codebase -->
-      <text x="56" y="174" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">YOU · FROM THE REPO</text>
-      <rect x="56" y="182" width="300" height="34" rx="11" fill="rgba(255,179,71,.06)" stroke="rgba(255,179,71,.26)"/>
-      <text x="72" y="203" font-family="'Fraunces',serif" font-style="italic" font-size="13.5" fill="#fff4e2">Real in-memory store. No mocks.</text>
-
-      <!-- the "next question" cue — one at a time, not a wall -->
-      <text x="56" y="248" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3b524e">→ ANSWER THIS ONE · ASK THE NEXT</text>
-      <g stroke="#1d8d80" stroke-width="1.4" fill="none" opacity=".55">
-        <path d="M56,266 C140,266 220,266 300,266"/>
+      <!-- faint root-mass mycelium under the bench — receded; each cut feeds the next forging (anastomosis, no terminus) -->
+      <g stroke="#1d8d80" fill="none" opacity=".22">
+        <path d="M40,372 C260,360 360,386 540,372 C720,358 820,386 1040,372" stroke-width="1"/>
+        <path d="M180,372 C260,338 340,338 420,372" stroke-width="0.8" opacity=".7"/>
+        <path d="M620,372 C700,340 780,340 860,372" stroke-width="0.8" opacity=".7"/>
       </g>
-      <circle cx="300" cy="266" r="3" fill="#3fe0c8" filter="url(#hglow)"/>
 
-      <text x="56" y="332" font-family="'Spline Sans',sans-serif" font-size="13" fill="#1d8d80" font-style="italic">a conversation produces an instrument —</text>
-      <text x="56" y="350" font-family="'Spline Sans',sans-serif" font-size="13" fill="#6f8a85" font-style="italic">not a document you hand-typed</text>
+      <!-- ===== LEFT: raw steel → forged by conversation ===== -->
+      <text x="56" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#1d8d80">FORGE FROM YOUR OWN STEEL · ONE QUESTION AT A TIME</text>
 
-      <!-- arrow into the file -->
+      <!-- the steel: conventions only your repo carries -->
+      <text x="56" y="84" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">RAW STEEL · YOUR REPO'S CONVENTIONS</text>
+      <g filter="url(#hglow)">
+        <rect x="56" y="94" width="120" height="46" rx="8" fill="url(#h-steel)" stroke="rgba(93,106,104,.6)"/>
+      </g>
+      <g stroke="#8a9794" stroke-width="1.4" opacity=".55"><line x1="72" y1="110" x2="160" y2="110"/><line x1="72" y1="122" x2="150" y2="122"/></g>
+      <text x="56" y="160" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#6f8a85" font-style="italic">not written down — drawn out</text>
+
+      <!-- the forge: the agent's questions, heated out of you one at a time -->
+      <text x="56" y="200" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">CLAUDE ASKS · YOU ANSWER FROM THE FILE</text>
+      <rect x="56" y="208" width="300" height="32" rx="11" fill="rgba(63,224,200,.07)" stroke="rgba(63,224,200,.28)"/>
+      <text x="72" y="229" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">When you mock — what's the rule for when you don't?</text>
+      <rect x="56" y="246" width="300" height="30" rx="11" fill="rgba(255,179,71,.06)" stroke="rgba(255,179,71,.26)"/>
+      <text x="72" y="266" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#fff4e2">Real store. No mock library. (from the repo)</text>
+
+      <text x="56" y="312" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3b524e">→ HEAT ONE ANSWER OUT · QUENCH THE NEXT</text>
+      <g stroke="#1d8d80" stroke-width="1.4" fill="none" opacity=".55"><path d="M56,328 C150,328 230,328 300,328"/></g>
+      <circle cx="300" cy="328" r="3" fill="#3fe0c8" filter="url(#hglow)"/>
+
+      <text x="56" y="360" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#1d8d80" font-style="italic">a conversation forges a blade —</text>
+      <text x="56" y="378" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#6f8a85" font-style="italic">a blank editor only waits for dictation</text>
+
+      <!-- arrow into the blade -->
       <g transform="translate(386,200)">
         <path d="M0,0 L48,0" stroke="#3fe0c8" stroke-width="1.4" fill="none" opacity=".7"/>
         <polygon points="48,0 38,-6 38,6" fill="#3fe0c8" opacity=".8"/>
       </g>
 
-      <!-- ===== CENTRE: the SKILL.md at personal scope ===== -->
-      <text x="600" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#3fe0c8">SHIPPED · PERSONAL SCOPE</text>
+      <!-- ===== CENTRE: the working blade — SKILL.md at personal scope ===== -->
+      <text x="600" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#3fe0c8">THE BLADE · ON YOUR OWN BENCH</text>
       <g filter="url(#hglow)">
-        <rect x="452" y="92" width="300" height="216" rx="12" fill="rgba(8,17,18,.82)" stroke="url(#h-file)" stroke-width="1.6"/>
+        <rect x="452" y="92" width="300" height="216" rx="12" fill="rgba(8,17,18,.82)" stroke="url(#h-blade)" stroke-width="1.6"/>
       </g>
       <rect x="452" y="92" width="300" height="26" rx="6" fill="rgba(63,224,200,.14)"/>
       <text x="468" y="110" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing=".04em" fill="#3fe0c8">~/.claude/skills/&lt;name&gt;/SKILL.md</text>
-      <g font-family="'Spline Sans Mono',monospace" font-size="11" fill="#cfe6e0">
-        <text x="468" y="146"># when to fire</text>
-        <text x="468" y="166" fill="#9bffe9">reviewing a test diff in THIS repo</text>
-        <text x="468" y="192"># the convention you encoded</text>
-        <text x="468" y="212" fill="#9bffe9">real store · no mock library</text>
-        <text x="468" y="238"># weakest section — grilled</text>
-        <text x="468" y="258" fill="#ffb347">browser flows: deferred, named</text>
-      </g>
+      <!-- the blade itself: a long edge drawn down the file -->
+      <path d="M468,150 L724,150" stroke="url(#h-blade)" stroke-width="3" stroke-linecap="round" filter="url(#hglow)"/>
+      <path d="M468,160 L700,160" stroke="url(#h-edge)" stroke-width="2.4" stroke-linecap="round"/>
+      <text x="468" y="184" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#9bffe9"># the convention you encoded</text>
+      <text x="468" y="204" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#cfe6e0">real store · no mock library</text>
+      <text x="468" y="232" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#9bffe9"># weakest section — struck, held</text>
+      <text x="468" y="252" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#ffb347">browser flows: deferred, named</text>
       <circle cx="742" cy="104" r="4" fill="#aeffee" class="breathe"/>
-      <text x="602" y="300" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">NO REVIEW · NO APPROVAL · AUTO-DISCOVERED</text>
+      <text x="602" y="298" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">NO REVIEW · NO APPROVAL · AUTO-DISCOVERED</text>
 
-      <!-- ===== RIGHT: the feature it was just invoked on ===== -->
-      <text x="828" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#a86a1f">PROVEN ON</text>
+      <!-- ===== RIGHT: carried daily, cut with — the feature you just built ===== -->
+      <text x="828" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#a86a1f">CUT WITH · DAILY ABUSE</text>
       <rect x="828" y="92" width="196" height="120" rx="12" fill="rgba(8,17,18,.7)" stroke="rgba(255,179,71,.3)" stroke-width="1.4"/>
       <text x="848" y="120" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".18em" fill="#a86a1f">THE FEATURE</text>
       <text x="848" y="142" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">you just shipped</text>
       <text x="848" y="162" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">+ security-tested</text>
+      <!-- the nicks the blade earned -->
       <g stroke="#ffb347" stroke-width="1.6" fill="none" opacity=".7">
         <line x1="848" y1="180" x2="1004" y2="180"/>
         <line x1="848" y1="194" x2="970" y2="194"/>
       </g>
+      <text x="848" y="206" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".14em" fill="#a86a1f">↑ THE NICKS PROVE IT</text>
 
-      <!-- the LOOP — skill invoked back onto the feature: the argument is in the loop -->
-      <path id="hloop" d="M752,180 C808,180 808,152 826,152" stroke="url(#h-loop)" stroke-width="2.2" fill="none" filter="url(#hglow)"/>
+      <!-- the LOOP — the blade carried back onto the feature: the argument is in the loop -->
+      <path id="hloop" d="M752,180 C808,180 808,152 826,152" stroke="url(#h-blade)" stroke-width="2.2" fill="none" filter="url(#hglow)"/>
       <polygon points="826,152 816,147 817,159" fill="#9bffe9"/>
-      <text x="790" y="232" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#3fe0c8">INVOKE ON WHAT YOU BUILT</text>
+      <text x="790" y="234" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#3fe0c8">CARRY IT ONTO WHAT YOU BUILT</text>
       <!-- nutrient pulse riding the loop -->
       <circle r="3.4" fill="#aeffee">
         <animateMotion dur="4.2s" repeatCount="indefinite" path="M752,180 C808,180 808,152 826,152"/>
         <animate attributeName="opacity" values="0;1;1;0" dur="4.2s" repeatCount="indefinite"/>
       </circle>
 
-      <text x="828" y="332" font-family="'Spline Sans',sans-serif" font-size="13" fill="#ffb347" font-style="italic">proven before</text>
-      <text x="828" y="350" font-family="'Spline Sans',sans-serif" font-size="13" fill="#a86a1f" font-style="italic">anyone else saw it</text>
+      <text x="828" y="332" font-family="'Spline Sans',sans-serif" font-size="13" fill="#ffb347" font-style="italic">cut with for a week</text>
+      <text x="828" y="350" font-family="'Spline Sans',sans-serif" font-size="13" fill="#a86a1f" font-style="italic">before anyone else held it</text>
     </svg>
-    <div class="hero-cap">It ran on the thing you just built — <b>before anyone else ever saw it</b>. The argument is in the loop.</div>
+    <div class="hero-cap">You'd already cut with it — <b>before it ever left the shop</b>. The nicks are the argument.</div>
   </div>
 
   <!-- ============================================================ -->
-  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
+  <!-- ============ PROSE BLOCK 1 — THE MATERIAL, NOT THE WORDS === -->
   <!-- ============================================================ -->
   <section class="prose">
-    <div class="sec-label">The mechanism · conversation in, instrument out</div>
-    <h2>Type it and you're a documentarian. <em>Talk it</em> and you're a builder.</h2>
+    <div class="sec-label">The bench · why a typed skill is hollow</div>
+    <h2>You wouldn't buy a chef's knife from someone who's <em>never cooked with one</em>.</h2>
 
     <p>
-      There are two roads to a <span class="mono">SKILL.md</span>, and they look identical at the finish line and
-      nothing alike in what they carry. Road one: you open an editor and hand-write the markdown. Now you're a
-      documentarian, producing a tidy document that reads like every other testing guide on the frontier —
-      <b>generic by construction</b>, because you wrote it from memory of how things are supposed to work. Road two:
-      you ask the agent to interview you, and you answer from the repo in front of you. The output looks the same.
-      It is not the same. <b>The conversation captures judgment the editor never asked for.</b>
+      The honest knifemaker keeps a working blade on their own bench — the one they reach for to open boxes, strip wire,
+      trim leather all day. That daily abuse is what tells them where the edge rolls, which grind chips, where the handle
+      raises a blister by hour three. Only a blade that has lived on the maker's bench earns the right to leave the shop.
+      So here is the question that decides everything about a skill you're about to author: <b>why would you hand a
+      teammate one you've never run yourself?</b> You've already decided this recurring judgment is worth keeping — that's
+      settled, not our subject. The only question that matters now is how you make the skill <b>worth anything</b>, instead
+      of worth the paper a manual is printed on.
+    </p>
+
+    <div class="sec-label">The trap · you become a documentarian</div>
+    <h2>Open an editor and within two paragraphs you're a <em>tech writer</em>.</h2>
+
+    <p>
+      You start typing <span class="mono">SKILL.md</span>, and the prose drifts on its own toward <em>a</em> test
+      strategy, the conventions a <em>reasonable</em> codebase <em>might</em> hold. What comes out is competent, generic,
+      and useless — manual-wisdom, the stuff any blog post or any AI consultancy could hand you without ever having seen
+      your repo. <b>A typed skill is a document. It describes knives in general. Nobody's hand is in it.</b> And the reason
+      it's hollow is structural, not lazy: the value of this skill was never in the words. It lives in the conventions
+      <b>only your repo carries</b> — the test framework you actually use, the mocking policy your reviews actually
+      enforce, the three things a senior here flags that a senior elsewhere wouldn't blink at. That knowledge isn't
+      <em>written down</em> anywhere to be copied. It has to be <b>drawn out of the material</b> — and a blank editor
+      can't draw anything out of you. It just waits for you to dictate.
     </p>
 
     <p>
-      The trap is that hand-typing <em>feels</em> like the rigorous choice — you, taking ownership, writing it down
-      properly. It isn't. Authoring-by-typing is the documented failure mode here: the moment you reach for the editor,
-      redirect to conversation. The agent's job is to drag the codebase-specific calls out of you one at a time —
-      <em class="teal">"what's your mocking policy?"</em>, <em class="teal">"what does a review in this repo actually
-      catch?"</em> — and your job is to answer from how the repo behaves, not how the manual says it should. Push back
-      when it dumps all five questions at once: <span class="mono">answer this one, ask the next.</span> The diagram
-      below shows why the conversation road wins — it's the only one whose input is your repo.
+      This is the documented failure mode of the move, not a stylistic quibble: the moment you reach for the editor to
+      hand-write the markdown, you've left the forge for the filing cabinet. The diagram below puts the two roads side by
+      side — they finish at a file that <em>looks</em> identical and carries nothing alike. One is fed by your memory of
+      how things are supposed to work; the other by the steel you actually brought.
     </p>
   </section>
 
-  <!-- ============ DIAGRAM 1 — TWO ROADS TO A SKILL.MD ============ -->
+  <!-- ============ DIAGRAM 1 — TWO ROADS TO A SKILL.MD (typed vs forged) ============ -->
   <div class="diagram">
-    <svg viewBox="0 0 1080 420" role="img" aria-label="Two paths to a SKILL.md. Top: hand-typed in an editor, fed only by your memory, producing a generic document labelled theatre. Bottom: the agent asks, you answer one question at a time from the codebase, producing a skill that carries your conventions, labelled instrument.">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="Two roads to a SKILL.md. Top: hand-typed in an editor, fed only by your memory of the manual, producing a cast-from-the-catalogue blank, labelled theatre. Bottom: forged by conversation — the agent asks, you answer one question at a time from the codebase, the conventions heated out of you and quenched into the blade, labelled instrument.">
       <defs>
         <linearGradient id="d1-grey" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#39423f" stop-opacity=".7"/><stop offset="1" stop-color="#5d6a68" stop-opacity=".35"/></linearGradient>
         <linearGradient id="d1-live" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".4"/><stop offset="1" stop-color="#3fe0c8" stop-opacity=".9"/></linearGradient>
+        <linearGradient id="d1-blade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9bffe9"/><stop offset="1" stop-color="#ffb347"/></linearGradient>
         <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
 
-      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">TWO ROADS TO THE SAME-LOOKING FILE · ONE CARRIES YOUR REPO, ONE CARRIES THE MANUAL</text>
+      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">TWO ROADS TO THE SAME-LOOKING FILE · ONE IS CAST FROM THE CATALOGUE, ONE FORGED FROM YOUR STEEL</text>
 
-      <!-- ===== TOP ROAD: hand-typed → generic document → theatre ===== -->
+      <!-- ===== TOP ROAD: hand-typed → catalogue blank → theatre ===== -->
       <g>
-        <text x="40" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#5d6a68">ROAD 1 · OPEN AN EDITOR</text>
+        <text x="40" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#5d6a68">ROAD 1 · OPEN AN EDITOR · TYPE FROM MEMORY</text>
 
-        <!-- input: your memory only -->
-        <rect x="40" y="90" width="170" height="58" rx="10" fill="rgba(93,106,104,.10)" stroke="rgba(93,106,104,.4)"/>
+        <!-- input: your memory of the manual -->
+        <rect x="40" y="90" width="180" height="58" rx="10" fill="rgba(93,106,104,.10)" stroke="rgba(93,106,104,.4)"/>
         <text x="56" y="114" font-family="'Spline Sans',sans-serif" font-size="13" fill="#8a9794">type from memory</text>
         <text x="56" y="134" font-family="'Spline Sans',sans-serif" font-size="12" fill="#5d6a68" font-style="italic">how it's supposed to work</text>
 
         <!-- flow -->
-        <g transform="translate(220,119)"><path d="M0,0 L46,0" stroke="url(#d1-grey)" stroke-width="1.6" fill="none"/><polygon points="46,0 37,-5 37,5" fill="#5d6a68"/></g>
+        <g transform="translate(230,119)"><path d="M0,0 L46,0" stroke="url(#d1-grey)" stroke-width="1.6" fill="none"/><polygon points="46,0 37,-5 37,5" fill="#5d6a68"/></g>
 
-        <!-- output: generic doc -->
-        <rect x="278" y="86" width="150" height="66" rx="9" fill="rgba(8,17,18,.6)" stroke="rgba(93,106,104,.45)"/>
-        <g stroke="#5d6a68" stroke-width="2" opacity=".5"><line x1="294" y1="108" x2="402" y2="108"/><line x1="294" y1="124" x2="412" y2="124"/><line x1="294" y1="140" x2="384" y2="140"/></g>
-        <text x="353" y="172" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">GENERIC DOCUMENT</text>
+        <!-- output: a catalogue blade, no hand in it -->
+        <rect x="288" y="86" width="150" height="66" rx="9" fill="rgba(8,17,18,.6)" stroke="rgba(93,106,104,.45)"/>
+        <g stroke="#5d6a68" stroke-width="2" opacity=".5"><line x1="304" y1="108" x2="412" y2="108"/><line x1="304" y1="124" x2="422" y2="124"/><line x1="304" y1="140" x2="394" y2="140"/></g>
+        <text x="363" y="172" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">CATALOGUE BLADE · NO HAND IN IT</text>
 
         <!-- verdict -->
-        <g transform="translate(470,119)"><path d="M0,0 L40,0" stroke="#5d6a68" stroke-width="1.4" fill="none" opacity=".6"/><polygon points="40,0 31,-5 31,5" fill="#5d6a68" opacity=".7"/></g>
-        <text x="530" y="124" font-family="'Fraunces',serif" font-style="italic" font-size="20" fill="#5d6a68">theatre</text>
-        <text x="530" y="146" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#39423f">test-pyramid wisdom</text>
+        <g transform="translate(480,119)"><path d="M0,0 L40,0" stroke="#5d6a68" stroke-width="1.4" fill="none" opacity=".6"/><polygon points="40,0 31,-5 31,5" fill="#5d6a68" opacity=".7"/></g>
+        <text x="540" y="124" font-family="'Fraunces',serif" font-style="italic" font-size="20" fill="#5d6a68">theatre</text>
+        <text x="540" y="146" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#39423f">manual-wisdom · describes knives in general</text>
       </g>
 
       <!-- divider -->
       <line x1="40" y1="210" x2="1040" y2="210" stroke="rgba(63,224,200,.12)" stroke-width="1" stroke-dasharray="4 6"/>
 
-      <!-- ===== BOTTOM ROAD: conversation → skill with your conventions → instrument ===== -->
+      <!-- ===== BOTTOM ROAD: forge by conversation → blade with your conventions → instrument ===== -->
       <g>
         <text x="40" y="252" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#3fe0c8">ROAD 2 · THE AGENT ASKS, YOU ANSWER FROM THE REPO</text>
 
         <!-- input: one-at-a-time Q&A from the codebase -->
         <g>
           <rect x="40" y="270" width="200" height="30" rx="9" fill="rgba(63,224,200,.07)" stroke="rgba(63,224,200,.26)"/>
-          <text x="54" y="290" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#9bffe9">Q: mocks, or the real store?</text>
+          <text x="54" y="290" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#9bffe9">Q: when you mock, what's the rule?</text>
           <rect x="40" y="306" width="200" height="28" rx="9" fill="rgba(255,179,71,.06)" stroke="rgba(255,179,71,.24)"/>
-          <text x="54" y="325" font-family="'Fraunces',serif" font-style="italic" font-size="11.5" fill="#fff4e2">A: real store, from the repo</text>
+          <text x="54" y="325" font-family="'Fraunces',serif" font-style="italic" font-size="11.5" fill="#fff4e2">A: paste the real convention</text>
           <rect x="40" y="340" width="200" height="30" rx="9" fill="rgba(63,224,200,.07)" stroke="rgba(63,224,200,.26)"/>
-          <text x="54" y="360" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#9bffe9">Q: what does review catch?</text>
+          <text x="54" y="360" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#9bffe9">Q: a test a reviewer sent back?</text>
         </g>
         <text x="40" y="392" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#1d8d80">ONE QUESTION AT A TIME · NOT A WALL</text>
 
         <!-- flow -->
         <g transform="translate(250,320)"><path d="M0,0 L40,0" stroke="url(#d1-live)" stroke-width="2" fill="none"/><polygon points="40,0 31,-5 31,5" fill="#3fe0c8"/></g>
 
-        <!-- output: the live skill -->
+        <!-- output: the forged blade -->
         <g filter="url(#d1-glow)">
           <rect x="300" y="278" width="170" height="92" rx="10" fill="rgba(8,17,18,.8)" stroke="url(#d1-live)" stroke-width="1.6"/>
         </g>
         <rect x="300" y="278" width="170" height="20" rx="6" fill="rgba(63,224,200,.14)"/>
         <text x="312" y="293" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#3fe0c8">SKILL.md</text>
-        <g stroke="#9bffe9" stroke-width="2" opacity=".75"><line x1="314" y1="318" x2="452" y2="318"/><line x1="314" y1="334" x2="430" y2="334"/></g>
-        <g stroke="#ffb347" stroke-width="2.2"><line x1="314" y1="352" x2="444" y2="352"/></g>
+        <!-- a forged edge running down the file -->
+        <path d="M314,318 L452,318" stroke="url(#d1-blade)" stroke-width="2.6" stroke-linecap="round"/>
+        <line x1="314" y1="334" x2="430" y2="334" stroke="#9bffe9" stroke-width="2" opacity=".75"/>
+        <line x1="314" y1="352" x2="444" y2="352" stroke="#ffb347" stroke-width="2.2"/>
         <text x="385" y="392" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#9bffe9">CARRIES YOUR CONVENTIONS</text>
 
         <!-- verdict -->
         <g transform="translate(488,320)"><path d="M0,0 L40,0" stroke="#3fe0c8" stroke-width="1.6" fill="none"/><polygon points="40,0 31,-5 31,5" fill="#3fe0c8"/></g>
         <text x="548" y="325" font-family="'Fraunces',serif" font-style="italic" font-size="22" fill="#3fe0c8" filter="url(#d1-glow)">instrument</text>
-        <text x="548" y="348" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#1d8d80">tuned to this codebase</text>
+        <text x="548" y="348" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#1d8d80">forged from steel you brought</text>
       </g>
 
-      <!-- the spine note: same shape, different input -->
+      <!-- the spine note: same shape, different steel -->
       <text x="1040" y="320" text-anchor="end" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#6f8a85">same file shape —</text>
-      <text x="1040" y="340" text-anchor="end" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">the input decides everything</text>
+      <text x="1040" y="340" text-anchor="end" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">the steel decides everything</text>
     </svg>
-    <div class="dcap"><span class="num">Process diagram · 01</span>Same file at the finish line. <b>Typing pulls from your memory of the manual; conversation pulls from your repo</b> — that's the only difference, and it's the whole difference.</div>
+    <div class="dcap"><span class="num">Process diagram · 01</span>Same file at the finish line. <b>Typing pulls from your memory of the manual; conversation pulls the conventions out of your repo</b> — that's the only difference, and it's the whole difference.</div>
   </div>
 
-  <!-- ============ PROSE BLOCK 2 — drafted → grilled → proven ============ -->
+  <!-- ============ PROSE BLOCK 2 — forge it by conversation ============ -->
   <section class="prose">
-    <p>
-      A first draft from the agent is generic-risk by default — it has no way of knowing where it's thinnest until you
-      make it look. So make it look. <b>Ask the skill to disclose its own weakest section</b>, then push back on the
-      critique rather than accepting it; the mirror reflects what your own read would miss. Turn the heat up when the
-      stakes are high: tell it to over-flag — <em class="teal">"find at least two sections that underdelivered, assume
-      it's worse than it looks"</em> — or open a fresh session with no scrollback and have it read the skill cold.
-      The grill is not optional politeness. It is the step that moves the skill off the first draft.
-    </p>
-
-    <p class="pull">
-      Authoring without invocation is theatre. <b>You don't trust the skill until you've run it on something real.</b>
-    </p>
+    <div class="sec-label">The forge · talk it into existence, from your own steel</div>
+    <h2>Don't type the skill. <em>Talk it</em> into existence.</h2>
 
     <p>
-      And the only run that counts is on the work you just did. <b>Invoke the skill on the feature you just built</b>
-      and ask, plainly: is this test strategy any good? A skill that only ever produces "use the test pyramid" tells you
-      the authoring conversation stayed generic — you answered from memory, not from the repo. A skill that surfaces
-      something <b>codebase-specific</b> — the integration boundary you actually cross, the review reflex this repo
-      enforces — tells you the conversation reached the judgment. The diagram below draws the short arc, and the arrow
-      from <em>drafted</em> to <em>proven</em> is not free: it costs you the grill and the invocation.
+      Prompt the agent to author the skill <b>by interview</b> — one question at a time — and make it ask about
+      <em>this</em> codebase, not skills in the abstract: <em class="teal">"What runner do your tests actually use? When
+      you mock, what's the rule for when you don't? Show me a test a reviewer here sent back — what was wrong with it?
+      What does a green suite here mean that it wouldn't mean elsewhere?"</em> You answer each one <b>from the repo</b> —
+      you open the file, you quote the real convention, you paste the actual reviewer comment. The agent isn't downloading
+      defaults; it's <b>eliciting yours</b>. Push back the instant it dumps all five questions at once:
+      <span class="mono">answer this one, ask the next.</span>
+    </p>
+
+    <p>
+      A blade forged from steel you brought has properties the catalogue blade never will. The conventions are heated out
+      of you by good questions and quenched into the skill — and what cools on the bench carries <em>your</em> answers,
+      not a template's. <b>Your codebase teaches the skill, not the manual.</b> This is the whole game.
+    </p>
+
+    <p class="aside">
+      <b>A riff, not a measurement.</b> Kieran Klaassen's compound-engineering idea is in the air here — the notion that
+      every answer you give accretes, so the next skill starts from harder steel.
+      <span class="mono">Attributed as a framework riffed on, not a cited finding or a number.</span> Treat it as the
+      direction the bench leans, not a result anyone clocked.
     </p>
   </section>
 
-  <!-- ============ DIAGRAM 2 — DRAFTED → GRILLED → PROVEN ============ -->
+  <!-- ============ PROSE BLOCK 3 — taste it / grill it before it leaves the pass ============ -->
+  <section class="prose">
+    <div class="sec-label">Strike the edge · taste it before it leaves the pass</div>
+    <h2>A line cook who plates a dish they haven't tasted is <em>gambling with someone else's dinner.</em></h2>
+
+    <p>
+      Before the blade leaves your bench, put it on your own tongue. <b>Make it disclose its own weakest section.</b> Ask
+      the agent flat out: <em class="teal">"which part of this skill is thinnest — where would it mislead someone?"</em>
+      Then, when it confesses, <b>push back on the confession.</b> Argue the section is fine. Make it defend the critique
+      or retract it. You're not looking for praise; you're looking for the spot the edge rolls under load. Strike harder
+      when the read matters — tell it to over-flag (<em class="teal">"find at least two sections that underdelivered,
+      assume it's worse than it looks"</em>) or open a fresh session with no scrollback and have it read the skill cold.
+      The blade that survives being struck against your own bench-vise is the one you'd hand over.
+    </p>
+
+    <p class="pull">
+      Authoring without invocation is theatre — <b>a knife admired in its display case, never cut with.</b>
+    </p>
+  </section>
+
+  <!-- ============ DIAGRAM 2 — DRAFTED → STRUCK → CUT-WITH ============ -->
   <div class="diagram">
-    <svg viewBox="0 0 1080 380" role="img" aria-label="One skill across three states on a short arc. Drafted: the agent's first generic-risk pass. Grilled: weakest section disclosed, pushed back on, sharpened. Proven: invoked on the real feature, surfaced something codebase-specific. The arrows between states are labelled grill and invoke — not free.">
+    <svg viewBox="0 0 1080 380" role="img" aria-label="One blade across three states on a short arc. Drafted: the agent's first generic-risk pass, dull catalogue steel. Struck: its weakest section disclosed, pushed back on, tested against the vise, the edge sharpened. Cut-with: carried onto the real feature, where it nicked something a generic pass never would. The arrows between states are labelled strike and cut — neither is free.">
       <defs>
         <radialGradient id="d2-draft" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#8a9794"/><stop offset="1" stop-color="#39423f"/></radialGradient>
         <radialGradient id="d2-grill" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#9bffe9"/><stop offset=".55" stop-color="#3fe0c8"/><stop offset="1" stop-color="#1d8d80"/></radialGradient>
@@ -655,92 +757,104 @@
         <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
 
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">ONE SKILL · THREE STATES · THE ARROWS ARE NOT FREE</text>
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">ONE BLADE · THREE STATES · THE ARROWS ARE NOT FREE</text>
 
       <!-- connecting arc -->
       <path d="M180,150 C360,90 540,90 720,150 C820,182 900,182 940,170" stroke="rgba(63,224,200,.22)" stroke-width="1.6" fill="none" stroke-dasharray="2 7"/>
 
-      <!-- STATE 1 — DRAFTED -->
+      <!-- STATE 1 — DRAFTED (dull catalogue steel) -->
       <g>
         <circle cx="180" cy="150" r="42" fill="url(#d2-draft)" filter="url(#d2-glow)" opacity=".85"/>
-        <!-- thin generic lines inside -->
         <g stroke="#cfe6e0" stroke-width="1.6" opacity=".4"><line x1="160" y1="142" x2="200" y2="142"/><line x1="160" y1="152" x2="196" y2="152"/><line x1="160" y1="162" x2="190" y2="162"/></g>
         <text x="180" y="222" text-anchor="middle" font-family="'Fraunces',serif" font-size="19" fill="#8a9794">drafted</text>
-        <text x="180" y="244" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#5d6a68">FIRST PASS · GENERIC-RISK</text>
-        <text x="180" y="270" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#6f8a85" font-style="italic">don't ship this</text>
+        <text x="180" y="244" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#5d6a68">DULL STEEL · GENERIC-RISK</text>
+        <text x="180" y="270" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#6f8a85" font-style="italic">don't hand this over</text>
       </g>
 
-      <!-- arrow: GRILL -->
+      <!-- arrow: STRIKE -->
       <g transform="translate(248,130)">
         <path d="M0,0 C40,-22 80,-22 124,-4" stroke="#3fe0c8" stroke-width="1.8" fill="none" opacity=".8"/>
         <polygon points="124,-4 113,-9 116,3" fill="#3fe0c8"/>
-        <text x="62" y="-30" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".2em" fill="#3fe0c8">GRILL</text>
+        <text x="62" y="-30" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".2em" fill="#3fe0c8">STRIKE</text>
         <text x="62" y="-15" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="11" fill="#6f8a85">disclose weakest · push back</text>
       </g>
 
-      <!-- STATE 2 — GRILLED -->
+      <!-- STATE 2 — STRUCK (the edge sharpened) -->
       <g>
         <circle cx="450" cy="150" r="46" fill="url(#d2-grill)" filter="url(#d2-glow)"/>
-        <!-- one section flagged amber (the weakest, now sharpened) -->
         <g stroke="#05080a" stroke-width="2" opacity=".55"><line x1="428" y1="140" x2="472" y2="140"/><line x1="428" y1="152" x2="468" y2="152"/></g>
         <line x1="428" y1="164" x2="466" y2="164" stroke="#a86a1f" stroke-width="2.6"/>
-        <text x="450" y="226" text-anchor="middle" font-family="'Fraunces',serif" font-size="19" fill="#3fe0c8">grilled</text>
+        <text x="450" y="226" text-anchor="middle" font-family="'Fraunces',serif" font-size="19" fill="#3fe0c8">struck</text>
         <text x="450" y="248" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#1d8d80">WEAKEST SECTION · SHARPENED</text>
-        <text x="450" y="274" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#6f8a85" font-style="italic">it named where it was thinnest</text>
+        <text x="450" y="274" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#6f8a85" font-style="italic">it named where the edge rolled</text>
       </g>
 
-      <!-- arrow: INVOKE -->
+      <!-- arrow: CUT -->
       <g transform="translate(516,138)">
         <path d="M0,0 C56,28 130,28 188,8" stroke="#ffb347" stroke-width="1.8" fill="none" opacity=".8"/>
         <polygon points="188,8 177,3 180,15" fill="#ffb347"/>
-        <text x="94" y="46" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".2em" fill="#ffb347">INVOKE</text>
-        <text x="94" y="61" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="11" fill="#6f8a85">run it on the feature you built</text>
+        <text x="94" y="46" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".2em" fill="#ffb347">CUT</text>
+        <text x="94" y="61" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="11" fill="#6f8a85">carry it onto the feature you built</text>
       </g>
 
-      <!-- STATE 3 — PROVEN -->
+      <!-- STATE 3 — CUT-WITH (proven, the nicks earned) -->
       <g>
         <circle cx="760" cy="150" r="50" fill="url(#d2-proven)" filter="url(#d2-glow)"/>
         <g stroke="#05080a" stroke-width="2.2"><line x1="734" y1="138" x2="786" y2="138"/><line x1="734" y1="150" x2="780" y2="150"/><line x1="734" y1="162" x2="784" y2="162"/></g>
-        <text x="760" y="230" text-anchor="middle" font-family="'Fraunces',serif" font-size="20" fill="#ffb347">proven</text>
-        <text x="760" y="252" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#a86a1f">SURFACED SOMETHING CODEBASE-SPECIFIC</text>
+        <text x="760" y="230" text-anchor="middle" font-family="'Fraunces',serif" font-size="20" fill="#ffb347">cut&#8209;with</text>
+        <text x="760" y="252" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#a86a1f">NICKED SOMETHING CODEBASE-SPECIFIC</text>
         <text x="760" y="278" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#cfe6e0" font-style="italic">caught what a generic pass never would</text>
       </g>
 
       <!-- the annotation -->
       <text x="940" y="150" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#6f8a85">authoring</text>
       <text x="940" y="170" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#6f8a85">without</text>
-      <text x="940" y="190" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#ffb347">invocation</text>
+      <text x="940" y="190" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#ffb347">a cut</text>
       <text x="940" y="210" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#6f8a85">is theatre</text>
     </svg>
-    <div class="dcap"><span class="num">Process diagram · 02</span>Drafted is generic-risk; <b>the grill and the invocation are what earn the word "proven"</b>. Skip either and you shipped a draft wearing a skill's clothes.</div>
+    <div class="dcap"><span class="num">Process diagram · 02</span>Drafted is dull catalogue steel; <b>the strike and the cut are what earn the word "proven"</b>. Skip either and you handed over a blade you've never carried.</div>
   </div>
 
-  <!-- ============ PROSE BLOCK 3 — the personal proving ground + accretion intro ============ -->
+  <!-- ============ PROSE BLOCK 4 — use it on the thing you just built ============ -->
   <section class="prose">
+    <div class="sec-label">Daily abuse · use it on the thing you just built</div>
+    <h2>Here's the part nobody does — and the part that separates a forged tool from a <em>forged signature.</em></h2>
+
     <p>
-      Here is the part teams skip, and the part that compounds. Once the skill is proven, you don't have to do anything
-      with it yet — <b>personal-first is the principle, not a holding pen you're embarrassed about</b>. It installs to your
-      own <span class="mono">~/.claude/skills/</span>, user-level, auto-discovered from any session by name. No one reviews
-      it. No one approves it. And because you proved it on your own codebase before anyone saw it, the next move — naming
-      whether it's team-worthy — is a calm one. The diagram below draws the loop the personal proving ground feeds.
+      <b>Invoke the skill on the feature you literally just shipped.</b> Drop it into personal scope so it's there every
+      session without ceremony — <span class="mono">~/.claude/skills/&lt;name&gt;/SKILL.md</span>, auto-discovered, no team
+      rollout, no PR, no meeting. Just you and the work. Run the skill against the real change on your screen and watch
+      what it does: where it nails a convention, where it whiffs, where it tells you something you'd forgotten you knew.
+      That's the daily abuse on the maker's bench — the only test that counts. And the verdict is binary in a useful way:
+      a skill that only ever produces <em class="amber">"use the test pyramid"</em> tells you the forge stayed cold —
+      you answered from memory, not the repo. A skill that surfaces something <b>codebase-specific</b> — the integration
+      boundary you actually cross, the review reflex this repo enforces — tells you the conversation reached the steel.
     </p>
 
-    <div class="sec-label amber">The crossing · personal proving ground → team kit</div>
+    <p>
+      And notice what shipping-to-yourself-first actually <em>is</em>: not timidity, not "I'll do the safe small version."
+      It's the <b>cheapest proving ground in the building.</b> When you eventually decide to bring this skill to the team
+      — a different conversation, on a different day — you don't arrive with a draft and a hope. You arrive with a blade
+      you've been cutting with for a week and the nicks to prove it. The diagram below draws that crossing as what it is:
+      deliberately downstream, dashed, and far easier <em>because</em> you carry evidence.
+    </p>
+
+    <div class="sec-label amber">The crossing · personal bench → shared kit</div>
     <h2 class="amber">Name the team-worthiness. <em>Don't force the crossing here.</em></h2>
 
     <p>
       Before any promotion, ask one question: is this <b>codebase-specific</b> — an auth pattern, an ADR convention, a
       named verifier — and therefore team-worthy? Or is it a <b>personal working-style preference</b> that should stay
       yours? Naming that difference precisely is the move; the team-worthy flag drifts to mush the instant you reach for a
-      universal like <em class="amber">"every team should know this."</em> Name a codebase-specific call instead. And the
-      actual crossing is a <b>later human conversation</b>, not an automatic PR the moment the skill compiles — far easier
-      to have when you arrive carrying a skill that has already caught something real.
+      universal like <em class="amber">"every team should know this."</em> Name a codebase-specific call instead. The
+      actual crossing is a <b>later human conversation</b>, not an automatic PR the moment the skill compiles — and it's
+      far easier to have when you arrive carrying a blade that has already caught something real.
     </p>
   </section>
 
-  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP (personal feeds the kit) ============ -->
+  <!-- ============ DIAGRAM 3 — THE COMPOUNDING BENCH (personal feeds the kit) ============ -->
   <div class="diagram">
-    <svg viewBox="0 0 1080 420" role="img" aria-label="A closed loop on the personal scope — author by conversation, ship personal, invoke on real work, evidence accumulates — feeding through a dashed downstream segment into the team kit, which grows by accretion rather than one big rollout, so the next feature's authoring starts from a sharper precedent.">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="A closed loop on the personal bench — forge by conversation, ship personal, cut on real work, the nicks accumulate as evidence — feeding through a dashed downstream segment into the shared kit, which grows by accretion rather than one big rollout, so the next blade's forging starts from harder steel.">
       <defs>
         <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/><stop offset="1" stop-color="#1d8d80" stop-opacity=".5"/></linearGradient>
         <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#9bffe9"/><stop offset=".55" stop-color="#3fe0c8"/><stop offset="1" stop-color="#1d8d80"/></radialGradient>
@@ -748,7 +862,7 @@
         <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
 
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">PERSONAL PROVING GROUND FEEDS THE KIT · BY ACCRETION, NOT ONE BIG ROLLOUT</text>
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">PERSONAL BENCH FEEDS THE KIT · BY ACCRETION, NOT ONE BIG ROLLOUT</text>
 
       <!-- ===== LEFT HALF: the personal loop ===== -->
       <text x="40" y="66" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#3fe0c8">PERSONAL SCOPE · NO PERMISSION</text>
@@ -765,7 +879,7 @@
         <g>
           <circle cx="210" cy="40" r="20" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
           <text x="210" y="45" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">1</text>
-          <text x="210" y="18" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Author by conversation</text>
+          <text x="210" y="18" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Forge by conversation</text>
         </g>
         <g>
           <circle cx="300" cy="110" r="20" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
@@ -775,16 +889,16 @@
         <g>
           <circle cx="150" cy="180" r="20" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
           <text x="150" y="185" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">3</text>
-          <text x="150" y="216" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Invoke on real work</text>
+          <text x="150" y="216" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Cut on real work</text>
         </g>
         <g>
           <circle cx="64" cy="110" r="20" fill="url(#d3-amberbead)" filter="url(#d3-glow)"/>
           <text x="64" y="115" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">4</text>
-          <text x="40" y="108" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12" fill="#fff4e2">Evidence accrues</text>
+          <text x="40" y="108" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12" fill="#fff4e2">The nicks accrue</text>
         </g>
 
         <text x="182" y="116" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">EACH PASS</text>
-        <text x="182" y="134" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#3fe0c8">sharper precedent</text>
+        <text x="182" y="134" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#3fe0c8">harder steel</text>
       </g>
 
       <!-- ===== the DASHED downstream segment — the deliberate later conversation ===== -->
@@ -797,13 +911,13 @@
       </g>
 
       <!-- ===== RIGHT HALF: the team kit accreting ===== -->
-      <text x="600" y="66" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#a86a1f">TEAM KIT · GROWS BY ACCRETION</text>
+      <text x="600" y="66" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#a86a1f">SHARED KIT · GROWS BY ACCRETION</text>
       <g transform="translate(600,86)">
-        <!-- the kit as accreting shelf — skills stacking, each a proven one -->
+        <!-- the kit as accreting shelf — blades stacking, each one carried first -->
         <rect x="0" y="100" width="380" height="86" rx="10" fill="rgba(8,17,18,.6)" stroke="rgba(255,179,71,.28)"/>
-        <text x="16" y="124" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".14em" fill="#a86a1f">SHARED KIT</text>
+        <text x="16" y="124" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".14em" fill="#a86a1f">THE RACK</text>
 
-        <!-- accreted skill tiles, growing left → right, last one freshly landed (amber) -->
+        <!-- accreted blade tiles, growing left → right, last one freshly hung (amber) -->
         <g>
           <rect x="16" y="134" width="40" height="40" rx="7" fill="rgba(63,224,200,.12)" stroke="rgba(63,224,200,.4)"/>
           <rect x="64" y="134" width="40" height="40" rx="7" fill="rgba(63,224,200,.12)" stroke="rgba(63,224,200,.4)"/>
@@ -811,39 +925,40 @@
           <rect x="160" y="134" width="40" height="40" rx="7" fill="rgba(63,224,200,.12)" stroke="rgba(63,224,200,.4)"/>
           <rect x="208" y="134" width="40" height="40" rx="7" fill="rgba(255,179,71,.16)" stroke="#ffb347" stroke-width="1.4" filter="url(#d3-glow)"/>
           <text x="228" y="159" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="13" fill="#ffb347">+1</text>
-          <!-- the dashed slot where the next one will land -->
+          <!-- the dashed slot where the next one will hang -->
           <rect x="256" y="134" width="40" height="40" rx="7" fill="none" stroke="rgba(63,224,200,.22)" stroke-width="1.2" stroke-dasharray="3 4"/>
           <text x="276" y="159" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="13" fill="#3b524e">…</text>
         </g>
 
-        <!-- the loop-back: kit raises the precedent the next authoring starts from -->
+        <!-- the loop-back: kit raises the steel the next forging starts from -->
         <path d="M150,134 C150,40 -180,40 -240,72" stroke="rgba(63,224,200,.4)" stroke-width="1.6" fill="none" stroke-dasharray="2 6"/>
-        <text x="-30" y="36" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">→ NEXT AUTHORING STARTS SHARPER</text>
+        <text x="-30" y="36" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">→ NEXT FORGING STARTS FROM HARDER STEEL</text>
 
         <text x="190" y="208" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13.5" fill="#ffb347">one skill shipped beats three drafted</text>
       </g>
     </svg>
-    <div class="dcap"><span class="num">Process diagram · 03</span><em>The kit grows by accretion, not one big rollout.</em> Every skill proven personal-first is a candidate the shared kit grows by — and each one <b>raises the precedent the next authoring starts from</b>.</div>
+    <div class="dcap"><span class="num">Process diagram · 03</span><em>The kit grows by accretion, not one big rollout.</em> Every blade carried personal-first is a candidate the shared rack grows by — and each one <b>leaves harder steel for the next forging</b>.</div>
   </div>
 
-  <!-- ============ PROSE BLOCK 4 — what Test actually means ============ -->
+  <!-- ============ PROSE BLOCK 5 — what the test actually means ============ -->
   <section class="prose">
     <div class="sec-label amber">What "Test" actually means · in practice</div>
-    <h2 class="amber">The test isn't "looks good." It's <em>"it caught something I'd have missed."</em></h2>
+    <h2 class="amber">The test isn't "looks sharp." It's <em>"I've already cut with it."</em></h2>
 
     <p>
-      You know the skill worked when you ran it <b>on the feature you just built</b> — not on a hypothetical — and it
-      raised something <b>codebase-specific</b>, not generic test-pyramid wisdom. You can say in one sentence whether it's
-      team-worthy or personal, and <em>why</em>, naming a real call — an auth pattern, an ADR convention, a verifier — rather
-      than a universal claim. The next session <b>cold-reads it without being told</b>, because it lives at user scope and
-      is auto-discovered. And the negative test is the sharpest of the lot: if the <span class="mono">SKILL.md</span> was
-      hand-typed in an editor and never invoked, the move didn't happen — you wrote documentation, not an instrument. This
-      is the same discipline Agents 101 trains the hour you author a test-strategy skill and run it on the very feature a
-      staff engineer and a CISO are about to review.
+      You know the blade is real the same way the knifemaker knows: not because it <em>looks</em> sharp, but because
+      you've already cut with it. Concretely: you ran the skill <b>on the feature you just built</b> — not on a
+      hypothetical — and it raised something <b>codebase-specific</b>, not generic test-pyramid wisdom. You can say in one
+      sentence whether it's team-worthy or personal, and <em>why</em>, naming a real call — an auth pattern, an ADR
+      convention, a verifier — rather than a universal claim. The next session <b>cold-reads it without being told</b>,
+      because it lives at user scope and is auto-discovered. And the negative test is the sharpest of the lot: if the
+      <span class="mono">SKILL.md</span> was hand-typed in an editor and never invoked, the move didn't happen — you wrote
+      documentation, not an instrument. This is the same discipline Agentic Engineering 101 trains the hour you author a test-strategy
+      skill and run it on the very feature a staff engineer and a CISO are about to review.
     </p>
   </section>
 
-  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
+  <!-- ============ USE WHEN · BUILD · TEST (recipe spine, the five functions in a glance) ============ -->
   <div class="plates">
     <div class="plate use">
       <div class="beat-label amber"><b>Use when</b></div>
@@ -856,14 +971,14 @@
     <div class="plate build">
       <div class="beat-label"><b>Build</b></div>
       <p class="body">
-        One authored skill at <b>~/.claude/skills/&lt;name&gt;/SKILL.md</b> — user-level, auto-discovered, weakest section
-        already grilled, <span class="grey">invoked once on real work</span>. Ships proven, not drafted.
+        One forged skill at <b>~/.claude/skills/&lt;name&gt;/SKILL.md</b> — user-level, auto-discovered, weakest section
+        already struck, <span class="grey">cut with once on real work</span>. Ships carried, not catalogued.
       </p>
     </div>
     <div class="plate test">
       <div class="beat-label"><b>Test</b></div>
       <p class="body">
-        It caught something <em>codebase-specific</em>.<br>
+        It <em>nicked something codebase-specific.</em><br>
         Not merely <em class="no">"use the test pyramid."</em>
       </p>
     </div>
@@ -873,7 +988,7 @@
   <section class="moves">
     <div class="beat-label"><b>Core moves</b></div>
     <div class="moves-head">
-      <h2>The action, in sequence</h2>
+      <h2>The forging, in sequence</h2>
       <span class="lede">Reusable on any recurring judgment — not a documentation chore.</span>
     </div>
 
@@ -881,22 +996,22 @@
       <div class="thread"></div>
       <div class="step">
         <div class="bead">1</div>
-        <h3>Author by conversation</h3>
+        <h3>Forge by conversation</h3>
         <p>Don't type it. <b>Answer one question at a time</b> from the repo.</p>
       </div>
       <div class="step">
         <div class="bead">2</div>
-        <h3>Grill the weakest part</h3>
-        <p>Make it disclose where it's thinnest. <b>Push back. Don't ship draft one.</b></p>
+        <h3>Strike the weakest part</h3>
+        <p>Make it name where the edge rolls. <b>Push back. Don't hand over draft one.</b></p>
       </div>
       <div class="step">
         <div class="bead">3</div>
-        <h3>Invoke on real work</h3>
-        <p>Run it on the feature you just built. <b>Anything less is theatre.</b></p>
+        <h3>Cut on real work</h3>
+        <p>Carry it onto the feature you just built. <b>Anything less is theatre.</b></p>
       </div>
       <div class="step">
         <div class="bead">4</div>
-        <h3>Ship to your own scope</h3>
+        <h3>Ship to your own bench</h3>
         <p>Install to <b>~/.claude/skills/</b>. No review. No approval.</p>
       </div>
       <div class="step">
@@ -921,17 +1036,10 @@
         </circle>
       </svg>
       <div class="ctext">
-        <div class="cyc">author by conversation<span class="arr">→</span>ship personal<span class="arr">→</span>invoke on real work<span class="arr">→</span>evidence accrues<span class="arr">→</span><span class="dash">name team-worthiness ⤳</span></div>
-        <p>Then it's a habit, not a chore: <b>one skill shipped beats three drafted.</b> Each proven skill is a candidate the team kit grows by — and raises the precedent the next authoring starts from.</p>
+        <div class="cyc">forge by conversation<span class="arr">→</span>ship personal<span class="arr">→</span>cut on real work<span class="arr">→</span>nicks accrue<span class="arr">→</span><span class="dash">name team-worthiness ⤳</span></div>
+        <p>Then it's a habit, not a chore: <b>one skill shipped beats three drafted.</b> Each carried blade is a candidate the shared rack grows by — and leaves harder steel for the next forging.</p>
       </div>
     </div>
-
-    <!-- the Monday-move / no-permission aside -->
-    <p class="aside">
-      <b>Fastest way to feel it: after your next substantive session.</b> Pick the one judgment that session needed from you.
-      <span class="mono">Ask Claude Code to author a skill for it through conversation · ship to ~/.claude/skills/ · grill it · invoke it on what you just built · no admin · no budget · ~10 min.</span>
-      The skill lives at your personal scope by dinner; no one had to approve a thing.
-    </p>
   </section>
 
   <!-- ============ WHY — the conviction ============ -->
@@ -953,24 +1061,46 @@
       instrument.</b>
     </p>
     <p class="gloss">
-      And personal-first isn't timidity — it's the cheapest possible proving ground. You install to your own scope, run it
-      on the feature in front of you, grill its weakest part, and <em>only then</em> does the team conversation become an
-      option, now backed by a thing that has already caught something real. <b>A shipped-and-proven skill carries evidence;
-      a draft carries only intent.</b>
+      And personal-first isn't timidity — it's the cheapest possible proving ground. You install to your own bench, cut
+      it on the feature in front of you, strike its weakest part, and <em>only then</em> does the team conversation become
+      an option, now backed by a thing that has already caught something real. <b>A carried-and-cut blade is evidence; a
+      draft is only intent — evidence beats eloquence.</b>
     </p>
-    <div class="corollary"><span class="sd"></span>One skill shipped beats three drafted.</div>
+    <div class="corollary"><span class="sd"></span>One skill shipped beats three drafted for an audience.</div>
   </section>
 
   <!-- ============ TEST-IN-PRACTICE inline panel (no-permission framing made explicit) ============ -->
   <section class="practice">
     <div class="beat-label amber"><b>No permission required</b></div>
     <p>
-      Every part of this move happens at <b>personal scope</b>. The skill installs to your own
+      Every part of this move happens at <b>personal scope</b>. The blade hangs on your own
       <span style="font-family:'Spline Sans Mono',monospace;color:var(--teal)">~/.claude/skills/</span> and the agent
-      auto-discovers it by name — <b>no admin, no team rollout, no platform change, no budget.</b> The authoring is a normal
-      session conversation; the invocation runs on a feature you already have. The only step that touches anyone else is the
-      team-kit promotion — and that's deliberately downstream, a later human conversation that's <em>easier</em> precisely
-      because you arrive with a skill already proving itself.
+      auto-discovers it by name — <b>no admin, no team rollout, no platform change, no budget.</b> The forging is a normal
+      session conversation; the cut runs on a feature you already have. The only step that touches anyone else is the
+      shared-kit promotion — and that's deliberately downstream, a later human conversation that's <em>easier</em>
+      precisely because you arrive with a blade already proving itself.
+    </p>
+  </section>
+
+  <!-- ============ MONDAY MOVE — "Tonight" closing call to action ============ -->
+  <section class="tonight">
+    <div class="beat-label amber"><b>Tonight</b></div>
+    <h2>After your next coding session — <em>while the work is still warm.</em></h2>
+    <p class="lede">
+      Ten minutes. The blade lives on your personal bench by dinner; no one had to approve a thing.
+    </p>
+    <ol>
+      <li>Pick the <b>one judgment</b> the agent needed from you this session — the thing only you knew because only you
+        know this repo.</li>
+      <li>Ask the agent to <b>author a skill for it by conversation</b> — one question at a time. Answer every question
+        from the actual files, not from memory. <span class="mono">"ask me one at a time about how we test here, then write the SKILL.md to ~/.claude/skills/."</span></li>
+      <li>Make it <b>name its own weakest section</b>, then push back on the critique until it either holds or breaks.</li>
+      <li>Drop it in <span class="mono">~/.claude/skills/</span> and <b>invoke it on the feature you just built.</b> Watch
+        where the edge rolls.</li>
+    </ol>
+    <p class="close">
+      You'll know it's real the same way the knifemaker knows: not because it looks sharp, but because
+      <b>you've already cut with it.</b>
     </p>
   </section>
 
@@ -979,9 +1109,9 @@
     <div class="beat-label"><b>Where this sits</b></div>
     <p class="gloss" style="margin-top:6px">
       <b>Personal → team → company.</b> At personal scope this turns a one-off judgment into a reusable, auto-discovered
-      instrument. At company scope it's the entry point to <b>kit accretion</b>: every skill proven personal-first is a
-      candidate the shared kit grows by, so a company's compounding capability rests on how reliably its personal proving
-      grounds feed the shared kit. This card is the explicit prerequisite for the crossing it makes possible —
+      instrument. At company scope it's the entry point to <b>kit accretion</b>: every blade carried personal-first is a
+      candidate the shared rack grows by, so a company's compounding capability rests on how reliably its personal benches
+      feed the shared kit. This card is the explicit prerequisite for the crossing it makes possible —
       <a href="team-kit-promotion.html" style="color:var(--teal);text-decoration:none;border-bottom:1px solid var(--teal-dim)">team-kit promotion</a>.
     </p>
   </section>
@@ -1005,19 +1135,16 @@
         <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#wglow)"/>
         <circle cx="150" cy="150" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
 
-        <path id="th1" d="M150,150 C360,70 540,52 760,56" stroke="url(#t1)" stroke-width="2.2" fill="none"/>
         <path id="th2" d="M150,150 C380,118 560,116 760,118" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
         <path id="th3" d="M150,150 C380,186 560,188 760,188" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
         <path id="th4" d="M150,150 C360,232 540,250 760,250" stroke="url(#t4)" stroke-width="1.6" stroke-dasharray="4 6" fill="none"/>
 
-        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
         <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
         <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
       </svg>
 
       <div class="neighbours">
-        <div class="origin-chip" style="left:13.8%;top:50%">Ship the skill to yourself first<small>recipe · you are here</small></div>
-        <a class="nb" href="session-shaper-authoring.html" style="left:74%;top:18.7%"><span class="sd"></span>Session-shaper authoring <span class="recipe-no">sibling move</span></a>
+        <div class="origin-chip" style="left:13.8%;top:50%">Cut your own hand first<small>recipe · you are here</small></div>
         <a class="nb" href="compound-from-evidence.html" style="left:74%;top:39.3%"><span class="sd"></span>Compound from evidence <span class="recipe-no">rules twin</span></a>
         <a class="nb amber" href="team-kit-promotion.html" style="left:74%;top:62.7%"><span class="sd"></span>Team-kit promotion <span class="recipe-no">downstream</span></a>
         <a class="nb" href="access-surface-map.html" style="left:74%;top:83.3%"><span class="sd"></span>Access-surface map <span class="recipe-no">invoked on</span></a>

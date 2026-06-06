@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Route each gap to its home — Pattern · The Big Picture</title>
+<title>Sort each lesson to the clock where it fires — Pattern · The Big Picture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -401,255 +401,320 @@
 
   <!-- ============ BREADCRUMB ============ -->
   <nav class="crumb">
-    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Route each gap to its home</span>
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Sort each lesson to the clock where it fires</span>
   </nav>
 
   <!-- ============ PATTERN NAME + ESSENCE ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· software lane · Absorption phase · the dispatcher after the loop closes</span></div>
-    <h1>Route each gap to its <em>home</em></h1>
-    <p class="principle">The principle: <b>the loop closes when the lesson ships</b> — but only to the home where it'll fire.</p>
+    <h1>Sort each lesson to the <em>clock</em> where it fires</h1>
+    <p class="principle">The principle: <b>the loop closes when the lesson ships</b> — but only to the clock where it'll act.</p>
     <p class="essence">
-      Take the gaps a two-run compare handed you and send each one to the right home —
-      <b>memory, a sharper verifier, or a new skill</b> — instead of pouring all of them
-      into a skill because skills feel like the answer. The home you pick decides whether
-      the lesson ever fires when you need it. It's a private fifteen-minute pass, but it's
-      also <b>the dispatcher a company-scale context layer either institutionalises or drowns under</b>:
-      prevention in memory, detection in CI, reuse in skills — or one undifferentiated pile.
+      After a run you hold a fistful of lessons, and the mistake is to treat them as one bin —
+      call the bin <b>a skill</b> and pour everything in. Each lesson has a clock: one acts
+      <b>before</b> the run, one <b>during</b> it, one on the <b>next</b> run of this shape.
+      Route a lesson to the wrong clock and it goes mute at exactly the moment you needed it.
+      A private fifteen-minute pass — but also <b>the dispatcher a company-scale context layer
+      either institutionalises or drowns under</b>: prevention in memory, detection in CI, reuse
+      in skills, instead of one undifferentiated pile.
     </p>
   </header>
 
-  <!-- ============ HERO PICTURE: skill-funnel trap (left) vs routed-to-three-homes (right) ============ -->
+  <!-- ============ HERO PICTURE: the hospital dispensary — three windows, three clocks ============ -->
   <div class="hero-frame">
-    <svg viewBox="0 0 1080 432" role="img" aria-label="On the left, four loose diagnosed gaps all sucked into a single skill funnel — the trap. On the right, the same four gaps sorted onto three diverging threads to three distinct homes: memory, a sharper verifier, and a new skill, with one memory-bound rule struck through to show subtraction is routing too.">
+    <svg viewBox="0 0 1080 432" role="img" aria-label="A hospital dispensary drawn as three windows, not one counter. Window one — pre-packed — is the blister pack loaded before the patient arrives: the lesson acts before the run, in memory. Window two — stat — is the live dispense while the patient is in front of you: the lesson acts during the run, as a check. Window three — repeat prescription — is the template written out for the next presentation of this condition: the lesson acts on the next run, as a skill. A lesson poured into the wrong window either spoils on the shelf or arrives after the damage. One expired packet is being taken off the shelf — subtraction is part of the sort.">
       <defs>
-        <radialGradient id="hwell" cx="74%" cy="46%" r="64%">
-          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".18"/>
-          <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".07"/>
+        <radialGradient id="hwell" cx="50%" cy="40%" r="70%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".15"/>
+          <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".06"/>
           <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
         </radialGradient>
-        <linearGradient id="trapGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#5d6a68" stop-opacity=".7"/>
-          <stop offset="100%" stop-color="#39423f" stop-opacity=".25"/>
-        </linearGradient>
-        <linearGradient id="memGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".35"/><stop offset="100%" stop-color="#9bffe9" stop-opacity=".9"/></linearGradient>
-        <linearGradient id="verGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".35"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".9"/></linearGradient>
-        <linearGradient id="skiGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a86a1f" stop-opacity=".35"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".95"/></linearGradient>
+        <linearGradient id="memGrad" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".35"/><stop offset="100%" stop-color="#9bffe9" stop-opacity=".9"/></linearGradient>
+        <linearGradient id="verGrad" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".35"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".9"/></linearGradient>
+        <linearGradient id="skiGrad" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#a86a1f" stop-opacity=".35"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".95"/></linearGradient>
+        <radialGradient id="patientCore" cx="40%" cy="35%" r="70%"><stop offset="0%" stop-color="#eafff9"/><stop offset="45%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#0c2b2a"/></radialGradient>
         <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
           <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
       </defs>
       <rect x="0" y="0" width="1080" height="432" fill="url(#hwell)"/>
 
-      <!-- ===== LEFT: the trap — four loose gaps poured into one skill funnel ===== -->
-      <g>
-        <text x="40" y="38" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#5d6a68">THE LAZY MOVE · EVERYTHING → ONE SKILL</text>
-        <!-- four loose, undifferentiated gaps -->
-        <g font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">
-          <g><rect x="40" y="64" width="170" height="30" rx="9" fill="rgba(93,106,104,.12)" stroke="#5d6a68" stroke-width="1"/><text x="54" y="84">gap · unsigned webhook</text></g>
-          <g><rect x="40" y="104" width="170" height="30" rx="9" fill="rgba(93,106,104,.12)" stroke="#5d6a68" stroke-width="1"/><text x="54" y="124">gap · contract broke</text></g>
-          <g><rect x="40" y="144" width="170" height="30" rx="9" fill="rgba(93,106,104,.12)" stroke="#5d6a68" stroke-width="1"/><text x="54" y="164">gap · re-explained scaffold</text></g>
-          <g><rect x="40" y="184" width="170" height="30" rx="9" fill="rgba(93,106,104,.12)" stroke="#5d6a68" stroke-width="1"/><text x="54" y="204">gap · stale Mongo rule</text></g>
-        </g>
-        <!-- the tempting funnel sucking all of them to one file -->
-        <g stroke="url(#trapGrad)" stroke-width="2" fill="none">
-          <path d="M210,79 C280,120 300,190 330,224"/>
-          <path d="M210,119 C280,150 305,200 330,228"/>
-          <path d="M210,159 C280,180 305,210 330,232"/>
-          <path d="M210,199 C285,210 310,222 330,236"/>
-        </g>
-        <polygon points="330,205 386,205 360,262 356,262" fill="rgba(93,106,104,.16)" stroke="#5d6a68" stroke-width="1.2"/>
-        <text x="358" y="232" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#5d6a68">→ new</text>
-        <text x="358" y="246" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#5d6a68">skill</text>
-        <text x="358" y="296" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#5d6a68">one pile · fires nothing</text>
-        <text x="40" y="372" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#5d6a68" font-style="italic">a rule isn't a skill · a missing check isn't a rule</text>
+      <text x="40" y="34" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2.5" fill="#3b524e">THE DISPENSARY · THREE WINDOWS, NOT ONE COUNTER — EACH WINDOW IS A DIFFERENT CLOCK</text>
+
+      <!-- the long dispensary counter — a faint grain, no terminus -->
+      <path d="M40,300 C300,288 780,288 1040,300" stroke="rgba(63,224,200,.14)" stroke-width="1.4" fill="none"/>
+      <!-- anastomosis: a filament that bows off the counter and rejoins — loop-not-a-loop -->
+      <path d="M360,300 C440,360 640,360 720,300" stroke="rgba(63,224,200,.16)" stroke-width="1.1" fill="none" opacity=".5"/>
+      <!-- faint root-mass filaments behind, grounding -->
+      <g stroke="rgba(63,224,200,.06)" stroke-width=".7" fill="none">
+        <path d="M120,330 C260,372 360,366 470,338"/>
+        <path d="M620,338 C740,372 860,366 960,332"/>
       </g>
 
-      <!-- the divider / decision -->
+      <!-- ===== WINDOW ONE — PRE-PACKED (memory · before) ===== -->
       <g>
-        <line x1="470" y1="64" x2="470" y2="392" stroke="rgba(63,224,200,.16)" stroke-width="1" stroke-dasharray="3 7"/>
-        <circle cx="470" cy="138" r="13" fill="rgba(8,17,18,.85)" stroke="#3fe0c8" stroke-width="1.2" filter="url(#hglow)"/>
-        <text x="470" y="142" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#3fe0c8">?</text>
-        <text x="470" y="170" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#1d8d80">ASK EACH GAP</text>
+        <rect x="64" y="70" width="276" height="206" rx="14" fill="rgba(8,17,18,.62)" stroke="url(#memGrad)" stroke-width="1.4"/>
+        <text x="84" y="98" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".22em" fill="#1d8d80">WINDOW ONE · PRE-PACKED</text>
+        <!-- a blister pack: rows of sealed cells, loaded before the patient -->
+        <g>
+          <rect x="92" y="118" width="172" height="70" rx="8" fill="rgba(63,224,200,.05)" stroke="rgba(155,255,233,.4)" stroke-width="1"/>
+          <g fill="rgba(155,255,233,.55)">
+            <circle cx="116" cy="138" r="7"/><circle cx="146" cy="138" r="7"/><circle cx="176" cy="138" r="7"/><circle cx="206" cy="138" r="7"/><circle cx="236" cy="138" r="7"/>
+            <circle cx="116" cy="166" r="7"/><circle cx="146" cy="166" r="7"/><circle cx="176" cy="166" r="7"/><circle cx="206" cy="166" r="7"/><circle cx="236" cy="166" r="7"/>
+          </g>
+        </g>
+        <text x="92" y="214" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#9bffe9">loaded before the patient arrives</text>
+        <rect x="92" y="228" width="172" height="28" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.3)"/>
+        <text x="104" y="246" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#9bffe9">./CLAUDE.local.md</text>
+        <text x="84" y="272" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".16em" fill="#1d8d80">A RULE · PREVENTS BEFORE THE RUN</text>
+        <circle cx="324" cy="92" r="3.6" fill="#aeffee" class="breathe"/>
       </g>
 
-      <!-- ===== RIGHT: the real move — sorted onto three diverging threads to three homes ===== -->
+      <!-- ===== WINDOW TWO — STAT (verifier · during) ===== -->
       <g>
-        <text x="540" y="38" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#3fe0c8">THE REAL MOVE · EACH GAP → WHERE IT FIRES</text>
-
-        <!-- the three diverging threads from the decision node -->
-        <path d="M484,138 C600,110 700,96 900,92"  stroke="url(#memGrad)" stroke-width="2.4" fill="none" filter="url(#hglow)"/>
-        <path d="M484,138 C620,170 720,196 900,200" stroke="url(#verGrad)" stroke-width="2.4" fill="none" filter="url(#hglow)"/>
-        <path d="M484,138 C600,230 700,300 900,316" stroke="url(#skiGrad)" stroke-width="2.4" fill="none" filter="url(#hglow)"/>
-
-        <!-- HOME 1 — memory -->
-        <g>
-          <rect x="900" y="62" width="160" height="62" rx="11" fill="rgba(8,17,18,.78)" stroke="url(#memGrad)" stroke-width="1.4"/>
-          <text x="916" y="84" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#9bffe9">CLAUDE.local.md</text>
-          <text x="916" y="102" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfe6e0">memory</text>
-          <text x="916" y="117" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".1em" fill="#1d8d80">PREVENTS UPSTREAM</text>
-          <circle cx="1048" cy="76" r="3.6" fill="#aeffee" class="breathe"/>
+        <rect x="402" y="70" width="276" height="206" rx="14" fill="rgba(8,17,18,.62)" stroke="url(#verGrad)" stroke-width="1.6" filter="url(#hglow)"/>
+        <text x="422" y="98" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".22em" fill="#3fe0c8">WINDOW TWO · STAT</text>
+        <!-- the patient, live at the window — the run in progress -->
+        <circle cx="468" cy="158" r="20" fill="url(#patientCore)" filter="url(#hglow)"/>
+        <circle cx="468" cy="158" r="20" fill="none" stroke="#9bffe9" stroke-width="1" opacity=".6"/>
+        <text x="468" y="196" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".12em" fill="#6f8a85">RUN · LIVE</text>
+        <!-- the check firing mid-dispense -->
+        <g stroke="#3fe0c8" stroke-width="2" opacity=".9" filter="url(#hglow)">
+          <line x1="500" y1="146" x2="556" y2="138"/>
+          <line x1="500" y1="158" x2="560" y2="158"/>
+          <line x1="500" y1="170" x2="556" y2="178"/>
         </g>
-        <!-- HOME 2 — sharper verifier -->
-        <g>
-          <rect x="900" y="170" width="160" height="62" rx="11" fill="rgba(8,17,18,.78)" stroke="url(#verGrad)" stroke-width="1.4"/>
-          <text x="916" y="192" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#3fe0c8">verifier.sh</text>
-          <text x="916" y="210" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfe6e0">sharper verifier</text>
-          <text x="916" y="225" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".1em" fill="#1d8d80">CATCHES MID-RUN</text>
-          <circle cx="1048" cy="184" r="3.6" fill="#5cffe6" class="breathe"/>
-        </g>
-        <!-- HOME 3 — new skill -->
-        <g>
-          <rect x="900" y="286" width="160" height="62" rx="11" fill="rgba(8,17,18,.78)" stroke="url(#skiGrad)" stroke-width="1.4"/>
-          <text x="916" y="308" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#ffb347">~/.claude/skills/</text>
-          <text x="916" y="326" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#fff4e2">new skill</text>
-          <text x="916" y="341" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".1em" fill="#a86a1f">REUSES NEXT RUN</text>
-          <circle cx="1048" cy="300" r="3.6" fill="#ffce85" class="breathe"/>
-        </g>
-
-        <!-- the struck-through rule — subtraction is routing too -->
-        <g>
-          <rect x="556" y="362" width="290" height="30" rx="9" fill="rgba(168,106,31,.07)" stroke="rgba(168,106,31,.5)" stroke-width="1" stroke-dasharray="4 5"/>
-          <text x="572" y="382" font-family="'Spline Sans Mono',monospace" font-size="11.5" fill="#a86a1f" text-decoration="line-through">- stale rule the diagnosis killed</text>
-          <text x="556" y="416" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12.5" fill="#a86a1f">routing includes subtraction · cut, don't only add</text>
-        </g>
-
-        <!-- nutrient pulse running the memory thread -->
-        <circle r="3.2" fill="#aeffee">
-          <animateMotion dur="4.6s" repeatCount="indefinite" path="M484,138 C600,110 700,96 900,92"/>
-          <animate attributeName="opacity" values="0;1;1;0" dur="4.6s" repeatCount="indefinite"/>
-        </circle>
+        <g fill="#aeffee"><circle cx="560" cy="138" r="3.4" class="breathe"/><circle cx="564" cy="158" r="3.8"/><circle cx="560" cy="178" r="3.4" class="breathe"/></g>
+        <text x="422" y="214" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#eafff9">the dispense happens while you wait</text>
+        <rect x="422" y="228" width="172" height="28" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.4)"/>
+        <text x="434" y="246" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#3fe0c8">verifier.sh</text>
+        <text x="422" y="272" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".16em" fill="#1d8d80">A CHECK · CATCHES DURING THE RUN</text>
+        <circle cx="662" cy="92" r="3.6" fill="#5cffe6" class="breathe"/>
       </g>
+
+      <!-- ===== WINDOW THREE — REPEAT PRESCRIPTION (skill · next) ===== -->
+      <g>
+        <rect x="740" y="70" width="276" height="206" rx="14" fill="rgba(8,17,18,.62)" stroke="url(#skiGrad)" stroke-width="1.4"/>
+        <text x="760" y="98" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".22em" fill="#a86a1f">WINDOW THREE · REPEAT RX</text>
+        <!-- the prescription slip, written for the NEXT presentation -->
+        <g>
+          <rect x="768" y="116" width="150" height="92" rx="8" fill="rgba(255,179,71,.05)" stroke="rgba(255,179,71,.4)" stroke-width="1"/>
+          <text x="780" y="136" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">℞  next presentation</text>
+          <g stroke="#ffce85" stroke-width="2" opacity=".7">
+            <line x1="780" y1="152" x2="900" y2="152"/>
+            <line x1="780" y1="170" x2="884" y2="170"/>
+            <line x1="780" y1="188" x2="906" y2="188"/>
+          </g>
+        </g>
+        <!-- arrow: the template travels forward to a future run -->
+        <path d="M922,162 C952,162 962,162 988,162" stroke="#ffb347" stroke-width="1.4" fill="none" opacity=".8"/>
+        <polygon points="988,162 979,156 979,168" fill="#ffb347" opacity=".85"/>
+        <text x="768" y="226" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#fff4e2">a template that travels</text>
+        <rect x="768" y="236" width="172" height="28" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(255,179,71,.4)"/>
+        <text x="780" y="254" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#ffb347">~/.claude/skills/</text>
+        <circle cx="1000" cy="92" r="3.6" fill="#ffce85" class="breathe"/>
+      </g>
+
+      <!-- ===== the expired packet being taken off the shelf — subtraction is part of the sort ===== -->
+      <g>
+        <rect x="402" y="356" width="296" height="30" rx="9" fill="rgba(168,106,31,.07)" stroke="rgba(168,106,31,.5)" stroke-width="1" stroke-dasharray="4 5"/>
+        <text x="418" y="376" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#a86a1f" text-decoration="line-through">expired packet · the rule the diagnosis killed</text>
+        <text x="40" y="412" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#a86a1f">expiry is real in a dispensary · pull the stale packet, don't only stock new ones</text>
+      </g>
+
+      <!-- nutrient pulse drifting the counter, life not GIF energy -->
+      <circle r="3.2" fill="#aeffee">
+        <animateMotion dur="7s" repeatCount="indefinite" path="M40,300 C300,288 780,288 1040,300"/>
+        <animate attributeName="opacity" values="0;1;1;0" dur="7s" repeatCount="indefinite"/>
+      </circle>
     </svg>
-    <div class="hero-cap">The funnel is the trap. <b>Three gaps want three homes</b> — and one of them is a rule you delete.</div>
+    <div class="hero-cap">Three windows, three clocks. <b>A skill is a repeat prescription</b> — useless for the acute mistake you should have prevented upstream.</div>
   </div>
 
   <!-- ============================================================ -->
-  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
+  <!-- ============ THE DISPENSARY IMAGE ========================= -->
   <!-- ============================================================ -->
   <section class="prose">
-    <div class="sec-label">The mechanism · how the lesson finds its home</div>
-    <h2>A rule, a check, and a skill are <em>three different times</em>.</h2>
+    <div class="sec-label">The dispensary image · why one counter is the wrong shape</div>
+    <h2>A dispensary is <em>three windows</em>, not one counter.</h2>
 
     <p>
-      You ran the same task twice — once un-packaged, once packaged — and the contrast handed you a fistful of things
-      the run didn't anticipate: a rule the agent never had, a check that would have fired mid-run if it existed,
-      a move you keep re-explaining every session. The trap the source curriculum names outright is what happens next.
-      You pour all of them into a new skill, because <b>a skill feels like the satisfying artefact to ship</b>. But a rule
-      isn't a skill, and a missing check isn't a rule. The three homes the source sorts gaps into — memory, a sharper
-      verifier, a new skill — are not a tidiness exercise. They are <b>three different times a lesson can act</b>: a rule acts
-      <em>before</em> the run, a verifier acts <em>during</em> it, a skill acts on the <em>next</em> run of this shape.
+      Walk into a hospital dispensary and you do not meet a single till that does everything. You meet three windows, and
+      each one runs on a different clock. <b>Window one is pre-packed:</b> the pharmacist loads the blister pack <em>before</em>
+      the patient ever arrives — the drug acts before the symptom shows, the decision already made upstream, nothing to
+      decide in the moment. <b>Window two is stat:</b> the dispense happens <em>while</em> the patient is in front of you — a
+      check, a dose, an intervention that would be useless either earlier or later, because it only works live. <b>Window
+      three is the repeat prescription:</b> the pharmacist writes it out for the <em>next</em> presentation of this condition —
+      not this patient, not right now — a template that travels.
     </p>
 
     <p>
-      So the routing question is really a timing question. Ask each gap one thing and the answer falls out.
-      <em class="teal">Would a rule have prevented this before the run started?</em> — then its home is memory; the agent should
-      have had the habit from cold start. <em class="teal">Would a check firing while the run was still going have caught it?</em>
-      — then it wants a sharper verifier, because rules prevent, they don't catch. <em class="teal">Will I re-perform this exact
-      move on the next task of this shape?</em> — then, and only then, it earns a skill. Route a lesson to the wrong time and
-      it never fires when you need it. The diagram below feeds one gap toward all three homes and lights up exactly one.
+      Hold that picture, because it is the whole card. After a run you are standing at the counter with a fistful of
+      lessons, and the reflex is to shove all of them through one window labelled <span class="mono">skill</span>. But a
+      lesson poured into the wrong window either <b>spoils on the shelf or arrives after the damage is done</b>. The three
+      windows here — a rule in memory, a sharper check, a new skill — are the source curriculum's three-way sort, drawn
+      from a convergent practitioner pattern read off the encode end of Armin Ronacher's reference / <span class="mono">plan.md</span> /
+      verifier trio. <b>One honest caveat that travels with every recurrence below:</b> it's that source's sort, a useful and
+      well-worn one — not an official Claude Code taxonomy and not a measured law. Stay open to a fourth window. What
+      <em>is</em> observed is plainer than any taxonomy: a lesson filed where its clock never strikes is a lesson that goes mute.
     </p>
   </section>
 
-  <!-- ============ DIAGRAM 1 — ONE GAP, THREE CANDIDATE HOMES, ONE FIRES ============ -->
+  <!-- ============ DIAGRAM 1 — ONE LESSON, THREE WINDOWS, ONE FIRES ============ -->
   <div class="diagram">
-    <svg viewBox="0 0 1080 432" role="img" aria-label="A single diagnosed gap at the centre fed toward all three candidate homes in parallel. Memory asks whether a rule would have prevented it before the run, the verifier asks whether a check would have caught it during the run, and the skill asks whether the move will recur next run. Exactly one home lights up; the other two read 'files it where it won't fire.'">
+    <svg viewBox="0 0 1080 432" role="img" aria-label="A single diagnosed lesson at the centre fed toward all three dispensary windows in parallel. Window one — pre-packed, memory — asks whether a rule would have prevented it before the run. Window two — stat, verifier — asks whether a check would have caught it during the run. Window three — repeat prescription, skill — asks whether the move will recur next run. Exactly one window lights up; the other two read 'wrong clock — goes mute here.'">
       <defs>
         <radialGradient id="d1-core" cx="40%" cy="35%" r="70%"><stop offset="0%" stop-color="#eafff9"/><stop offset="45%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#0c2b2a"/></radialGradient>
         <linearGradient id="d1-live" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".4"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".95"/></linearGradient>
         <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
 
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME GAP · THREE HOMES · THE QUESTION YOU ASK DECIDES WHERE THE LESSON ACTS</text>
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">ONE LESSON · THREE WINDOWS · THE QUESTION YOU ASK DECIDES WHICH CLOCK STRIKES</text>
 
-      <!-- the single gap at the centre-left -->
+      <!-- the single lesson at the centre-left -->
       <circle cx="150" cy="216" r="26" fill="url(#d1-core)" filter="url(#d1-glow)"/>
       <circle cx="150" cy="216" r="26" fill="none" stroke="#9bffe9" stroke-width="1" opacity=".6"/>
-      <text x="150" y="262" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#6f8a85">ONE GAP</text>
-      <text x="150" y="278" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85" font-style="italic">"contract broke"</text>
+      <text x="150" y="262" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#6f8a85">ONE LESSON</text>
+      <text x="150" y="278" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85" font-style="italic">"it broke and we knew too late"</text>
 
-      <!-- three parallel branches to the three candidate homes -->
-      <!-- branch to MEMORY (dim — doesn't fire here) -->
+      <!-- three parallel branches to the three windows -->
+      <!-- branch to PRE-PACKED / memory (dim — doesn't fire here) -->
       <path d="M176,200 C320,140 440,110 560,104" stroke="rgba(93,106,104,.4)" stroke-width="1.8" fill="none" stroke-dasharray="5 6"/>
-      <!-- branch to VERIFIER (lights up) -->
+      <!-- branch to STAT / verifier (lights up) -->
       <path d="M176,216 C320,216 440,216 560,216" stroke="url(#d1-live)" stroke-width="2.6" fill="none" filter="url(#d1-glow)"/>
-      <!-- branch to SKILL (dim) -->
+      <!-- branch to REPEAT RX / skill (dim) -->
       <path d="M176,232 C320,292 440,322 560,328" stroke="rgba(93,106,104,.4)" stroke-width="1.8" fill="none" stroke-dasharray="5 6"/>
 
-      <!-- HOME A — memory (dimmed) -->
+      <!-- WINDOW ONE — pre-packed / memory (dimmed) -->
       <g opacity=".5">
         <rect x="560" y="74" width="440" height="62" rx="11" fill="rgba(8,17,18,.55)" stroke="#39423f" stroke-width="1"/>
-        <text x="580" y="100" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em" fill="#5d6a68">MEMORY · CLAUDE.local.md</text>
+        <text x="580" y="100" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em" fill="#5d6a68">WINDOW ONE · PRE-PACKED · ./CLAUDE.local.md</text>
         <text x="580" y="120" font-family="'Spline Sans',sans-serif" font-size="13" fill="#6f8a85" font-style="italic">"Would a rule have prevented this before the run?"</text>
         <text x="980" y="100" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#5d6a68">NO →</text>
-        <text x="980" y="120" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="11" fill="#5d6a68">files it where it won't fire</text>
+        <text x="980" y="120" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="11" fill="#5d6a68">wrong clock · goes mute here</text>
       </g>
 
-      <!-- HOME B — sharper verifier (LIGHTS UP) -->
+      <!-- WINDOW TWO — stat / verifier (LIGHTS UP) -->
       <g>
         <rect x="560" y="184" width="440" height="64" rx="11" fill="rgba(63,224,200,.08)" stroke="url(#d1-live)" stroke-width="1.8" filter="url(#d1-glow)"/>
-        <text x="580" y="210" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em" fill="#3fe0c8">SHARPER VERIFIER · verifier.sh</text>
+        <text x="580" y="210" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em" fill="#3fe0c8">WINDOW TWO · STAT · verifier.sh</text>
         <text x="580" y="230" font-family="'Spline Sans',sans-serif" font-size="13" fill="#eafff9" font-style="italic">"Would a check have caught this during the run?"</text>
         <text x="980" y="220" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".12em" fill="#3fe0c8">YES · IT FIRES HERE</text>
         <circle cx="978" cy="200" r="4" fill="#aeffee" class="breathe"/>
       </g>
 
-      <!-- HOME C — new skill (dimmed) -->
+      <!-- WINDOW THREE — repeat rx / skill (dimmed) -->
       <g opacity=".5">
         <rect x="560" y="298" width="440" height="62" rx="11" fill="rgba(8,17,18,.55)" stroke="#39423f" stroke-width="1"/>
-        <text x="580" y="324" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em" fill="#5d6a68">NEW SKILL · ~/.claude/skills/</text>
+        <text x="580" y="324" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em" fill="#5d6a68">WINDOW THREE · REPEAT RX · ~/.claude/skills/</text>
         <text x="580" y="344" font-family="'Spline Sans',sans-serif" font-size="13" fill="#6f8a85" font-style="italic">"Will I re-perform this move next run?"</text>
         <text x="980" y="324" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#5d6a68">NO →</text>
-        <text x="980" y="344" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="11" fill="#5d6a68">files it where it won't fire</text>
+        <text x="980" y="344" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="11" fill="#5d6a68">wrong clock · goes mute here</text>
       </g>
 
-      <text x="40" y="406" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">PREVENT (BEFORE) · DETECT (DURING) · REUSE (NEXT) — THREE TIMES A LESSON CAN ACT. THE SOURCE'S THREE-WAY SORT, A CONVERGENT PRACTITIONER PATTERN — KEEP OPEN TO A FOURTH HOME.</text>
+      <text x="40" y="406" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">PRE-PACKED (BEFORE) · STAT (DURING) · REPEAT RX (NEXT) — THREE CLOCKS A LESSON CAN STRIKE. THE SOURCE'S THREE-WAY SORT, A CONVERGENT PRACTITIONER PATTERN — KEEP OPEN TO A FOURTH WINDOW.</text>
     </svg>
-    <div class="dcap"><span class="num">Process diagram · 01</span>Same gap, three candidate homes. <b>The question you ask decides where the lesson acts</b> — exactly one fires; the other two file it where it won't.</div>
+    <div class="dcap"><span class="num">Process diagram · 01</span>One lesson, three windows. <b>The question you ask decides which clock strikes</b> — exactly one fires; the other two file it where its clock never comes round.</div>
   </div>
 
-  <!-- ============ PROSE BLOCK 2 — the collapse, and the upgrade out of it ============ -->
+  <!-- ============ USE WHEN ============ -->
   <section class="prose">
+    <div class="sec-label amber">Use when · the moment you reach for the bundle</div>
+    <h2 class="amber">You're holding a short stack, and the reflex is to <em>call it a skill.</em></h2>
+
     <p>
-      The framing is load-bearing, so be precise about it. Memory holds what prevents, a verifier holds what detects, a skill
-      holds what you'll reuse — the source curriculum's three-way sort, drawn from a convergent practitioner pattern read off
-      the encode end of Armin Ronacher's reference / <span class="mono">plan.md</span> / verifier trio, with the
-      prevent / detect / reuse timing as this card's gloss on why it works. <b>One honest caveat:</b> it's the source's
-      sort, not an official Claude Code taxonomy or a measured law — useful, well-worn, and open to a fourth home.
-      What is observed: lessons filed in the wrong place stop firing.
+      You have just compared two runs of the same task — once un-packaged, once packaged — or post-mortemed a single bad
+      one, and you are holding a short stack of realisations: something the agent <b>should never have done</b>; something
+      that should have <b>set off an alarm halfway through</b>; something you want available <b>next time this shape of task
+      appears</b>. The reflex is to bundle all three into a skill and call it a ship. That reflex is wrong — not because
+      skills are bad, but because a skill only catches the <em>next</em> presentation. It does nothing to prevent the same
+      mistake in <em>this</em> type of run, and it cannot interrupt a run already in progress. Bundling is comfortable;
+      routing is the actual work.
+    </p>
+
+    <p>
+      This recurs at every loop closure: after any two-run compare, after a CI red that surfaces a mistake the loop should
+      have caught, at the end of any session that produced a surprise you want the <em>next</em> session to inherit. The
+      source names the trap outright — call it <em>gap-home confusion</em>, the practitioner observation that engineers
+      pack everything into the second skill because skills feel like the answer. (It's a teaching note about why loops
+      stall, not a measured rate.) Most engineers either skip the routing — everything stays in their head — or collapse it,
+      where everything becomes a skill. Both leave the lesson mute.
+    </p>
+  </section>
+
+  <!-- ============ THE THREE WINDOWS (core moves, in the draft's own frame) ============ -->
+  <section class="prose">
+    <div class="sec-label">The three windows · what each one is, and what it cannot do</div>
+    <h2>Each window holds <em>one kind</em> of lesson — and refuses the others.</h2>
+
+    <p>
+      <b>PREVENT — acts before the run.</b> A rule the model reads on every invocation. Its home is a personal rules file:
+      <span class="mono">./CLAUDE.local.md</span> (gitignored, per-project) or a global equivalent. Rules are blister-packed:
+      loaded before the session opens, invisible during it, doing their work in the <em>negative space of things that simply
+      do not happen</em>. If you diagnosed a gap and a single sentence in a rules file would have closed it upstream — a habit
+      the agent should have had from cold start — that is where it lives. Not in a skill that only fires when someone
+      invokes it. The shape of the lesson is <em class="teal">"the agent should never have done X."</em>
+    </p>
+
+    <p>
+      <b>DETECT — acts during the run.</b> A check that fires mid-execution. Not a reminder to the agent — an actual gate:
+      a verifier, a lint, a structural assertion, a self-critique step the agent runs before proceeding. Window two, stat.
+      It is useless pre-packed (what would it check before anything has happened?) and useless after the fact (the damage
+      is done). Rules prevent; they do not catch. If the diagnosis is <em class="teal">"we never knew it had gone wrong
+      until the very end,"</em> the lesson belongs here, in a sharpened or newly-fitted verifier — not a rule and not a skill.
+    </p>
+
+    <p>
+      <b>REUSE — acts on the next run of this shape.</b> A skill: a procedural template the agent invokes when it recognises
+      this category of task again. Window three, the repeat prescription. It travels — that is its virtue. But it only fires
+      when invoked, so it cannot prevent and it cannot interrupt. If the lesson is <em class="teal">"I keep re-explaining this
+      sequence from scratch,"</em> that is a skill — its home is the repeat-prescription window, and the routing stops there (how to forge it well is the next card's job, not this one's). Do not conflate a rule with a skill because
+      the word "skill" feels satisfying to ship.
     </p>
 
     <p class="pull">
       A rule that prevents a mistake upstream does <b>more, cheaper work</b> than a skill that re-catches it every run.
     </p>
+  </section>
 
-    <div class="sec-label">The upgrade move · from skill-funnel collapse to routed map</div>
-    <h2>Stop pouring. <em>Sort, then file.</em></h2>
+  <!-- ============ SUBTRACTION IS PART OF THE SORT ============ -->
+  <section class="prose">
+    <div class="sec-label amber">Subtraction is part of the sort · expiry is real</div>
+    <h2 class="amber">The same pass that <em>stocks</em> a packet should <em>pull</em> an expired one.</h2>
 
     <p>
-      The comfortable collapse is to make everything a skill — it feels productive, and it fires nothing, because most of
-      what you learned wasn't a reusable move. The upgrade is two beats. First, <b>hold the gaps as a list before routing any
-      of them</b> — three, maybe four, dominant first; don't reach for the fix on the first gap. The source caps this
-      deliberately: pick the three that cost the most. Over-routing is its own failure; a long catalogue produces noise, not a
-      loop. Then tag each gap with the prevent / catch / reuse question and <b>actually file it in its home</b> — including the
-      one move that struck through, because deleting a stale rule is routing too. The diagram below walks the diagonal.
+      Routing is not only addition. The two-run contrast often shows a rule in <span class="mono">./CLAUDE.local.md</span>
+      that didn't fire, didn't help, or no longer matches how you work. The same diagnostic pass that adds a rule should
+      ask: <b>is there a rule already here that this new one supersedes?</b> Cut it, visibly. A rules file that only ever
+      grows has stopped being read honestly — it is a filing cabinet nobody opens, and a cabinet full of outdated
+      prescriptions is not a safety net, it is noise that trains the reader, human or model, to skim. <b>A gap can be
+      negative:</b> the absence the loop wants is a rule removed, not added. The source calls this compound-by-subtraction,
+      and names the opposite as a failure mode — addition-only compounding, where you only ever add rules and never cut one.
+    </p>
+
+    <p>
+      This is the part most practitioners skip. They add the new rule, feel the satisfaction, and leave the superseded one
+      in place "just in case." Just-in-case rules are the expired blister packs stacked at the back of the shelf. Expiry is
+      real in a dispensary; it should be real in your rules file. <b>The git history is your audit trail</b> — make the
+      deletion visible there, not just locally. The diagram below walks the same diagonal: a comfortable collapse that fires
+      nothing, tagged legible, then filed — the cut included.
     </p>
   </section>
 
-  <!-- ============ DIAGRAM 2 — SKILL-FUNNEL COLLAPSE → ROUTED MAP ============ -->
+  <!-- ============ DIAGRAM 2 — BUNDLE COLLAPSE → SORTED, FILED, WITH ONE PULLED ============ -->
   <div class="diagram">
-    <svg viewBox="0 0 1080 396" role="img" aria-label="A three-step diagonal. Step one: every gap funnelled into one skill — feels productive, fires nothing. Step two: each gap tagged with its home by the prevent-catch-reuse question — now legible. Step three: each gap filed in its home with one rule struck through — each lesson now acts at its right time.">
+    <svg viewBox="0 0 1080 396" role="img" aria-label="A three-step diagonal. Step one: every lesson funnelled into one skill — feels productive, fires nothing. Step two: each lesson tagged with its window by the prevent-detect-reuse question — now legible. Step three: each lesson filed in its window with one expired packet pulled — each lesson now strikes at its own clock.">
       <defs>
         <linearGradient id="d2-collapse" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5d6a68" stop-opacity=".5"/><stop offset="1" stop-color="#39423f" stop-opacity=".2"/></linearGradient>
         <linearGradient id="d2-routed" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".55"/><stop offset="1" stop-color="#ffb347" stop-opacity=".4"/></linearGradient>
         <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
 
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">ROUTING IS WHAT TURNS A GAP LIST INTO A LOOP</text>
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SORTING IS WHAT TURNS A STACK OF LESSONS INTO A LOOP</text>
 
       <!-- STEP 1 — collapse -->
       <g transform="translate(40,64)">
-        <text x="0" y="0" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#5d6a68">① EVERY GAP → ONE SKILL</text>
+        <text x="0" y="0" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#5d6a68">① EVERY LESSON → ONE SKILL</text>
         <g stroke="url(#d2-collapse)" stroke-width="1.8" fill="none">
           <path d="M14,40 C90,60 110,120 126,150"/>
           <path d="M14,72 C90,90 112,130 126,154"/>
@@ -674,14 +739,14 @@
 
       <!-- STEP 2 — tagged / legible -->
       <g transform="translate(360,64)">
-        <text x="0" y="0" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#9bffe9">② TAG EACH WITH ITS HOME</text>
+        <text x="0" y="0" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#9bffe9">② TAG EACH WITH ITS WINDOW</text>
         <g font-family="'Spline Sans Mono',monospace" font-size="10.5">
-          <g><rect x="0" y="24" width="200" height="28" rx="8" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.3)"/><text x="12" y="42" fill="#cfe6e0">webhook</text><text x="190" y="42" text-anchor="end" fill="#9bffe9">memory</text></g>
-          <g><rect x="0" y="60" width="200" height="28" rx="8" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.3)"/><text x="12" y="78" fill="#cfe6e0">contract</text><text x="190" y="78" text-anchor="end" fill="#3fe0c8">verifier</text></g>
-          <g><rect x="0" y="96" width="200" height="28" rx="8" fill="rgba(255,179,71,.06)" stroke="rgba(255,179,71,.3)"/><text x="12" y="114" fill="#cfe6e0">scaffold move</text><text x="190" y="114" text-anchor="end" fill="#ffb347">skill</text></g>
-          <g><rect x="0" y="132" width="200" height="28" rx="8" fill="rgba(168,106,31,.06)" stroke="rgba(168,106,31,.3)" stroke-dasharray="4 4"/><text x="12" y="150" fill="#a86a1f">Mongo rule</text><text x="190" y="150" text-anchor="end" fill="#a86a1f">cut</text></g>
+          <g><rect x="0" y="24" width="200" height="28" rx="8" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.3)"/><text x="12" y="42" fill="#cfe6e0">never-do-X</text><text x="190" y="42" text-anchor="end" fill="#9bffe9">pre-packed</text></g>
+          <g><rect x="0" y="60" width="200" height="28" rx="8" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.3)"/><text x="12" y="78" fill="#cfe6e0">knew too late</text><text x="190" y="78" text-anchor="end" fill="#3fe0c8">stat</text></g>
+          <g><rect x="0" y="96" width="200" height="28" rx="8" fill="rgba(255,179,71,.06)" stroke="rgba(255,179,71,.3)"/><text x="12" y="114" fill="#cfe6e0">re-explained move</text><text x="190" y="114" text-anchor="end" fill="#ffb347">repeat rx</text></g>
+          <g><rect x="0" y="132" width="200" height="28" rx="8" fill="rgba(168,106,31,.06)" stroke="rgba(168,106,31,.3)" stroke-dasharray="4 4"/><text x="12" y="150" fill="#a86a1f">superseded rule</text><text x="190" y="150" text-anchor="end" fill="#a86a1f">pull</text></g>
         </g>
-        <text x="100" y="200" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12" fill="#9bffe9">prevent · catch · reuse · cut</text>
+        <text x="100" y="200" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12" fill="#9bffe9">prevent · detect · reuse · pull</text>
         <text x="100" y="218" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12" fill="#6f8a85">now legible</text>
       </g>
 
@@ -692,13 +757,13 @@
         <text x="22" y="-12" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#ffb347">FILE</text>
       </g>
 
-      <!-- STEP 3 — filed, each at its right time -->
+      <!-- STEP 3 — filed, each at its own clock -->
       <g transform="translate(700,64)">
-        <text x="0" y="0" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#ffb347">③ FILE EACH IN ITS HOME</text>
+        <text x="0" y="0" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#ffb347">③ FILE EACH AT ITS WINDOW</text>
         <g filter="url(#d2-glow)">
           <rect x="0" y="24" width="320" height="28" rx="8" fill="rgba(8,17,18,.78)" stroke="url(#d2-routed)" stroke-width="1.3"/>
         </g>
-        <text x="12" y="42" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#9bffe9">CLAUDE.local.md</text>
+        <text x="12" y="42" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#9bffe9">./CLAUDE.local.md</text>
         <text x="310" y="42" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#1d8d80">before run</text>
 
         <rect x="0" y="60" width="320" height="28" rx="8" fill="rgba(8,17,18,.78)" stroke="rgba(63,224,200,.4)" stroke-width="1.3"/>
@@ -709,261 +774,111 @@
         <text x="12" y="114" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#ffb347">~/.claude/skills/</text>
         <text x="310" y="114" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#a86a1f">next run</text>
 
-        <!-- the struck-through cut -->
+        <!-- the pulled / expired packet -->
         <rect x="0" y="132" width="320" height="28" rx="8" fill="rgba(168,106,31,.05)" stroke="rgba(168,106,31,.45)" stroke-width="1" stroke-dasharray="4 5"/>
-        <text x="12" y="150" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#a86a1f" text-decoration="line-through">- stale Mongo rule</text>
+        <text x="12" y="150" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#a86a1f" text-decoration="line-through">- expired rule</text>
         <text x="310" y="150" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#a86a1f">subtraction</text>
 
-        <text x="160" y="200" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12" fill="#3fe0c8">each lesson now acts at its right time</text>
+        <text x="160" y="200" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12" fill="#3fe0c8">each lesson now strikes at its own clock</text>
       </g>
 
       <text x="40" y="384" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">SUBTRACTION IS ROUTING TOO · A RULES FILE THAT ONLY GROWS HAS STOPPED BEING READ HONESTLY</text>
     </svg>
-    <div class="dcap"><span class="num">Process diagram · 02</span>The comfortable collapse fires nothing. <b>Routing is what turns a gap list into a loop</b> — file each gap where it acts, the cut included.</div>
+    <div class="dcap"><span class="num">Process diagram · 02</span>The comfortable bundle fires nothing. <b>Sorting is what turns a stack of lessons into a loop</b> — file each at its window, the pulled packet included.</div>
   </div>
 
-  <!-- ============ PROSE BLOCK 3 — the compounding loop intro ============ -->
+  <!-- ============ THE ROUTING DECISION ============ -->
   <section class="prose">
+    <div class="sec-label">The routing decision · ask this of each lesson</div>
+    <h2>Three questions. <em>Whichever answers first</em> names the window.</h2>
+
     <p>
-      Why does subtraction count as routing? Because an instrument calibrates by removing as much as by adding. The two-run
-      contrast often shows a rule in <span class="mono">./CLAUDE.local.md</span> that didn't fire, didn't help, or no longer
-      matches how you work — <em>we use Mongo</em> when you switched to Postgres months ago. <b>A gap can be negative</b>: the
-      absence the loop wants is a rule removed, not added. Delete it in place, with the deletion visible in git history. The
-      source calls this compound-by-subtraction, and names the opposite as a failure mode — addition-only compounding, where
-      a student only ever adds rules and never cuts one. A rules file that only grows is a file that's stopped being read honestly.
+      Don't reach for the fix on the first lesson. Lay the stack out flat — three, maybe four, dominant first — so you can
+      route them as a set, not one impulsive skill at a time. The source caps this deliberately: <em>two runs, maybe three
+      gaps each; pick the three that cost the most.</em> Over-routing is its own failure; a long catalogue produces noise,
+      not a loop. Then ask each lesson, in order:
     </p>
 
-    <div class="sec-label">The compounding loop · leaner and fuller each pass</div>
-    <h2>Each lap the file is <em>both</em> fuller and leaner.</h2>
+    <p>
+      <b>1 · Would a rule have prevented this <em>upstream</em>, before the run opened?</b> → <span class="mono">./CLAUDE.local.md</span>
+      or equivalent. Write the rule in the imperative; keep it short enough to be read, not skimmed.
+      <b>2 · Would a check have caught this <em>mid-run</em>, while the agent still had room to correct?</b> → tighten the
+      verifier, add the assertion, sharpen the self-critique step. The check lives in the agent's task protocol, not in a
+      background file. <b>3 · Is this a move I will need to <em>re-perform</em> next time this shape appears, explained from
+      scratch every time without it?</b> → that is a skill. One of three destinations; not the default.
+    </p>
 
     <p>
-      The picture below closes the thread. Two runs surface gaps; you route each to its home; you cut the stale rule the
-      diagnosis killed; you ship the lesson; the next run inherits the sharpened memory, the sharper verifier, and the new
-      skill — and surfaces new, subtler gaps to route again. Notice the rules file across passes: hash marks added, some
-      struck out, and the gaps getting quieter each lap. This is the named principle doing its work — <b>the loop closes when
-      the lesson ships, to the home where it fires</b>. Ship it to the wrong time and the lap doesn't close; the same gap
-      surfaces again next run, wearing a different hat.
+      If a lesson fits none cleanly, it probably wants to be a <b>note</b> — a post-mortem line, not a standing instruction.
+      Notes are not windows; they are the pharmacist's handwriting on the back of the packet — useful once, not refiled as
+      standing orders. And remember the caveat that travels with this whole sort: <b>this taxonomy is a practitioner sort,
+      not an official architecture.</b> There may be a fourth window you discover. The point is not the categories; it is the
+      habit of asking <em class="teal">when does this need to fire?</em> before you write anything down.
     </p>
   </section>
 
-  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP (diagnose → route → ship → re-run) ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 420" role="img" aria-label="A closed loop — two runs surface gaps, route each to its home, cut the stale rule, ship the lesson, the next run inherits memory plus verifier plus skill and surfaces new subtler gaps to route again — with the rules file across three passes shown both fuller and leaner, and the gaps getting quieter.">
-      <defs>
-        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/><stop offset="1" stop-color="#ffb347" stop-opacity=".6"/></linearGradient>
-        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#9bffe9"/><stop offset=".55" stop-color="#3fe0c8"/><stop offset="1" stop-color="#1d8d80"/></radialGradient>
-        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE LOOP CLOSES WHEN THE LESSON SHIPS · TO THE HOME WHERE IT FIRES</text>
-
-      <!-- ===== LEFT HALF: the loop ===== -->
-      <g transform="translate(40,60)">
-        <circle cx="210" cy="170" r="132" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="540 60" stroke-linecap="round" transform="rotate(-90 210 170)"/>
-        <circle r="3.6" fill="#aeffee">
-          <animateMotion dur="9s" repeatCount="indefinite" path="M210,38 a132,132 0 1,1 -0.1,0"/>
-          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
-        </circle>
-
-        <g>
-          <circle cx="210" cy="38" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="210" y="43" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">1</text>
-          <text x="210" y="16" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Two runs surface gaps</text>
-        </g>
-        <g>
-          <circle cx="342" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="342" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">2</text>
-          <text x="374" y="166" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Route to its home</text>
-          <text x="374" y="182" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#1d8d80">memory / verifier / skill</text>
-        </g>
-        <g>
-          <circle cx="210" cy="302" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="210" y="307" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">3</text>
-          <text x="210" y="340" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Cut the stale rule · ship</text>
-        </g>
-        <g>
-          <circle cx="78" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="78" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">4</text>
-          <text x="46" y="162" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Next run inherits</text>
-          <text x="46" y="178" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#1d8d80">subtler gaps surface</text>
-        </g>
-
-        <text x="210" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EVERY LAP</text>
-        <text x="210" y="184" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">quieter gaps</text>
-      </g>
-
-      <!-- ===== RIGHT HALF: the rules file fuller AND leaner across passes ===== -->
-      <g transform="translate(548,68)">
-        <!-- pass 1 -->
-        <g>
-          <rect x="0" y="14" width="150" height="200" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.22)"/>
-          <rect x="0" y="14" width="150" height="20" rx="6" fill="rgba(63,224,200,.10)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">CLAUDE.local.md</text>
-          <text x="118" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v1</text>
-          <g stroke="#6f8a85" stroke-width="2" opacity=".55">
-            <line x1="12" y1="58" x2="92" y2="58"/>
-            <line x1="12" y1="78" x2="130" y2="78"/>
-            <line x1="12" y1="98" x2="72" y2="98"/>
-          </g>
-          <text x="75" y="240" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#5d6a68">PASS 1</text>
-        </g>
-
-        <g transform="translate(158,114)">
-          <path d="M0,0 L22,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="22,0 14,-5 14,5" fill="#3fe0c8" opacity=".75"/>
-        </g>
-
-        <!-- pass 2 — added AND one struck -->
-        <g transform="translate(184,0)">
-          <rect x="0" y="14" width="150" height="220" rx="8" fill="rgba(8,17,18,.78)" stroke="rgba(63,224,200,.35)"/>
-          <rect x="0" y="14" width="150" height="20" rx="6" fill="rgba(63,224,200,.14)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">CLAUDE.local.md</text>
-          <text x="118" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v2</text>
-          <g stroke="#9bffe9" stroke-width="2" opacity=".75">
-            <line x1="12" y1="58" x2="120" y2="58"/>
-            <line x1="12" y1="78" x2="100" y2="78"/>
-            <line x1="12" y1="118" x2="128" y2="118"/>
-            <line x1="12" y1="138" x2="106" y2="138"/>
-          </g>
-          <!-- struck-out rule (the cut) -->
-          <g stroke="#a86a1f" stroke-width="2" opacity=".7">
-            <line x1="12" y1="98" x2="112" y2="98"/>
-            <line x1="10" y1="98" x2="114" y2="98" stroke-width="1"/>
-          </g>
-          <!-- added in amber -->
-          <g stroke="#ffb347" stroke-width="2" opacity=".8">
-            <line x1="12" y1="178" x2="118" y2="178"/>
-          </g>
-          <text x="75" y="252" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#9bffe9">PASS 2 · ± BOTH</text>
-        </g>
-
-        <g transform="translate(342,124)">
-          <path d="M0,0 L22,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="22,0 14,-5 14,5" fill="#3fe0c8" opacity=".75"/>
-        </g>
-
-        <!-- pass 3 — fuller and leaner -->
-        <g transform="translate(368,0)">
-          <rect x="0" y="0" width="150" height="260" rx="8" fill="rgba(8,17,18,.85)" stroke="url(#d3-ring)" stroke-width="1.5" filter="url(#d3-glow)"/>
-          <rect x="0" y="0" width="150" height="20" rx="6" fill="rgba(255,179,71,.16)"/>
-          <text x="10" y="15" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">CLAUDE.local.md</text>
-          <text x="118" y="15" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v3</text>
-          <g stroke="#ffb347" stroke-width="2.2">
-            <line x1="12" y1="40" x2="130" y2="40"/>
-            <line x1="12" y1="60" x2="112" y2="60"/>
-          </g>
-          <g stroke="#9bffe9" stroke-width="2" opacity=".8">
-            <line x1="12" y1="84" x2="138" y2="84"/>
-            <line x1="12" y1="104" x2="112" y2="104"/>
-            <line x1="12" y1="124" x2="130" y2="124"/>
-            <line x1="12" y1="144" x2="100" y2="144"/>
-            <line x1="12" y1="164" x2="120" y2="164"/>
-          </g>
-          <!-- another cut -->
-          <g stroke="#a86a1f" stroke-width="2" opacity=".55">
-            <line x1="12" y1="188" x2="96" y2="188"/>
-            <line x1="10" y1="188" x2="98" y2="188" stroke-width="1"/>
-          </g>
-          <text x="75" y="280" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#ffb347">PASS 3 · FULLER + LEANER</text>
-        </g>
-
-        <!-- legend -->
-        <g transform="translate(0,300)">
-          <rect x="0" y="0" width="14" height="3" fill="#ffb347"/>
-          <text x="22" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">RULES THAT EARNED THEIR KEEP</text>
-          <rect x="0" y="14" width="14" height="3" fill="#9bffe9"/>
-          <text x="22" y="18" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">SCAFFOLDING · STILL USEFUL</text>
-          <g stroke="#a86a1f" stroke-width="2" opacity=".7"><line x1="0" y1="29" x2="14" y2="29"/><line x1="-1" y1="29" x2="15" y2="29" stroke-width="1"/></g>
-          <text x="22" y="32" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">CUT BY THE DIAGNOSIS · SUBTRACTION</text>
-        </g>
-      </g>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 03</span><em>Each lap the file is both fuller and leaner.</em> The loop closes only when the lesson ships <b>to the home where it fires</b>; the gaps get quieter every pass.</div>
-  </div>
-
-  <!-- ============ TEST-IN-PRACTICE inline panel ============ -->
-  <div class="practice">
-    <div class="beat-label amber"><b>Test · how you know the routing worked</b></div>
-    <p>
-      Each gap has <b>exactly one named home</b>, and you can say in one sentence why that home and not the other two —
-      <em>"this is memory because a rule would've prevented it, not a check that would've caught it."</em> If a gap resists
-      the question, it's doing two jobs; split it.
-    </p>
-    <p>
-      At least one gap routed to memory as a <b>deletion</b> — git history shows a rule cut, not only rules added. Pure
-      accretion means you skipped subtraction. And <em class="no">not everything became a skill</em>: if all your gaps ended up
-      in one new <span style="font-family:'Spline Sans Mono',monospace;font-size:13px;color:#3fe0c8">SKILL.md</span>, you collapsed
-      the routing — re-sort.
-    </p>
-    <p>
-      The skill you <em>did</em> author moves to catch its gap: its <span style="font-family:'Spline Sans Mono',monospace;font-size:13px;color:#3fe0c8">description</span>
-      ends with an <b>outcome, not a topic</b>. If it reads like a documentation page describing the gap, it's mis-routed —
-      that gap was probably a rule. (Skill-as-documentation is the source's named diagnostic, a practitioner teaching
-      observation about why loops stall — not a measured rate.)
-    </p>
-  </div>
-
-  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
+  <!-- ============ USE WHEN · BUILD · TEST (recipe spine, in dispensary language) ============ -->
   <div class="plates">
     <div class="plate use">
       <div class="beat-label amber"><b>Use when</b></div>
       <p class="body">
-        You've diagnosed two runs of the same task, you hold <span class="grey">a fistful of gaps</span> — and your
-        instinct is to pour <b>all of them into a new skill</b>, because skills feel like the answer. Recurs at every loop
-        closure: after a two-run compare, after a CI red the loop should've caught.
+        You've compared two runs of the same task — or post-mortemed one bad one — and hold <span class="grey">a short
+        stack of lessons</span>, and the reflex is to bundle <b>all of them into a skill</b> and call it a ship. Recurs at
+        every loop closure: after a two-run compare, after a CI red the loop should've caught.
       </p>
     </div>
     <div class="plate build">
       <div class="beat-label"><b>Build</b></div>
       <p class="body">
-        <b>A routed gap map</b> — a short ranked list (M6 scrollback, optionally durable in <span style="font-family:'Spline Sans Mono',monospace;font-size:12px">observations/</span>)
-        where each gap is tagged with its home and <b>actually filed there</b>, one stale rule cut in place.
+        <b>Three short artefacts at three windows</b> — a rules file with one addition and one visible deletion; a tighter
+        verifier or a new assertion in the task protocol; possibly a skill entry for a recurring move. The durable output is
+        the sort itself.
       </p>
     </div>
     <div class="plate test">
       <div class="beat-label"><b>Test</b></div>
       <p class="body">
-        One named home per gap, one sentence of why.<br>
-        <em>At least one rule deleted in git history.</em><br>
+        One named window per lesson, one sentence of why.<br>
+        <em>At least one rule pulled in git history.</em><br>
         <em class="no">Not everything a skill.</em>
       </p>
     </div>
   </div>
 
-  <!-- ============ CORE MOVES — actionable heart ============ -->
+  <!-- ============ CORE MOVES — the actionable rail ============ -->
   <section class="moves">
     <div class="beat-label"><b>Core moves</b></div>
     <div class="moves-head">
-      <h2>The action, in sequence</h2>
-      <span class="lede">A flat gap list becomes three routed lessons, each filed where it fires.</span>
+      <h2>The sort, in sequence</h2>
+      <span class="lede">A flat stack becomes three lessons, each at the window where its clock strikes.</span>
     </div>
 
     <div class="move-rail">
       <div class="thread"></div>
       <div class="step">
         <div class="bead">1</div>
-        <h3>Hold the gaps as a list</h3>
-        <p>Don't fix the first one. <b>Lay three or four out flat</b>, dominant first — route as a set.</p>
+        <h3>Lay the stack out flat</h3>
+        <p>Don't fix the first one. <b>Three or four, dominant first</b> — sort as a set.</p>
       </div>
       <div class="step">
         <div class="bead">2</div>
         <h3>Would a rule have prevented it?</h3>
-        <p>A habit it should've had cold. <b>→ memory.</b></p>
+        <p>A habit it should've had cold. <b>→ pre-packed (memory).</b></p>
       </div>
       <div class="step">
         <div class="bead">3</div>
         <h3>Would a check have caught it?</h3>
-        <p>Something that fires mid-run. <b>→ sharper verifier.</b></p>
+        <p>Something that fires live. <b>→ stat (sharper verifier).</b></p>
       </div>
       <div class="step">
         <div class="bead">4</div>
         <h3>Will I re-perform this move?</h3>
-        <p>A reusable move, not the rule. <b>→ new skill.</b></p>
+        <p>A reusable move, not the rule. <b>→ repeat rx (skill).</b></p>
       </div>
       <div class="step">
         <div class="bead">5</div>
-        <h3>Cut the rule it killed</h3>
-        <p>Delete the stale one in place. <b>Subtraction is routing.</b></p>
+        <h3>Pull the expired packet</h3>
+        <p>Delete the stale rule in place. <b>Subtraction is routing.</b></p>
       </div>
     </div>
 
@@ -982,19 +897,45 @@
         </circle>
       </svg>
       <div class="ctext">
-        <div class="cyc">prevent (before)<span class="arr">→</span>detect (during)<span class="arr">→</span>reuse (next)<span class="arr">→</span>cut what's stale</div>
-        <p>Three different times a lesson can fire. <b>Route it to the wrong time and it never fires at all</b> — which is why the satisfying skill funnel is the wrong default.</p>
+        <div class="cyc">pre-packed (before)<span class="arr">→</span>stat (during)<span class="arr">→</span>repeat rx (next)<span class="arr">→</span>pull what's expired</div>
+        <p>Three clocks a lesson can strike. <b>Send it to the wrong clock and it never strikes at all</b> — which is why the satisfying skill bundle is the wrong default.</p>
       </div>
     </div>
 
     <!-- the Monday-move / no-permission aside -->
     <p class="aside">
-      <b>Monday move:</b> open the last task you ran more than once — or the last CI red your loop should've caught. List the
-      gaps, three at most, dominant first. Ask each one the prevent / catch / reuse question, file it where it lands, then
-      cut one stale rule while you're in there.
-      <span class="mono">./CLAUDE.local.md is gitignored · verifier is your own repo · skill ships to ~/.claude/skills/ · no platform · no budget · no sign-off · ~15 min.</span>
+      <b>Monday move:</b> pick the last run that surprised you. Write the one lesson from it as a sentence. Before you file
+      it anywhere, ask: <em>when would this sentence have needed to fire to change the outcome?</em> If "before the run
+      opened," open <span class="mono">./CLAUDE.local.md</span> right now and write the rule. While you're there, read the
+      last three rules and delete the stale one. Do that tonight; the habit compounds from the first repetition.
+      <span class="mono">./CLAUDE.local.md gitignored · verifier is your own repo · skill ships to ~/.claude/skills/ · no platform · no budget · no sign-off · ~15 min.</span>
     </p>
   </section>
+
+  <!-- ============ WHAT YOU END UP WITH + HOW YOU KNOW IT WORKED ============ -->
+  <div class="practice">
+    <div class="beat-label amber"><b>What you end up with · and how you know it worked</b></div>
+    <p>
+      After one diagnostic pass: <b>a rules file with one addition and one visible deletion; a tighter verifier or a new
+      assertion in the task protocol; possibly a skill entry for a recurring move.</b> Three short artefacts routed to three
+      different clocks. Each one will strike where it is needed; none will be mute.
+    </p>
+    <p>
+      Run the same task shape a week later and read the windows. The rule-shaped lesson does not require mention — the agent
+      simply <em>does not make the upstream mistake</em>. The check-shaped lesson <b>fires mid-run and you see it catch
+      something</b>. The skill-shaped lesson surfaces when the agent recognises the pattern and reaches for the template. And
+      the structural tells: each lesson has <b>exactly one named window</b>, and you can say in one sentence why that window
+      and not the other two. At least one lesson routed to memory as a <em>deletion</em>, the git history showing a rule
+      pulled — pure accretion means you skipped subtraction. And <em class="no">not everything became a skill.</em>
+    </p>
+    <p>
+      The negative test catches the most common slip: if the skill you authored reads like a documentation page
+      <em>describing</em> the gap rather than moving to catch it — its <span class="mono">description</span> ending with a
+      topic, not an outcome — it's mis-routed; that lesson was probably a rule. (Skill-as-documentation is the source's named
+      diagnostic, a practitioner teaching observation about why loops stall — not a measured rate.) If you ever find yourself
+      re-explaining something you thought you had sorted, a lesson is in the wrong window. Re-sort.
+    </p>
+  </div>
 
   <!-- ============ WHY — the conviction ============ -->
   <section class="why">
@@ -1002,23 +943,25 @@
 
     <div class="principle-block">
       <div class="principle-label">The principle</div>
-      <p class="principle-line">The loop closes when the lesson <em>ships</em> — but only to the home where it'll act.</p>
+      <p class="principle-line">The loop closes when the lesson <em>ships</em> — but only to the clock where it'll act.</p>
     </div>
 
-    <p class="quote">"A rule, a check, and a skill are three different times a lesson can fire — route it to the wrong time and it never fires at all."</p>
+    <p class="quote">"A skill is a repeat prescription — brilliant for chronic conditions, useless for the acute mistake you should have prevented upstream."</p>
     <p class="gloss">
-      The counterintuitive part: the satisfying artefact is the wrong default. A skill is the <b>heaviest</b> of the three
-      homes — a move you'll re-invoke — so it feels like the serious place to put a lesson, which is precisely why
-      undisciplined engineers route everything there. But a rule that prevents a mistake upstream does more, cheaper work
-      than a skill that re-catches it every run; and a check that fires mid-run protects you in ways no rule can.
+      The consulting instinct — and the AI-tooling instinct — is to make everything a skill, because skills are the
+      <em>exciting</em> artefact. They have names, they feel shipped, they feel like capability. But a skill is a repeat
+      prescription, and a repeat prescription for an acute, preventable condition is not medicine — <b>it is a protocol that
+      arrives after the damage.</b> That is precisely why undisciplined engineers route everything to the heaviest window.
     </p>
     <p class="gloss">
-      The three homes aren't a tidiness exercise — they're three different <em>times</em> a lesson can act: a rule before
-      the run, a verifier during it, a skill on the next run of this shape. <b>Route a lesson to the wrong time and it never
-      fires when you need it.</b> The deletion arm matters for the same reason — an instrument calibrates by subtraction as
-      much as addition, and a rules file that only grows is a file that's stopped being read honestly. (The three homes are
-      the source's three-way sort — a convergent practitioner pattern, not an official Claude Code taxonomy — and stay open
-      to a fourth home.)
+      The real question is temporal: <em>at what moment in the causal chain does this lesson need to act?</em> Rules act
+      early and cheaply, before anything has gone wrong. Checks act at the decision point, when correction is still possible.
+      Skills act on recurrence, when the shape repeats. Route each to the moment it is actually useful and your personal
+      operating system starts to behave like <b>infrastructure — silent, load-bearing, trustworthy</b> — rather than a pile
+      of good intentions. The compounding is asymmetric: a rule that prevents a mistake compounds silently (you never pay the
+      tax), while a skill that arrives a lesson too late costs every time the shape recurs. Triage is not a metaphor for
+      tidiness; it is a leverage decision. (The three windows are the source's three-way sort — a convergent practitioner
+      pattern, not an official Claude Code taxonomy — and stay open to a fourth.)
     </p>
     <div class="corollary"><span class="sd"></span>Skills feel like the answer · which is exactly why the loop stalls.</div>
   </section>
@@ -1046,8 +989,7 @@
         <path id="th1" d="M150,160 C360,72 540,54 760,58"  stroke="url(#t1)" stroke-width="2.2" fill="none"/>
         <path id="th2" d="M150,160 C380,118 560,112 760,114" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
         <path id="th3" d="M150,160 C380,168 560,168 760,170" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
-        <path id="th4" d="M150,160 C380,212 560,224 760,226" stroke="url(#t4)" stroke-width="2.2" fill="none"/>
-        <path id="th5" d="M150,160 C360,268 540,288 760,290" stroke="url(#t5)" stroke-width="1.6" stroke-dasharray="4 6" fill="none"/>
+        <path id="th4" d="M150,160 C360,268 540,288 760,290" stroke="url(#t4)" stroke-width="2.2" fill="none"/>
 
         <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
         <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".5s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".5s" repeatCount="indefinite"/></circle>
@@ -1056,12 +998,11 @@
       </svg>
 
       <div class="neighbours">
-        <div class="origin-chip" style="left:13.8%;top:50%">Route each gap to its home<small>software · Absorption · you are here</small></div>
+        <div class="origin-chip" style="left:13.8%;top:50%">Sort each lesson to its clock<small>software · Absorption · you are here</small></div>
         <a class="nb"      href="failure-mode-diagnosis.html"    style="left:74%;top:18.1%"><span class="sd"></span>Diagnose the failure mode <span class="recipe-no">prerequisite</span></a>
-        <a class="nb"      href="three-block-memory.html"        style="left:74%;top:35.6%"><span class="sd"></span>Three-block memory <span class="recipe-no">upstream lens</span></a>
-        <a class="nb"      href="verifier-shaped-to-failure.html" style="left:74%;top:53.1%"><span class="sd"></span>Shape the verifier to the failure <span class="recipe-no">a home, done right</span></a>
-        <a class="nb amber" href="session-shaper-authoring.html" style="left:74%;top:70.6%"><span class="sd"></span>Author the skill in conversation <span class="recipe-no">a home, done right</span></a>
-        <a class="nb"      href="compound-from-evidence.html"    style="left:74%;top:88.1%"><span class="sd"></span>Compound from evidence <span class="recipe-no">the memory engine</span></a>
+        <a class="nb"      href="three-block-memory.html"        style="left:74%;top:39.3%"><span class="sd"></span>Three-block memory <span class="recipe-no">upstream lens</span></a>
+        <a class="nb"      href="verifier-shaped-to-failure.html" style="left:74%;top:60.7%"><span class="sd"></span>Shape the verifier to the failure <span class="recipe-no">a window, done right</span></a>
+        <a class="nb"      href="compound-from-evidence.html"    style="left:74%;top:83.3%"><span class="sd"></span>Compound from evidence <span class="recipe-no">the memory engine</span></a>
       </div>
     </div>
   </section>
