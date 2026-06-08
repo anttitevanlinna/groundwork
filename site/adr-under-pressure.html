@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Write the decision before you forget why — Pattern · The Big Picture</title>
+<title>The decision record — Pattern · The Big Picture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -35,7 +35,6 @@
     position:relative;
     overflow-x:hidden;
   }
-  /* atmospheric soil + light-well — recedes for the long read */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
@@ -43,7 +42,6 @@
       radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
       linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
   }
-  /* grain / spore dust */
   body::after{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
@@ -60,7 +58,7 @@
   .crumb a:hover{color:var(--teal)}
   .crumb .here{color:var(--ink)}
 
-  /* ============ PATTERN HEADER (name + essence) ============ */
+  /* ============ HEADER ============ */
   header.pat{padding:30px 0 8px;max-width:900px;}
   .kicker{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
@@ -71,7 +69,6 @@
     box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 14px 2px rgba(63,224,200,.6);
     flex:none;
   }
-  .kicker .pat-no{color:var(--ink-faint)}
   header.pat h1{
     font-family:'Fraunces',serif;font-weight:400;font-size:clamp(38px,6.6vw,64px);line-height:.99;
     color:var(--spore);letter-spacing:-.015em;margin:13px 0 0;
@@ -94,7 +91,7 @@
   .essence .layer .arr{color:var(--ink-faint);padding:0 5px}
   .essence .layer .co{color:var(--amber)}
 
-  /* ============ HERO PICTURE ============ */
+  /* ============ HERO ============ */
   .hero-frame{
     margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
     background:linear-gradient(180deg, rgba(13,31,32,.5), rgba(5,8,10,.6));
@@ -102,236 +99,108 @@
     box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.04) inset;
   }
   .hero-frame svg{display:block;width:100%;height:auto}
-  .hero-cap{
-    position:absolute;left:18px;bottom:13px;z-index:3;
-    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
-    color:var(--ink-dim);text-transform:uppercase;
-  }
-  .hero-cap b{color:var(--teal)}
 
-  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
-  .prose{
-    margin-top:34px;max-width:760px;
-  }
-  .prose h2{
-    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
-    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
-  }
-  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
-  .prose h2.amber em{color:var(--amber)}
-  .prose .sec-label{
+  /* ============ SPINE — the lean T1 body ============ */
+  .spine{margin-top:40px;max-width:760px}
+  .spine .movement{
     font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
     text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
-    margin-top:42px;
+    margin-top:46px;
   }
-  .prose .sec-label::before{
+  .spine .movement::before{
     content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
     box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
   }
-  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
-  .prose p{
-    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
-    letter-spacing:.002em;
+  .spine .movement.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .spine h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
+    letter-spacing:-.012em;line-height:1.1;margin-top:13px;
   }
-  .prose p b{color:var(--spore);font-weight:500}
-  .prose p em{font-style:italic;color:var(--ink-dim)}
-  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
-  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
-  .prose p .mono{
+  .spine h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .spine h2.amber em{color:var(--amber)}
+  .spine p{
+    font-size:15.5px;line-height:1.64;color:var(--ink);margin-top:16px;letter-spacing:.002em;
+  }
+  .spine p b{color:var(--spore);font-weight:500}
+  .spine p em{font-style:italic;color:var(--ink-dim)}
+  .spine p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .spine p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .spine p .mono{
     font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
   }
-  .prose p .mono.amber{color:var(--amber)}
-  .prose .pull{
-    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
-    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+  .spine p .mono.amber{color:var(--amber)}
+  .spine .turn{
+    margin:24px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:19px;line-height:1.4;
     color:var(--ink);max-width:680px;
   }
-  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
+  .spine .turn b{color:var(--teal);font-weight:500;font-style:normal}
 
-  /* ============ TEMPLATE-CAVEAT STRIP — honest label, real epistemic content ============ */
-  .caveat{
-    margin:24px 0 6px;border:1px dashed var(--amber-dim);border-radius:12px;
-    padding:13px 18px 14px;max-width:760px;
-    background:radial-gradient(120% 160% at 0% 0%, rgba(255,179,71,.06), transparent 60%), rgba(8,15,17,.4);
-    display:flex;align-items:flex-start;gap:13px;
-  }
-  .caveat .tag{
-    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
-    color:var(--amber);border:1px solid var(--amber-dim);border-radius:20px;padding:4px 10px 5px;flex:none;
-    margin-top:1px;
-  }
-  .caveat p{font-size:13px;line-height:1.55;color:var(--ink-dim);margin:0}
-  .caveat p b{color:var(--amber);font-weight:500}
-  .caveat p .mono{font-family:'Spline Sans Mono',monospace;font-size:11.5px;color:var(--ink-dim)}
-
-  /* ============ PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
-  .diagram{
-    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+  /* ============ THE ONE GOVERNING DIAGRAM ============ */
+  .figure{
+    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
     background:
       radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
       linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
     position:relative;
     box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
   }
-  .diagram svg{display:block;width:100%;height:auto}
-  .diagram .dcap{
-    padding:12px 20px 16px;border-top:1px solid var(--hairline);
-    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
+  .figure svg{display:block;width:100%;height:auto}
+  .figure .fcap{
+    padding:13px 22px 16px;border-top:1px solid var(--hairline);
+    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.45;
     color:var(--ink-dim);letter-spacing:.003em;
     background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
   }
-  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
-  .diagram .dcap .num{
-    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
-    letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
-  }
+  .figure .fcap b{color:var(--ink);font-weight:500;font-style:normal}
 
-  /* ============ RECIPE SECTION BEATS ============ */
-  .beat-label{
-    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
-    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  /* ============ THE FOUR LINES — inline ledger, not a three-plate grid ============ */
+  .ledger{
+    margin:28px 0 6px;border:1px solid var(--hairline);border-radius:14px;
+    padding:20px 24px 22px;max-width:760px;
+    background:radial-gradient(120% 140% at 100% 0%, rgba(255,179,71,.05), transparent 58%), rgba(8,15,17,.5);
   }
-  .beat-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
-    box-shadow:0 0 9px rgba(63,224,200,.6);
+  .ledger .head{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.04em;
+    color:var(--ink-dim);margin-bottom:14px;
   }
-  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
-  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+  .ledger .head b{color:var(--amber);font-weight:500}
+  .ledger ol{list-style:none;counter-reset:l;display:grid;gap:11px}
+  .ledger li{
+    counter-increment:l;display:flex;gap:13px;align-items:baseline;
+    font-size:14.5px;line-height:1.45;color:var(--ink);
+  }
+  .ledger li::before{
+    content:counter(l);font-family:'Fraunces',serif;font-size:13px;color:var(--teal-dim);
+    flex:none;width:16px;
+  }
+  .ledger li b{color:var(--spore);font-weight:500}
+  .ledger li .mono{font-family:'Spline Sans Mono',monospace;font-size:12.5px;color:var(--teal)}
+  .ledger li.bearing{
+    margin-top:3px;padding-top:13px;border-top:1px dashed var(--amber-dim);
+  }
+  .ledger li.bearing::before{content:"★";color:var(--amber);font-size:11px}
+  .ledger li.bearing b{color:var(--amber)}
+  .ledger li.bearing .mono{color:var(--amber)}
 
-  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
-  .plates{
-    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
+  /* honest default-shape note */
+  .note{
+    margin:18px 0 6px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
+    border-left:2px solid var(--amber-dim);padding:3px 0 3px 15px;max-width:760px;
   }
-  .plate{
-    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
-    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
-  }
-  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
-  .plate .body b{color:var(--spore);font-weight:500}
-  .plate .body .grey{color:var(--grey)}
-  .plate .body .mono{font-family:'Spline Sans Mono',monospace;font-size:12px;color:var(--teal)}
-  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
-  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
-  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
+  .note b{color:var(--amber);font-weight:500}
+  .note .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
 
-  /* ============ CORE MOVES ============ */
-  .moves{margin-top:46px}
-  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
-  .moves-head h2{
-    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
+  /* the woven Monday line — quiet, not a boxed mono aside */
+  .now{
+    margin-top:22px;font-size:15px;line-height:1.6;color:var(--ink);max-width:740px;
+    border-left:2px solid var(--teal-dim);padding-left:16px;
   }
-  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
-  .move-rail{
-    margin-top:20px;position:relative;
-    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
-  }
-  .move-rail .thread{
-    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
-    background:linear-gradient(90deg,
-      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
-      rgba(63,224,200,.7) 50%, rgba(255,179,71,.65) 94%, rgba(255,179,71,0) 100%);
-  }
-  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
-  .step:first-child{padding-left:0}
-  .step .bead{
-    width:42px;height:42px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
-    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
-    margin-bottom:13px;
-  }
-  .step:nth-child(5) .bead{
-    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
-  }
-  .step h3{
-    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
-  }
-  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
-  .step p b{color:var(--ink);font-weight:500}
-
-  .compound{
-    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
-    padding:18px 22px;position:relative;overflow:hidden;
-    background:
-      radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.07), transparent 60%),
-      rgba(8,17,18,.55);
-    display:flex;align-items:center;gap:20px;
-  }
-  .compound .loop-ico{flex:none}
-  .compound .ctext{flex:1}
-  .compound .ctext .cyc{
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
-  }
-  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
-  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
-  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
-
-  .aside{
-    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
-    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
-  }
-  .aside b{color:var(--amber);font-weight:500}
-  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
-
-  /* ============ WHY ============ */
-  .why{
-    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
-    padding:26px 30px 28px;position:relative;overflow:hidden;
-    background:
-      radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
-      radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
-      rgba(7,14,15,.6);
-  }
-  .why .beat-label{margin-bottom:14px}
-  .why .principle-block{
-    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
-  }
-  .why .principle-label{
-    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
-    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
-  }
-  .why .principle-line{
-    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
-    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
-  }
-  .why .principle-line em{font-style:italic;color:var(--teal)}
-  .why .quote{
-    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:clamp(20px,2.7vw,27px);line-height:1.22;color:var(--teal);letter-spacing:.004em;
-    text-shadow:0 0 30px rgba(63,224,200,.26);max-width:840px;
-  }
-  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
-  .why .gloss b{color:var(--spore);font-weight:500}
-  .why .gloss em{font-style:italic;color:var(--ink-dim)}
-  .why .gloss + .gloss{margin-top:12px}
-  .why .corollary{
-    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
-    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
-  }
-  .why .corollary .sd{
-    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
-    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
-  }
-
-  /* ============ TEST-IN-PRACTICE inline panel ============ */
-  .practice{
-    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
-    padding:22px 26px 24px;
-    background:
-      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
-      rgba(8,15,17,.5);
-  }
-  .practice .beat-label{margin-bottom:12px}
-  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
-  .practice p b{color:var(--spore);font-weight:500}
-  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
-  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+  .now b{color:var(--teal);font-weight:500}
+  .now .mono{font-family:'Spline Sans Mono',monospace;font-size:13px;color:var(--ink-dim)}
 
   /* ============ CONNECTS TO ============ */
-  .connects{margin-top:52px}
+  .connects{margin-top:54px}
   .connects h2{
     font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
   }
@@ -364,15 +233,6 @@
   .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
   .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
   .nb:hover .sd{animation:throb 1s ease-in-out infinite}
-  .nb.soon{opacity:.62}
-  .nb.soon::after{
-    content:"soon";
-    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--ink-faint);
-    border:1px solid var(--ink-faint);border-radius:20px;
-    padding:2px 7px 3px;margin-left:4px;
-  }
-  .nb.soon:hover{opacity:1}
   @keyframes throb{50%{transform:scale(1.5)}}
   .origin-chip{
     position:absolute;transform:translate(-50%,-50%);
@@ -398,26 +258,12 @@
     text-transform:uppercase;color:var(--ink-faint);
   }
 
-  /* breathing glow on the diagram spore-tips */
-  @keyframes breathe{
-    0%,100%{opacity:.55}
-    50%{opacity:1}
-  }
+  @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
   .breathe{animation:breathe 4.2s ease-in-out infinite}
 
-  @media (max-width:860px){
-    .plates{grid-template-columns:1fr 1fr}
-    .plate.use{grid-column:1 / -1}
-  }
   @media (max-width:780px){
-    .plates{grid-template-columns:1fr}
-    .plate.use{grid-column:1}
-    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
-    .move-rail .thread{display:none}
-    .step{padding:0}
-    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .spine p{font-size:14.5px}
     .neighbours .nb{font-size:11px;padding:6px 10px}
-    .prose p{font-size:14.5px}
   }
 </style>
 </head>
@@ -426,629 +272,258 @@
 
   <!-- ============ BREADCRUMB ============ -->
   <nav class="crumb">
-    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Write the decision before you forget why</span>
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">The decision record</span>
   </nav>
 
-  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <!-- ============ HEADER ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe · software lane · the move after a hardening call</div>
-    <h1>Write the decision <em>before you forget why</em></h1>
-    <p class="principle">The principle: <b>context as standing input</b> — a decision that lives only in your head is invisible to every session that follows.</p>
+    <h1>The decision <em>record</em></h1>
+    <p class="principle">The contrarian read: <b>the decision was the cheap part</b> — what evaporates, and what you can't recover later, is the bearing that made it obvious.</p>
     <p class="essence">
-      The instant a real architectural call resolves under pressure, write the <b>four lines</b>
-      that capture it — context, decision, alternatives, and the one constraint that picked the winner —
-      into a repo-resident record, while the <em>why</em> is still warm and free.
+      A captain logs the bearing at the moment of the turn, because the sea will not hold the memory and a course
+      reconstructed from a faint heading runs aground. Do the same with an architectural call made under pressure:
+      while the <em>why</em> is still warm, write the <b>four lines</b> — context, decision, alternatives, and the
+      one constraint that picked the winner — into a repo-resident file the next session reads cold.
       <span class="layer">layer: <b>personal</b><span class="arr">→</span><b>team</b><span class="arr">→</span><span class="co">company</span> · phase: Context &amp; Guardrails</span>
     </p>
   </header>
 
-  <!-- ============ HERO PICTURE: warm threads → faded a week later, one surviving constraint line read cold ============ -->
+  <!-- ============ HERO: the ADR file as logbook entry — bearing logged at the turn, read cold downstream ============ -->
   <div class="hero-frame">
-    <svg viewBox="0 0 1080 400" role="img" aria-label="On the left an engineer mid threat-model with the rationale glowing as bright threads in working memory; on the right the same threads a week later faded to almost nothing, except one bright constraint line written into an ADR file, where a second reader picks it up cold.">
+    <svg viewBox="0 0 1080 380" role="img" aria-label="At the moment of an architectural turn, four rationale threads glow in working memory — context, decision, alternatives, and one bright constraint. The constraint line is logged into an ADR file. Downstream, the threads in memory have faded to dashed ghosts, but the logged line stays bright, and an agent reads the open file cold to set its next course.">
       <defs>
-        <radialGradient id="hwell" cx="22%" cy="46%" r="62%">
-          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".16"/>
+        <radialGradient id="adr-well" cx="20%" cy="44%" r="64%">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".15"/>
           <stop offset="55%" stop-color="#3fe0c8" stop-opacity=".05"/>
           <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
         </radialGradient>
-        <linearGradient id="warmThread" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#9bffe9" stop-opacity=".95"/>
+        <linearGradient id="adr-warm" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#9bffe9" stop-opacity="0"/>
+          <stop offset="35%" stop-color="#9bffe9" stop-opacity=".85"/>
           <stop offset="100%" stop-color="#3fe0c8" stop-opacity=".5"/>
         </linearGradient>
-        <linearGradient id="fadeThread" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#39423f" stop-opacity=".55"/>
-          <stop offset="100%" stop-color="#39423f" stop-opacity="0"/>
+        <linearGradient id="adr-bearing" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#ffce85" stop-opacity="0"/>
+          <stop offset="30%" stop-color="#ffce85" stop-opacity=".95"/>
+          <stop offset="100%" stop-color="#ffb347" stop-opacity=".75"/>
         </linearGradient>
-        <linearGradient id="constraintLine" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#ffce85" stop-opacity=".95"/>
-          <stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/>
-        </linearGradient>
-        <radialGradient id="mindCore" cx="40%" cy="35%" r="70%">
+        <radialGradient id="adr-mind" cx="40%" cy="35%" r="70%">
           <stop offset="0%" stop-color="#eafff9"/>
           <stop offset="45%" stop-color="#3fe0c8"/>
           <stop offset="100%" stop-color="#0c2b2a"/>
         </radialGradient>
-        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        <filter id="adr-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="4.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
       </defs>
-      <rect x="0" y="0" width="1080" height="400" fill="url(#hwell)"/>
+      <rect x="0" y="0" width="1080" height="380" fill="url(#adr-well)"/>
 
-      <!-- ===== LEFT: the moment of decision — rationale glowing in working memory ===== -->
-      <g>
-        <text x="56" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#3fe0c8">THE MOMENT · DECISION STILL WARM</text>
-        <!-- the deciding mind -->
-        <circle cx="130" cy="200" r="24" fill="url(#mindCore)" filter="url(#hglow)"/>
-        <circle cx="130" cy="200" r="24" fill="none" stroke="#9bffe9" stroke-width="1" opacity=".6"/>
-        <text x="130" y="246" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#6f8a85">YOU · DECIDING</text>
-        <!-- the rationale threads, all bright -->
-        <g stroke="url(#warmThread)" fill="none" stroke-width="2.2" filter="url(#hglow)">
-          <path d="M154,200 C230,150 280,120 360,108"/>
-          <path d="M154,200 C230,184 300,170 360,160"/>
-          <path d="M154,200 C240,212 300,224 360,236"/>
-          <path d="M154,200 C230,252 290,288 360,300"/>
-        </g>
-        <!-- the one constraint thread, amber, the load-bearing one -->
-        <path d="M154,200 C240,200 300,202 360,204" stroke="url(#constraintLine)" stroke-width="2.8" fill="none" filter="url(#hglow)"/>
-        <g font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfe6e0" font-style="italic">
-          <text x="368" y="112">the alternatives you weighed</text>
-          <text x="368" y="164">the trade-off you took</text>
-          <text x="368" y="240">the things that didn't matter</text>
-          <text x="368" y="304">the relief you're past it</text>
-        </g>
-        <text x="368" y="208" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing=".12em" fill="#ffb347">THE CONSTRAINT THAT DECIDED IT</text>
+      <!-- ===== THE TURN: rationale glowing, the bearing logged ===== -->
+      <text x="48" y="38" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2" fill="#3fe0c8">THE TURN · BEARING STILL WARM</text>
+      <circle cx="112" cy="180" r="22" fill="url(#adr-mind)" filter="url(#adr-glow)"/>
+      <circle cx="112" cy="180" r="22" fill="none" stroke="#9bffe9" stroke-width="1" opacity=".6"/>
+      <text x="112" y="222" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#6f8a85">YOU · DECIDING</text>
+
+      <!-- three threads fade toward nothing; one bearing-thread runs to the file -->
+      <g fill="none">
+        <path d="M134,180 C200,128 250,108 312,100" stroke="url(#adr-warm)" stroke-width="2" filter="url(#adr-glow)"/>
+        <path d="M134,180 C200,156 250,146 312,142" stroke="url(#adr-warm)" stroke-width="2" filter="url(#adr-glow)"/>
+        <path d="M134,180 C200,236 250,256 312,262" stroke="url(#adr-warm)" stroke-width="2" filter="url(#adr-glow)"/>
+        <path d="M134,180 C220,182 300,184 408,186" stroke="url(#adr-bearing)" stroke-width="2.8" filter="url(#adr-glow)"/>
       </g>
-
-      <!-- divider: a week later -->
-      <line x1="540" y1="60" x2="540" y2="346" stroke="rgba(63,224,200,.14)" stroke-width="1" stroke-dasharray="3 7"/>
-      <text x="540" y="372" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".2em" fill="#3b524e">— A WEEK LATER —</text>
-
-      <!-- ===== RIGHT: a week later — everything faded but the written line ===== -->
-      <g>
-        <text x="600" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#5d6a68">A WEEK LATER · ONLY ONE THREAD SURVIVED</text>
-        <!-- faded threads -->
-        <g stroke="url(#fadeThread)" fill="none" stroke-width="1.4" opacity=".7" stroke-dasharray="2 6">
-          <path d="M600,108 C680,104 760,104 840,108"/>
-          <path d="M600,160 C680,158 760,158 840,160"/>
-          <path d="M600,236 C680,236 760,236 840,236"/>
-          <path d="M600,300 C680,300 760,300 840,300"/>
-        </g>
-        <text x="600" y="332" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#5d6a68" font-style="italic">the why evaporated · reconstructed wrong</text>
-
-        <!-- the surviving constraint, written into the file -->
-        <path d="M600,204 C660,204 700,204 760,204" stroke="url(#constraintLine)" stroke-width="2.6" fill="none" filter="url(#hglow)"/>
-        <!-- the ADR file -->
-        <g filter="url(#hglow)">
-          <rect x="760" y="150" width="248" height="112" rx="10" fill="rgba(8,17,18,.85)" stroke="url(#constraintLine)" stroke-width="1.6"/>
-        </g>
-        <rect x="760" y="150" width="248" height="22" rx="6" fill="rgba(255,179,71,.14)"/>
-        <text x="772" y="166" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#ffb347">docs/adr/0007-slug.md</text>
-        <g font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#9bffe9">
-          <text x="772" y="192">context · decision · alternatives</text>
-          <text x="772" y="226" fill="#ffce85">constraint: chose X because Y</text>
-        </g>
-        <rect x="768" y="216" width="200" height="14" rx="3" fill="rgba(255,179,71,.10)"/>
-        <!-- second reader picking it up cold -->
-        <g>
-          <circle cx="1030" cy="206" r="3" fill="#aeffee" class="breathe"/>
-          <path d="M1008,206 L1024,206" stroke="#3fe0c8" stroke-width="1.2" opacity=".7"/>
-        </g>
-        <text x="1012" y="282" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#3fe0c8" font-style="italic">a teammate — or an agent — reads it cold,</text>
-        <text x="1012" y="298" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#3fe0c8" font-style="italic">picks up exactly where you left off</text>
+      <g font-family="'Spline Sans',sans-serif" font-size="11" fill="#cfe6e0" font-style="italic">
+        <text x="318" y="104">context — the threat you were picturing</text>
+        <text x="318" y="146">the decision — option X, shipped</text>
+        <text x="318" y="266">the alternatives you weighed and dropped</text>
       </g>
+      <text x="318" y="190" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing=".1em" fill="#ffb347">THE CONSTRAINT THAT PICKED THE WINNER</text>
 
-      <!-- the constraint travelling left → right, written, surviving -->
-      <circle r="3.4" fill="#ffce85">
-        <animateMotion dur="5s" repeatCount="indefinite" path="M154,200 C300,201 460,203 600,204 C660,204 700,204 760,204"/>
+      <!-- the ADR file — the logbook the bearing is written into -->
+      <g filter="url(#adr-glow)">
+        <rect x="700" y="120" width="256" height="128" rx="10" fill="rgba(8,17,18,.86)" stroke="url(#adr-bearing)" stroke-width="1.6"/>
+      </g>
+      <rect x="700" y="120" width="256" height="22" rx="6" fill="rgba(255,179,71,.14)"/>
+      <text x="712" y="136" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#ffb347">docs/adr/0007-token-scope.md</text>
+      <g font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#9bffe9">
+        <text x="712" y="162">context · decision · alternatives</text>
+      </g>
+      <rect x="708" y="186" width="240" height="42" rx="6" fill="rgba(255,179,71,.09)" stroke="rgba(255,179,71,.4)"/>
+      <text x="716" y="203" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#ffce85">constraint: reachable unauthenticated</text>
+      <text x="716" y="219" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#ffce85">— so least-privilege wins</text>
+
+      <!-- the bearing travelling from mind → logged line -->
+      <circle r="3.2" fill="#ffce85">
+        <animateMotion dur="5s" repeatCount="indefinite" path="M134,180 C300,183 520,185 700,186"/>
         <animate attributeName="opacity" values="0;1;1;1;0" dur="5s" repeatCount="indefinite"/>
       </circle>
+
+      <!-- ===== DOWNSTREAM: memory faded, the logged line still bright, agent reads cold ===== -->
+      <line x1="700" y1="268" x2="956" y2="268" stroke="rgba(63,224,200,.12)" stroke-width="1" stroke-dasharray="3 7"/>
+      <text x="700" y="290" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#3b524e">A WEEK LATER — IN-MEMORY THREADS GONE; THE LOGGED LINE HOLDS</text>
+
+      <!-- ghost threads, faded -->
+      <g stroke="#39423f" stroke-width="1.3" fill="none" opacity=".6" stroke-dasharray="2 6">
+        <path d="M48,316 C160,312 240,312 360,316"/>
+        <path d="M48,338 C160,336 240,336 360,338"/>
+      </g>
+      <text x="48" y="312" font-family="'Spline Sans',sans-serif" font-size="11" fill="#5d6a68" font-style="italic">the why you swore you'd remember — reconstructed wrong</text>
+
+      <!-- the agent reading the open file cold -->
+      <g>
+        <circle cx="980" cy="184" r="3" fill="#aeffee" class="breathe"/>
+        <path d="M958,184 L974,184" stroke="#3fe0c8" stroke-width="1.2" opacity=".7"/>
+      </g>
+      <text x="1042" y="330" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#3fe0c8" font-style="italic">a teammate — or an agent — reads it cold,</text>
+      <text x="1042" y="346" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#3fe0c8" font-style="italic">sets its next course from your bearing, not against it</text>
     </svg>
-    <div class="hero-cap">The decision was real. <b>The why evaporated — except the one line you wrote down.</b></div>
   </div>
 
-  <!-- ============================================================ -->
-  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
-  <!-- ============================================================ -->
-  <section class="prose">
-    <div class="sec-label">The mechanism · two fates of the same decision</div>
-    <h2>The choosing was cheap. <em>Loading the context</em> was the expensive part.</h2>
+  <!-- ============ SPINE — lean T1 body around ONE governing diagram ============ -->
+  <section class="spine">
+
+    <div class="movement">The contrarian read · what's actually expensive</div>
+    <h2>You banked the decision. You <em>lost the loaded context</em> that made it obvious.</h2>
 
     <p>
-      A threat-model pass flags one thing worth hardening. You weigh the trade-off, pick a side, ship the fix,
-      and move on with the small relief of being past it. The relief is the trap. It feels like a decision
-      banked — but the only thing you actually kept is the <em>feeling</em> of having decided, and a feeling
-      is not an artefact. The reasoning that made one option obviously right was a whole loaded context: the
-      attacker you were picturing, the alternative you rejected and why, the constraint that broke the tie.
-      That context decays fast and silently. A week later someone in review asks <em class="teal">"why this and
-      not the obvious alternative?"</em> and you find yourself reconstructing a rationale you no longer actually
-      hold — or worse, defending a guess.
+      A threat-model pass flags one thing worth hardening. You weigh the trade-off, pick a side, ship the fix, and
+      move on with the small relief of being past it. That relief is the trap. The intuition says the choosing was
+      the hard part — but choosing is cheap. The expensive thing was <b>loading the context</b> that made one option
+      obviously right: the attacker you were picturing, the alternative you rejected and why, the single constraint
+      that broke the tie. That context decays fast and silently, and a feeling of having decided is not an artefact.
+      A week later someone in review asks <em class="teal">"why this and not the obvious alternative?"</em> and you
+      reconstruct a rationale you no longer actually hold — or defend a guess.
     </p>
 
     <p>
-      In an agentic workflow the decay costs twice. The agent that picks up adjacent work next week has
-      <b>no memory of the room where you decided.</b> It reads the repo cold, sees a settled trade-off with no
-      recorded reason, and does the rational thing: it re-litigates the call from scratch — sometimes landing
-      on the option you already rejected, for the exact reason you already rejected it. The diagram below shows
-      the fork: same decision, two fates, split only by whether the constraint got written down while it was warm.
+      In an agentic workflow the decay costs twice. The agent that picks up adjacent work next week has <b>no memory
+      of the room where you decided</b>. It reads the repo cold, sees a settled trade-off with no recorded reason, and
+      does the rational thing — re-litigates the call from scratch, sometimes landing back on the option you already
+      rejected, for the exact reason you already rejected it. The figure below is the whole pattern: one decision, two
+      courses, split only by whether the bearing got logged while it was warm.
     </p>
-  </section>
 
-  <!-- ============ DIAGRAM 1 — SAME DECISION, TWO FATES ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 440" role="img" aria-label="Top track: a decision made then not written; a week later the why is gone and an agent re-litigates the settled call. Bottom track: the same decision with four lines written warm; a week later the same agent reads the constraint and builds on it.">
-      <defs>
-        <linearGradient id="d1-lose" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".6"/><stop offset="1" stop-color="#39423f" stop-opacity=".15"/></linearGradient>
-        <linearGradient id="d1-keep" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".7"/><stop offset="1" stop-color="#ffb347" stop-opacity=".75"/></linearGradient>
-        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
+    <!-- THE ONE GOVERNING DIAGRAM -->
+    <div class="figure">
+      <svg viewBox="0 0 1080 360" role="img" aria-label="One decision splits into two courses. The upper course, bearing not logged, fades to a dashed ghost; a week later an agent finds a settled call with no reason and re-litigates it, paid twice. The lower course, the constraint logged warm into an ADR, stays bright; the same agent reads the constraint and builds on it, paid once.">
+        <defs>
+          <linearGradient id="fig-lose" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".6"/><stop offset="1" stop-color="#39423f" stop-opacity=".12"/></linearGradient>
+          <linearGradient id="fig-keep" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".7"/><stop offset="1" stop-color="#ffb347" stop-opacity=".78"/></linearGradient>
+          <filter id="fig-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
 
-      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME DECISION · TWO FATES · SPLIT BY WHETHER THE CONSTRAINT GOT WRITTEN WARM</text>
+        <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.4" fill="#3b524e">ONE DECISION · TWO COURSES · SPLIT BY WHETHER THE BEARING GOT LOGGED WARM</text>
 
-      <!-- shared origin: the decision made -->
-      <g>
-        <circle cx="120" cy="220" r="26" fill="rgba(63,224,200,.12)" stroke="#3fe0c8" stroke-width="1.4" filter="url(#d1-glow)"/>
-        <text x="120" y="217" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#eafff9">decision</text>
-        <text x="120" y="233" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#eafff9">made</text>
-        <text x="120" y="272" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#6f8a85">STRIDE → HARDEN</text>
-      </g>
+        <!-- shared origin -->
+        <circle cx="118" cy="180" r="26" fill="rgba(63,224,200,.12)" stroke="#3fe0c8" stroke-width="1.4" filter="url(#fig-glow)"/>
+        <text x="118" y="177" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#eafff9">decision</text>
+        <text x="118" y="193" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#eafff9">made</text>
+        <text x="118" y="232" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#6f8a85">STRIDE → HARDEN</text>
 
-      <!-- TOP TRACK — not written -->
-      <g>
-        <path d="M148,206 C240,140 300,108 360,104" stroke="url(#d1-lose)" stroke-width="2.2" fill="none"/>
-        <text x="200" y="96" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#5d6a68">NOT WRITTEN ↑</text>
+        <!-- UPPER: not logged -->
+        <path d="M146,166 C240,108 300,80 360,76" stroke="url(#fig-lose)" stroke-width="2.2" fill="none"/>
+        <text x="186" y="66" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#5d6a68">NOT LOGGED ↑</text>
+        <path d="M360,76 C480,76 560,76 660,76" stroke="url(#fig-lose)" stroke-width="1.5" fill="none" stroke-dasharray="2 7" opacity=".55"/>
+        <text x="470" y="66" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3b524e">"we decided that already" → faint heading →</text>
+        <rect x="660" y="44" width="356" height="70" rx="12" fill="rgba(93,106,104,.08)" stroke="rgba(93,106,104,.4)"/>
+        <text x="676" y="68" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">AGENT PICKS UP ADJACENT WORK</text>
+        <text x="676" y="90" font-family="'Spline Sans',sans-serif" font-size="13" fill="#8a9794" font-style="italic">no recorded why → re-litigates from scratch,</text>
+        <text x="676" y="107" font-family="'Spline Sans',sans-serif" font-size="13" fill="#8a9794" font-style="italic">may undo the call you already made</text>
+        <text x="1004" y="34" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#5d6a68">✕ PAID TWICE</text>
 
-        <!-- the relief bubble -->
-        <rect x="360" y="78" width="158" height="52" rx="14" fill="rgba(63,224,200,.05)" stroke="rgba(63,224,200,.16)" stroke-dasharray="3 4"/>
-        <text x="439" y="100" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#6f8a85">"we decided</text>
-        <text x="439" y="118" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#6f8a85">that already"</text>
-
-        <!-- decay -->
-        <path d="M518,104 C600,104 640,104 700,104" stroke="url(#d1-lose)" stroke-width="1.6" fill="none" stroke-dasharray="2 7" opacity=".6"/>
-        <text x="610" y="94" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3b524e">A WEEK LATER →</text>
-
-        <!-- the agent re-litigating -->
-        <rect x="700" y="66" width="320" height="78" rx="12" fill="rgba(93,106,104,.08)" stroke="rgba(93,106,104,.4)"/>
-        <text x="716" y="90" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">AGENT PICKS UP ADJACENT WORK</text>
-        <text x="716" y="112" font-family="'Spline Sans',sans-serif" font-size="13" fill="#8a9794" font-style="italic">no recorded why → re-litigates from</text>
-        <text x="716" y="130" font-family="'Spline Sans',sans-serif" font-size="13" fill="#8a9794" font-style="italic">scratch · may undo the call you made</text>
-        <text x="1004" y="56" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#5d6a68">✕ PAID TWICE</text>
-      </g>
-
-      <!-- BOTTOM TRACK — written warm -->
-      <g>
-        <path d="M148,234 C240,300 300,332 360,336" stroke="url(#d1-keep)" stroke-width="2.4" fill="none" filter="url(#d1-glow)"/>
-        <text x="196" y="352" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#a86a1f">WRITTEN WARM ↓</text>
-
-        <!-- the four lines -->
-        <rect x="360" y="304" width="158" height="74" rx="12" fill="rgba(255,179,71,.06)" stroke="url(#d1-keep)" stroke-width="1.3"/>
+        <!-- LOWER: logged warm -->
+        <path d="M146,194 C240,252 300,280 360,284" stroke="url(#fig-keep)" stroke-width="2.4" fill="none" filter="url(#fig-glow)"/>
+        <text x="182" y="300" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#a86a1f">LOGGED WARM ↓</text>
+        <rect x="360" y="250" width="150" height="74" rx="12" fill="rgba(255,179,71,.06)" stroke="url(#fig-keep)" stroke-width="1.3"/>
         <g font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#9bffe9">
-          <text x="374" y="324">context</text>
-          <text x="374" y="340">decision</text>
-          <text x="374" y="356">alternatives</text>
-          <text x="374" y="372" fill="#ffce85">→ constraint</text>
+          <text x="374" y="270">context</text>
+          <text x="374" y="286">decision</text>
+          <text x="374" y="302">alternatives</text>
+          <text x="374" y="318" fill="#ffce85">★ constraint</text>
         </g>
+        <path d="M510,287 C580,287 620,287 660,287" stroke="url(#fig-keep)" stroke-width="1.8" fill="none" filter="url(#fig-glow)"/>
+        <circle r="3" fill="#ffce85"><animateMotion dur="3.6s" repeatCount="indefinite" path="M510,287 C580,287 620,287 660,287"/><animate attributeName="opacity" values="0;1;1;0" dur="3.6s" repeatCount="indefinite"/></circle>
+        <rect x="660" y="252" width="356" height="70" rx="12" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.4)" filter="url(#fig-glow)"/>
+        <text x="676" y="276" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#3fe0c8">SAME AGENT · SAME ADJACENT WORK</text>
+        <text x="676" y="298" font-family="'Spline Sans',sans-serif" font-size="13" fill="#cfe6e0" font-style="italic">reads the constraint → builds ON it,</text>
+        <text x="676" y="315" font-family="'Spline Sans',sans-serif" font-size="13" fill="#cfe6e0" font-style="italic">doesn't re-derive the settled trade-off</text>
+        <text x="1004" y="242" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3fe0c8">✓ PAID ONCE</text>
+      </svg>
+      <div class="fcap">Same input, two outputs — because the bearing was <b>logged, not lost</b>. The fork is one four-line file.</div>
+    </div>
 
-        <!-- accretes -->
-        <path d="M518,340 C600,340 640,340 700,340" stroke="url(#d1-keep)" stroke-width="1.8" fill="none" filter="url(#d1-glow)"/>
-        <text x="610" y="330" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#a86a1f">A WEEK LATER →</text>
-        <circle r="3" fill="#ffce85"><animateMotion dur="3.6s" repeatCount="indefinite" path="M518,340 C600,340 640,340 700,340"/><animate attributeName="opacity" values="0;1;1;0" dur="3.6s" repeatCount="indefinite"/></circle>
+    <div class="movement">The load-bearing line · what ages well</div>
+    <h2>The verdict is in the diff. The <em>constraint</em> is the only thing that expires.</h2>
 
-        <!-- the agent building on it -->
-        <rect x="700" y="302" width="320" height="78" rx="12" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.4)" filter="url(#d1-glow)"/>
-        <text x="716" y="326" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#3fe0c8">SAME AGENT · SAME ADJACENT WORK</text>
-        <text x="716" y="348" font-family="'Spline Sans',sans-serif" font-size="13" fill="#cfe6e0" font-style="italic">reads the constraint → builds ON it,</text>
-        <text x="716" y="366" font-family="'Spline Sans',sans-serif" font-size="13" fill="#cfe6e0" font-style="italic">doesn't re-derive the settled trade-off</text>
-        <text x="1004" y="292" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3fe0c8">✓ PAID ONCE</text>
-      </g>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 01</span>Same input, different output — because the context was <b>captured, not lost</b>. The fork is one four-line file.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 2 — context isn't only the choice ============ -->
-  <section class="prose">
     <p>
-      Here's the counterintuitive bit. The expensive thing to preserve isn't <b>what</b> you decided — anyone can
-      read the diff and see that you chose option X. The expensive thing is <b>the constraint that made X obvious</b>
-      at the time. That single line is the test by which a future reader knows whether your call still holds when
-      the inputs change. <em class="teal">"We chose the stricter token scope because the endpoint is reachable
-      unauthenticated"</em> ages gracefully — the day the endpoint goes behind auth, anyone can see the call is now
-      reversible. Strip the constraint and all that survives is a verdict with no expiry date, defended forever by
-      reflex because nobody remembers what would falsify it.
+      Here's the part the intuition gets backwards. The expensive thing to preserve isn't <b>what</b> you decided —
+      anyone can read the diff and see you chose option X. The expensive thing is <b>the constraint that made X
+      obvious at the time</b>. That single line is the test by which a future reader knows whether your call still
+      holds when the inputs change. <em class="teal">"We scoped the token to read-only because the endpoint is
+      reachable unauthenticated"</em> ages gracefully — the day the endpoint goes behind auth, anyone can see the
+      call is now reversible. Strip the constraint and all that survives is a verdict with no expiry date, defended
+      forever by reflex because nobody remembers what would falsify it.
     </p>
 
-    <p class="pull">
+    <p class="turn">
       A decision you can't reconstruct isn't a decision you still own — <b>it's a guess you'll re-make under worse conditions.</b>
     </p>
 
-    <div class="sec-label">The shelf-life upgrade · from private judgment to repo record</div>
-    <h2>From the <em>thought you'll keep</em> to the file the agent reads cold.</h2>
+    <p>
+      The move, then, is not <em>"document more."</em> It's a shelf-life upgrade on a single decision: take the
+      rationale that currently lives as a fading thought and turn it into a numbered file the repo carries forward.
+      The convention most teams reach for is an <b>Architecture Decision Record</b> — a short, standalone,
+      repo-resident note, one per decision, numbered so they read as a history. Not a wiki page that rots in a
+      corner, not a Slack thread that scrolls away, not a commit message buried in history. A file the next session —
+      yours or an agent's — cold-reads as part of the system's standing context. Four lines do the work:
+    </p>
+
+    <!-- THE FOUR LINES — inline ledger, NOT a three-plate grid -->
+    <div class="ledger">
+      <div class="head">the logbook entry — <b>four lines, one decision</b></div>
+      <ol>
+        <li><span><b>Context.</b> the threat you were picturing — e.g. an unauth read endpoint a STRIDE pass surfaced.</span></li>
+        <li><span><b>Decision.</b> the call you actually shipped — <span class="mono">scope the token to read-only</span>.</span></li>
+        <li><span><b>Alternatives.</b> what you weighed and dropped — gateway allow-list, per-call auth.</span></li>
+        <li class="bearing"><span><b>The constraint that picked the winner.</b> reachable unauthenticated — so least-privilege. <em style="color:var(--amber-dim);font-style:italic">This is the bearing. It's the one line that ages.</em></span></li>
+      </ol>
+    </div>
+
+    <p class="note">
+      <b>Default shape, not a mandate.</b> The path <span class="mono">docs/adr/NNNN-slug.md</span> and the four
+      sections are an illustrative default — if your repo already has an ADR convention, use theirs. The portable
+      part is the discipline, not the directory name.
+    </p>
+
+    <div class="movement amber">What thickens · the org stops storing reasoning in heads</div>
+    <h2>One record is a note. A directory of them is the <em>layer the next call rests on.</em></h2>
 
     <p>
-      The move is not "document more." It's a shelf-life upgrade on a single decision: take the rationale that
-      currently lives as a fading thought — <em>"I'll remember why"</em> — and turn it into a numbered file the
-      repo carries forward. The convention most teams reach for is an <b>Architecture Decision Record</b>: a
-      short, standalone, repo-resident note, one per decision, numbered so they read as a history. Four labelled
-      sections do the work — <span class="mono">context · decision · alternatives · constraint</span> — with the
-      constraint section as the load-bearing one. Not a wiki page that rots in a corner, not a Slack thread that
-      scrolls away, not a commit message buried in history. A file that the next session — yours or an agent's —
-      cold-reads as part of the system's standing context.
+      One ADR is a note. A repo of them is a different thing entirely — the layer the next decision rests on instead
+      of fighting against. Each pass thickens the <span class="mono">docs/adr/</span> directory, and each new
+      constraint is read as standing context by whatever reads the repo next: a reviewer, a junior who wasn't in the
+      room, a memory pass that loads prior decisions, or an agent doing adjacent work. Decision-recall stops
+      depending on the person who made the call still being available — or still remembering. That's the systemic
+      win: an org's architectural reasoning starts living <b>in the codebase, not in senior heads</b>. The one trap
+      to refuse — treat the ADR as a checkbox after a menu-pick threat and you get <em>paperwork</em>: a fabricated
+      trade-off written to satisfy a form. A genuine trade-off written down is design; a fabricated one is theatre.
+      Write only what you actually decided.
     </p>
+
+    <!-- the woven Monday line — not a boxed mono aside -->
+    <p class="now">
+      So the move this week is small and immediate: after your next real trade-off, stop for <b>ninety seconds while
+      the why is still warm</b> and log four lines into <span class="mono">docs/adr/NNNN-slug.md</span> (or wherever
+      your repo keeps them) — context, the call, the alternative you rejected, and the constraint that decided it.
+      You're not proposing a process or asking anyone's permission; an ADR is a markdown file in a directory you
+      already own, and you're writing down a decision you already made. Do it once and the why stops evaporating;
+      do it after every real call and the directory becomes the substrate every future reader — human or agent —
+      inherits instead of reconstructs.
+    </p>
+
   </section>
 
-  <!-- ============ TEMPLATE-CAVEAT — labels travel (prose + diagram) ============ -->
-  <div class="caveat">
-    <span class="tag">Default convention</span>
-    <p>
-      The path <span class="mono">docs/adr/NNNN-slug.md</span> and the four-section shape
-      (context · decision · alternatives · constraint) are an <b>illustrative default, not a mandate</b>.
-      Your repo's actual ADR path and section shape override it — if the team already has a convention, use theirs.
-      The portable part is the discipline, not the directory name.
-    </p>
-  </div>
-
-  <!-- ============ DIAGRAM 2 — SHELF-LIFE UPGRADE ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 380" role="img" aria-label="A thought-bubble reading we decided this dissolving into nothing on the left, transforming into a numbered repo file on the right with four labelled sections, the constraint section glowing as the load-bearing one.">
-      <defs>
-        <linearGradient id="d2-fade" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stop-color="#9bffe9" stop-opacity=".6"/>
-          <stop offset="1" stop-color="#9bffe9" stop-opacity="0"/>
-        </linearGradient>
-        <linearGradient id="d2-file" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#3fe0c8" stop-opacity=".4"/>
-          <stop offset="1" stop-color="#ffb347" stop-opacity=".3"/>
-        </linearGradient>
-        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME RATIONALE · DIFFERENT SHELF LIFE</text>
-
-      <!-- LEFT: dissolving thought bubble -->
-      <g>
-        <text x="80" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#5d6a68">PRIVATE JUDGMENT · DISSOLVING</text>
-
-        <g>
-          <rect x="80" y="100" width="280" height="48" rx="22" fill="rgba(63,224,200,.09)" stroke="rgba(155,255,233,.4)"/>
-          <text x="100" y="129" font-family="'Fraunces',serif" font-style="italic" font-size="15" fill="#eafff9">"we decided this…"</text>
-        </g>
-        <g opacity=".5">
-          <rect x="104" y="166" width="248" height="42" rx="20" fill="rgba(63,224,200,.05)" stroke="rgba(155,255,233,.22)"/>
-          <text x="124" y="192" font-family="'Spline Sans',sans-serif" font-size="13" fill="#cfe6e0">"…I'll remember why…"</text>
-        </g>
-        <g opacity=".22">
-          <rect x="134" y="226" width="210" height="40" rx="18" fill="rgba(63,224,200,.03)" stroke="rgba(155,255,233,.14)"/>
-          <text x="152" y="251" font-family="'Spline Sans',sans-serif" font-size="13" fill="#6f8a85" font-style="italic">…why again?</text>
-        </g>
-
-        <line x1="80" y1="288" x2="430" y2="288" stroke="url(#d2-fade)" stroke-width="1.4"/>
-        <text x="80" y="310" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#5d6a68">nobody owns it → reconstructed under review</text>
-      </g>
-
-      <!-- arrow / transformation -->
-      <g transform="translate(470,180)">
-        <path d="M0,0 L70,0" stroke="#ffb347" stroke-width="1.4" fill="none" opacity=".75"/>
-        <polygon points="70,0 60,-6 60,6" fill="#ffb347" opacity=".85"/>
-        <text x="36" y="-12" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".24em" fill="#ffb347">WRITE WARM</text>
-        <text x="36" y="22" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#6f8a85">90 seconds</text>
-      </g>
-
-      <!-- RIGHT: the numbered ADR file -->
-      <g>
-        <text x="580" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#ffb347">REPO RECORD · NUMBERED · READ COLD</text>
-
-        <g filter="url(#d2-glow)">
-          <rect x="580" y="98" width="380" height="234" rx="12" fill="rgba(8,17,18,.8)" stroke="url(#d2-file)" stroke-width="1.6"/>
-        </g>
-        <rect x="580" y="98" width="230" height="26" rx="6" fill="rgba(255,179,71,.14)"/>
-        <text x="596" y="116" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing=".04em" fill="#ffb347">docs/adr/0007-slug.md</text>
-
-        <g font-family="'Spline Sans Mono',monospace" font-size="11" fill="#cfe6e0">
-          <text x="596" y="150"># context</text>
-          <text x="596" y="172" fill="#9bffe9">unauth read endpoint flagged by STRIDE</text>
-          <text x="596" y="198"># decision</text>
-          <text x="596" y="220" fill="#9bffe9">scope the token to read-only</text>
-          <text x="596" y="246"># alternatives considered</text>
-          <text x="596" y="268" fill="#9bffe9">gateway allow-list · per-call auth</text>
-        </g>
-        <!-- constraint section glowing -->
-        <rect x="588" y="282" width="364" height="40" rx="7" fill="rgba(255,179,71,.08)" stroke="rgba(255,179,71,.45)"/>
-        <text x="596" y="300" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#ffb347"># constraint that picked the winner</text>
-        <text x="596" y="318" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#ffce85">reachable unauthenticated — so least-privilege</text>
-
-        <circle cx="944" cy="110" r="4" fill="#ffce85" class="breathe"/>
-        <text x="952" y="304" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".18em" fill="#a86a1f" transform="rotate(-90 952 304)">LOAD-BEARING</text>
-
-        <g stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7">
-          <path d="M540,148 C560,148 570,148 580,148"/>
-          <path d="M540,218 C560,218 570,218 580,218"/>
-          <path d="M540,288 C560,288 570,288 580,288"/>
-        </g>
-        <g font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#6f8a85" text-anchor="end">
-          <text x="535" y="151">REVIEW READS →</text>
-          <text x="535" y="221">JUNIOR READS →</text>
-          <text x="535" y="291">AGENT READS →</text>
-        </g>
-      </g>
-
-      <text x="540" y="362" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">DEFAULT SHAPE SHOWN — YOUR REPO'S ACTUAL ADR PATH &amp; SECTIONS OVERRIDE IT.</text>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 02</span>Private judgment → repo-resident, agent-readable record. The <b>constraint section is the one that ages well</b>. <em>Path and sections shown are the default convention — yours override.</em></div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 3 — the compounding intro ============ -->
-  <section class="prose">
-    <p>
-      One ADR is a note. A repo of them is a different thing entirely — it's the layer the next decision rests on
-      instead of fighting against. Each pass thickens the <span class="mono">docs/adr/</span> directory, and each
-      new constraint is read as standing context by whatever reads the repo next: a reviewer, a junior who wasn't
-      in the room, a memory pass that loads prior decisions, or an agent doing adjacent work. The decision-recall
-      doesn't depend on the person who made the call still being available — or still remembering. The loop below
-      closes through the repo: decide, write the constraint warm, the directory accretes, the next session inherits
-      the why, and decides the <em>next</em> thing on top of it rather than against it.
-    </p>
-  </section>
-
-  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 420" role="img" aria-label="Four-beat compounding loop — decide, write the constraint warm, the repo accretes, the next session cold-reads it as standing context and decides the next thing on top — with the docs/adr directory visibly thickening across passes.">
-      <defs>
-        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/>
-          <stop offset="1" stop-color="#ffb347" stop-opacity=".6"/>
-        </linearGradient>
-        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%">
-          <stop offset="0" stop-color="#9bffe9"/>
-          <stop offset=".55" stop-color="#3fe0c8"/>
-          <stop offset="1" stop-color="#1d8d80"/>
-        </radialGradient>
-        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE NEXT AGENT INHERITS THE WHY · WHAT THICKENS BETWEEN PASSES</text>
-
-      <!-- ===== LEFT HALF: the loop ===== -->
-      <g transform="translate(40,60)">
-        <circle cx="200" cy="170" r="130" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="540 60" stroke-linecap="round" transform="rotate(-90 200 170)"/>
-        <circle r="3.6" fill="#ffce85">
-          <animateMotion dur="9s" repeatCount="indefinite" path="M200,40 a130,130 0 1,1 -0.1,0"/>
-          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
-        </circle>
-
-        <g>
-          <circle cx="200" cy="40" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="200" y="45" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">1</text>
-          <text x="200" y="20" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Decide</text>
-        </g>
-        <g>
-          <circle cx="330" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="330" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">2</text>
-          <text x="362" y="167" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Write the</text>
-          <text x="362" y="183" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">constraint warm</text>
-        </g>
-        <g>
-          <circle cx="200" cy="300" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="200" y="305" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">3</text>
-          <text x="200" y="338" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Repo accretes the ADR</text>
-        </g>
-        <g>
-          <circle cx="70" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="70" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">4</text>
-          <text x="38" y="167" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Next session</text>
-          <text x="38" y="183" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">cold-reads it</text>
-        </g>
-
-        <text x="200" y="160" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">DECIDES THE NEXT</text>
-        <text x="200" y="178" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#ffb347">on top, not against</text>
-      </g>
-
-      <!-- ===== RIGHT HALF: the docs/adr directory thickening ===== -->
-      <g transform="translate(540,68)">
-
-        <!-- pass 1 — one record -->
-        <g>
-          <rect x="0" y="14" width="160" height="200" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.22)"/>
-          <rect x="0" y="14" width="160" height="20" rx="6" fill="rgba(63,224,200,.10)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">docs/adr/</text>
-          <g stroke="#6f8a85" stroke-width="2" opacity=".6">
-            <line x1="12" y1="58" x2="120" y2="58"/>
-          </g>
-          <g font-family="'Spline Sans Mono',monospace" font-size="8" fill="#5d6a68">
-            <text x="12" y="74">0001-…</text>
-          </g>
-          <text x="80" y="240" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#5d6a68">PASS 1 · ONE RECORD</text>
-        </g>
-
-        <g transform="translate(170,114)">
-          <path d="M0,0 L26,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="26,0 18,-5 18,5" fill="#3fe0c8" opacity=".75"/>
-        </g>
-
-        <!-- pass 2 — a handful -->
-        <g transform="translate(200,0)">
-          <rect x="0" y="14" width="160" height="220" rx="8" fill="rgba(8,17,18,.78)" stroke="rgba(63,224,200,.35)"/>
-          <rect x="0" y="14" width="160" height="20" rx="6" fill="rgba(63,224,200,.14)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">docs/adr/</text>
-          <g stroke="#9bffe9" stroke-width="2" opacity=".75">
-            <line x1="12" y1="58" x2="130" y2="58"/>
-            <line x1="12" y1="80" x2="120" y2="80"/>
-            <line x1="12" y1="102" x2="134" y2="102"/>
-          </g>
-          <g stroke="#ffb347" stroke-width="2" opacity=".75">
-            <line x1="12" y1="124" x2="126" y2="124"/>
-          </g>
-          <g font-family="'Spline Sans Mono',monospace" font-size="8" fill="#5d6a68">
-            <text x="12" y="150">0001 · 0002 · 0003 · 0004</text>
-          </g>
-          <text x="80" y="252" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#9bffe9">PASS 2 · A HISTORY FORMS</text>
-        </g>
-
-        <g transform="translate(370,124)">
-          <path d="M0,0 L26,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="26,0 18,-5 18,5" fill="#3fe0c8" opacity=".75"/>
-        </g>
-
-        <!-- pass 3 — substrate the org reads -->
-        <g transform="translate(400,0)">
-          <rect x="0" y="0" width="160" height="260" rx="8" fill="rgba(8,17,18,.85)" stroke="url(#d3-ring)" stroke-width="1.5" filter="url(#d3-glow)"/>
-          <rect x="0" y="0" width="160" height="20" rx="6" fill="rgba(255,179,71,.16)"/>
-          <text x="10" y="15" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">docs/adr/</text>
-          <g stroke="#ffb347" stroke-width="2.2">
-            <line x1="12" y1="40" x2="138" y2="40"/>
-            <line x1="12" y1="60" x2="120" y2="60"/>
-          </g>
-          <g stroke="#9bffe9" stroke-width="2" opacity=".8">
-            <line x1="12" y1="84" x2="146" y2="84"/>
-            <line x1="12" y1="104" x2="120" y2="104"/>
-            <line x1="12" y1="124" x2="138" y2="124"/>
-            <line x1="12" y1="144" x2="110" y2="144"/>
-            <line x1="12" y1="164" x2="128" y2="164"/>
-            <line x1="12" y1="184" x2="138" y2="184"/>
-            <line x1="12" y1="204" x2="104" y2="204"/>
-          </g>
-          <text x="80" y="280" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#ffb347">PASS N · THE SUBSTRATE</text>
-        </g>
-
-        <!-- legend -->
-        <g transform="translate(0,300)">
-          <rect x="0" y="0" width="14" height="3" fill="#ffb347"/>
-          <text x="22" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">CONSTRAINT LINES THE ORG INHERITS</text>
-          <rect x="0" y="14" width="14" height="3" fill="#9bffe9"/>
-          <text x="22" y="18" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">DECISIONS THAT STOPPED LIVING IN HEADS</text>
-        </g>
-      </g>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 03</span><em>The next agent inherits the why.</em> Each pass the <span style="font-family:'Spline Sans Mono',monospace;font-style:normal;color:#3fe0c8">docs/adr/</span> directory thickens — and the org's architectural reasoning starts living <b>in the codebase, not in senior heads</b>.</div>
-  </div>
-
-  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
-  <div class="plates">
-    <div class="plate use">
-      <div class="beat-label amber"><b>Use when</b></div>
-      <p class="body">
-        You just made a <b>real architectural call under pressure</b> — a STRIDE pass picked a threat to harden,
-        a curated skill surfaced a trade-off and you committed — and the only record is <span class="grey">the relief
-        you're past it</span>. Or you catch yourself saying <b>"we decided that already"</b> and can't point at where.
-      </p>
-    </div>
-    <div class="plate build">
-      <div class="beat-label"><b>Build</b></div>
-      <p class="body">
-        A standalone, numbered, repo-resident record — <span class="mono">docs/adr/NNNN-slug.md</span> by default
-        (<b>your repo's convention wins</b>) — with four sections: context, decision, alternatives, <b>and the
-        constraint that picked the winner</b>.
-      </p>
-    </div>
-    <div class="plate test">
-      <div class="beat-label"><b>Test</b></div>
-      <p class="body">
-        A teammate reads it and says <em>"right, that's why."</em><br>
-        Not a stranger's <em class="no">"well-formatted."</em>
-      </p>
-    </div>
-  </div>
-
-  <!-- ============ CORE MOVES ============ -->
-  <section class="moves">
-    <div class="beat-label"><b>Core moves</b></div>
-    <div class="moves-head">
-      <h2>The action, in sequence</h2>
-      <span class="lede">Ninety seconds while the why is still warm — not a process to roll out.</span>
-    </div>
-
-    <div class="move-rail">
-      <div class="thread"></div>
-      <div class="step">
-        <div class="bead">1</div>
-        <h3>Catch it the moment it lands</h3>
-        <p>The trigger is the felt <b>"okay, we're hardening this"</b> — not a calendar slot. An hour later it's a reconstruction.</p>
-      </div>
-      <div class="step">
-        <div class="bead">2</div>
-        <h3>Write four things, not a treatise</h3>
-        <p>Context, decision, the alternatives you weighed, and <b>the one constraint</b> that picked the winner.</p>
-      </div>
-      <div class="step">
-        <div class="bead">3</div>
-        <h3>Put it where the repo travels</h3>
-        <p>The team's ADR path, or <b>default <span style="font-family:'Spline Sans Mono',monospace;color:#9bffe9">docs/adr/</span></b>. Not a private note — part of the system you have.</p>
-      </div>
-      <div class="step">
-        <div class="bead">4</div>
-        <h3>Resist the compliance reading</h3>
-        <p>A real trade-off written down is design. A fabricated one is <b>paperwork</b> — write only what you actually decided.</p>
-      </div>
-    </div>
-
-    <div class="compound">
-      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
-        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
-        </linearGradient></defs>
-        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
-          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
-        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
-        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
-        <circle r="3" fill="#aeffee">
-          <animateMotion dur="5s" repeatCount="indefinite"
-            path="M37,11 a26,26 0 1,1 -0.1,0"/>
-        </circle>
-      </svg>
-      <div class="ctext">
-        <div class="cyc">decide<span class="arr">→</span>write the constraint warm<span class="arr">→</span>repo accretes<span class="arr">→</span>next session inherits<span class="arr">→</span>repeat</div>
-        <p>Then it's a habit, not a chore: <b>the why stops evaporating.</b> Each constraint you bank is one the next reader — human or agent — never has to reconstruct.</p>
-      </div>
-    </div>
-
-    <!-- the Monday-move / no-permission aside -->
-    <p class="aside">
-      <b>Monday move:</b> after your next real trade-off, stop for ninety seconds and write four lines into
-      <span class="mono">docs/adr/NNNN-slug.md</span> (or wherever your repo keeps them) — context, call, the
-      alternative you rejected, the constraint that decided it. <span class="mono">An ADR is a markdown file in
-      a directory you already own · no platform · no budget · no sign-off · ~90 sec.</span> You're not proposing
-      a process; you're writing down a decision you already made.
-    </p>
-  </section>
-
-  <!-- ============ WHY — the conviction ============ -->
-  <section class="why">
-    <div class="beat-label"><b>Why</b></div>
-
-    <div class="principle-block">
-      <div class="principle-label">The principle</div>
-      <p class="principle-line">Context as <em>standing input</em>. The ADR is the only channel by which a past judgment reaches a future agent.</p>
-    </div>
-
-    <p class="quote">"The expensive part of a decision was loading the context that made it obvious — and that context evaporates faster than the decision does."</p>
-    <p class="gloss">
-      The agent reading your repo has no memory of the room where you decided. A decision that lives only in your
-      head is invisible to every session that follows — so the ADR isn't bureaucracy, it's <b>the wire</b> from a
-      past judgment to a future reader. The constraint line is the highest-leverage sentence in the file: it's the
-      test by which anyone later knows whether your call still holds when the inputs change. Strip it, and you've
-      kept the verdict but lost the expiry date.
-    </p>
-    <p class="gloss">
-      And the failure mode is specific. Treat the ADR as a checkbox after a menu-pick threat and you get
-      <em>paperwork</em> — a fabricated trade-off written down to satisfy a form. The move is real only when the
-      decision was real: name the worst thing the feature could do, find the threat adjacent to that answer, and
-      record the constraint that resolved it. <b>A genuine trade-off written down is design; a fabricated one is theatre.</b>
-    </p>
-    <div class="corollary"><span class="sd"></span>A guess you'll re-make under worse conditions is not a decision you own.</div>
-  </section>
-
-  <!-- ============ TEST IN PRACTICE ============ -->
-  <section class="practice">
-    <div class="beat-label amber"><b>Test</b> · how you know it worked</div>
-    <p>
-      The practitioner's <em>"right, that's why"</em> — the constraint line reconstructs the call without you in the
-      room — beats a stranger's <em class="no">"well-formatted."</em> Three more checks the file should survive: an
-      agent picking up adjacent work <b>builds on the constraint instead of re-deriving the settled trade-off</b>;
-      the four sections answer the hostile review question <em>"why not the obvious alternative?"</em> before it's
-      asked; and the negative test — <b>if the only record is that you feel past the decision, it didn't cross.</b>
-      Felt relief is not an artefact. Reconstructing the why a week later means the move never happened.
-    </p>
-  </section>
-
-  <!-- ============ CONNECTS TO — neighbour patterns ============ -->
+  <!-- ============ CONNECTS TO ============ -->
   <section class="connects">
     <h2>Connects to</h2>
     <div class="sub">Threads leaving this node · the pattern language</div>
@@ -1056,28 +531,27 @@
     <div class="web">
       <svg viewBox="0 0 1080 300" aria-hidden="true">
         <defs>
-          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
-          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="ct1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="ct2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="ct3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <filter id="ctglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         </defs>
 
         <circle cx="150" cy="150" r="30" fill="none" stroke="#3fe0c8" stroke-width="1.2" opacity=".5"/>
-        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#wglow)"/>
+        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#ctglow)"/>
         <circle cx="150" cy="150" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
 
-        <!-- prerequisite (in, from STRIDE) drawn dashed/upstream; downstream + sibling lead out -->
-        <path id="th1" d="M150,150 C360,72 540,58 760,62" stroke="url(#t1)" stroke-width="2.2" fill="none"/>
-        <path id="th2" d="M150,150 C380,150 560,150 760,150" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
-        <path id="th3" d="M150,150 C360,228 540,242 760,240" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
+        <path id="cth1" d="M150,150 C360,72 540,58 760,62" stroke="url(#ct1)" stroke-width="2.2" fill="none"/>
+        <path id="cth2" d="M150,150 C380,150 560,150 760,150" stroke="url(#ct2)" stroke-width="2.2" fill="none"/>
+        <path id="cth3" d="M150,150 C360,228 540,242 760,240" stroke="url(#ct3)" stroke-width="2.2" fill="none"/>
 
-        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#cth1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#cth2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#cth3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
       </svg>
 
       <div class="neighbours">
-        <div class="origin-chip" style="left:13.8%;top:50%">Write the decision<small>software · you are here</small></div>
+        <div class="origin-chip" style="left:13.8%;top:50%">The decision record<small>software · you are here</small></div>
         <a class="nb" href="stride-threat-model.html" style="left:74%;top:20.7%"><span class="sd"></span>Threat-model with STRIDE <span class="role">prerequisite</span></a>
         <a class="nb" href="three-block-memory.html" style="left:74%;top:50%"><span class="sd"></span>Three-block memory <span class="role">downstream</span></a>
         <a class="nb amber" href="compound-from-evidence.html" style="left:74%;top:80%"><span class="sd"></span>Compound from evidence <span class="role">sibling</span></a>
@@ -1087,7 +561,7 @@
 
   <!-- ============ FOOTER ============ -->
   <footer class="floor">
-    <span class="door">Sits at the personal-decision layer but composes upward: a repo of well-written ADRs is the substrate the memory pass reads and a junior — or an agent — inherits, so the organisation's architectural reasoning stops living in senior heads and starts compounding in the codebase.</span>
+    <span class="door">Log the bearing at the turn — four lines into the repo while the why is still warm, before the reasoning that lived in your head runs aground.</span>
     <span class="meta">The Big Picture · Pattern Language</span>
   </footer>
 

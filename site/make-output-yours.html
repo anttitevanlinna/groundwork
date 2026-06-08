@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Make output yours — Pattern · The Big Picture</title>
+<title>Making output yours — Pattern · The Big Picture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -102,26 +102,17 @@
   }
   .hero-cap b{color:var(--teal)}
 
-  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
+  /* ============ READING-PROSE ============ */
   .prose{
-    margin-top:34px;max-width:760px;
+    margin-top:30px;max-width:760px;
   }
   .prose h2{
     font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
-    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+    letter-spacing:-.012em;line-height:1.08;margin-top:34px;
   }
+  .prose h2:first-child{margin-top:6px}
   .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
   .prose h2.amber em{color:var(--amber)}
-  .prose .sec-label{
-    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
-    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
-    margin-top:42px;
-  }
-  .prose .sec-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
-    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
-  }
-  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
   .prose p{
     font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
     letter-spacing:.002em;
@@ -135,13 +126,13 @@
   }
   .prose p .mono.amber{color:var(--amber)}
   .prose .pull{
-    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
+    margin:24px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
     font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
     color:var(--ink);max-width:680px;
   }
   .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
 
-  /* ============ NEW PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
+  /* ============ GOVERNING DIAGRAM frame ============ */
   .diagram{
     margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
     background:
@@ -163,120 +154,123 @@
     letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
   }
 
-  /* ============ RECIPE SECTION BEATS ============ */
-  .beat-label{
-    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
-    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  /* ============ FASTNESS LADDER — the lightweight inline swatch motif ============ */
+  .ladder{
+    margin:30px 0 6px;max-width:760px;
+    display:flex;align-items:stretch;gap:0;
+    border-left:2px solid var(--teal-dim);
   }
-  .beat-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
-    box-shadow:0 0 9px rgba(63,224,200,.6);
+  .ladder .rung{
+    flex:1;padding:14px 16px 16px;position:relative;
+    border-right:1px solid var(--hairline);
   }
-  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
-  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+  .ladder .rung:last-child{border-right:none}
+  .ladder .swatch{
+    height:34px;border-radius:6px;margin-bottom:11px;
+    border:1px solid rgba(63,224,200,.2);
+  }
+  .ladder .rung.r0 .swatch{background:rgba(93,106,104,.16);border-color:rgba(93,106,104,.28)}
+  .ladder .rung.r1 .swatch{background:linear-gradient(180deg,rgba(29,141,128,.5),rgba(29,141,128,.16))}
+  .ladder .rung.r2 .swatch{background:linear-gradient(180deg,rgba(63,224,200,.6),rgba(29,141,128,.26))}
+  .ladder .rung.r3 .swatch{
+    background:linear-gradient(180deg,rgba(255,179,71,.78),rgba(168,106,31,.34));
+    border-color:var(--amber);box-shadow:0 0 16px -2px rgba(255,179,71,.4);
+  }
+  .ladder .rung .tag{
+    font-family:'Spline Sans Mono',monospace;font-size:8.5px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+  .ladder .rung.r3 .tag{color:var(--amber-dim)}
+  .ladder .rung .what{font-size:12px;line-height:1.4;color:var(--ink-dim);margin-top:6px}
+  .ladder .rung .what b{color:var(--ink);font-weight:500}
+  .ladder-cap{
+    font-family:'Fraunces',serif;font-style:italic;font-size:13.5px;line-height:1.45;
+    color:var(--ink-dim);max-width:680px;margin-top:14px;
+  }
+  .ladder-cap b{color:var(--ink);font-weight:500;font-style:normal}
+  .ladder-cap .seq{
+    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:11px;
+    letter-spacing:.04em;color:var(--teal);
+  }
+  .ladder-cap .seq .arr{color:var(--ink-faint);padding:0 2px}
 
-  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
-  .plates{
-    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
-  }
-  .plate{
-    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
-    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
-  }
-  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
-  .plate .body b{color:var(--spore);font-weight:500}
-  .plate .body .grey{color:var(--grey)}
-  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
-  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
-  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
-
-  /* ============ CORE MOVES ============ */
-  .moves{margin-top:46px}
-  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
-  .moves-head h2{
-    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
-  }
-  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
-  .move-rail{
-    margin-top:20px;position:relative;
-    display:grid;grid-template-columns:repeat(6,1fr);gap:0;
-  }
-  .move-rail .thread{
-    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
-    background:linear-gradient(90deg,
-      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
-      rgba(63,224,200,.7) 50%, rgba(255,179,71,.65) 94%, rgba(255,179,71,0) 100%);
-  }
-  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
-  .step:first-child{padding-left:0}
-  .step .bead{
-    width:42px;height:42px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
-    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
-    margin-bottom:13px;
-  }
-  .step:nth-child(6) .bead{
-    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
-  }
-  .step:nth-child(7) .bead{
-    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
-  }
-  .step h3{
-    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
-  }
-  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
-  .step p b{color:var(--ink);font-weight:500}
-
-  .compound{
-    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
-    padding:18px 22px;position:relative;overflow:hidden;
+  /* ============ THE FIELD-TEST PANEL (the dyer's eye, kept whole) ============ */
+  .fieldtest{
+    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
+    padding:22px 26px 24px;
     background:
-      radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.07), transparent 60%),
-      rgba(8,17,18,.55);
-    display:flex;align-items:center;gap:20px;
+      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
+      rgba(8,15,17,.5);
   }
-  .compound .loop-ico{flex:none}
-  .compound .ctext{flex:1}
-  .compound .ctext .cyc{
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
+  .fieldtest .lab{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--amber-dim);margin-bottom:12px;
+    display:flex;align-items:center;gap:9px;
   }
-  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
-  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
-  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
+  .fieldtest .lab::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);flex:none;
+    box-shadow:0 0 9px rgba(255,179,71,.55);
+  }
+  .fieldtest h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);
+    letter-spacing:-.01em;line-height:1.1;
+  }
+  .fieldtest h2 em{font-style:italic;color:var(--amber)}
+  .fieldtest p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:14px;max-width:720px}
+  .fieldtest p b{color:var(--spore);font-weight:500}
+  .fieldtest p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
+  .fieldtest p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
 
-  .aside{
-    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
-    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+  /* ============ THE FIRST SWATCH — Monday move woven into the form ============ */
+  .swatch-do{
+    margin-top:30px;border:1px solid rgba(255,179,71,.18);border-radius:14px;
+    padding:24px 28px 26px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 100% 0%, rgba(255,179,71,.07), transparent 58%),
+      rgba(9,15,15,.6);
   }
-  .aside b{color:var(--amber);font-weight:500}
-  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
+  .swatch-do h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:24px;color:var(--spore);
+    letter-spacing:-.008em;line-height:1.12;
+  }
+  .swatch-do h2 em{font-style:italic;color:var(--amber)}
+  .swatch-do .lede{
+    font-size:13px;color:var(--ink-dim);margin-top:6px;letter-spacing:.01em;
+  }
+  .swatch-do ol{margin:18px 0 0;padding:0;list-style:none;counter-reset:s;}
+  .swatch-do li{
+    position:relative;padding:0 0 14px 38px;counter-increment:s;
+    font-size:14.5px;line-height:1.55;color:var(--ink);
+  }
+  .swatch-do li:last-child{padding-bottom:0}
+  .swatch-do li::before{
+    content:counter(s);position:absolute;left:0;top:-1px;
+    width:24px;height:24px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:13px;color:var(--soil-0);font-weight:500;
+    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
+  }
+  .swatch-do li:last-child::before{
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+  }
+  .swatch-do li b{color:var(--spore);font-weight:500}
+  .swatch-do li .grey{color:var(--grey)}
+  .swatch-do li .mono{font-family:'Spline Sans Mono',monospace;font-size:12.5px;color:var(--teal)}
+  .swatch-do .spec{
+    margin-top:18px;padding-top:14px;border-top:1px dashed var(--hairline);
+    font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.05em;color:var(--ink-dim);
+  }
+  .swatch-do .spec b{color:var(--amber);font-weight:500}
 
   /* ============ WHY ============ */
   .why{
-    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
+    margin-top:38px;border:1px solid var(--hairline);border-radius:16px;
     padding:26px 30px 28px;position:relative;overflow:hidden;
     background:
       radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
       radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
       rgba(7,14,15,.6);
   }
-  .why .beat-label{margin-bottom:14px}
-  .why .principle-block{
-    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
-  }
-  .why .principle-label{
-    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
-    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
-  }
-  .why .principle-line{
-    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
-    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
-  }
-  .why .principle-line em{font-style:italic;color:var(--teal)}
   .why .quote{
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
     font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--teal);letter-spacing:.004em;
@@ -287,7 +281,7 @@
   .why .gloss em{font-style:italic;color:var(--ink-dim)}
   .why .gloss + .gloss{margin-top:12px}
   .why .corollary{
-    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
+    margin-top:20px;display:inline-flex;align-items:center;gap:11px;
     font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
     border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
   }
@@ -296,22 +290,8 @@
     box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
   }
 
-  /* ============ TEST-IN-PRACTICE inline panel ============ */
-  .practice{
-    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
-    padding:22px 26px 24px;
-    background:
-      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
-      rgba(8,15,17,.5);
-  }
-  .practice .beat-label{margin-bottom:12px}
-  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
-  .practice p b{color:var(--spore);font-weight:500}
-  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
-  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
-
   /* ============ CONNECTS TO ============ */
-  .connects{margin-top:52px}
+  .connects{margin-top:50px}
   .connects h2{
     font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
   }
@@ -382,24 +362,17 @@
     text-transform:uppercase;color:var(--ink-faint);
   }
 
-  /* breathing glow on the diagram spore-tips */
+  /* breathing glow on diagram spore-tips */
   @keyframes breathe{
     0%,100%{opacity:.55}
     50%{opacity:1}
   }
   .breathe{animation:breathe 4.2s ease-in-out infinite}
 
-  @media (max-width:860px){
-    .plates{grid-template-columns:1fr 1fr}
-    .plate.use{grid-column:1 / -1}
-  }
   @media (max-width:780px){
-    .plates{grid-template-columns:1fr}
-    .plate.use{grid-column:1}
-    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
-    .move-rail .thread{display:none}
-    .step{padding:0}
-    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .ladder{flex-direction:column}
+    .ladder .rung{border-right:none;border-bottom:1px solid var(--hairline)}
+    .ladder .rung:last-child{border-bottom:none}
     .neighbours .nb{font-size:11px;padding:6px 10px}
     .prose p{font-size:14.5px}
   }
@@ -410,52 +383,53 @@
 
   <!-- ============ BREADCRUMB ============ -->
   <nav class="crumb">
-    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Make output yours</span>
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Making output yours</span>
   </nav>
 
   <!-- ============ PATTERN NAME + ESSENCE ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· R1 · the first move on any agent file</span></div>
-    <h1>Make output <em>yours</em></h1>
-    <p class="principle">The principle: <b>Context is King</b> — a cleverer prompt won't save you; structured context will.</p>
+    <h1>Making output <em>yours</em></h1>
+    <p class="principle">The principle: <b>Context is King</b> — a cleverer prompt is a cleaner rinse; it never puts colour in cloth that never met dye.</p>
     <p class="essence">
-      Steer the agent with structured context until the output sounds like
-      <b>a real person or company</b>, not the LLM — by changing what the agent sees,
-      not how cleverly you ask.
+      The model's flat, generic answer isn't a flaw to prompt your way around — it's <b>undyed cloth</b>,
+      sitting in the mean of everything it ever read. Steer it with structured context, then a rules file
+      it reads cold, until the output comes out the shade of <b>a real person or company</b>. Change what
+      you feed it, not how cleverly you ask.
     </p>
   </header>
 
-  <!-- ============ HERO PICTURE: grey output → guardrail → alive output (kept verbatim) ============ -->
+  <!-- ============ HERO PICTURE (kept from prototype look) ============ -->
   <div class="hero-frame">
-    <svg viewBox="0 0 1080 392" role="img" aria-label="The same agent producing generic grey output on the left versus genuinely-yours alive output on the right, with the guardrail drawn as the control between them.">
+    <svg viewBox="0 0 1080 392" role="img" aria-label="The same agent producing generic grey output on the left versus genuinely-yours alive output on the right, with structured context drawn as the dye-bath control between them.">
       <defs>
-        <radialGradient id="hwell" cx="78%" cy="50%" r="62%">
+        <radialGradient id="moy-hwell" cx="78%" cy="50%" r="62%">
           <stop offset="0%" stop-color="#ffd99a" stop-opacity=".22"/>
           <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".07"/>
           <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
         </radialGradient>
-        <linearGradient id="greyGrad" x1="0" y1="0" x2="1" y2="0">
+        <linearGradient id="moy-greyGrad" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0%" stop-color="#39423f" stop-opacity="0"/>
           <stop offset="100%" stop-color="#5d6a68" stop-opacity=".8"/>
         </linearGradient>
-        <linearGradient id="aliveGrad" x1="0" y1="0" x2="1" y2="0">
+        <linearGradient id="moy-aliveGrad" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0%" stop-color="#1d8d80" stop-opacity=".4"/>
           <stop offset="60%" stop-color="#3fe0c8" stop-opacity=".9"/>
           <stop offset="100%" stop-color="#ffce85" stop-opacity=".95"/>
         </linearGradient>
-        <radialGradient id="agentCore" cx="40%" cy="35%" r="70%">
+        <radialGradient id="moy-agentCore" cx="40%" cy="35%" r="70%">
           <stop offset="0%" stop-color="#eafff9"/>
           <stop offset="45%" stop-color="#3fe0c8"/>
           <stop offset="100%" stop-color="#0c2b2a"/>
         </radialGradient>
-        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
+        <filter id="moy-hglow" x="-60%" y="-60%" width="220%" height="220%">
           <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
       </defs>
-      <rect x="0" y="0" width="1080" height="392" fill="url(#hwell)"/>
+      <rect x="0" y="0" width="1080" height="392" fill="url(#moy-hwell)"/>
       <g opacity=".9">
-        <text x="60" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#5d6a68">SAME AGENT · NO CONTEXT</text>
-        <g stroke="url(#greyGrad)" fill="none" stroke-width="2">
+        <text x="60" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#5d6a68">SAME AGENT · UNDYED</text>
+        <g stroke="url(#moy-greyGrad)" fill="none" stroke-width="2">
           <path d="M150,196 C210,200 250,250 320,258"/>
           <path d="M150,196 C210,196 250,180 320,176"/>
           <path d="M150,196 C200,210 240,235 320,300"/>
@@ -467,7 +441,7 @@
         </g>
         <text x="150" y="350" font-family="'Spline Sans',sans-serif" font-size="14" fill="#5d6a68" font-style="italic">generic · flat · not&#8209;quite&#8209;yours</text>
       </g>
-      <circle cx="150" cy="196" r="22" fill="url(#agentCore)" filter="url(#hglow)"/>
+      <circle cx="150" cy="196" r="22" fill="url(#moy-agentCore)" filter="url(#moy-hglow)"/>
       <circle cx="150" cy="196" r="22" fill="none" stroke="#9bffe9" stroke-width="1" opacity=".6"/>
       <text x="150" y="240" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#6f8a85">AGENT</text>
       <g>
@@ -479,14 +453,14 @@
           <line x1="530" y1="234" x2="550" y2="234"/>
           <line x1="530" y1="276" x2="550" y2="276"/>
         </g>
-        <circle cx="540" cy="196" r="3" fill="#9bffe9" filter="url(#hglow)"/>
-        <text x="540" y="56" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3fe0c8">THE GUARDRAIL</text>
+        <circle cx="540" cy="196" r="3" fill="#9bffe9" filter="url(#moy-hglow)"/>
+        <text x="540" y="56" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3fe0c8">THE DYE-BATH</text>
         <text x="540" y="350" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#6f8a85" font-style="italic">structured context</text>
         <text x="540" y="368" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="1.5" fill="#3b524e">= THE CONTROL</text>
       </g>
       <g>
         <text x="600" y="40" text-anchor="start" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#3fe0c8">SAME AGENT · YOUR CONTEXT</text>
-        <g stroke="url(#aliveGrad)" fill="none" stroke-width="2.4" filter="url(#hglow)">
+        <g stroke="url(#moy-aliveGrad)" fill="none" stroke-width="2.4" filter="url(#moy-hglow)">
           <path d="M560,108 C660,96 760,70 1000,60"/>
           <path d="M560,150 C660,150 780,138 1000,128"/>
           <path d="M560,192 C680,196 820,200 1000,206"/>
@@ -499,11 +473,11 @@
           <path d="M760,72 C800,110 800,130 770,140"/>
         </g>
         <g>
-          <circle cx="1000" cy="60" r="5" fill="#9bffe9" filter="url(#hglow)"/>
-          <circle cx="1000" cy="128" r="5.4" fill="#5cffe6" filter="url(#hglow)"/>
-          <circle cx="1000" cy="206" r="6" fill="#aeffee" filter="url(#hglow)"/>
-          <circle cx="1000" cy="276" r="5.4" fill="#ffce85" filter="url(#hglow)"/>
-          <circle cx="1000" cy="332" r="5" fill="#ffb347" filter="url(#hglow)"/>
+          <circle cx="1000" cy="60" r="5" fill="#9bffe9" filter="url(#moy-hglow)"/>
+          <circle cx="1000" cy="128" r="5.4" fill="#5cffe6" filter="url(#moy-hglow)"/>
+          <circle cx="1000" cy="206" r="6" fill="#aeffee" filter="url(#moy-hglow)"/>
+          <circle cx="1000" cy="276" r="5.4" fill="#ffce85" filter="url(#moy-hglow)"/>
+          <circle cx="1000" cy="332" r="5" fill="#ffb347" filter="url(#moy-hglow)"/>
         </g>
         <text x="1015" y="368" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="14" fill="#3fe0c8" font-style="italic">genuinely yours · alive</text>
       </g>
@@ -512,578 +486,263 @@
         <animate attributeName="opacity" values="0;1;1;0" dur="4.2s" repeatCount="indefinite"/>
       </circle>
     </svg>
-    <div class="hero-cap">The agent isn't generic. <b>Your context is</b> — the guardrail is the only thing that changed.</div>
+    <div class="hero-cap">The undyed cloth is the model in the mean. <b>The dye-bath is the only thing you changed.</b></div>
   </div>
 
   <!-- ============================================================ -->
-  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
+  <!-- ============ THE GREY IS A DEFAULT, NOT A FATE ============= -->
+  <!-- ============ (Refusal — name the orthodoxy, mark it failing) -->
   <!-- ============================================================ -->
   <section class="prose">
-    <div class="sec-label">The mechanism · how the sausage is made</div>
-    <h2>Same words, <em>different answer</em>.</h2>
+    <h2>The grey is a <em>default</em>, not a fate.</h2>
 
     <p>
-      The most useful thing to understand about a coding agent is also the most unglamorous:
-      it isn't looking your question up in a database. Every turn, it <b>re-reads the whole conversation</b>
-      and generates the next response from all of it. Your first prompt and its answer are now
-      <em>part of the input</em> to the second prompt. Change the front, change the back. That's it.
-      That's the lever everything else in this operating model — tools, goals, checks, boundaries, loops —
-      sits on top of. None of them work unless the agent reads the right world first.
+      Every consultancy crossing your threshold sells the same fix for grey, not-quite-yours output: a cleverer
+      prompt. A better incantation, a prompt-engineering course, the phrasing that finally makes the model sound
+      like you. It is the wrong drawer entirely. Picture the model as undyed cloth — it comes out of every bath
+      the colour of the mean of everything it ever read, and asking more cleverly doesn't change that. What changes
+      the colour is what you drop in before you ask. That is the one sentence of metaphor you need; the rest is just
+      how an agent actually reads.
     </p>
 
     <p>
-      The cleanest demonstration takes ninety seconds. Open three fresh windows. In each one,
-      ask <em class="teal">"What should we have for dinner?"</em> as the <b>second</b> turn — but vary the first.
-      Window A's first turn is <span class="mono">"What is the capital of Italy?" / "Rome."</span>
-      Window B's first turn is <span class="mono">"What is the largest lake in Finland?" / "Saimaa."</span>
-      Window C's first turn is <span class="mono">"I'm a cardiologist preparing dinner for my patients."</span>
-      Same exact follow-up. Three answers that drift Italian, Finnish, and heart-healthy respectively.
-      Below is the picture — the diagram you can run yourself before lunch.
+      Here is the unglamorous mechanic underneath. A coding agent isn't looking your question up in a database.
+      <b>Every turn, it re-reads the whole context window</b> — the system prompt, any loaded files, the entire
+      conversation so far — and generates the next response from all of it. Your first exchange is now
+      <em>part of the input</em> to the second. So a prompt can't retrieve facts the window never held; it can only
+      re-comb what is already steeped in there. <b>Same words in, whatever the window holds comes back out.</b>
+    </p>
+
+    <p class="pull">
+      A cleverer prompt is a cleaner rinse. <b>It cannot put colour in cloth that never met dye.</b>
     </p>
   </section>
 
-  <!-- ============ DIAGRAM 1 — SAME PROMPT, THREE WINDOWS ============ -->
+  <!-- ============================================================ -->
+  <!-- ============ THE GOVERNING DIAGRAM — the dye-bath demo ===== -->
+  <!-- ============ ninety-second proof, three contexts ========== -->
+  <!-- ============================================================ -->
+  <section class="prose">
+    <p>
+      You can prove it in ninety seconds, no org data required. Open three fresh windows. In each, ask
+      <em class="teal">"What should we have for dinner?"</em> as the <b>second</b> turn — the identical follow-up,
+      the exact same words — but vary the first exchange, the thing the window steeps in before you ask.
+      Window A steeps in <span class="mono">"What is the capital of Italy?" / "Rome."</span>
+      Window B in <span class="mono">"What is the largest lake in Finland?" / "Saimaa."</span>
+      Window C in <span class="mono">"I'm a cardiologist preparing dinner for my patients."</span>
+      The follow-up never moves. The answer comes out Italian, Finnish, heart-healthy. The context decided the shade.
+    </p>
+  </section>
+
   <div class="diagram">
-    <svg viewBox="0 0 1080 480" role="img" aria-label="Three chat windows, same second prompt, three different answers — pasta, salmon, heart-healthy — because the first exchange coloured the context.">
+    <svg viewBox="0 0 1080 480" role="img" aria-label="Three agent runs — the same second prompt, but three different first-turn contexts fed into the context window, producing three differently coloured answers: Italian pasta, Finnish salmon, heart-healthy cod — because the context coloured the window before the follow-up was ever asked.">
       <defs>
-        <linearGradient id="d1-itTeal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".75"/><stop offset="1" stop-color="#1d8d80" stop-opacity=".25"/></linearGradient>
-        <linearGradient id="d1-fiTeal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9bffe9" stop-opacity=".75"/><stop offset="1" stop-color="#1d8d80" stop-opacity=".25"/></linearGradient>
-        <linearGradient id="d1-amber" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb347" stop-opacity=".85"/><stop offset="1" stop-color="#a86a1f" stop-opacity=".25"/></linearGradient>
-        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <linearGradient id="moy-itTeal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".75"/><stop offset="1" stop-color="#1d8d80" stop-opacity=".25"/></linearGradient>
+        <linearGradient id="moy-fiTeal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9bffe9" stop-opacity=".75"/><stop offset="1" stop-color="#1d8d80" stop-opacity=".25"/></linearGradient>
+        <linearGradient id="moy-amber" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb347" stop-opacity=".85"/><stop offset="1" stop-color="#a86a1f" stop-opacity=".25"/></linearGradient>
+        <filter id="moy-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
 
-      <!-- header strip -->
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME SECOND PROMPT · THREE FIRST EXCHANGES · THREE COLOURS OF ANSWER</text>
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME PROMPT TO THE AGENT · THREE CONTEXTS · THREE ANSWERS OUT</text>
 
-      <!-- three identical window frames -->
-      <!-- ====== WINDOW A — Italy ====== -->
+      <!-- ====== WINDOW A — Italian ====== -->
       <g>
         <rect x="40"  y="58" width="320" height="384" rx="14" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.18)" stroke-width="1"/>
-        <text x="60" y="84" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing="2.4" fill="#1d8d80">WINDOW A</text>
-        <circle cx="338" cy="78" r="3" fill="#3fe0c8" filter="url(#d1-glow)"/>
+        <text x="60" y="84" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing="2.4" fill="#1d8d80">CONTEXT WINDOW A</text>
+        <circle cx="338" cy="78" r="3" fill="#3fe0c8" filter="url(#moy-glow)"/>
 
-        <!-- turn 1 (the colouring turn) -->
-        <text x="60" y="116" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">YOU · turn 1</text>
+        <text x="60" y="116" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">CONTEXT IN · turn 1</text>
         <rect x="60" y="124" width="240" height="30" rx="9" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.18)"/>
         <text x="72" y="144" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">What is the capital of Italy?</text>
         <text x="60" y="174" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">CLAUDE</text>
-        <rect x="60" y="182" width="120" height="26" rx="9" fill="rgba(63,224,200,.12)" stroke="url(#d1-itTeal)"/>
+        <rect x="60" y="182" width="120" height="26" rx="9" fill="rgba(63,224,200,.12)" stroke="url(#moy-itTeal)"/>
         <text x="72" y="200" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#eafff9">Rome.</text>
 
-        <!-- the context-tint band -->
-        <rect x="60" y="220" width="280" height="2" fill="url(#d1-itTeal)" opacity=".7"/>
-        <text x="60" y="238" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".22em" fill="#1d8d80">CONTEXT NOW TINTED · ITALIAN</text>
+        <rect x="60" y="220" width="280" height="2" fill="url(#moy-itTeal)" opacity=".7"/>
+        <text x="60" y="238" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".22em" fill="#1d8d80">WINDOW DYED · ITALIAN</text>
 
-        <!-- turn 2 (the same prompt across all three) -->
-        <text x="60" y="268" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">YOU · turn 2</text>
+        <text x="60" y="268" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">SAME ASK · turn 2</text>
         <rect x="60" y="276" width="280" height="30" rx="9" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.22)"/>
         <text x="72" y="296" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">What should we have for dinner?</text>
 
-        <!-- the drifted answer -->
-        <text x="60" y="326" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">CLAUDE</text>
-        <rect x="60" y="334" width="280" height="92" rx="9" fill="rgba(63,224,200,.07)" stroke="url(#d1-itTeal)" stroke-width="1.4"/>
+        <text x="60" y="326" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">ANSWER OUT</text>
+        <rect x="60" y="334" width="280" height="92" rx="9" fill="rgba(63,224,200,.07)" stroke="url(#moy-itTeal)" stroke-width="1.4"/>
         <text x="72" y="354" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#eafff9">Pasta puttanesca,</text>
         <text x="72" y="372" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#eafff9">osso buco, a simple</text>
         <text x="72" y="390" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#eafff9">risotto with sage…</text>
-        <text x="72" y="416" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3fe0c8">→ ITALIAN DRIFT</text>
+        <text x="72" y="416" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3fe0c8">→ DYED ITALIAN</text>
       </g>
 
-      <!-- ====== WINDOW B — Finland ====== -->
+      <!-- ====== WINDOW B — Finnish ====== -->
       <g>
         <rect x="380" y="58" width="320" height="384" rx="14" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.18)" stroke-width="1"/>
-        <text x="400" y="84" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing="2.4" fill="#1d8d80">WINDOW B</text>
-        <circle cx="678" cy="78" r="3" fill="#9bffe9" filter="url(#d1-glow)"/>
+        <text x="400" y="84" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing="2.4" fill="#1d8d80">CONTEXT WINDOW B</text>
+        <circle cx="678" cy="78" r="3" fill="#9bffe9" filter="url(#moy-glow)"/>
 
-        <text x="400" y="116" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">YOU · turn 1</text>
+        <text x="400" y="116" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">CONTEXT IN · turn 1</text>
         <rect x="400" y="124" width="280" height="30" rx="9" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.18)"/>
         <text x="412" y="144" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">What is the largest lake in Finland?</text>
         <text x="400" y="174" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">CLAUDE</text>
-        <rect x="400" y="182" width="120" height="26" rx="9" fill="rgba(63,224,200,.12)" stroke="url(#d1-fiTeal)"/>
+        <rect x="400" y="182" width="120" height="26" rx="9" fill="rgba(63,224,200,.12)" stroke="url(#moy-fiTeal)"/>
         <text x="412" y="200" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#eafff9">Saimaa.</text>
 
-        <rect x="400" y="220" width="280" height="2" fill="url(#d1-fiTeal)" opacity=".7"/>
-        <text x="400" y="238" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".22em" fill="#1d8d80">CONTEXT NOW TINTED · FINNISH</text>
+        <rect x="400" y="220" width="280" height="2" fill="url(#moy-fiTeal)" opacity=".7"/>
+        <text x="400" y="238" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".22em" fill="#1d8d80">WINDOW DYED · FINNISH</text>
 
-        <text x="400" y="268" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">YOU · turn 2</text>
+        <text x="400" y="268" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">SAME ASK · turn 2</text>
         <rect x="400" y="276" width="280" height="30" rx="9" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.22)"/>
         <text x="412" y="296" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">What should we have for dinner?</text>
 
-        <text x="400" y="326" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">CLAUDE</text>
-        <rect x="400" y="334" width="280" height="92" rx="9" fill="rgba(63,224,200,.07)" stroke="url(#d1-fiTeal)" stroke-width="1.4"/>
+        <text x="400" y="326" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">ANSWER OUT</text>
+        <rect x="400" y="334" width="280" height="92" rx="9" fill="rgba(63,224,200,.07)" stroke="url(#moy-fiTeal)" stroke-width="1.4"/>
         <text x="412" y="354" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#eafff9">Pan-fried salmon,</text>
         <text x="412" y="372" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#eafff9">rye bread, lihapullat</text>
         <text x="412" y="390" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#eafff9">with lingonberry…</text>
-        <text x="412" y="416" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#9bffe9">→ FINNISH DRIFT</text>
+        <text x="412" y="416" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#9bffe9">→ DYED FINNISH</text>
       </g>
 
-      <!-- ====== WINDOW C — Cardiologist ====== -->
+      <!-- ====== WINDOW C — Clinical ====== -->
       <g>
         <rect x="720" y="58" width="320" height="384" rx="14" fill="rgba(8,17,18,.6)" stroke="rgba(255,179,71,.22)" stroke-width="1"/>
-        <text x="740" y="84" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing="2.4" fill="#a86a1f">WINDOW C</text>
-        <circle cx="1018" cy="78" r="3" fill="#ffb347" filter="url(#d1-glow)"/>
+        <text x="740" y="84" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing="2.4" fill="#a86a1f">CONTEXT WINDOW C</text>
+        <circle cx="1018" cy="78" r="3" fill="#ffb347" filter="url(#moy-glow)"/>
 
-        <text x="740" y="116" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">YOU · turn 1</text>
+        <text x="740" y="116" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">CONTEXT IN · turn 1</text>
         <rect x="740" y="124" width="280" height="48" rx="9" fill="rgba(255,179,71,.06)" stroke="rgba(255,179,71,.22)"/>
         <text x="752" y="143" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">I'm a cardiologist preparing</text>
         <text x="752" y="161" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">dinner for my patients.</text>
         <text x="740" y="190" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">CLAUDE</text>
-        <rect x="740" y="198" width="200" height="22" rx="8" fill="rgba(255,179,71,.12)" stroke="url(#d1-amber)"/>
+        <rect x="740" y="198" width="200" height="22" rx="8" fill="rgba(255,179,71,.12)" stroke="url(#moy-amber)"/>
         <text x="752" y="214" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#fff4e2">(noted — patients in mind)</text>
 
-        <rect x="740" y="232" width="280" height="2" fill="url(#d1-amber)" opacity=".75"/>
-        <text x="740" y="250" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".22em" fill="#a86a1f">CONTEXT NOW TINTED · CLINICAL</text>
+        <rect x="740" y="232" width="280" height="2" fill="url(#moy-amber)" opacity=".75"/>
+        <text x="740" y="250" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".22em" fill="#a86a1f">WINDOW DYED · CLINICAL</text>
 
-        <text x="740" y="276" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">YOU · turn 2</text>
+        <text x="740" y="276" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">SAME ASK · turn 2</text>
         <rect x="740" y="284" width="280" height="30" rx="9" fill="rgba(255,179,71,.06)" stroke="rgba(255,179,71,.28)"/>
         <text x="752" y="304" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">What should we have for dinner?</text>
 
-        <text x="740" y="334" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">CLAUDE</text>
-        <rect x="740" y="342" width="280" height="88" rx="9" fill="rgba(255,179,71,.07)" stroke="url(#d1-amber)" stroke-width="1.4"/>
+        <text x="740" y="334" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#6f8a85">ANSWER OUT</text>
+        <rect x="740" y="342" width="280" height="88" rx="9" fill="rgba(255,179,71,.07)" stroke="url(#moy-amber)" stroke-width="1.4"/>
         <text x="752" y="362" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#fff4e2">Low-sodium baked cod,</text>
         <text x="752" y="380" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#fff4e2">leafy greens, lentils,</text>
         <text x="752" y="398" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#fff4e2">olive oil, no butter…</text>
-        <text x="752" y="422" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#ffb347">→ HEART-HEALTHY DRIFT</text>
+        <text x="752" y="422" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#ffb347">→ DYED HEART-HEALTHY</text>
       </g>
 
-      <!-- the colour-of-context band underneath, showing the answer was already decided -->
       <g opacity=".85">
-        <text x="40" y="468" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">THE FIRST EXCHANGE ALREADY COLOURED THE SECOND.&nbsp; THE WORDS DIDN'T CHANGE — THE INPUT DID.</text>
+        <text x="40" y="468" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">THE CONTEXT WENT INTO THE WINDOW BEFORE THE ASK.&#160; THE PROMPT DIDN'T CHANGE — THE CONTEXT DID.</text>
       </g>
     </svg>
-    <div class="dcap"><span class="num">Process diagram · 01</span>Same words. Different answer. The first exchange became context, and <b>the context coloured everything after</b>.</div>
+    <div class="dcap"><span class="num">The dye-bath demo</span>Same prompt to the agent, three contexts, three answers. Whatever the window steeped in is the dye — <b>the answer comes out the colour of what you fed it</b>.</div>
   </div>
 
-  <!-- ============ PROSE BLOCK 2 — context isn't only countries ============ -->
+  <!-- ============================================================ -->
+  <!-- ============ THE MORDANT GOES IN BEFORE ==================== -->
+  <!-- ============ ephemeral chat vs CLAUDE.md read cold ======== -->
+  <!-- ============================================================ -->
   <section class="prose">
     <p>
-      The context that colours output isn't only nationality. It can be a fact, a role, a preference, a constraint —
-      anything you tell the agent. Window C's answer shifts not because Claude suddenly knows medicine better
-      than it knows Italian cooking, but because <b>you told it who you are</b> and every answer after took that into account.
-      The mechanism is dumb and total: whatever you put in front, you'll find pulled through to the back. Garbage in,
-      garbage back. Specifics in, specifics back. The shape of what you give it is the shape of what you get.
+      What dyes the window isn't only nationality — it can be a fact, a role, a preference, a constraint, anything you
+      steep it in. Window C shifts not because the model suddenly knows medicine better than Italian cooking, but because
+      <b>you told it who you are</b> before you asked. That works, and it also bleeds out the moment you close the tab:
+      the typed-in turn lives only inside that one window's context. Powerful this session, gone by Monday — a dye dropped
+      in plain water.
     </p>
 
-    <p class="pull">
-      A cleverer prompt won't manufacture facts you never gave it. <b>Only structured context can.</b>
-    </p>
-
-    <div class="sec-label">The shelf-life upgrade · from chat to file</div>
-    <h2>From the <em>fading message</em> to the file the agent reads cold.</h2>
+    <h2>The mordant goes in <em>before</em> the dye.</h2>
 
     <p>
-      What we just did was an ephemeral message — typed into a chat, gone when the window closes.
-      Powerful per session, useless next Monday. The move that survives the weekend is the same mechanism
-      with a different shelf life: <b>turn that context into a file the agent reads at the start of every conversation.</b>
-      <span class="mono">CLAUDE.md</span> in a Claude Code project. A rules file the agent loads cold. Same physics — the agent
-      reads it as part of the input — but now the steering is durable, version-controlled, and starts the next
-      session sharper than the last one ended. Below: chat-bubble fading on the left; rule file glowing on the right.
+      A dyer fixes colour with a <b>mordant</b> — a fixative added <em>before</em> the dye so the colour both takes and
+      lasts, never a better rinse after. The agent's mordant is a file it loads cold at the start of every conversation:
+      <span class="mono">CLAUDE.md</span> in a Claude Code project, alongside the memory and source files an agent reads
+      before it does anything. Same physics as the chat turn — it lands in the context window — but now the steering is
+      durable, version-controlled, and the next session starts the shade the last one ended. You stop re-typing who you
+      are. The fixative sits in the project, going in first, every run.
     </p>
   </section>
 
-  <!-- ============ DIAGRAM 2 — SHELF-LIFE UPGRADE ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 380" role="img" aria-label="Ephemeral chat message on the left fades; a persistent CLAUDE.md file on the right is read cold by every new session.">
-      <defs>
-        <linearGradient id="d2-fade" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stop-color="#9bffe9" stop-opacity=".7"/>
-          <stop offset="1" stop-color="#9bffe9" stop-opacity="0"/>
-        </linearGradient>
-        <linearGradient id="d2-file" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#3fe0c8" stop-opacity=".4"/>
-          <stop offset="1" stop-color="#ffb347" stop-opacity=".3"/>
-        </linearGradient>
-        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME MECHANISM · DIFFERENT SHELF LIFE</text>
-
-      <!-- LEFT: ephemeral chat bubble fading -->
-      <g>
-        <text x="80" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#5d6a68">EPHEMERAL · ONE SESSION</text>
-
-        <!-- a stack of three chat bubbles, each fainter than the last -->
-        <g>
-          <rect x="80" y="100" width="290" height="42" rx="14" fill="rgba(63,224,200,.10)" stroke="rgba(155,255,233,.45)"/>
-          <text x="96" y="126" font-family="'Spline Sans',sans-serif" font-size="13" fill="#eafff9">"I'm a cardiologist…"</text>
-        </g>
-        <g opacity=".55">
-          <rect x="100" y="160" width="270" height="42" rx="14" fill="rgba(63,224,200,.07)" stroke="rgba(155,255,233,.28)"/>
-          <text x="116" y="186" font-family="'Spline Sans',sans-serif" font-size="13" fill="#cfe6e0">colouring this session…</text>
-        </g>
-        <g opacity=".25">
-          <rect x="130" y="220" width="240" height="42" rx="14" fill="rgba(63,224,200,.04)" stroke="rgba(155,255,233,.16)"/>
-          <text x="146" y="246" font-family="'Spline Sans',sans-serif" font-size="13" fill="#6f8a85" font-style="italic">…gone tomorrow.</text>
-        </g>
-
-        <!-- fading horizon line -->
-        <line x1="80" y1="284" x2="430" y2="284" stroke="url(#d2-fade)" stroke-width="1.4"/>
-        <text x="80" y="306" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#5d6a68">close the window → context is lost</text>
-
-        <!-- "you" speaker icon -->
-        <circle cx="60" cy="121" r="11" fill="rgba(63,224,200,.18)" stroke="#3fe0c8" stroke-width=".8"/>
-        <text x="60" y="125" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">U</text>
-      </g>
-
-      <!-- arrow / transformation -->
-      <g transform="translate(470,180)">
-        <path d="M0,0 L70,0" stroke="#3fe0c8" stroke-width="1.4" fill="none" opacity=".7"/>
-        <polygon points="70,0 60,-6 60,6" fill="#3fe0c8" opacity=".8"/>
-        <text x="36" y="-12" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".24em" fill="#3fe0c8">UPGRADE</text>
-        <text x="36" y="22" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#6f8a85">same physics</text>
-      </g>
-
-      <!-- RIGHT: persistent rule file -->
-      <g>
-        <text x="580" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#3fe0c8">PERSISTENT · EVERY SESSION</text>
-
-        <!-- the file -->
-        <g filter="url(#d2-glow)">
-          <rect x="580" y="98" width="380" height="232" rx="12" fill="rgba(8,17,18,.78)" stroke="url(#d2-file)" stroke-width="1.6"/>
-        </g>
-        <!-- file header tab -->
-        <rect x="580" y="98" width="160" height="26" rx="6" fill="rgba(63,224,200,.14)"/>
-        <text x="596" y="116" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing=".06em" fill="#3fe0c8">CLAUDE.md</text>
-
-        <!-- file rows (the structured context) -->
-        <g font-family="'Spline Sans Mono',monospace" font-size="11" fill="#cfe6e0">
-          <text x="596" y="148"># who I am</text>
-          <text x="596" y="170" fill="#9bffe9">cardiologist · patient-facing menus</text>
-          <text x="596" y="196"># what counts as good</text>
-          <text x="596" y="218" fill="#9bffe9">low sodium · vegetable-forward</text>
-          <text x="596" y="244"># voice</text>
-          <text x="596" y="266" fill="#9bffe9">plain, no clinical jargon</text>
-          <text x="596" y="292"># banned</text>
-          <text x="596" y="314" fill="#ffb347">butter, deep-fry, "delicious"</text>
-        </g>
-
-        <!-- glowing edge — file is alive -->
-        <rect x="580" y="98" width="380" height="232" rx="12" fill="none" stroke="#3fe0c8" stroke-width=".6" opacity=".4"/>
-
-        <!-- session arrows hitting the file -->
-        <g stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".75">
-          <path d="M540,140 C560,140 570,140 580,140"/>
-          <path d="M540,214 C560,214 570,214 580,214"/>
-          <path d="M540,288 C560,288 570,288 580,288"/>
-        </g>
-        <g font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#6f8a85" text-anchor="end">
-          <text x="535" y="143">SESSION MON →</text>
-          <text x="535" y="217">SESSION TUE →</text>
-          <text x="535" y="291">SESSION WED →</text>
-        </g>
-
-        <!-- breathing spore at top of file -->
-        <circle cx="950" cy="110" r="4" fill="#aeffee" class="breathe"/>
-      </g>
-
-      <!-- substrate line -->
-      <text x="540" y="360" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EVERY NEW SESSION READS IT COLD. THE STEERING SURVIVES THE WEEKEND.</text>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 02</span>Guardrails are <b>structured context, not a checklist</b>. A file the agent reads cold makes the next session start sharper than the last one ended.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 3 — the keep + compounding intro ============ -->
-  <section class="prose">
-    <p>
-      The compounding step is where most teams under-invest, and where the gap with serious operators widens fastest.
-      The first version of any rule file is never exactly right. Two paragraphs are too thin; ten paragraphs are
-      noise the agent skims past. <b>You only find out which two were the load-bearing ones by using the file again,
-      noticing what the agent still got wrong, and editing.</b> Same move you used here on a one-pager, you'll use
-      on every agent file from now on — module 1 lands the muscle; later modules systematise it.
-    </p>
-
-    <div class="sec-label">The compounding loop · what changes between passes</div>
-    <h2>The rule file gets <em>sharper</em> every time you put it to work.</h2>
-
-    <p>
-      The picture below shows the four-beat loop with the file itself getting visibly denser between passes.
-      Notice the order: you <em>do the work</em> first — you don't sit and write rules in the abstract.
-      Reflection without a real run produces opinions, not guardrails. Then you capture what mattered.
-      Then you reflect. Then you sharpen the file. Then you do the next piece of work, which is the first
-      run against the sharper file, which is also the first place you discover what's still missing. Compound interest
-      on a rule file. Boring on day one; dominant by day thirty.
-    </p>
-  </section>
-
-  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP (file gets richer) ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 420" role="img" aria-label="Four-beat compounding loop — do the work, capture the rules, reflect, sharpen — with the rule file visibly densifying across passes one, two and three.">
-      <defs>
-        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/>
-          <stop offset="1" stop-color="#ffb347" stop-opacity=".6"/>
-        </linearGradient>
-        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%">
-          <stop offset="0" stop-color="#9bffe9"/>
-          <stop offset=".55" stop-color="#3fe0c8"/>
-          <stop offset="1" stop-color="#1d8d80"/>
-        </radialGradient>
-        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">COMPOUND INTEREST ON A RULE FILE · WHAT CHANGES BETWEEN PASSES</text>
-
-      <!-- ===== LEFT HALF: the loop ===== -->
-      <g transform="translate(40,60)">
-        <!-- the ring -->
-        <circle cx="200" cy="170" r="130" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="540 60" stroke-linecap="round" transform="rotate(-90 200 170)"/>
-        <!-- breathing pulse on the ring -->
-        <circle r="3.6" fill="#aeffee">
-          <animateMotion dur="9s" repeatCount="indefinite" path="M200,40 a130,130 0 1,1 -0.1,0"/>
-          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
-        </circle>
-
-        <!-- four beads -->
-        <g>
-          <circle cx="200" cy="40" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="200" y="45" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">1</text>
-          <text x="200" y="20" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Do the work</text>
-        </g>
-        <g>
-          <circle cx="330" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="330" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">2</text>
-          <text x="362" y="173" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Capture the rules</text>
-        </g>
-        <g>
-          <circle cx="200" cy="300" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="200" y="305" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">3</text>
-          <text x="200" y="338" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Reflect</text>
-        </g>
-        <g>
-          <circle cx="70" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="70" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">4</text>
-          <text x="38" y="173" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Sharpen the rules</text>
-        </g>
-
-        <!-- centre label -->
-        <text x="200" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EVERY PASS</text>
-        <text x="200" y="184" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">starts smarter</text>
-      </g>
-
-      <!-- ===== RIGHT HALF: the file densifying across passes ===== -->
-      <g transform="translate(540,68)">
-
-        <!-- pass 1 — thin -->
-        <g>
-          <rect x="0" y="14" width="160" height="200" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.22)"/>
-          <rect x="0" y="14" width="160" height="20" rx="6" fill="rgba(63,224,200,.10)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">CLAUDE.md</text>
-          <text x="120" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v1</text>
-          <!-- thin content -->
-          <g stroke="#6f8a85" stroke-width="2" opacity=".55">
-            <line x1="12" y1="58" x2="98" y2="58"/>
-            <line x1="12" y1="78" x2="140" y2="78"/>
-            <line x1="12" y1="98" x2="78" y2="98"/>
-          </g>
-          <text x="80" y="240" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#5d6a68">PASS 1 · THIN</text>
-        </g>
-
-        <!-- arrow -->
-        <g transform="translate(170,114)">
-          <path d="M0,0 L26,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="26,0 18,-5 18,5" fill="#3fe0c8" opacity=".75"/>
-        </g>
-
-        <!-- pass 2 — denser -->
-        <g transform="translate(200,0)">
-          <rect x="0" y="14" width="160" height="220" rx="8" fill="rgba(8,17,18,.78)" stroke="rgba(63,224,200,.35)"/>
-          <rect x="0" y="14" width="160" height="20" rx="6" fill="rgba(63,224,200,.14)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">CLAUDE.md</text>
-          <text x="120" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v2</text>
-          <g stroke="#9bffe9" stroke-width="2" opacity=".75">
-            <line x1="12" y1="58" x2="120" y2="58"/>
-            <line x1="12" y1="78" x2="140" y2="78"/>
-            <line x1="12" y1="98" x2="98" y2="98"/>
-            <line x1="12" y1="118" x2="132" y2="118"/>
-            <line x1="12" y1="138" x2="108" y2="138"/>
-          </g>
-          <!-- newly added in green -->
-          <g stroke="#ffb347" stroke-width="2" opacity=".75">
-            <line x1="12" y1="158" x2="126" y2="158"/>
-            <line x1="12" y1="178" x2="92" y2="178"/>
-          </g>
-          <text x="80" y="252" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#9bffe9">PASS 2 · DENSER</text>
-        </g>
-
-        <!-- arrow -->
-        <g transform="translate(370,124)">
-          <path d="M0,0 L26,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="26,0 18,-5 18,5" fill="#3fe0c8" opacity=".75"/>
-        </g>
-
-        <!-- pass 3 — sharp (amber on the load-bearing lines) -->
-        <g transform="translate(400,0)">
-          <rect x="0" y="0" width="160" height="260" rx="8" fill="rgba(8,17,18,.85)" stroke="url(#d3-ring)" stroke-width="1.5" filter="url(#d3-glow)"/>
-          <rect x="0" y="0" width="160" height="20" rx="6" fill="rgba(255,179,71,.16)"/>
-          <text x="10" y="15" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">CLAUDE.md</text>
-          <text x="120" y="15" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v3</text>
-          <!-- load-bearing rules (amber, bright) -->
-          <g stroke="#ffb347" stroke-width="2.2">
-            <line x1="12" y1="40" x2="138" y2="40"/>
-            <line x1="12" y1="60" x2="120" y2="60"/>
-          </g>
-          <g stroke="#9bffe9" stroke-width="2" opacity=".8">
-            <line x1="12" y1="84" x2="146" y2="84"/>
-            <line x1="12" y1="104" x2="120" y2="104"/>
-            <line x1="12" y1="124" x2="138" y2="124"/>
-            <line x1="12" y1="144" x2="110" y2="144"/>
-            <line x1="12" y1="164" x2="128" y2="164"/>
-            <line x1="12" y1="184" x2="138" y2="184"/>
-            <line x1="12" y1="204" x2="104" y2="204"/>
-            <line x1="12" y1="224" x2="126" y2="224"/>
-          </g>
-          <text x="80" y="280" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#ffb347">PASS 3 · LOAD-BEARING</text>
-        </g>
-
-        <!-- legend -->
-        <g transform="translate(0,300)">
-          <rect x="0" y="0" width="14" height="3" fill="#ffb347"/>
-          <text x="22" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">RULES THAT EARNED THEIR KEEP</text>
-          <rect x="0" y="14" width="14" height="3" fill="#9bffe9"/>
-          <text x="22" y="18" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">SCAFFOLDING · STILL USEFUL</text>
-        </g>
-      </g>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 03</span><em>Compound interest on a rule file.</em> The first pass is never exactly right; <b>the rule file gets sharper every time you put it to work</b>.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 4 — what Test actually means ============ -->
-  <section class="prose">
-    <div class="sec-label amber">What "Test" actually means · in practice</div>
-    <h2 class="amber">The test that matters is <em>"yes, that's it."</em></h2>
-
-    <p>
-      The test that matters is <em class="teal">"yes, that's it"</em> from someone who knows the subject cold — not
-      <em class="no">"that's polished"</em> from a stranger, and not "looks good" from Claude itself. Polish-praise
-      rounds corners. Asked to comment on a stranger's bio you'd reach for <em>"reads well, nice tone."</em>
-      Asked about your own bio, the wrong adjectives jump off the page like a typo. <b>Domain expertise is the eval.</b>
-      When you read the output, push back on anything that doesn't match your own gut; <b>that's the pattern.</b>
-      Every time you do the work and reflect, the rule file gets sharper, and the next pass needs less pushing-back
-      to land. This is also why module 1 of Agents 101 puts you on a one-pager about yourself — you cannot fool
-      yourself on your own material, which is exactly the calibration you need to spot fabrication everywhere else later.
-    </p>
-  </section>
-
-  <!-- ============ USE WHEN · BUILD · TEST (recipe spine — kept) ============ -->
-  <div class="plates">
-    <div class="plate use">
-      <div class="beat-label amber"><b>Use when</b></div>
-      <p class="body">
-        The agent keeps producing <span class="grey">generic prose, pages, pitches, profiles or memos</span>
-        that need to sound like <b>a real person or company</b> — and you catch yourself blaming the model,
-        or hunting for a cleverer prompt.
-      </p>
+  <!-- ============ FASTNESS LADDER — the lightweight inline motif (share-magnet) ============ -->
+  <div class="ladder">
+    <div class="rung r0">
+      <div class="swatch"></div>
+      <div class="tag">Rinse only · no file</div>
+      <div class="what"><b>Clever prompt, fresh window.</b> Bleeds back to grey by Monday.</div>
     </div>
-    <div class="plate build">
-      <div class="beat-label"><b>Build</b></div>
-      <p class="body">
-        A first artifact — <b>plus the guardrails</b> that make the next one sharper.
-        A reusable rule file you keep.
-      </p>
+    <div class="rung r1">
+      <div class="swatch"></div>
+      <div class="tag">Pass 1 · thin</div>
+      <div class="what">First <b>CLAUDE.md</b>. Two rules — too thin to hold much yet.</div>
     </div>
-    <div class="plate test">
-      <div class="beat-label"><b>Test</b></div>
-      <p class="body">
-        Someone who knows the subject says <em>"yes, that's it."</em><br>
-        Not merely <em class="no">"that's polished."</em>
-      </p>
+    <div class="rung r2">
+      <div class="swatch"></div>
+      <div class="tag">Pass 2 · denser</div>
+      <div class="what">Ran it, caught what it still got wrong, <b>sharpened</b> the file.</div>
+    </div>
+    <div class="rung r3">
+      <div class="swatch"></div>
+      <div class="tag">Pass 3 · colour-fast</div>
+      <div class="what">The two rules that <b>earned their keep</b> survive every wash.</div>
     </div>
   </div>
+  <p class="ladder-cap">
+    The first dyeing is never the right shade — two rules are too thin to hold, ten are noise the agent skims past.
+    You only learn which took by running the cloth through the wash again: <span class="seq">do the work<span class="arr">→</span>capture<span class="arr">→</span>reflect<span class="arr">→</span>sharpen</span>, in that order.
+    Reflecting before a real run produces opinions, not guardrails. <b>Fastness, not brilliance, is what compounds</b> — boring on day one, dominant by day thirty.
+  </p>
 
-  <!-- ============ CORE MOVES — actionable heart (kept) ============ -->
-  <section class="moves">
-    <div class="beat-label"><b>Core moves</b></div>
-    <div class="moves-head">
-      <h2>The action, in sequence</h2>
-      <span class="lede">Reusable on any work — not a branding exercise.</span>
-    </div>
-
-    <div class="move-rail">
-      <div class="thread"></div>
-      <div class="step">
-        <div class="bead">1</div>
-        <h3>Generate the thin baseline</h3>
-        <p>Run it cold first. <b>See the grey</b> — that's your before.</p>
-      </div>
-      <div class="step">
-        <div class="bead">2</div>
-        <h3>Name the real audience</h3>
-        <p>Who is this <b>actually for</b>? Tell the agent, specifically.</p>
-      </div>
-      <div class="step">
-        <div class="bead">3</div>
-        <h3>Add the facts only you know</h3>
-        <p>The details no model could guess. <b>This is the steering.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">4</div>
-        <h3>Compare versions</h3>
-        <p>Before vs after, side by side. <b>The gap is the lesson.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">5</div>
-        <h3>Catch the fabrication</h3>
-        <p>Where you're the expert, <b>spot what it made up.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">6</div>
-        <h3>Save the useful rules</h3>
-        <p>Write the guardrails down. <b>Next run starts smarter.</b></p>
-      </div>
-    </div>
-
-    <div class="compound">
-      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
-        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
-        </linearGradient></defs>
-        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
-          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
-        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
-        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
-        <circle r="3" fill="#aeffee">
-          <animateMotion dur="5s" repeatCount="indefinite"
-            path="M37,11 a26,26 0 1,1 -0.1,0"/>
-        </circle>
-      </svg>
-      <div class="ctext">
-        <div class="cyc">do the work<span class="arr">→</span>capture the rules<span class="arr">→</span>reflect<span class="arr">→</span>sharpen<span class="arr">→</span>repeat</div>
-        <p>Then it's a habit, not a task: <b>compound interest on a rule file.</b> Each pass leaves the next one starting smarter — the move you reuse on every agent file, forever.</p>
-      </div>
-    </div>
-
-    <!-- the Monday-move / no-permission aside -->
-    <p class="aside">
-      <b>Fastest way to feel it: something you know cold.</b> A one-pager about yourself.
-      <span class="mono">Vanilla Claude Code · your own LinkedIn · no org data · no platform · no budget · ~45 min.</span>
-      You'll catch every flattened line instantly — this is literally the first hour of Agents 101.
+  <!-- ============================================================ -->
+  <!-- ============ THE DYER'S EYE — the test, kept whole ======== -->
+  <!-- ============ (the fabrication only you can catch) ========= -->
+  <!-- ============================================================ -->
+  <section class="fieldtest">
+    <div class="lab">The dyer's eye</div>
+    <h2>The test that matters is <em>"yes, that's it."</em></h2>
+    <p>
+      It comes from someone who knows the true shade cold — not <em class="no">"that's polished"</em> from a stranger,
+      and not "looks good" from the model that mixed it. Polish-praise rounds the corners: asked about a swatch you've
+      never made, you reach for <em>"reads well, nice tone."</em> Asked about your <b>own</b> swatch, the wrong shade jumps
+      off the cloth like a typo. <b>Domain expertise is the eval.</b> When you read the output, push back on every line
+      that doesn't match your gut — that's the pattern, and each wash needs less pushing-back to land. This is why module 1
+      of Agents 101 puts you on a one-pager about yourself: <b>you are the one dyer you cannot fool on your own swatch</b> —
+      exactly the calibration you'll need to catch a faked colour everywhere else, where you can't see it coming.
     </p>
   </section>
 
-  <!-- ============ WHY — the conviction (kept, with the prose-Why woven in) ============ -->
+  <!-- ============================================================ -->
+  <!-- ============ THE FIRST SWATCH — Monday move woven in ====== -->
+  <!-- ============================================================ -->
+  <section class="swatch-do">
+    <h2>Dye your <em>first</em> swatch tonight.</h2>
+    <div class="lede">Start on the one shade you can't be fooled on — something you know cold.</div>
+    <ol>
+      <li>Ask vanilla Claude Code to write a one-pager about <b>you</b>, sourced from your own LinkedIn. Read the grey baseline. <span class="grey">That's the undyed cloth.</span></li>
+      <li>Drop in the mordant: <b>who it's actually for</b>, the two or three facts no model could guess, your real voice. Re-run.</li>
+      <li>Where you're the expert, mark every flattened line — and every <b>fabricated</b> one — the way a wrong shade jumps off a swatch.</li>
+      <li>Write the rules that fixed it into a <span class="mono">CLAUDE.md</span> the next session reads cold. Run it again; watch the colour hold.</li>
+    </ol>
+    <div class="spec"><b>~45 min · vanilla Claude Code · your own LinkedIn · no org data.</b> The first hour of Agents 101 — and the move you'll reuse on every agent file after.</div>
+  </section>
+
+  <!-- ============ WHY — the conviction (kept, recoloured) ============ -->
   <section class="why">
-    <div class="beat-label"><b>Why</b></div>
-
-    <div class="principle-block">
-      <div class="principle-label">The principle</div>
-      <p class="principle-line">Context is <em>King</em>. The agent isn't the lever — what it sees is.</p>
-    </div>
-
-    <p class="quote">"You are the one evaluator you cannot fool on your own content."</p>
+    <p class="quote">"You are the one dyer you cannot fool on your own swatch."</p>
     <p class="gloss">
-      The agent isn't generic — your context is. Average output becomes great not because you prompted harder,
-      but because <b>the guardrail is the control.</b> A cleverer prompt cannot manufacture facts you never gave it;
-      only structured context can. That's why the move is structural, not stylistic.
+      Flat output becomes genuinely yours not because you rinsed harder, but because <b>the mordant is the control.</b>
+      A cleverer prompt can't put colour in cloth that never met dye; only structured context — fed into the window
+      before you ask, then fixed in a file the agent reads cold — can. The move is structural, not stylistic. And
+      <b>spotting a faked colour on something you know cold</b> is the foundation everything later in the operating model
+      rests on: verification, evals, judges, autonomy. Skip this and the rest is theatre.
     </p>
     <p class="gloss">
-      This works because you are the one evaluator you cannot fool on your own material. Asked to comment on a
-      stranger's bio, you'd reach for <em>"looks polished."</em> Asked about your own, the wrong adjectives jump off
-      the page. <b>Spotting fabrication on something you know cold</b> is the foundation skill everything later in the
-      operating model — verification, evals, judges, autonomy — is built on. Skip this and the rest is theatre.
+      The same physics holds at company scope. The agents your whole team runs come out the colour of the shared files
+      behind them — the house-style file, the memory, the sources you commit once are the mordant the next hundred runs
+      steep in. <em>You're putting the dye in the bath for everyone downstream.</em>
     </p>
-    <div class="corollary"><span class="sd"></span>The agent isn't generic. Your context is.</div>
+    <div class="corollary"><span class="sd"></span>The model isn't grey. Your context is the dye.</div>
   </section>
 
-  <!-- ============ CONNECTS TO — neighbour patterns (kept, wired to index with .soon) ============ -->
+  <!-- ============ CONNECTS TO — neighbour patterns (real hrefs) ============ -->
   <section class="connects">
     <h2>Connects to</h2>
     <div class="sub">Threads leaving this node · the pattern language</div>
@@ -1091,29 +750,29 @@
     <div class="web">
       <svg viewBox="0 0 1080 300" aria-hidden="true">
         <defs>
-          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#6f8a85" stop-opacity=".5"/></linearGradient>
-          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="moy-t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="moy-t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="moy-t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="moy-t4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#6f8a85" stop-opacity=".5"/></linearGradient>
+          <filter id="moy-wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         </defs>
 
         <circle cx="150" cy="150" r="30" fill="none" stroke="#3fe0c8" stroke-width="1.2" opacity=".5"/>
-        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#wglow)"/>
+        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#moy-wglow)"/>
         <circle cx="150" cy="150" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
 
-        <path id="th1" d="M150,150 C360,70 540,52 760,56" stroke="url(#t1)" stroke-width="2.2" fill="none"/>
-        <path id="th2" d="M150,150 C380,118 560,116 760,118" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
-        <path id="th3" d="M150,150 C380,186 560,188 760,188" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
-        <path id="th4" d="M150,150 C360,232 540,250 760,250" stroke="url(#t4)" stroke-width="1.6" stroke-dasharray="4 6" fill="none"/>
+        <path id="moy-th1" d="M150,150 C360,70 540,52 760,56" stroke="url(#moy-t1)" stroke-width="2.2" fill="none"/>
+        <path id="moy-th2" d="M150,150 C380,118 560,116 760,118" stroke="url(#moy-t2)" stroke-width="2.2" fill="none"/>
+        <path id="moy-th3" d="M150,150 C380,186 560,188 760,188" stroke="url(#moy-t3)" stroke-width="2.2" fill="none"/>
+        <path id="moy-th4" d="M150,150 C360,232 540,250 760,250" stroke="url(#moy-t4)" stroke-width="1.6" stroke-dasharray="4 6" fill="none"/>
 
-        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#moy-th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#moy-th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#moy-th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
       </svg>
 
       <div class="neighbours">
-        <div class="origin-chip" style="left:13.8%;top:50%">Make output yours<small>recipe R1 · you are here</small></div>
+        <div class="origin-chip" style="left:13.8%;top:50%">Making output yours<small>recipe R1 · you are here</small></div>
         <a class="nb"        href="compounding-system.html" style="left:74%;top:18.7%"><span class="sd"></span>Build a compounding system <span class="recipe-no">R2</span></a>
         <a class="nb"        href="benchmark-the-judge.html" style="left:74%;top:39.3%"><span class="sd"></span>Earn a judge by benchmarking <span class="recipe-no">R5</span></a>
         <a class="nb amber"  href="fixed-judge-loop.html" style="left:74%;top:62.7%"><span class="sd"></span>Tighten under a fixed judge <span class="recipe-no">R6</span></a>
@@ -1122,9 +781,9 @@
     </div>
   </section>
 
-  <!-- ============ FOOTER (launchpad close folded in) ============ -->
+  <!-- ============ FOOTER ============ -->
   <footer class="floor">
-    <span class="door">A door, not a destination — the rule file is yours. No platform, no vendor, no permission required.</span>
+    <span class="door">The grey is the model writing toward the average. A rule file is your thumb on the dye.</span>
     <span class="meta">The Big Picture · Pattern Language</span>
   </footer>
 

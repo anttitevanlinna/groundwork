@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Map the access surface first — Pattern · The Big Picture</title>
+<title>The access surface — Pattern · The Big Picture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -35,7 +35,6 @@
     position:relative;
     overflow-x:hidden;
   }
-  /* atmospheric soil + light-well — recedes for the long read */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
@@ -43,7 +42,6 @@
       radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
       linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
   }
-  /* grain / spore dust */
   body::after{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
@@ -60,7 +58,7 @@
   .crumb a:hover{color:var(--teal)}
   .crumb .here{color:var(--ink)}
 
-  /* ============ PATTERN HEADER (name + essence) ============ */
+  /* ============ PATTERN HEADER ============ */
   header.pat{padding:30px 0 8px;max-width:900px;}
   .kicker{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
@@ -103,7 +101,7 @@
   }
   .hero-cap b{color:var(--teal)}
 
-  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
+  /* ============ READING-PROSE ============ */
   .prose{
     margin-top:34px;max-width:760px;
   }
@@ -113,16 +111,6 @@
   }
   .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
   .prose h2.amber em{color:var(--amber)}
-  .prose .sec-label{
-    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
-    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
-    margin-top:42px;
-  }
-  .prose .sec-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
-    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
-  }
-  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
   .prose p{
     font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
     letter-spacing:.002em;
@@ -136,15 +124,31 @@
   }
   .prose p .mono.amber{color:var(--amber)}
   .prose .pull{
-    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
-    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+    margin:30px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:20px;line-height:1.4;
     color:var(--ink);max-width:680px;
   }
   .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
 
-  /* ============ PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
+  /* the refusal mark — the orthodoxy struck out, inline */
+  .refuse{
+    margin-top:26px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+    font-size:15.5px;line-height:1.5;
+  }
+  .refuse .tag{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--amber-dim);flex:none;padding-top:2px;
+  }
+  .refuse .struck{
+    color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);
+    font-style:italic;font-family:'Fraunces',serif;font-size:17px;
+  }
+  .refuse .instead{color:var(--ink);}
+  .refuse .instead b{color:var(--spore);font-weight:500}
+
+  /* ============ THE ONE GOVERNING DIAGRAM (T1 spine) ============ */
   .diagram{
-    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+    margin:34px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
     background:
       radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
       linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
@@ -164,152 +168,30 @@
     letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
   }
 
-  /* ============ RECIPE SECTION BEATS ============ */
-  .beat-label{
-    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
-    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  /* the woven Monday line — quiet, not a boxed aside */
+  .monday{
+    margin-top:30px;max-width:760px;font-size:15px;line-height:1.6;color:var(--ink);
+    padding:2px 0 2px 16px;border-left:2px solid var(--teal-dim);
   }
-  .beat-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
-    box-shadow:0 0 9px rgba(63,224,200,.6);
-  }
-  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
-  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+  .monday b{color:var(--spore);font-weight:500}
+  .monday em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
+  .monday .mono{font-family:'Spline Sans Mono',monospace;font-size:13px;color:var(--ink-dim)}
 
-  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
-  .plates{
-    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
-  }
-  .plate{
-    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
-    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
-  }
-  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
-  .plate .body b{color:var(--spore);font-weight:500}
-  .plate .body .grey{color:var(--grey)}
-  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
-  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
-  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
-
-  /* ============ CORE MOVES ============ */
-  .moves{margin-top:46px}
-  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
-  .moves-head h2{
-    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
-  }
-  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
-  .move-rail{
-    margin-top:20px;position:relative;
-    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
-  }
-  .move-rail .thread{
-    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
-    background:linear-gradient(90deg,
-      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
-      rgba(63,224,200,.7) 50%, rgba(255,179,71,.65) 94%, rgba(255,179,71,0) 100%);
-  }
-  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
-  .step:first-child{padding-left:0}
-  .step .bead{
-    width:42px;height:42px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
-    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
-    margin-bottom:13px;
-  }
-  .step:nth-child(5) .bead{
-    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
-  }
-  .step:nth-child(6) .bead{
-    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
-  }
-  .step h3{
-    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
-  }
-  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
-  .step p b{color:var(--ink);font-weight:500}
-
-  .compound{
-    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
-    padding:18px 22px;position:relative;overflow:hidden;
-    background:
-      radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.07), transparent 60%),
-      rgba(8,17,18,.55);
-    display:flex;align-items:center;gap:20px;
-  }
-  .compound .loop-ico{flex:none}
-  .compound .ctext{flex:1}
-  .compound .ctext .cyc{
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
-  }
-  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
-  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
-  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
-
-  .aside{
-    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
-    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
-  }
-  .aside b{color:var(--amber);font-weight:500}
-  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
-
-  /* ============ WHY ============ */
-  .why{
-    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
-    padding:26px 30px 28px;position:relative;overflow:hidden;
-    background:
-      radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
-      radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
-      rgba(7,14,15,.6);
-  }
-  .why .beat-label{margin-bottom:14px}
-  .why .principle-block{
-    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
-  }
-  .why .principle-label{
-    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
-    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
-  }
-  .why .principle-line{
-    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
-    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
-  }
-  .why .principle-line em{font-style:italic;color:var(--teal)}
-  .why .quote{
-    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--teal);letter-spacing:.004em;
-    text-shadow:0 0 30px rgba(63,224,200,.26);max-width:840px;
-  }
-  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
-  .why .gloss b{color:var(--spore);font-weight:500}
-  .why .gloss em{font-style:italic;color:var(--ink-dim)}
-  .why .gloss + .gloss{margin-top:12px}
-  .why .corollary{
-    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
-    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
-  }
-  .why .corollary .sd{
-    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
-    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
-  }
-
-  /* ============ TEST-IN-PRACTICE inline panel ============ */
-  .practice{
-    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
+  /* systemic line */
+  .where{
+    margin-top:34px;max-width:760px;border:1px solid var(--hairline);border-radius:14px;
     padding:22px 26px 24px;
     background:
-      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
+      radial-gradient(120% 140% at 100% 0%, rgba(255,179,71,.05), transparent 55%),
       rgba(8,15,17,.5);
   }
-  .practice .beat-label{margin-bottom:12px}
-  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
-  .practice p b{color:var(--spore);font-weight:500}
-  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
-  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+  .where .wl{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--amber-dim);margin-bottom:12px;
+  }
+  .where p{font-size:15px;line-height:1.6;color:var(--ink)}
+  .where p b{color:var(--spore);font-weight:500}
+  .where p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
 
   /* ============ CONNECTS TO ============ */
   .connects{margin-top:52px}
@@ -344,15 +226,6 @@
   .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
   .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
   .nb:hover .sd{animation:throb 1s ease-in-out infinite}
-  .nb.soon{opacity:.62}
-  .nb.soon::after{
-    content:"soon";
-    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--ink-faint);
-    border:1px solid var(--ink-faint);border-radius:20px;
-    padding:2px 7px 3px;margin-left:4px;
-  }
-  .nb.soon:hover{opacity:1}
   @keyframes throb{50%{transform:scale(1.5)}}
   .origin-chip{
     position:absolute;transform:translate(-50%,-50%);
@@ -378,24 +251,13 @@
     text-transform:uppercase;color:var(--ink-faint);
   }
 
-  /* breathing glow on the diagram spore-tips */
   @keyframes breathe{
     0%,100%{opacity:.55}
     50%{opacity:1}
   }
   .breathe{animation:breathe 4.2s ease-in-out infinite}
 
-  @media (max-width:860px){
-    .plates{grid-template-columns:1fr 1fr}
-    .plate.use{grid-column:1 / -1}
-  }
   @media (max-width:780px){
-    .plates{grid-template-columns:1fr}
-    .plate.use{grid-column:1}
-    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
-    .move-rail .thread{display:none}
-    .step{padding:0}
-    .compound{flex-direction:column;align-items:flex-start;gap:14px}
     .neighbours .nb{font-size:11px;padding:6px 10px}
     .prose p{font-size:14.5px}
   }
@@ -406,619 +268,261 @@
 
   <!-- ============ BREADCRUMB ============ -->
   <nav class="crumb">
-    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Map the access surface first</span>
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">The access surface</span>
   </nav>
 
   <!-- ============ PATTERN NAME + ESSENCE ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· Context &amp; Guardrails · software lane · the first move before STRIDE</span></div>
-    <h1>Map the access <em>surface</em> first</h1>
+    <h1>The access <em>surface</em></h1>
     <p class="principle">The principle: <b>Map what you're protecting before you name what could go wrong.</b></p>
     <p class="essence">
-      Before you threat-model, send a fresh subagent to walk the whole feature and map who can reach what —
-      so your own attention stays free for the <b>two surfaces only you can name</b>: the one it under-weighted,
-      and the one it missed. <span class="x">Breadth is borrowed; judgment is yours.</span>
+      A fire marshal counts every door out of a building before anyone games the break-in — so
+      send a fresh subagent to walk the feature and chart every way in, while you keep your attention for the
+      <b>two doors only you can name</b>: the one it drew too thin, and the one it never drew. <span class="x">Breadth is borrowed; judgment is yours.</span>
     </p>
   </header>
 
-  <!-- ============ HERO PICTURE: calm handler → exploded surface fan, two inks ============ -->
+  <!-- ============ HERO: the egress plan — every entrance charted by the subagent, two in your ink ============ -->
   <div class="hero-frame">
-    <svg viewBox="0 0 1080 400" role="img" aria-label="On the left, one feature handler drawn calm and small. On the right, the same feature exploded into a labelled surface fan — entry point, trust boundary, data tier, auth checkpoint, external call, inherited-auth bypass — most threads drawn faintly by a subagent, with two threads hand-drawn in amber: one the skill drew too thin, one it never drew at all.">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="An access-surface map drawn as a building floor-plan. A subagent has charted every labelled entrance into the feature — entry point, trust boundary, data tier, auth checkpoint, external call — in faint teal. Two doors are over-inked in amber by your hand: a checkpoint drawn too thin, and an inherited-auth bypass the plan never drew. A STRIDE arrow waits outside the plan, refused entry until the map is complete.">
       <defs>
-        <radialGradient id="hwell" cx="74%" cy="46%" r="64%">
-          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".16"/>
-          <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".07"/>
+        <radialGradient id="asm-well" cx="50%" cy="42%" r="62%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".12"/>
+          <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".06"/>
           <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
         </radialGradient>
-        <radialGradient id="featCore" cx="40%" cy="35%" r="70%">
-          <stop offset="0%" stop-color="#eafff9"/>
-          <stop offset="45%" stop-color="#3fe0c8"/>
-          <stop offset="100%" stop-color="#0c2b2a"/>
-        </radialGradient>
-        <linearGradient id="faintThread" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#1d8d80" stop-opacity=".25"/>
-          <stop offset="100%" stop-color="#3fe0c8" stop-opacity=".55"/>
+        <linearGradient id="asm-faint" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#1d8d80" stop-opacity=".15"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity=".6"/>
         </linearGradient>
-        <linearGradient id="inkThread" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#a86a1f" stop-opacity=".5"/>
+        <linearGradient id="asm-ink" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#a86a1f" stop-opacity=".4"/>
           <stop offset="100%" stop-color="#ffb347" stop-opacity=".95"/>
         </linearGradient>
-        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        <filter id="asm-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="4.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
       </defs>
-      <rect x="0" y="0" width="1080" height="400" fill="url(#hwell)"/>
+      <rect x="0" y="0" width="1080" height="420" fill="url(#asm-well)"/>
 
-      <!-- LEFT: the calm handler -->
-      <text x="56" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#6f8a85">ONE FEATURE · LOOKS CALM</text>
-      <g>
-        <rect x="56" y="150" width="150" height="100" rx="12" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.3)"/>
-        <text x="72" y="178" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#6f8a85">webhook.ts</text>
-        <g stroke="#3fe0c8" stroke-width="2" opacity=".4">
-          <line x1="72" y1="198" x2="178" y2="198"/>
-          <line x1="72" y1="214" x2="160" y2="214"/>
-          <line x1="72" y1="230" x2="172" y2="230"/>
-        </g>
-      </g>
-      <circle cx="206" cy="200" r="16" fill="url(#featCore)" filter="url(#hglow)"/>
-      <text x="131" y="288" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13" fill="#5d6a68" font-style="italic">"I think the auth is fine."</text>
+      <text x="56" y="44" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2.5" fill="#3fe0c8">ACCESS-SURFACE MAP · webhook.ts · EVERY WAY IN CHARTED</text>
 
-      <!-- the explode line -->
-      <g transform="translate(250,200)">
-        <path d="M-20,0 L30,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".6"/>
-        <polygon points="30,0 22,-5 22,5" fill="#3fe0c8" opacity=".7"/>
-        <text x="6" y="-12" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3fe0c8">MAP IT</text>
-      </g>
+      <!-- the feature footprint: an irregular plan outline -->
+      <path d="M250,110 L760,96 L800,150 L800,310 L300,330 L240,250 Z"
+            fill="rgba(8,17,18,.55)" stroke="url(#asm-faint)" stroke-width="1.6"/>
+      <!-- interior partition — the trust boundary wall -->
+      <path d="M520,103 L540,318" fill="none" stroke="rgba(63,224,200,.22)" stroke-width="1.2" stroke-dasharray="5 6"/>
+      <text x="528" y="210" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".1em" fill="#3b524e" transform="rotate(88 528 210)">TRUST BOUNDARY WALL</text>
 
-      <!-- RIGHT: the exploded surface fan -->
-      <text x="600" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2" fill="#3fe0c8">THE SAME FEATURE · ITS ACCESS SURFACE</text>
+      <!-- the core node: the feature itself -->
+      <circle cx="500" cy="215" r="17" fill="rgba(8,17,18,.9)" stroke="#9bffe9" stroke-width="1.3" filter="url(#asm-glow)"/>
+      <text x="500" y="219" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".1em" fill="#9bffe9">FEAT</text>
 
-      <!-- six surface threads fanning from the feature node -->
-      <g fill="none" stroke-width="2.2">
-        <path d="M300,200 C470,110 640,72 980,64"  stroke="url(#faintThread)"/>
-        <path d="M300,200 C470,150 640,128 980,124" stroke="url(#faintThread)"/>
-        <path d="M300,200 C470,196 640,200 980,206" stroke="url(#faintThread)"/>
-        <path d="M300,200 C470,250 640,278 980,284" stroke="url(#faintThread)"/>
-      </g>
-      <!-- the two hand-drawn ink threads (the deltas) -->
-      <g fill="none" stroke-width="2.8" filter="url(#hglow)">
-        <path d="M300,200 C470,178 640,160 980,160" stroke="url(#inkThread)" stroke-dasharray="1 0"/>
-        <path d="M300,200 C470,300 640,338 980,344" stroke="url(#inkThread)"/>
+      <!-- the faint subagent-charted doors (breadth) -->
+      <g font-family="'Spline Sans',sans-serif" font-size="11.5">
+        <!-- entry point (left wall) -->
+        <rect x="234" y="170" width="14" height="34" fill="url(#asm-faint)" opacity=".7"/>
+        <text x="150" y="190" text-anchor="end" fill="#cfe6e0">entry point</text>
+        <line x1="158" y1="186" x2="234" y2="186" stroke="url(#asm-faint)" stroke-width="1.4"/>
+        <!-- data tier (bottom) -->
+        <rect x="370" y="322" width="34" height="14" fill="url(#asm-faint)" opacity=".7"/>
+        <text x="387" y="372" text-anchor="middle" fill="#cfe6e0">data tier</text>
+        <line x1="387" y1="338" x2="387" y2="356" stroke="url(#asm-faint)" stroke-width="1.4"/>
+        <!-- external call (right wall) -->
+        <rect x="794" y="200" width="14" height="34" fill="url(#asm-faint)" opacity=".7"/>
+        <text x="900" y="220" fill="#cfe6e0">external call</text>
+        <line x1="808" y1="216" x2="892" y2="216" stroke="url(#asm-faint)" stroke-width="1.4"/>
+        <!-- trust boundary (top wall, left) -->
+        <rect x="400" y="98" width="34" height="13" fill="url(#asm-faint)" opacity=".7"/>
+        <text x="417" y="64" text-anchor="middle" fill="#cfe6e0">trust boundary</text>
+        <line x1="417" y1="80" x2="417" y2="96" stroke="url(#asm-faint)" stroke-width="1.4"/>
       </g>
 
-      <!-- the source node -->
-      <circle cx="300" cy="200" r="18" fill="url(#featCore)" filter="url(#hglow)"/>
-      <circle cx="300" cy="200" r="18" fill="none" stroke="#9bffe9" stroke-width="1" opacity=".6"/>
+      <!-- the two amber over-inked doors (the deltas) -->
+      <g filter="url(#asm-glow)">
+        <!-- checkpoint drawn too thin: a door rendered as a thin sliver, you've thickened its frame -->
+        <rect x="630" y="98" width="34" height="13" fill="url(#asm-ink)"/>
+        <rect x="626" y="94" width="42" height="21" fill="none" stroke="#ffb347" stroke-width="1.8"/>
+        <text x="647" y="60" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#ffce85" font-style="italic">checkpoint · drawn too thin</text>
+        <line x1="647" y1="76" x2="647" y2="92" stroke="url(#asm-ink)" stroke-width="1.8"/>
 
-      <!-- surface labels at the tips -->
-      <g font-family="'Spline Sans',sans-serif" font-size="12.5">
-        <circle cx="980" cy="64"  r="4" fill="#3fe0c8" filter="url(#hglow)"/><text x="996" y="68"  fill="#cfe6e0">entry point</text>
-        <circle cx="980" cy="124" r="4" fill="#3fe0c8" filter="url(#hglow)"/><text x="996" y="128" fill="#cfe6e0">trust boundary</text>
-        <circle cx="980" cy="206" r="4" fill="#3fe0c8" filter="url(#hglow)"/><text x="996" y="210" fill="#cfe6e0">data tier</text>
-        <circle cx="980" cy="284" r="4" fill="#3fe0c8" filter="url(#hglow)"/><text x="996" y="288" fill="#cfe6e0">external call</text>
-        <!-- the two ink tips -->
-        <circle cx="980" cy="160" r="5" fill="#ffb347" filter="url(#hglow)"/><text x="996" y="164" fill="#ffce85" font-style="italic">checkpoint · drawn too thin</text>
-        <circle cx="980" cy="344" r="5" fill="#ffb347" filter="url(#hglow)"/><text x="996" y="348" fill="#ffce85" font-style="italic">inherited-auth bypass · missed</text>
+        <!-- inherited-auth bypass: a door the plan never drew — hand-sketched into a blank wall section -->
+        <path d="M690,316 L724,313 L724,327 L690,330 Z" fill="url(#asm-ink)" stroke="#ffb347" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="760" y="372" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#ffce85" font-style="italic">inherited-auth bypass · never drawn</text>
+        <line x1="707" y1="330" x2="730" y2="356" stroke="url(#asm-ink)" stroke-width="1.8"/>
       </g>
 
-      <!-- the two-ink legend -->
-      <g transform="translate(360,376)">
-        <line x1="0" y1="-4" x2="22" y2="-4" stroke="url(#faintThread)" stroke-width="2.4"/>
-        <text x="30" y="0" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">SUBAGENT'S BREADTH</text>
-        <line x1="240" y1="-4" x2="262" y2="-4" stroke="url(#inkThread)" stroke-width="2.8"/>
-        <text x="270" y="0" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">YOUR INK · THE DELTA</text>
+      <!-- STRIDE waits outside, refused until the map is whole -->
+      <g transform="translate(936,150)">
+        <rect x="0" y="0" width="108" height="120" rx="10" fill="rgba(8,17,18,.7)" stroke="rgba(99,106,104,.5)" stroke-dasharray="4 5"/>
+        <text x="54" y="26" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing=".2em" fill="#6f8a85">STRIDE</text>
+        <text x="54" y="48" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="10" fill="#5d6a68" font-style="italic">waits at</text>
+        <text x="54" y="62" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="10" fill="#5d6a68" font-style="italic">the door</text>
+        <text x="54" y="92" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".12em" fill="#3b524e">NO MAP,</text>
+        <text x="54" y="104" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".12em" fill="#3b524e">NO ENTRY</text>
       </g>
 
-      <!-- nutrient pulse riding the data-tier thread -->
-      <circle r="3.4" fill="#aeffee">
-        <animateMotion dur="4.6s" repeatCount="indefinite" path="M300,200 C470,196 640,200 980,206"/>
-        <animate attributeName="opacity" values="0;1;1;0" dur="4.6s" repeatCount="indefinite"/>
+      <!-- legend -->
+      <g transform="translate(360,402)">
+        <line x1="0" y1="-4" x2="22" y2="-4" stroke="url(#asm-faint)" stroke-width="2.4"/>
+        <text x="30" y="0" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">SUBAGENT'S CHARTED DOORS</text>
+        <line x1="266" y1="-4" x2="288" y2="-4" stroke="url(#asm-ink)" stroke-width="2.8"/>
+        <text x="296" y="0" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">YOUR INK · THE TWO DELTAS</text>
+      </g>
+
+      <!-- a nutrient pulse running the entry-point thread inward -->
+      <circle r="3.2" fill="#aeffee">
+        <animateMotion dur="4.4s" repeatCount="indefinite" path="M158,186 L234,186 L248,200 L490,215"/>
+        <animate attributeName="opacity" values="0;1;1;0" dur="4.4s" repeatCount="indefinite"/>
       </circle>
     </svg>
-    <div class="hero-cap">The breadth is borrowed. <b>The two amber threads are yours</b> — the surface it drew too thin, and the one it never drew.</div>
+    <div class="hero-cap">Every door charted by the subagent. <b>The two amber ones are yours</b> — and STRIDE waits outside until the plan is whole.</div>
   </div>
 
-  <!-- ============================================================ -->
-  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
-  <!-- ============================================================ -->
+  <!-- ============ SPINE — lean, T1 ============ -->
   <section class="prose">
-    <div class="sec-label">The mechanism · why you map before you threat-model</div>
-    <h2>STRIDE has nothing to <em>chew on</em> until the surface is mapped.</h2>
+
+    <div class="refuse">
+      <span class="tag">The move that fails</span>
+      <span><span class="struck">"Ship it, bolt the auth on later."</span> <span class="instead">Run the whole thing through STRIDE, then patch wherever it flinches. <b>Both threat-model a vibe</b> — six categories floating over a surface nobody actually charted.</span></span>
+    </div>
 
     <p>
-      Here's the trap, and almost everyone walks into it: you've a feature shipping this week — a webhook handler,
-      a new route, a tenant-scoped query — a staff engineer and a CISO will review it, and you're quietly nervous
-      one of them will catch a surface you didn't think to look at. So you reach for STRIDE, the six-category threat
-      checklist. That's the trap. <b>STRIDE without a surface map is pub-quiz threat-modelling</b> — six categories
-      walked against a vibe. The thing you're missing isn't the threat list; it's the map of <em>what the threats land on</em>.
-      You can't reason about spoofing a boundary you never wrote down.
+      Map a feature's access surface and you find most of the labour isn't yours. The entry points, the trust
+      boundaries, the data tiers, the auth checkpoints — that's a long, structured breadth read, and a breadth read is
+      exactly what you hand to a fresh subagent. Invoke a curated access-control skill, name the feature by route or a
+      couple of symbols, and let it find the code itself — it burns <em>its</em> whole context window walking the tree,
+      so <b>yours stays clean for the part it can't do.</b> What stays with you is two doors only you can name: the one
+      it drew <em>too thin</em>, under-weighted against what you know this codebase actually does, and the one it
+      <em>never drew at all</em> — the entrance that lives in your head and nowhere in the obvious code.
     </p>
 
     <p>
-      So map first. But mapping every entry point, boundary, data tier and auth checkpoint a feature touches is a long,
-      structured breadth read — and breadth reads are exactly what you hand to a fresh subagent. Invoke a curated
-      access-control skill, name the feature by route or a couple of symbols, and let it find the code itself. It burns
-      <em>its</em> whole context window walking the tree; <b>yours stays clean for the judgment only you carry.</b> This is
-      the breadth-first-to-a-subagent split: the wall of structured output leaves the main thread on purpose, and you
-      stay rested for the part a generic reader structurally can't do. Below, the same feature read twice — once wide, once deep.
+      Make the read cover <b>six surfaces, not five</b>: entry points · trust boundaries crossed · data and its
+      sensitivity tier · auth checkpoints, split into present, assumed, and delegated · external connector calls · and
+      the load-bearing one — <b>anything that bypasses, defers, or inherits an auth decision made elsewhere.</b> That
+      last door is where the surprises live. A generic reader handles standard middleware well and hand-rolled,
+      inherited-elsewhere auth worst of all — which is precisely where breaches breed. A good skill doesn't fake
+      omniscience; it narrates what it misses <em>while it works</em> — flags that a parent router's middleware
+      propagates downward, flags bespoke auth it reads worse than the standard kind — then closes with a calibrated
+      self-grade and names where the last percents hide. A flagged uncertainty beats a confident fabrication; those
+      flags aren't noise to skim, they're invitations addressed to you.
     </p>
+
+    <p class="pull">
+      The skill reads the standard doors well and the weird ones badly. <b>The weird ones are where the break-ins happen.</b>
+    </p>
+
   </section>
 
-  <!-- ============ DIAGRAM 1 — SAME FEATURE, TWO READERS ============ -->
+  <!-- ============ THE ONE GOVERNING DIAGRAM ============ -->
   <div class="diagram">
-    <svg viewBox="0 0 1080 470" role="img" aria-label="One feature feeds two passes side by side. A subagent pass, fast and broad, covers six surfaces with a confidence percent and blind spots confessed in the margin. Your pass is narrow and deep and codebase-specific. They converge on a single node, the delta note, which STRIDE reads next.">
+    <svg viewBox="0 0 1080 380" role="img" aria-label="One feature feeds two reads that converge on a single delta note. A subagent read, fast and broad, charts six surfaces and self-grades around eighty percent with its blind spots confessed in the margin. Your read is narrow and deep — one surface flagged harder than it would have, one it missed that you know matters. The two join in a delta note, and only then does STRIDE read it.">
       <defs>
-        <linearGradient id="d1-sub" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".7"/><stop offset="1" stop-color="#1d8d80" stop-opacity=".25"/></linearGradient>
-        <linearGradient id="d1-you" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb347" stop-opacity=".85"/><stop offset="1" stop-color="#a86a1f" stop-opacity=".25"/></linearGradient>
-        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <linearGradient id="asm-d-sub" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".7"/><stop offset="1" stop-color="#1d8d80" stop-opacity=".25"/></linearGradient>
+        <linearGradient id="asm-d-you" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb347" stop-opacity=".85"/><stop offset="1" stop-color="#a86a1f" stop-opacity=".25"/></linearGradient>
+        <filter id="asm-d-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
 
       <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">ONE FEATURE · TWO READERS · EACH COVERS WHAT THE OTHER STRUCTURALLY CAN'T</text>
 
-      <!-- the feature node at the left -->
-      <circle cx="92" cy="235" r="20" fill="rgba(8,17,18,.8)" stroke="#9bffe9" stroke-width="1.4" filter="url(#d1-glow)"/>
-      <text x="92" y="239" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".1em" fill="#9bffe9">FEAT</text>
-      <text x="92" y="278" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85" font-style="italic">the feature</text>
+      <circle cx="92" cy="195" r="20" fill="rgba(8,17,18,.8)" stroke="#9bffe9" stroke-width="1.4" filter="url(#asm-d-glow)"/>
+      <text x="92" y="199" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".1em" fill="#9bffe9">FEAT</text>
+      <text x="92" y="236" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85" font-style="italic">the feature</text>
 
-      <!-- split threads -->
       <g fill="none" stroke-width="2">
-        <path d="M112,228 C170,150 200,120 250,116" stroke="url(#d1-sub)"/>
-        <path d="M112,242 C170,320 200,352 250,356" stroke="url(#d1-you)"/>
+        <path d="M112,188 C170,120 200,96 250,92" stroke="url(#asm-d-sub)"/>
+        <path d="M112,202 C170,270 200,300 250,304" stroke="url(#asm-d-you)"/>
       </g>
 
-      <!-- ===== TOP: subagent pass (breadth) ===== -->
+      <!-- subagent (breadth) -->
       <g>
-        <rect x="250" y="58" width="430" height="172" rx="14" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.22)"/>
-        <text x="270" y="84" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#3fe0c8">SUBAGENT · FRESH CONTEXT · BREADTH</text>
+        <rect x="250" y="40" width="420" height="148" rx="14" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.22)"/>
+        <text x="270" y="66" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#3fe0c8">SUBAGENT · FRESH CONTEXT · CHARTS EVERY DOOR</text>
         <g font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfe6e0">
-          <text x="270" y="108">· entry points</text>
-          <text x="270" y="126">· trust boundaries — service · network · tenant · role</text>
-          <text x="270" y="144">· data read/written + sensitivity tier</text>
-          <text x="270" y="162">· authorization checkpoints — present · assumed · delegated</text>
-          <text x="270" y="180">· external tool / connector / service calls</text>
-          <text x="270" y="198" fill="#9bffe9">· anything that bypasses, defers or inherits an auth decision</text>
+          <text x="270" y="90">· entry points · trust boundaries · data + tier</text>
+          <text x="270" y="110">· auth checkpoints — present · assumed · delegated</text>
+          <text x="270" y="130">· external tool / connector calls</text>
+          <text x="270" y="150" fill="#9bffe9">· anything that bypasses, defers or inherits an auth decision</text>
         </g>
-        <text x="270" y="220" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80" font-style="italic">…confesses its blind spots in the margin as it goes →</text>
-        <!-- confidence chip -->
-        <g transform="translate(560,84)">
+        <text x="270" y="174" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80" font-style="italic">…confesses its blind spots in the margin as it goes →</text>
+        <g transform="translate(548,64)">
           <rect x="0" y="-14" width="100" height="22" rx="11" fill="rgba(63,224,200,.1)" stroke="rgba(63,224,200,.4)"/>
           <text x="50" y="1" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#3fe0c8">self-grade: ~80%</text>
         </g>
       </g>
-      <!-- blind-spot margin notes -->
       <g font-family="'Fraunces',serif" font-style="italic" font-size="10.5" fill="#6f8a85">
-        <text x="694" y="112">"parent-router middleware</text>
-        <text x="694" y="126">propagates — I'll walk up."</text>
-        <text x="694" y="160">"hand-rolled auth I read</text>
-        <text x="694" y="174">worse than middleware."</text>
+        <text x="684" y="96">"parent-router middleware</text>
+        <text x="684" y="110">propagates — I'll walk up."</text>
+        <text x="684" y="142">"hand-rolled auth I read</text>
+        <text x="684" y="156">worse than middleware."</text>
       </g>
 
-      <!-- ===== BOTTOM: your pass (depth) ===== -->
+      <!-- you (depth) -->
       <g>
-        <rect x="250" y="262" width="430" height="148" rx="14" fill="rgba(8,17,18,.6)" stroke="rgba(255,179,71,.28)"/>
-        <text x="270" y="288" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#ffb347">YOU · NARROW · DEEP · CODEBASE-SPECIFIC</text>
+        <rect x="250" y="222" width="420" height="126" rx="14" fill="rgba(8,17,18,.6)" stroke="rgba(255,179,71,.28)"/>
+        <text x="270" y="248" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#ffb347">YOU · NARROW · DEEP · CODEBASE-SPECIFIC</text>
         <g font-family="'Spline Sans',sans-serif" font-size="12" fill="#fff4e2">
-          <text x="270" y="318">▲ the surface it flagged harder than you would have</text>
-          <text x="270" y="344">▲ the surface you know matters that it missed —</text>
-          <text x="290" y="362" font-family="'Fraunces',serif" font-style="italic" font-size="12.5" fill="#ffce85">"the weird bit," where a generic pass runs thinnest</text>
+          <text x="270" y="278">▲ the door it flagged harder than you would have</text>
+          <text x="270" y="304">▲ the door you know matters that it missed —</text>
+          <text x="290" y="322" font-family="'Fraunces',serif" font-style="italic" font-size="12.5" fill="#ffce85">"the weird bit," where a generic pass runs thinnest</text>
         </g>
-        <text x="270" y="392" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f" font-style="italic">two surfaces, each reasoned in this codebase's own terms</text>
       </g>
 
-      <!-- converge on the delta note -->
       <g fill="none" stroke-width="2.2">
-        <path d="M680,144 C760,170 800,200 858,224" stroke="url(#d1-sub)"/>
-        <path d="M680,336 C760,310 800,280 858,256" stroke="url(#d1-you)"/>
+        <path d="M670,114 C760,140 800,168 858,190" stroke="url(#asm-d-sub)"/>
+        <path d="M670,286 C760,260 800,232 858,210" stroke="url(#asm-d-you)"/>
       </g>
       <g>
-        <rect x="858" y="196" width="184" height="92" rx="13" fill="rgba(8,17,18,.85)" stroke="#9bffe9" stroke-width="1.4" filter="url(#d1-glow)"/>
-        <text x="950" y="222" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#9bffe9">THE DELTA NOTE</text>
-        <text x="950" y="244" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#eafff9">breadth from the skill,</text>
-        <text x="950" y="262" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#eafff9">depth from you</text>
-        <text x="950" y="280" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#3fe0c8">STRIDE READS THE JOIN →</text>
+        <rect x="858" y="158" width="184" height="86" rx="13" fill="rgba(8,17,18,.85)" stroke="#9bffe9" stroke-width="1.4" filter="url(#asm-d-glow)"/>
+        <text x="950" y="184" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#9bffe9">THE DELTA NOTE</text>
+        <text x="950" y="206" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#eafff9">breadth from the skill,</text>
+        <text x="950" y="224" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#eafff9">depth from you</text>
+        <text x="950" y="240" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#3fe0c8">STRIDE READS THE JOIN →</text>
       </g>
 
-      <text x="40" y="452" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">THE SUBAGENT CAN'T HAVE YOUR CODEBASE DEPTH. YOU WON'T SPEND YOUR CONTEXT ON ITS BREADTH. THAT'S WHY THE SPLIT EXISTS.</text>
+      <text x="40" y="368" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">THE SUBAGENT CAN'T HAVE YOUR CODEBASE DEPTH. YOU WON'T SPEND YOUR CONTEXT ON ITS BREADTH. THAT'S WHY THE SPLIT EXISTS.</text>
     </svg>
-    <div class="dcap"><span class="num">Process diagram · 01</span>Same feature, two readers. <b>Breadth from the skill, depth from you</b> — they converge on the delta note, and that join is what STRIDE reads.</div>
+    <div class="dcap"><span class="num">The governing read</span>Same feature, two readers. <b>Breadth from the skill, depth from you</b> — they converge on the delta note, and that join is the only thing STRIDE gets to read.</div>
   </div>
 
-  <!-- ============ PROSE BLOCK 2 — the six surfaces + the load-bearing one ============ -->
   <section class="prose">
     <p>
-      Make the read cover <b>six surfaces, not five</b>: entry points · trust boundaries crossed (service, network,
-      tenant, role) · data read and written with its sensitivity tier · authorization checkpoints, separated into
-      present, assumed, and delegated · external tool and connector calls · and the load-bearing one —
-      <b>anything that bypasses, defers, or inherits an auth decision made elsewhere.</b> That last category is where the
-      surprises live. A generic reader handles standard middleware well and hand-rolled auth badly; it reads explicit
-      checkpoints well and inherited-elsewhere decisions worst of all — which is precisely where breaches actually breed.
-    </p>
-
-    <p>
-      A good curated skill doesn't pretend to omniscience — it narrates what it misses <em>while it works</em>. It flags
-      that auth middleware on a parent router propagates to every route beneath it, so finding the handler but not where
-      it's mounted under-reports protection. It flags implicit trust between internal services. It flags bespoke auth it
-      reads worse than the standard kind. Then it closes with a calibrated self-grade — its own read of how much it caught,
-      not a measured accuracy and not a benchmark about the move — and names where the last percents hide.
-      <b>A flagged uncertainty is more useful than a confident fabrication.</b> Those flagged spots aren't noise to skim past;
-      they're invitations addressed to you.
-    </p>
-
-    <p class="pull">
-      The skill reads standard middleware well and the weird bits badly. <b>The weird bits are where the breaches live.</b>
-    </p>
-
-    <div class="sec-label">The upgrade · vibe-check → mapped surface</div>
-    <h2>From threat-modelling a <em>vibe</em> to threat-modelling a map.</h2>
-
-    <p>
-      The upgrade is the same shape as every guardrail move: from something ephemeral and felt to something explicit and
-      durable. On the left below, STRIDE walked against a remembered, hand-waved surface — <em class="teal">"I think auth's fine"</em> —
-      six categories floating over nothing. That's the pub-quiz. On the right, STRIDE walked against an explicit six-surface map
-      with the inherited-auth-bypass row lit up: <b>defensible.</b> Same six categories either way; the difference is entirely in
-      whether they have a real surface to land on. The map is what turns a checklist into an analysis.
+      Now the door you can't delegate. Read the map's confessed blind spots — don't skim them — and write the
+      <b>delta</b>: two surfaces, each reasoned in this codebase's own terms. One the skill flagged <em>harder</em> than
+      you would have. One you <em>know</em> matters that it missed. Push every reason until it names something a
+      <em>different</em> codebase wouldn't share.
+      <span class="mono">"This export route trusts the tenant id in the path, not the session"</span> beats
+      <span class="mono">"check the auth."</span> The first is yours; the second is anyone's. And the delta — not the
+      skill's wall of output — is what STRIDE reads next. The raw map is the input to <em>your</em> judgment;
+      <b>the delta is the artifact.</b> Each feature you map this way widens the kit the next feature's read starts from:
+      the surface you name once, hardened into a team ADR, becomes default breadth the skill carries on its own — so the
+      discipline compounds across features rather than resetting each time.
     </p>
   </section>
 
-  <!-- ============ DIAGRAM 2 — VIBE → MAPPED ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 380" role="img" aria-label="On the left, the six STRIDE categories float over an empty hand-waved surface, labelled pub-quiz. On the right, the same six categories land on an explicit six-row access-surface map with the inherited-auth-bypass row highlighted, labelled defensible.">
-      <defs>
-        <linearGradient id="d2-vibe" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5d6a68" stop-opacity=".5"/><stop offset="1" stop-color="#5d6a68" stop-opacity="0"/></linearGradient>
-        <linearGradient id="d2-map" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".4"/><stop offset="1" stop-color="#ffb347" stop-opacity=".3"/></linearGradient>
-        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
+  <!-- the Monday move, woven not boxed -->
+  <p class="monday">
+    <b>This week, the feature you're closest to shipping.</b> Name it in one sentence, ask Claude Code to run the
+    access-control skill on it as a subagent — no file paths — then write <em>two lines</em>: one door it flagged harder
+    than you would have, one it missed that you know matters. <span class="mono">The skill reads the tree; you write the delta, before your next PR review.</span>
+    You know it worked when both lines are present and neither is generic — and when the skill caught at least one thing you'd have missed.
+  </p>
 
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME SIX CATEGORIES · DIFFERENT GROUND TO LAND ON</text>
-
-      <!-- LEFT: vibe -->
-      <text x="80" y="72" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#5d6a68">STRIDE OVER A VIBE</text>
-      <g font-family="'Spline Sans Mono',monospace" font-size="11" fill="#6f8a85">
-        <text x="80" y="104">S  T  R  I  D  E</text>
-      </g>
-      <!-- the six letters floating, with dangling threads into nothing -->
-      <g stroke="url(#d2-vibe)" stroke-width="1.4" fill="none" opacity=".7">
-        <path d="M86,112 C86,150 110,180 96,220"/>
-        <path d="M104,112 C104,160 130,190 150,232"/>
-        <path d="M122,112 C122,150 100,200 120,244"/>
-        <path d="M140,112 C140,170 170,210 184,250"/>
-        <path d="M158,112 C158,150 138,210 150,258"/>
-        <path d="M176,112 C176,160 200,200 210,262"/>
-      </g>
-      <text x="80" y="300" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="14" fill="#5d6a68">"I think the auth is fine."</text>
-      <text x="80" y="324" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#6f8a85">nothing underneath to land on</text>
-      <!-- pub-quiz stamp -->
-      <g transform="translate(80,346) rotate(-4)">
-        <rect x="0" y="-16" width="118" height="24" rx="5" fill="none" stroke="#5d6a68" stroke-width="1.4" opacity=".7"/>
-        <text x="59" y="0" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".18em" fill="#5d6a68">PUB-QUIZ</text>
-      </g>
-
-      <!-- arrow -->
-      <g transform="translate(470,190)">
-        <path d="M0,0 L70,0" stroke="#3fe0c8" stroke-width="1.4" fill="none" opacity=".7"/>
-        <polygon points="70,0 60,-6 60,6" fill="#3fe0c8" opacity=".8"/>
-        <text x="36" y="-12" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".24em" fill="#3fe0c8">MAP IT</text>
-      </g>
-
-      <!-- RIGHT: mapped -->
-      <text x="580" y="72" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#3fe0c8">STRIDE OVER A MAP</text>
-      <g font-family="'Spline Sans Mono',monospace" font-size="11" fill="#9bffe9">
-        <text x="580" y="98">S  T  R  I  D  E</text>
-      </g>
-      <!-- the six categories landing on six map rows -->
-      <g filter="url(#d2-glow)">
-        <rect x="580" y="112" width="420" height="222" rx="12" fill="rgba(8,17,18,.78)" stroke="url(#d2-map)" stroke-width="1.6"/>
-      </g>
-      <g font-family="'Spline Sans Mono',monospace" font-size="11.5">
-        <text x="598" y="140" fill="#cfe6e0">entry points</text>
-        <text x="598" y="166" fill="#cfe6e0">trust boundaries · service/network/tenant/role</text>
-        <text x="598" y="192" fill="#cfe6e0">data + sensitivity tier</text>
-        <text x="598" y="218" fill="#cfe6e0">auth checkpoints · present/assumed/delegated</text>
-        <text x="598" y="244" fill="#cfe6e0">external tool / connector calls</text>
-      </g>
-      <!-- the load-bearing row, highlighted amber -->
-      <rect x="588" y="258" width="404" height="30" rx="7" fill="rgba(255,179,71,.1)" stroke="rgba(255,179,71,.5)"/>
-      <text x="598" y="278" font-family="'Spline Sans Mono',monospace" font-size="11.5" fill="#ffb347">bypasses / defers / inherits an auth decision</text>
-      <circle cx="978" cy="273" r="4" fill="#ffb347" class="breathe"/>
-      <text x="598" y="312" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="12.5" fill="#9bffe9">every category now has a surface to chew on</text>
-      <!-- defensible stamp -->
-      <g transform="translate(862,344) rotate(-3)">
-        <rect x="0" y="-16" width="130" height="24" rx="5" fill="none" stroke="#3fe0c8" stroke-width="1.4"/>
-        <text x="65" y="0" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".16em" fill="#3fe0c8">DEFENSIBLE</text>
-      </g>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 02</span>Same six categories, different ground. STRIDE over a vibe is a pub-quiz; <b>STRIDE over a six-surface map is defensible</b>.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 3 — the delta + compounding intro ============ -->
-  <section class="prose">
-    <p>
-      Now the move you can't delegate. Read the map's confessed blind spots — don't skim them — and write the <b>delta</b>:
-      two surfaces, each reasoned in this codebase's own terms. One the skill flagged <em>harder</em> than you would have
-      (you'd under-weighted it). One you <em>know</em> matters that it missed — usually the part you'd call "the weird bit,"
-      where a generic pass runs thinnest. Push every reason until it names something a <em>different</em> codebase wouldn't share.
-      <span class="mono">"The billing webhook re-hits the queue on retry, so the same event gets reprocessed"</span> beats
-      <span class="mono">"webhooks need auth."</span> The first is yours; the second is anyone's.
-    </p>
-
-    <p>
-      And the delta — not the skill's wall of output — is what you ship to STRIDE next. The raw map is the input to <em>your</em>
-      judgment; <b>the delta is the artifact.</b> Add a one-line context header if a teammate landing cold would miss something the
-      map quietly assumes. That's the whole handoff: not a hardening backlog, not a fix list, just a map with your fingerprints on
-      the surfaces only you knew to check. The loop below shows where this goes once it's a habit — each feature you map widens the
-      kit the <em>next</em> feature's read starts from.
-    </p>
-  </section>
-
-  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 420" role="img" aria-label="A closed thread loop — map a feature, name the delta, harden one surface as an ADR — closes back through the repo's accumulating ADRs and rules, so the codebase-specific surface you named becomes a thing the next feature's read starts from. One hardening decision is enough; the kit's breadth grows across many features.">
-      <defs>
-        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/>
-          <stop offset="1" stop-color="#ffb347" stop-opacity=".6"/>
-        </linearGradient>
-        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%">
-          <stop offset="0" stop-color="#9bffe9"/>
-          <stop offset=".55" stop-color="#3fe0c8"/>
-          <stop offset="1" stop-color="#1d8d80"/>
-        </radialGradient>
-        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">ONE HARDENING DECISION IS ENOUGH · THE KIT'S BREADTH GROWS ACROSS MANY FEATURES</text>
-
-      <!-- ===== LEFT HALF: the loop ===== -->
-      <g transform="translate(40,60)">
-        <circle cx="200" cy="170" r="130" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="540 60" stroke-linecap="round" transform="rotate(-90 200 170)"/>
-        <circle r="3.6" fill="#aeffee">
-          <animateMotion dur="9s" repeatCount="indefinite" path="M200,40 a130,130 0 1,1 -0.1,0"/>
-          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
-        </circle>
-
-        <g>
-          <circle cx="200" cy="40" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="200" y="45" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">1</text>
-          <text x="200" y="20" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Map a feature</text>
-        </g>
-        <g>
-          <circle cx="330" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="330" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">2</text>
-          <text x="362" y="173" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Name the delta</text>
-        </g>
-        <g>
-          <circle cx="200" cy="300" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="200" y="305" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">3</text>
-          <text x="200" y="338" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Harden one surface → ADR</text>
-        </g>
-        <g>
-          <circle cx="70" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="70" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">4</text>
-          <text x="38" y="167" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">It joins the kit</text>
-          <text x="38" y="183" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="11" fill="#9bffe9">next read starts here</text>
-        </g>
-
-        <text x="200" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EACH FEATURE</text>
-        <text x="200" y="184" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">widens the kit</text>
-      </g>
-
-      <!-- ===== RIGHT HALF: the kit's breadth growing across features ===== -->
-      <g transform="translate(540,68)">
-        <!-- feature 1 -->
-        <g>
-          <rect x="0" y="14" width="150" height="200" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.22)"/>
-          <rect x="0" y="14" width="150" height="20" rx="6" fill="rgba(63,224,200,.10)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">team-kit · ADRs</text>
-          <g stroke="#6f8a85" stroke-width="2" opacity=".55">
-            <line x1="12" y1="58" x2="92" y2="58"/>
-          </g>
-          <text x="75" y="240" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#5d6a68">AFTER FEATURE 1</text>
-        </g>
-
-        <g transform="translate(158,114)">
-          <path d="M0,0 L24,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="24,0 16,-5 16,5" fill="#3fe0c8" opacity=".75"/>
-        </g>
-
-        <!-- feature 3 -->
-        <g transform="translate(190,0)">
-          <rect x="0" y="14" width="150" height="220" rx="8" fill="rgba(8,17,18,.78)" stroke="rgba(63,224,200,.35)"/>
-          <rect x="0" y="14" width="150" height="20" rx="6" fill="rgba(63,224,200,.14)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">team-kit · ADRs</text>
-          <g stroke="#9bffe9" stroke-width="2" opacity=".75">
-            <line x1="12" y1="58" x2="120" y2="58"/>
-            <line x1="12" y1="78" x2="100" y2="78"/>
-            <line x1="12" y1="98" x2="124" y2="98"/>
-          </g>
-          <text x="75" y="252" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#9bffe9">AFTER FEATURE 3</text>
-        </g>
-
-        <g transform="translate(348,124)">
-          <path d="M0,0 L24,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="24,0 16,-5 16,5" fill="#3fe0c8" opacity=".75"/>
-        </g>
-
-        <!-- feature N -->
-        <g transform="translate(380,0)">
-          <rect x="0" y="0" width="150" height="260" rx="8" fill="rgba(8,17,18,.85)" stroke="url(#d3-ring)" stroke-width="1.5" filter="url(#d3-glow)"/>
-          <rect x="0" y="0" width="150" height="20" rx="6" fill="rgba(255,179,71,.16)"/>
-          <text x="10" y="15" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">team-kit · ADRs</text>
-          <!-- the surfaces a past feature named, now amber load-bearing -->
-          <g stroke="#ffb347" stroke-width="2.2">
-            <line x1="12" y1="40" x2="132" y2="40"/>
-            <line x1="12" y1="60" x2="114" y2="60"/>
-          </g>
-          <g stroke="#9bffe9" stroke-width="2" opacity=".8">
-            <line x1="12" y1="84" x2="138" y2="84"/>
-            <line x1="12" y1="104" x2="116" y2="104"/>
-            <line x1="12" y1="124" x2="132" y2="124"/>
-            <line x1="12" y1="144" x2="106" y2="144"/>
-            <line x1="12" y1="164" x2="124" y2="164"/>
-            <line x1="12" y1="184" x2="134" y2="184"/>
-            <line x1="12" y1="204" x2="100" y2="204"/>
-          </g>
-          <text x="75" y="280" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#ffb347">FEATURE N STARTS HERE</text>
-        </g>
-
-        <!-- legend -->
-        <g transform="translate(0,300)">
-          <rect x="0" y="0" width="14" height="3" fill="#ffb347"/>
-          <text x="22" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">SURFACES A PAST DELTA NAMED · NOW HARDENED</text>
-          <rect x="0" y="14" width="14" height="3" fill="#9bffe9"/>
-          <text x="22" y="18" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">BREADTH THE KIT NOW CARRIES BY DEFAULT</text>
-        </g>
-      </g>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 03</span><em>The loop closes through the repo, not one perfect map.</em> <b>One hardening decision is enough</b> — the surface you named becomes where the next feature's read starts.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 4 — what Test actually means ============ -->
-  <section class="prose">
-    <div class="sec-label amber">What "Test" actually means · in practice</div>
-    <h2 class="amber">The test is <em>both shapes present, neither generic.</em></h2>
-
-    <p>
-      You know the move worked when the delta note has <b>both shapes present and neither is generic</b> — an over-weighted surface
-      and a missed one, each reasoned in terms a different codebase wouldn't share. A teammate could hand it to STRIDE cold and
-      threat-model something <b>real</b>, not a thin map. The tell that you skimmed: if the skill caught <em>nothing</em> you'd have missed,
-      either the feature is trivial or you rushed to the next prompt and never sat with the map. And the failing case is sharp —
-      if the only output is the skill's raw map with no delta layered on, the breadth read shipped and <b>your read didn't</b>,
-      so STRIDE will chew on a map with no judgment in it. The percent the skill prints is its own calibrated read of its coverage —
-      not a measured accuracy, not a benchmark about the pattern — and you treat it as a pointer to where to look, never as proof the map is right.
-    </p>
-  </section>
-
-  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
-  <div class="plates">
-    <div class="plate use">
-      <div class="beat-label amber"><b>Use when</b></div>
-      <p class="body">
-        You're shipping a feature with an <span class="grey">external or user-facing surface</span> this week,
-        a <b>staff engineer and a CISO</b> will review it, and <em>"I think the auth is fine"</em> is doing more
-        work than it should.
-      </p>
-    </div>
-    <div class="plate build">
-      <div class="beat-label"><b>Build</b></div>
-      <p class="body">
-        A <b>surface-map delta note</b> — the skill's six-surface map, its confessed blind spots and self-grade,
-        plus <b>your two surfaces</b>. Session scratch, deliberately ephemeral.
-      </p>
-    </div>
-    <div class="plate test">
-      <div class="beat-label"><b>Test</b></div>
-      <p class="body">
-        Both shapes present, <em>neither generic.</em><br>
-        Not just <em class="no">the skill's raw map.</em>
-      </p>
-    </div>
-  </div>
-
-  <!-- ============ CORE MOVES ============ -->
-  <section class="moves">
-    <div class="beat-label"><b>Core moves</b></div>
-    <div class="moves-head">
-      <h2>The action, in sequence</h2>
-      <span class="lede">What changes = who does the breadth read, and whose judgment owns the deltas.</span>
-    </div>
-
-    <div class="move-rail">
-      <div class="thread"></div>
-      <div class="step">
-        <div class="bead">1</div>
-        <h3>Dispatch the surface read</h3>
-        <p>Hand a subagent the feature by name. <b>Let it find the code.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">2</div>
-        <h3>Cover six surfaces, not five</h3>
-        <p>Including <b>inherited-auth bypasses</b> — where surprises live.</p>
-      </div>
-      <div class="step">
-        <div class="bead">3</div>
-        <h3>Read the blind spots</h3>
-        <p>The flagged-uncertain spots are <b>invitations, not noise.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">4</div>
-        <h3>Write the delta</h3>
-        <p>One under-weighted, one missed — <b>each codebase-specific.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">5</div>
-        <h3>Ship the delta, not the dump</h3>
-        <p>The delta is the artifact STRIDE reads. <b>Not the wall.</b></p>
-      </div>
-    </div>
-
-    <div class="compound">
-      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
-        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
-        </linearGradient></defs>
-        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
-          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
-        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
-        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
-        <circle r="3" fill="#aeffee">
-          <animateMotion dur="5s" repeatCount="indefinite"
-            path="M37,11 a26,26 0 1,1 -0.1,0"/>
-        </circle>
-      </svg>
-      <div class="ctext">
-        <div class="cyc">map a feature<span class="arr">→</span>name the delta<span class="arr">→</span>harden one surface<span class="arr">→</span>it joins the kit<span class="arr">→</span>repeat</div>
-        <p>Then it's a discipline, not a one-off: <b>the kit's breadth grows across many features.</b> One hardening decision is enough each pass — the next feature's read starts from the surface this one named.</p>
-      </div>
-    </div>
-
-    <!-- the Monday-move / no-permission aside -->
-    <p class="aside">
-      <b>Monday move: the feature you're closest to shipping.</b> Name it in one sentence, ask Claude Code to run the
-      access-control skill on it as a subagent — no file paths — then write <em>two lines</em>: one surface it flagged harder than you would have, one it missed that you know matters.
-      <span class="mono">Installs to ~/.claude/skills/ · read-only · no admin · no team rollout · before your next PR review.</span>
-    </p>
-  </section>
-
-  <!-- ============ WHY — the conviction ============ -->
-  <section class="why">
-    <div class="beat-label"><b>Why</b></div>
-
-    <div class="principle-block">
-      <div class="principle-label">The principle</div>
-      <p class="principle-line">Map what you're <em>protecting</em> before you name what could go wrong.</p>
-    </div>
-
-    <p class="quote">"The skill does the breadth you wouldn't have. You name the surface only you could."</p>
-    <p class="gloss">
-      The competence was never in knowing the threats — it's in knowing <b>what you're protecting</b>, and refusing to let a
-      generic reader's confidence stand in for your codebase's particulars. A curated skill packages upstream work you don't
-      re-derive: <em>invoke, don't re-derive.</em> But it reads standard middleware well and hand-rolled, inherited-elsewhere auth
-      worst of all — exactly the surfaces where breaches breed. So the labour splits by what each party is good at: the subagent
-      does breadth on a fresh context, cheap and calibrated-honest about its blind spots; you do the codebase-specific depth it
-      structurally cannot have.
-    </p>
-    <p class="gloss">
-      Mapping before threat-modelling is the same discipline as writing the failing test before the fix — <b>ground the work in
-      what's true before you reason about what could go wrong.</b> The reason a CISO signs off isn't that you ran a tool. It's that
-      the map has your fingerprints on the surfaces only you knew to check.
-    </p>
-    <div class="corollary"><span class="sd"></span>Breadth is borrowed. Judgment is yours.</div>
-  </section>
-
-  <!-- ============ SYSTEMIC LINE — surfaced, reaches company scope ============ -->
-  <section class="practice">
-    <div class="beat-label amber"><b>Where it sits</b></div>
+  <!-- systemic line -->
+  <section class="where">
+    <div class="wl">Where it sits</div>
     <p>
       This is the <b>first guardrail in the trust arc</b>: paired with <em>STRIDE</em> and <em>the ADR under pressure</em>,
-      it walks a single engineer into staff-engineer and CISO review with a defensible map, a hardening decision, and a named
-      residual risk — personal competence, made reviewable. And that same map-the-boundary-before-the-build discipline is what
-      <b>scope-for-trust raises to company scope</b>, where it becomes the precondition for an organisation trusting any agent it
-      didn't personally calibrate. Map a feature's access surface here; scope an agent's surface to what the org can trust there —
-      <b>same move, two surfaces.</b>
+      it walks a single engineer into staff-engineer and CISO review with a defensible map, a hardening decision, and a
+      named residual risk. And that same chart-the-doors-before-the-build discipline is what <b>scope-for-trust raises to
+      company scope</b> — the precondition for an org trusting an agent it didn't personally calibrate. Map a feature's
+      access surface here; scope an agent's surface to what the org can trust there — <b>same move, two surfaces.</b>
     </p>
   </section>
 
-  <!-- ============ CONNECTS TO — neighbour patterns (wired to index with .soon) ============ -->
+  <!-- ============ CONNECTS TO ============ -->
   <section class="connects">
     <h2>Connects to</h2>
     <div class="sub">Threads leaving this node · the pattern language</div>
@@ -1026,29 +530,29 @@
     <div class="web">
       <svg viewBox="0 0 1080 300" aria-hidden="true">
         <defs>
-          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".5"/></linearGradient>
-          <linearGradient id="t4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
-          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="asm-t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="asm-t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="asm-t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".5"/></linearGradient>
+          <linearGradient id="asm-t4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <filter id="asm-wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         </defs>
 
         <circle cx="150" cy="150" r="30" fill="none" stroke="#3fe0c8" stroke-width="1.2" opacity=".5"/>
-        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#wglow)"/>
+        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#asm-wglow)"/>
         <circle cx="150" cy="150" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
 
-        <path id="th1" d="M150,150 C360,70 540,52 760,56" stroke="url(#t1)" stroke-width="2.4" fill="none"/>
-        <path id="th2" d="M150,150 C380,118 560,116 760,118" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
-        <path id="th3" d="M150,150 C380,186 560,188 760,188" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
-        <path id="th4" d="M150,150 C360,232 540,250 760,250" stroke="url(#t4)" stroke-width="2.2" fill="none"/>
+        <path id="asm-pth1" d="M150,150 C360,70 540,52 760,56" stroke="url(#asm-t1)" stroke-width="2.4" fill="none"/>
+        <path id="asm-pth2" d="M150,150 C380,118 560,116 760,118" stroke="url(#asm-t2)" stroke-width="2.2" fill="none"/>
+        <path id="asm-pth3" d="M150,150 C380,186 560,188 760,188" stroke="url(#asm-t3)" stroke-width="2.2" fill="none"/>
+        <path id="asm-pth4" d="M150,150 C360,232 540,250 760,250" stroke="url(#asm-t4)" stroke-width="2.2" fill="none"/>
 
-        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#th4"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#asm-pth1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#asm-pth2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#asm-pth4"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
       </svg>
 
       <div class="neighbours">
-        <div class="origin-chip" style="left:13.8%;top:50%">Map the access surface<small>you are here · the move before STRIDE</small></div>
+        <div class="origin-chip" style="left:13.8%;top:50%">The access surface<small>you are here · the move before STRIDE</small></div>
         <a class="nb"       href="stride-threat-model.html" style="left:74%;top:18.7%"><span class="sd"></span>Run the STRIDE threat model <span class="recipe-no">next move</span></a>
         <a class="nb"       href="tests-first-ground-truth.html" style="left:74%;top:39.3%"><span class="sd"></span>Tests-first ground truth <span class="recipe-no">same discipline</span></a>
         <a class="nb"       href="adr-under-pressure.html" style="left:74%;top:62.7%"><span class="sd"></span>ADR under pressure <span class="recipe-no">the hardening lands</span></a>
@@ -1059,7 +563,7 @@
 
   <!-- ============ FOOTER ============ -->
   <footer class="floor">
-    <span class="door">A door, not a destination — the map is read-only, the delta is yours. No platform, no vendor, no permission required.</span>
+    <span class="door">Count every door before you let STRIDE try the handles — two of them you draw yourself.</span>
     <span class="meta">The Big Picture · Pattern Language</span>
   </footer>
 

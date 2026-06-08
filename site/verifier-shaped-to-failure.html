@@ -530,16 +530,28 @@
   <!-- ============ PROSE BLOCK 1 — THE TRAP ===================== -->
   <!-- ============================================================ -->
   <section class="prose">
-    <div class="sec-label">The trap · the comfortable check vs. the fitted one</div>
-    <h2>The verifier you reach for and the one you <em>need</em> are rarely the same.</h2>
+    <div class="sec-label">The scar · a gate that fired green and saw nothing</div>
+    <h2>We built a gate to catch fabrication. It <em>passed</em> a fabrication.</h2>
 
     <p>
-      Here is the moment this pattern lives in: a long run came back, you read the artefact, and you named where it
-      went wrong. The agent quietly changed what it was solving (drift), or lost the thread across a long session
-      (rot), or shipped something that looks right and isn't (plausible-but-wrong). Diagnosis done. Now you reach
-      for a check — and the trap springs. You reach for the <b>comfortable</b> check, the one your hands already know,
-      not the one that fits the failure you just named. A shell-hook for a qualitative miss. An LLM-judge for
-      something a one-line lint would catch deterministically. Both fire green. Both catch nothing.
+      We learned this one on our own keyboard. Building this very field guide, a render agent produced one of the
+      cards and its coherence gate lit green — theme intact, structure clean, every neighbour link present. The card
+      went into the queue with a PASS. Except two of its <b>"connects-to" neighbour links pointed at cards that don't
+      exist</b> — slugs the agent had confabulated, plausible-but-fake, that would have 404'd the moment anyone
+      clicked them. Caught one gate past where they should have been, before anything shipped. The gate had done
+      exactly what we wrote it to do: it checked that every link was <em>present</em>. It never checked that any link
+      <em>resolved</em>. We had shaped the verifier to the wrong failure.
+    </p>
+
+    <p>
+      That is the whole pattern in one wound. A green light fired on a fabrication because it was never shaped to the
+      failure we actually feared — fake neighbours, not missing ones. So here is the moment this pattern lives in: a
+      long run comes back, you read the artefact, and you name where it went wrong. The agent quietly changed what it
+      was solving (drift), or lost the thread across a long session (rot), or shipped something that looks right and
+      isn't (plausible-but-wrong). Diagnosis done. Now you reach for a check — and the trap springs. You reach for the
+      <b>comfortable</b> check, the one your hands already know, not the one that fits the failure you just named. A
+      shell-hook for a qualitative miss. An LLM-judge for something a one-line lint would catch deterministically.
+      Both fire green. Both catch nothing.
     </p>
 
     <p>
@@ -893,7 +905,6 @@
   <section class="moves">
     <div class="beat-label"><b>Core moves</b></div>
     <div class="moves-head">
-      <h2>The action, in sequence</h2>
       <span class="lede">From reflexive check to failure-fitted instrument — reusable at every post-run review.</span>
     </div>
 
@@ -949,7 +960,7 @@
     <!-- the Monday-move / no-permission aside -->
     <p class="aside">
       <b>Monday move:</b> open the last long-run artefact you have. Name the one failure that cost you most — drift, rot, or plausible-but-wrong. Write three lines of a verifier: line one names the failure, line two names the shape (hook / judge / re-feed), line three is the check itself. Point it at that same artefact and confirm it fires.
-      <span class="mono">One file · your own repo · no platform · no CI gate · no sign-off · ~10 min.</span>
+      <span class="mono">One file · your own repo · runs from your keyboard · ~10 min.</span>
     </p>
   </section>
 
@@ -1021,7 +1032,7 @@
 
   <!-- ============ FOOTER ============ -->
   <footer class="floor">
-    <span class="door">A door, not a destination — the verifier is one file in your own repo. No platform, no CI gate, no permission required.</span>
+    <span class="door">Open your last broken run, name the failure it cost you, and write the three lines that catch it. That file is your first eval.</span>
     <span class="meta">The Big Picture · Pattern Language</span>
   </footer>
 

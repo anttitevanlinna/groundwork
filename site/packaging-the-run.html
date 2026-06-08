@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Package before you step away — Pattern · The Big Picture</title>
+<title>Packaging a run — Pattern · The Big Picture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -93,220 +93,80 @@
     box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.04) inset;
   }
   .hero-frame svg{display:block;width:100%;height:auto}
-  .hero-cap{
-    position:absolute;left:18px;bottom:13px;z-index:3;
-    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
-    color:var(--ink-dim);text-transform:uppercase;
-  }
-  .hero-cap b{color:var(--teal)}
 
-  /* ============ PROSE ============ */
-  .prose{
-    margin-top:34px;max-width:760px;
-  }
-  .prose h2{
-    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
-    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
-  }
-  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
-  .prose h2.amber em{color:var(--amber)}
-  .prose .sec-label{
+  /* ============ T2 PUNCH BODY ============ */
+  .punch{margin-top:40px;max-width:760px}
+  .punch .lede-beat{
     font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
     text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
-    margin-top:42px;
   }
-  .prose .sec-label::before{
+  .punch .lede-beat::before{
     content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
     box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
   }
-  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
-  .prose p{
-    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
-    letter-spacing:.002em;
+  .punch .lede-beat.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .punch h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:32px;color:var(--spore);
+    letter-spacing:-.012em;line-height:1.06;margin-top:14px;
   }
-  .prose p b{color:var(--spore);font-weight:500}
-  .prose p em{font-style:italic;color:var(--ink-dim)}
-  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
-  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
-  .prose p .mono{
+  .punch h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .punch h2.amber em{color:var(--amber)}
+  .punch p{
+    font-size:16px;line-height:1.64;color:var(--ink);margin-top:18px;letter-spacing:.002em;
+  }
+  .punch p b{color:var(--spore);font-weight:500}
+  .punch p em{font-style:italic;color:var(--ink-dim)}
+  .punch p .mono{
     font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
   }
-  .prose p .mono.amber{color:var(--amber)}
-  .prose .pull{
-    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
-    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
+  .punch p .mono.amber{color:var(--amber)}
+  .punch .turn{
+    margin:30px 0 6px;padding:0 0 0 20px;border-left:2px solid var(--teal-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:21px;line-height:1.38;
     color:var(--ink);max-width:680px;
   }
-  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
+  .punch .turn b{color:var(--teal);font-weight:500;font-style:normal}
 
-  /* ============ DIAGRAMS ============ */
-  .diagram{
-    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
-    background:
-      radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
-      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
-    position:relative;
-    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
+  /* the second beat — the three artefacts, inline as a single strip */
+  .kit-strip{
+    margin-top:32px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+    border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+    background:var(--hairline);
   }
-  .diagram svg{display:block;width:100%;height:auto}
-  .diagram .dcap{
-    padding:12px 20px 16px;border-top:1px solid var(--hairline);
-    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
-    color:var(--ink-dim);letter-spacing:.003em;
-    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  .kit-cell{
+    padding:18px 19px 20px;
+    background:linear-gradient(180deg, rgba(8,17,18,.7), rgba(5,8,10,.6));
   }
-  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
-  .diagram .dcap .num{
-    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
-    letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
+  .kit-cell .fname{
+    font-family:'Spline Sans Mono',monospace;font-size:12.5px;letter-spacing:.01em;color:var(--teal);
   }
+  .kit-cell.amber .fname{color:var(--amber)}
+  .kit-cell .closes{
+    font-family:'Spline Sans Mono',monospace;font-size:8.5px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--ink-faint);margin-top:9px;
+  }
+  .kit-cell .closes b{color:var(--ink-dim);font-weight:500}
+  .kit-cell p{font-size:13px;line-height:1.5;color:var(--ink-dim);margin-top:9px}
+  .kit-cell p b{color:var(--ink);font-weight:500}
 
-  /* ============ RECIPE BEAT LABELS ============ */
-  .beat-label{
-    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
-    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  /* the woven monday line — NOT a mono aside box */
+  .now{
+    margin-top:30px;font-size:16px;line-height:1.62;color:var(--ink);max-width:720px;
   }
-  .beat-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
-    box-shadow:0 0 9px rgba(63,224,200,.6);
-  }
-  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
-  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+  .now b{color:var(--spore);font-weight:500}
+  .now .do{color:var(--teal);font-weight:500}
 
-  /* ============ USE WHEN + BUILD + TEST PLATES ============ */
-  .plates{
-    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
-  }
-  .plate{
-    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
-    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
-  }
-  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
-  .plate .body b{color:var(--spore);font-weight:500}
-  .plate .body .grey{color:var(--grey)}
-  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
-  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
-  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
-
-  /* ============ CORE MOVES ============ */
-  .moves{margin-top:46px}
-  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
-  .moves-head h2{
-    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
-  }
-  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
-  .move-rail{
-    margin-top:20px;position:relative;
-    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
-  }
-  .move-rail .thread{
-    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
-    background:linear-gradient(90deg,
-      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
-      rgba(63,224,200,.7) 50%, rgba(255,179,71,.65) 94%, rgba(255,179,71,0) 100%);
-  }
-  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
-  .step:first-child{padding-left:0}
-  .step .bead{
-    width:42px;height:42px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
-    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
-    margin-bottom:13px;
-  }
-  .step:nth-child(5) .bead,
-  .step:nth-child(6) .bead{
-    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
-  }
-  .step h3{
-    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
-  }
-  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
-  .step p b{color:var(--ink);font-weight:500}
-
-  .compound{
-    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
-    padding:18px 22px;position:relative;overflow:hidden;
-    background:
-      radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.07), transparent 60%),
-      rgba(8,17,18,.55);
-    display:flex;align-items:center;gap:20px;
-  }
-  .compound .loop-ico{flex:none}
-  .compound .ctext{flex:1}
-  .compound .ctext .cyc{
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
-  }
-  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
-  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
-  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
-
-  .aside{
-    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
-    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
-  }
-  .aside b{color:var(--amber);font-weight:500}
-  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
-
-  /* ============ WHY ============ */
-  .why{
-    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
-    padding:26px 30px 28px;position:relative;overflow:hidden;
-    background:
-      radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
-      radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
-      rgba(7,14,15,.6);
-  }
-  .why .beat-label{margin-bottom:14px}
-  .why .principle-block{
-    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
-  }
-  .why .principle-label{
-    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
-    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
-  }
-  .why .principle-line{
-    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
-    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
-  }
-  .why .principle-line em{font-style:italic;color:var(--teal)}
-  .why .quote{
+  /* the closing recode line */
+  .seal{
+    margin-top:38px;padding:24px 0 6px;border-top:1px solid var(--hairline);
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--teal);letter-spacing:.004em;
-    text-shadow:0 0 30px rgba(63,224,200,.26);max-width:840px;
+    font-size:clamp(21px,3vw,27px);line-height:1.22;color:var(--teal);
+    text-shadow:0 0 28px rgba(63,224,200,.22);max-width:820px;
   }
-  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
-  .why .gloss b{color:var(--spore);font-weight:500}
-  .why .gloss em{font-style:italic;color:var(--ink-dim)}
-  .why .gloss + .gloss{margin-top:12px}
-  .why .corollary{
-    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
-    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
-  }
-  .why .corollary .sd{
-    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
-    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
-  }
-
-  /* ============ PRACTICE PANEL ============ */
-  .practice{
-    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
-    padding:22px 26px 24px;
-    background:
-      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
-      rgba(8,15,17,.5);
-  }
-  .practice .beat-label{margin-bottom:12px}
-  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
-  .practice p b{color:var(--spore);font-weight:500}
-  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
-  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+  .seal b{color:var(--spore);font-style:normal;font-weight:500}
 
   /* ============ CONNECTS TO ============ */
-  .connects{margin-top:52px}
+  .connects{margin-top:54px}
   .connects h2{
     font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
   }
@@ -335,15 +195,6 @@
   .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
   .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
   .nb:hover .sd{animation:throb 1s ease-in-out infinite}
-  .nb.soon{opacity:.62}
-  .nb.soon::after{
-    content:"soon";
-    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--ink-faint);
-    border:1px solid var(--ink-faint);border-radius:20px;
-    padding:2px 7px 3px;margin-left:4px;
-  }
-  .nb.soon:hover{opacity:1}
   .origin-chip{
     position:absolute;transform:translate(-50%,-50%);
     font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
@@ -369,25 +220,13 @@
     text-transform:uppercase;color:var(--ink-faint);
   }
 
-  @keyframes breathe{
-    0%,100%{opacity:.55}
-    50%{opacity:1}
-  }
+  @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
   .breathe{animation:breathe 4.2s ease-in-out infinite}
 
-  @media (max-width:860px){
-    .plates{grid-template-columns:1fr 1fr}
-    .plate.use{grid-column:1 / -1}
-  }
   @media (max-width:780px){
-    .plates{grid-template-columns:1fr}
-    .plate.use{grid-column:1}
-    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
-    .move-rail .thread{display:none}
-    .step{padding:0}
-    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .kit-strip{grid-template-columns:1fr}
     .neighbours .nb{font-size:11px;padding:6px 10px}
-    .prose p{font-size:14.5px}
+    .punch p{font-size:15px}
   }
 </style>
 </head>
@@ -396,713 +235,190 @@
 
   <!-- ============ BREADCRUMB ============ -->
   <nav class="crumb">
-    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Package before you step away</span>
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Packaging a run</span>
   </nav>
 
   <!-- ============ PATTERN NAME + ESSENCE ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe · software lane · <span class="pat-no">The Work</span></div>
-    <h1>Package before you <em>step away</em></h1>
-    <p class="principle">The principle: <b>Packaging is steering, not bureaucracy</b> — the agent isn't generic; your task constraints are.</p>
+    <h1>Packaging a <em>run</em></h1>
+    <p class="principle">The principle: <b>the prompt was never the thing you write</b> — the packaging is, and the short prompt only invokes it.</p>
     <p class="essence">
-      Before you send a long-running agent task, <b>give it a stable reference to re-orient against</b> — or it will drift, confabulate, and return something plausible that isn't what you asked for.
+      You think the work of sending off a long agent task is wording the prompt. It isn't.
+      <b>The wording barely matters; what the agent finds on disk decides everything.</b>
+      Move the effort there and you can step away.
     </p>
   </header>
 
-  <!-- ============ HERO: unpackaged vs packaged side-by-side ============ -->
+  <!-- ============ HERO: the single image — short prompt, three artefacts doing the work ============ -->
   <div class="hero-frame">
-    <svg viewBox="0 0 1080 420" role="img" aria-label="Two Claude Code sessions: left shows a bare one-line prompt with no surrounding files; right shows the same short prompt but the session lists reference.md, plan.md, and verifier.sh, and the agent's first response is reading reference.md to confirm goal.">
+    <svg viewBox="0 0 1080 440" role="img" aria-label="A short two-line prompt sits small at the centre. Three glowing context artefacts — reference.md, plan.md, and verifier.sh — feed gradient spines into it, and a single bright spine carries the agent's run outward to a diff artefact. The prompt is tiny; the packaging around it is what glows.">
       <defs>
-        <radialGradient id="hwell" cx="75%" cy="50%" r="65%">
-          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".18"/>
-          <stop offset="50%" stop-color="#3fe0c8" stop-opacity=".06"/>
+        <radialGradient id="pkr-well" cx="50%" cy="46%" r="62%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".14"/>
+          <stop offset="46%" stop-color="#3fe0c8" stop-opacity=".06"/>
           <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
         </radialGradient>
-        <linearGradient id="diffGrad" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".4"/>
+        <linearGradient id="pkr-feed" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#3fe0c8" stop-opacity=".85"/>
+        </linearGradient>
+        <linearGradient id="pkr-feed-amber" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ffb347" stop-opacity="0"/>
           <stop offset="100%" stop-color="#ffb347" stop-opacity=".85"/>
         </linearGradient>
-        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-      </defs>
-      <rect width="1080" height="420" fill="url(#hwell)"/>
-
-      <!-- LEFT: unpackaged -->
-      <g>
-        <text x="44" y="34" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2.5" fill="#5d6a68">UNPACKAGED · BARE PROMPT</text>
-        <rect x="44" y="52" width="456" height="338" rx="12" fill="rgba(8,17,18,.72)" stroke="rgba(93,106,104,.35)" stroke-width="1"/>
-        <!-- window chrome -->
-        <circle cx="70" cy="72" r="5" fill="#39423f"/>
-        <circle cx="86" cy="72" r="5" fill="#39423f"/>
-        <circle cx="102" cy="72" r="5" fill="#39423f"/>
-        <text x="240" y="76" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#3b524e">Claude Code · new session</text>
-
-        <!-- files in context: nothing -->
-        <text x="64" y="106" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3b524e">CONTEXT FILES</text>
-        <text x="64" y="124" font-family="'Spline Sans',sans-serif" font-size="13" fill="#39423f" font-style="italic">(none)</text>
-
-        <!-- the bare prompt -->
-        <rect x="64" y="148" width="416" height="44" rx="8" fill="rgba(93,106,104,.12)" stroke="rgba(93,106,104,.28)"/>
-        <text x="76" y="168" font-family="'Spline Sans',sans-serif" font-size="13" fill="#cfe6e0">Refactor the API layer to use the new client.</text>
-        <text x="76" y="183" font-family="'Spline Sans',sans-serif" font-size="12" fill="#6f8a85">Make sure nothing breaks.</text>
-
-        <!-- the long run zone -->
-        <rect x="64" y="208" width="416" height="116" rx="8" fill="rgba(5,8,10,.45)" stroke="rgba(93,106,104,.14)"/>
-        <text x="240" y="244" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">LONG RUN · 2.4 HOURS</text>
-        <g stroke="#39423f" stroke-width="1.4" opacity=".6">
-          <path d="M100,264 C160,270 200,255 260,268"/>
-          <path d="M260,268 C320,282 360,258 420,265"/>
-          <path d="M420,265 C450,268 460,270 480,268"/>
-        </g>
-        <text x="240" y="302" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#5d6a68" font-style="italic">drifting… re-reading from recency, not intent</text>
-
-        <!-- ambiguous result -->
-        <rect x="64" y="340" width="416" height="34" rx="8" fill="rgba(93,106,104,.12)" stroke="rgba(93,106,104,.25)"/>
-        <text x="240" y="362" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#6f8a85" font-style="italic">"Done! Refactored 18 files, tests passing." <tspan fill="#3b524e">— plausible?</tspan></text>
-      </g>
-
-      <!-- DIVIDER -->
-      <g>
-        <line x1="540" y1="52" x2="540" y2="388" stroke="url(#diffGrad)" stroke-width="1.6"/>
-        <text x="540" y="228" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e" transform="rotate(-90 540 228)">PACKAGING IS THE ONLY CHANGED VARIABLE</text>
-      </g>
-
-      <!-- RIGHT: packaged -->
-      <g>
-        <text x="568" y="34" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2.5" fill="#3fe0c8">PACKAGED · SAME SHORT PROMPT</text>
-        <rect x="568" y="52" width="472" height="338" rx="12" fill="rgba(8,17,18,.72)" stroke="rgba(63,224,200,.28)" stroke-width="1"/>
-        <circle cx="594" cy="72" r="5" fill="#1d8d80"/>
-        <circle cx="610" cy="72" r="5" fill="#1d8d80"/>
-        <circle cx="626" cy="72" r="5" fill="#1d8d80"/>
-        <text x="804" y="76" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#3b524e">Claude Code · new session</text>
-
-        <!-- context files loaded -->
-        <text x="586" y="106" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#1d8d80">CONTEXT FILES — AUTO-LOADED</text>
-        <g font-family="'Spline Sans Mono',monospace" font-size="11.5" fill="#3fe0c8">
-          <text x="586" y="125">📄 reference.md</text>
-          <text x="586" y="142" fill="#9bffe9">📄 plan.md</text>
-          <text x="586" y="159" fill="#ffb347">⚙ verifier.sh</text>
-        </g>
-
-        <!-- same short prompt -->
-        <rect x="586" y="174" width="432" height="44" rx="8" fill="rgba(63,224,200,.07)" stroke="rgba(63,224,200,.25)"/>
-        <text x="598" y="194" font-family="'Spline Sans',sans-serif" font-size="13" fill="#cfe6e0">Refactor the API layer to use the new client.</text>
-        <text x="598" y="210" font-family="'Spline Sans',sans-serif" font-size="12" fill="#6f8a85">Make sure nothing breaks.</text>
-
-        <!-- agent first response -->
-        <rect x="586" y="232" width="432" height="76" rx="8" fill="rgba(63,224,200,.07)" stroke="rgba(63,224,200,.22)" stroke-width="1.3"/>
-        <text x="598" y="254" font-family="'Fraunces',serif" font-style="italic" font-size="13.5" fill="#9bffe9">Reading reference.md to confirm goal…</text>
-        <text x="598" y="274" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#cfe6e0">Goal: replace HTTPClient in all service layers.</text>
-        <text x="598" y="292" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#cfe6e0">Done criteria: verifier.sh exits 0. Starting now.</text>
-
-        <!-- verifier fires -->
-        <rect x="586" y="322" width="432" height="34" rx="8" fill="rgba(255,179,71,.08)" stroke="rgba(255,179,71,.38)" stroke-width="1.2"/>
-        <text x="804" y="344" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".18em" fill="#ffb347">✓ VERIFIER FIRED · DIFF ARTEFACT VS. BASELINE</text>
-
-        <circle cx="1028" cy="76" r="3.5" fill="#aeffee" class="breathe"/>
-      </g>
-
-      <text x="540" y="410" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">THE PROMPT IS IDENTICALLY SHORT. THE DIFFERENCE IS WHAT THE AGENT FINDS ON DISK.</text>
-    </svg>
-    <div class="hero-cap">Same task. Same prompt length. <b>The packaging does the explaining; the prompt invokes it.</b></div>
-  </div>
-
-  <!-- ============================================================ -->
-  <!-- ============ PROSE BLOCK 1 — THE PROBLEM =================== -->
-  <!-- ============================================================ -->
-  <section class="prose">
-    <div class="sec-label">The failure you're setting up · before you type the first word</div>
-    <h2>The un-packaged run was <em>always going to drift</em>.</h2>
-
-    <p>
-      Long-running agent tasks have a physics problem. The agent's context window fills from the bottom:
-      recent tokens count more than early ones. <b>Send a task with nothing but a prompt and the goal
-      degrades over time</b> — not because the model is bad, but because the model navigates from recency
-      rather than from intent. By hour two of a multi-file refactor, the carefully-worded objective you
-      typed at the start is scroll archaeology. The agent improvises from the most recent tool call. It
-      has no mechanism to re-anchor.
-    </p>
-
-    <p>
-      The three failure modes that produce most of the damage in long runs are distinct enough to deserve
-      names (<em class="teal">convergent practitioner pattern</em> — not an official Claude Code taxonomy, but
-      named consistently by Ronacher, Cherny, Klaassen and others who've run this into the wall):
-      <b>drift</b> (the goal shifts mid-run as recency overwrites intent),
-      <b>rot</b> (context degrades across session restarts — the agent cold-starts with no state and
-      re-invents the plan), and <b>plausible-but-wrong</b> (the output looks correct but hasn't been
-      checked against any stable definition of done — RLHF will happily frame a partial failure as a
-      partial success). The three-part packaging kit maps one intervention to each failure mode. That's
-      not coincidence; it's how the kit earns its shape.
-    </p>
-  </section>
-
-  <!-- ============ DIAGRAM 1 — UNPACKAGED vs PACKAGED contrast ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 460" role="img" aria-label="Two parallel horizontal flows. Top: bare prompt, long run, plausible output, ambiguous result. Bottom: same prompt plus reference, plan.md, verifier, same long run, verifier fires, diff artefact versus baseline. Single vertical connector labelled same task same SHA packaging is the only changed variable.">
-      <defs>
-        <linearGradient id="d1-grey" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#5d6a68" stop-opacity=".4"/>
-          <stop offset="100%" stop-color="#5d6a68" stop-opacity=".9"/>
-        </linearGradient>
-        <linearGradient id="d1-teal" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#1d8d80" stop-opacity=".5"/>
-          <stop offset="60%" stop-color="#3fe0c8" stop-opacity=".9"/>
-          <stop offset="100%" stop-color="#ffb347" stop-opacity=".85"/>
-        </linearGradient>
-        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME TASK · SAME SHA · PACKAGING IS THE ONLY CHANGED VARIABLE</text>
-
-      <!-- TOP TRACK: unpackaged -->
-      <g>
-        <text x="40" y="68" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#5d6a68">UNPACKAGED</text>
-        <!-- bare prompt node -->
-        <rect x="40" y="78" width="130" height="48" rx="9" fill="rgba(8,17,18,.7)" stroke="rgba(93,106,104,.38)"/>
-        <text x="105" y="97" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">BARE PROMPT</text>
-        <text x="105" y="114" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85" font-style="italic">one-liner task</text>
-        <!-- flow line -->
-        <path d="M172,102 L240,102" stroke="url(#d1-grey)" stroke-width="1.8" fill="none"/>
-        <polygon points="240,102 231,97 231,107" fill="#5d6a68" opacity=".7"/>
-        <!-- long run -->
-        <rect x="242" y="78" width="160" height="48" rx="9" fill="rgba(8,17,18,.7)" stroke="rgba(93,106,104,.28)"/>
-        <text x="322" y="97" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#3b524e">LONG RUN</text>
-        <text x="322" y="114" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#5d6a68" font-style="italic">navigates from recency</text>
-        <!-- drift indicator -->
-        <g stroke="#39423f" stroke-width="1.2" opacity=".7">
-          <path d="M272,108 Q292,100 312,112 Q332,124 352,106 Q372,88 392,100"/>
-        </g>
-        <!-- flow -->
-        <path d="M404,102 L480,102" stroke="url(#d1-grey)" stroke-width="1.8" fill="none"/>
-        <polygon points="480,102 471,97 471,107" fill="#5d6a68" opacity=".7"/>
-        <!-- plausible output -->
-        <rect x="482" y="78" width="160" height="48" rx="9" fill="rgba(8,17,18,.7)" stroke="rgba(93,106,104,.28)"/>
-        <text x="562" y="97" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#3b524e">"PLAUSIBLE" OUTPUT</text>
-        <text x="562" y="114" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#5d6a68" font-style="italic">sounds right. is it?</text>
-        <!-- flow -->
-        <path d="M644,102 L730,102" stroke="url(#d1-grey)" stroke-width="1.8" fill="none"/>
-        <polygon points="730,102 721,97 721,107" fill="#5d6a68" opacity=".7"/>
-        <!-- ambiguous result -->
-        <rect x="732" y="78" width="180" height="48" rx="9" fill="rgba(8,17,18,.7)" stroke="rgba(93,106,104,.38)"/>
-        <text x="822" y="97" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">AMBIGUOUS RESULT</text>
-        <text x="822" y="114" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#3b524e" font-style="italic">no baseline to diff against</text>
-        <!-- failure modes float above -->
-        <g font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".16em" fill="#39423f">
-          <text x="280" y="152">↑ DRIFT</text>
-          <text x="490" y="152">↑ PLAUSIBLE-BUT-WRONG</text>
-          <text x="734" y="152">↑ NO VERIFIER</text>
-        </g>
-      </g>
-
-      <!-- VERTICAL CONNECTOR -->
-      <g>
-        <line x1="540" y1="170" x2="540" y2="292" stroke="rgba(63,224,200,.3)" stroke-width="1.4" stroke-dasharray="4 5"/>
-        <text x="544" y="236" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#1d8d80">SAME TASK</text>
-        <text x="544" y="252" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#1d8d80">SAME SHA</text>
-        <text x="544" y="268" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#1d8d80">↕ PACKAGING</text>
-      </g>
-
-      <!-- BOTTOM TRACK: packaged -->
-      <g>
-        <text x="40" y="320" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".22em" fill="#3fe0c8">PACKAGED</text>
-        <!-- prompt + kit node -->
-        <rect x="40" y="330" width="130" height="64" rx="9" fill="rgba(8,17,18,.8)" stroke="rgba(63,224,200,.35)" filter="url(#d1-glow)"/>
-        <text x="105" y="350" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#3fe0c8">SAME PROMPT</text>
-        <text x="105" y="366" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#9bffe9">+ reference.md</text>
-        <text x="105" y="380" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#9bffe9">+ plan.md + verifier</text>
-        <!-- flow -->
-        <path id="d1-bot" d="M172,362 L242,362" stroke="url(#d1-teal)" stroke-width="1.8" fill="none"/>
-        <polygon points="242,362 233,357 233,367" fill="#3fe0c8" opacity=".8"/>
-        <!-- long run (same) -->
-        <rect x="244" y="330" width="160" height="64" rx="9" fill="rgba(8,17,18,.8)" stroke="rgba(63,224,200,.28)"/>
-        <text x="324" y="350" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#3b524e">LONG RUN</text>
-        <text x="324" y="368" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#9bffe9" font-style="italic">re-reads plan.md on drift</text>
-        <text x="324" y="384" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="10" fill="#6f8a85" font-style="italic">intent preserved</text>
-        <!-- smooth flow line -->
-        <g stroke="#3fe0c8" stroke-width="1" opacity=".5">
-          <path d="M268,358 Q308,348 348,362 Q388,376 406,358"/>
-        </g>
-        <!-- flow -->
-        <path d="M406,362 L482,362" stroke="url(#d1-teal)" stroke-width="1.8" fill="none"/>
-        <polygon points="482,362 473,357 473,367" fill="#3fe0c8" opacity=".8"/>
-        <!-- verifier fires -->
-        <rect x="484" y="330" width="160" height="64" rx="9" fill="rgba(8,17,18,.8)" stroke="rgba(255,179,71,.4)"/>
-        <text x="564" y="350" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#ffb347">VERIFIER FIRES</text>
-        <text x="564" y="368" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#cfe6e0" font-style="italic">pass or fail — both signal</text>
-        <text x="564" y="384" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="10" fill="#a86a1f" font-style="italic">not just self-report</text>
-        <!-- flow -->
-        <path d="M646,362 L730,362" stroke="url(#d1-teal)" stroke-width="1.8" fill="none"/>
-        <polygon points="730,362 721,357 721,367" fill="#ffb347" opacity=".8"/>
-        <!-- diff artefact -->
-        <rect x="732" y="330" width="180" height="64" rx="9" fill="rgba(8,17,18,.8)" stroke="rgba(255,179,71,.45)" filter="url(#d1-glow)"/>
-        <text x="822" y="350" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#ffb347">DIFF ARTEFACT</text>
-        <text x="822" y="368" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#eafff9" font-style="italic">vs. un-packaged baseline</text>
-        <text x="822" y="384" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".16em" fill="#3fe0c8">← THE LESSON</text>
-        <!-- closed-failure labels -->
-        <g font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".16em" fill="#1d8d80">
-          <text x="248" y="414">↑ ROT + DRIFT CLOSED</text>
-          <text x="488" y="414">↑ PLAUSIBLE-BUT-WRONG CLOSED</text>
-        </g>
-        <!-- pulse dot -->
-        <circle r="3" fill="#aeffee">
-          <animateMotion dur="5s" repeatCount="indefinite" path="M172,362 C350,348 530,380 730,362"/>
-          <animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/>
-        </circle>
-      </g>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 01</span>Three failure modes, three closures. <b>Drift · Rot · Plausible-but-wrong</b> — each with one named intervention. <em>Convergent practitioner pattern (Ronacher, Cherny, Klaassen) — not official Claude Code taxonomy.</em></div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 2 — from ephemeral to durable ============ -->
-  <section class="prose">
-    <div class="sec-label">The upgrade · from ephemeral intent to durable intent</div>
-    <h2>Three files. <em>One for each failure mode.</em></h2>
-
-    <p>
-      The packaging kit has three named artefacts at the worktree root and they earn their shape from
-      the failure taxonomy (<em class="teal">convergent practitioner pattern</em>, not vendor-specified):
-      <b>reference.md</b> closes drift — it pins the goal as a testable outcome, the constraints the
-      agent must not violate, and the definition of done. Task-local; lives next to <span class="mono">plan.md</span>,
-      not inside your rules files (those are for the codebase, not this task).
-      <b>plan.md</b> closes rot — it carries state across session restarts and cold starts. The agent reads
-      it when it loses the thread mid-run; you never have to re-explain where it got to. And the
-      <b>verifier at a stable path</b> closes plausible-but-wrong — three shapes exist (shell-hook for
-      deterministic failures, LLM-judge for qualitative drift, Ralph re-feed for goal drift), and you
-      pick the one against your dominant failure, not the safest one.
-    </p>
-
-    <p class="pull">
-      <b>A vague prompt is a prayer. A packaged run is a contract.</b>
-    </p>
-
-    <p>
-      The SHA pin is what makes the un-packaged baseline comparable. Before you touch anything else,
-      commit the current state on a named branch and record the short SHA. This isn't ceremony — it's
-      the only way to run both tracks (un-packaged and packaged) against the same starting codebase
-      and read the diff as a clean signal rather than a confound. <b>Fork from the pinned SHA</b> when
-      you re-send packaged. The contrast between the two runs is the lesson. Without the pin, the two
-      runs aren't comparable, and the lesson dissolves.
-    </p>
-  </section>
-
-  <!-- ============ DIAGRAM 2 — UPGRADE: ephemeral → durable ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 380" role="img" aria-label="Three steps on a diagonal: bare prompt at bottom left captures nothing; reference.md and plan.md in the middle close drift and rot; verifier at stable path at top right closes plausible-but-wrong. Arrow from step three loops back to step one labelled next run starts here richer.">
-      <defs>
-        <linearGradient id="d2-diag" x1="0" y1="1" x2="1" y2="0">
-          <stop offset="0%" stop-color="#5d6a68" stop-opacity=".5"/>
-          <stop offset="50%" stop-color="#3fe0c8" stop-opacity=".8"/>
+        <linearGradient id="pkr-out" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".15"/>
+          <stop offset="60%" stop-color="#3fe0c8" stop-opacity=".8"/>
           <stop offset="100%" stop-color="#ffb347" stop-opacity=".9"/>
         </linearGradient>
-        <radialGradient id="d2-bead1" cx="35%" cy="30%" r="70%">
-          <stop offset="0" stop-color="#6f8a85"/>
-          <stop offset=".6" stop-color="#39423f"/>
-          <stop offset="1" stop-color="#1a2624"/>
-        </radialGradient>
-        <radialGradient id="d2-bead2" cx="35%" cy="30%" r="70%">
+        <radialGradient id="pkr-node" cx="35%" cy="30%" r="75%">
           <stop offset="0" stop-color="#9bffe9"/>
           <stop offset=".55" stop-color="#3fe0c8"/>
           <stop offset="1" stop-color="#1d8d80"/>
         </radialGradient>
-        <radialGradient id="d2-bead3" cx="35%" cy="30%" r="70%">
-          <stop offset="0" stop-color="#ffe0a8"/>
-          <stop offset=".55" stop-color="#ffb347"/>
-          <stop offset="1" stop-color="#a86a1f"/>
-        </radialGradient>
-        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%">
+        <filter id="pkr-glow" x="-70%" y="-70%" width="240%" height="240%">
           <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
       </defs>
+      <rect width="1080" height="440" fill="url(#pkr-well)"/>
 
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">EPHEMERAL → DURABLE · ONE STEP PER FAILURE MODE CLOSED</text>
+      <!-- the three feeding spines, fading transparent -> bright into the prompt -->
+      <path d="M196,120 C320,150 380,196 470,216" stroke="url(#pkr-feed)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <path d="M168,300 C300,288 392,250 470,232" stroke="url(#pkr-feed)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <path d="M210,392 C330,360 400,280 472,242" stroke="url(#pkr-feed-amber)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
 
-      <!-- diagonal thread -->
-      <path d="M120,320 C240,280 460,240 640,160 C720,124 780,100 920,68" stroke="url(#d2-diag)" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-
-      <!-- pulse dot travelling up -->
+      <!-- the outward run spine -->
+      <path d="M610,224 C740,224 820,224 916,224" stroke="url(#pkr-out)" stroke-width="2.8" fill="none" stroke-linecap="round"/>
       <circle r="3.2" fill="#aeffee">
-        <animateMotion dur="6s" repeatCount="indefinite" path="M120,320 C240,280 460,240 640,160 C720,124 780,100 920,68"/>
-        <animate attributeName="opacity" values="0;1;1;0" dur="6s" repeatCount="indefinite"/>
+        <animateMotion dur="4.4s" repeatCount="indefinite" path="M610,224 C740,224 820,224 916,224"/>
+        <animate attributeName="opacity" values="0;1;1;0" dur="4.4s" repeatCount="indefinite"/>
       </circle>
 
-      <!-- STEP 1 — bare prompt -->
-      <g transform="translate(120,320)">
-        <circle r="26" fill="url(#d2-bead1)" cx="0" cy="0"/>
-        <text x="0" y="5" text-anchor="middle" font-family="'Fraunces',serif" font-size="17" fill="#6f8a85" font-weight="500">①</text>
-        <text x="0" y="354" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#5d6a68" transform="translate(0,-318)">Bare prompt</text>
-        <text x="0" y="370" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#39423f" font-style="italic" transform="translate(0,-318)">ephemeral intent</text>
-        <text x="60" y="10" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#39423f">CATCHES NOTHING</text>
-        <text x="60" y="26" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#3b524e">all three failure modes open</text>
-      </g>
-
-      <!-- STEP 2 — reference + plan.md -->
-      <g transform="translate(640,160)">
-        <circle r="26" fill="url(#d2-bead2)" cx="0" cy="0" filter="url(#d2-glow)"/>
-        <text x="0" y="5" text-anchor="middle" font-family="'Fraunces',serif" font-size="17" fill="#05080a" font-weight="500">②</text>
-        <text x="0" y="-42" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#eafff9">reference.md + plan.md</text>
-        <text x="0" y="-26" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#9bffe9" font-style="italic">durable intent · survives session restart</text>
-        <text x="36" y="10" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3fe0c8">CLOSES DRIFT + ROT</text>
-        <text x="36" y="26" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">plausible-but-wrong still open</text>
-      </g>
-
-      <!-- STEP 3 — verifier -->
-      <g transform="translate(920,68)">
-        <circle r="26" fill="url(#d2-bead3)" cx="0" cy="0" filter="url(#d2-glow)"/>
-        <text x="0" y="5" text-anchor="middle" font-family="'Fraunces',serif" font-size="17" fill="#05080a" font-weight="500">③</text>
-        <text x="0" y="-42" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#fff4e2">verifier at stable path</text>
-        <text x="0" y="-26" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#ffb347" font-style="italic">durable quality gate · fires on every re-run</text>
-        <text x="-200" y="46" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#ffb347">CLOSES PLAUSIBLE-BUT-WRONG</text>
-        <text x="-200" y="62" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">all three failure modes closed</text>
-      </g>
-
-      <!-- loop back label -->
+      <!-- ARTEFACT 1: reference.md -->
       <g>
-        <path d="M960,68 C980,50 1020,40 1040,80 C1050,100 1040,300 1020,340 C1000,370 200,370 148,348" stroke="rgba(63,224,200,.25)" stroke-width="1.2" fill="none" stroke-dasharray="5 7"/>
-        <polygon points="148,348 140,338 158,340" fill="rgba(63,224,200,.4)"/>
-        <text x="1020" y="210" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#1d8d80" transform="rotate(90 1020 210)">NEXT RUN STARTS HERE · RICHER</text>
+        <circle cx="156" cy="108" r="40" fill="rgba(8,17,18,.78)" stroke="rgba(63,224,200,.3)" stroke-width="1.2" filter="url(#pkr-glow)"/>
+        <text x="156" y="103" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#3fe0c8">reference</text>
+        <text x="156" y="118" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#9bffe9">.md</text>
+        <text x="156" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#1d8d80">PINS THE GOAL</text>
+      </g>
+      <!-- ARTEFACT 2: plan.md -->
+      <g>
+        <circle cx="124" cy="300" r="40" fill="rgba(8,17,18,.78)" stroke="rgba(63,224,200,.3)" stroke-width="1.2" filter="url(#pkr-glow)"/>
+        <text x="124" y="296" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#3fe0c8">plan</text>
+        <text x="124" y="311" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#9bffe9">.md</text>
+        <text x="124" y="358" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#1d8d80">CARRIES STATE</text>
+      </g>
+      <!-- ARTEFACT 3: verifier -->
+      <g>
+        <circle cx="178" cy="396" r="40" fill="rgba(8,17,18,.78)" stroke="rgba(255,179,71,.36)" stroke-width="1.2" filter="url(#pkr-glow)"/>
+        <text x="178" y="392" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#ffb347">verifier</text>
+        <text x="178" y="407" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#ffe0a8">.sh</text>
+      </g>
+      <text x="178" y="436" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#a86a1f">CHECKS DONE</text>
+
+      <!-- THE PROMPT — small, deliberately unremarkable -->
+      <g>
+        <rect x="470" y="196" width="140" height="56" rx="9" fill="rgba(93,106,104,.1)" stroke="rgba(93,106,104,.34)" stroke-width="1"/>
+        <text x="540" y="183" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".22em" fill="#5d6a68">THE PROMPT</text>
+        <text x="540" y="220" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#6f8a85">Refactor the API layer.</text>
+        <text x="540" y="237" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#5d6a68" font-style="italic">— two short lines, that's all</text>
       </g>
 
-      <text x="40" y="362" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">PICK THE VERIFIER SHAPE AGAINST YOUR DOMINANT FAILURE — NOT THE SAFEST ONE, THE RIGHT ONE.</text>
+      <!-- THE OUTPUT — the diff artefact -->
+      <g>
+        <circle cx="960" cy="224" r="44" fill="rgba(8,17,18,.82)" stroke="rgba(255,179,71,.42)" stroke-width="1.3" filter="url(#pkr-glow)"/>
+        <text x="960" y="219" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em" fill="#ffb347">diff</text>
+        <text x="960" y="234" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#eafff9">artefact</text>
+        <circle cx="996" cy="190" r="3.5" fill="#aeffee" class="breathe"/>
+        <text x="960" y="288" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#a86a1f">CHECKED, NOT CLAIMED</text>
+      </g>
+
+      <text x="540" y="36" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".26em" fill="#3b524e">THE EFFORT MOVED OFF THE PROMPT AND ONTO THE THREE THINGS AROUND IT</text>
     </svg>
-    <div class="dcap"><span class="num">Process diagram · 02</span>Three steps, three failure modes closed. <b>Shell-hook · LLM-judge · Ralph re-feed</b> — pick the verifier shape against the dominant failure. <em>Convergent practitioner pattern — not official Claude Code taxonomy.</em></div>
   </div>
 
-  <!-- ============ PROSE BLOCK 3 — compounding ============ -->
-  <section class="prose">
-    <div class="sec-label">The compounding loop · what changes between passes</div>
-    <h2>The kit gets <em>sharper every send-off</em>.</h2>
+  <!-- ============ T2 PUNCH — BEAT ONE: the recode ============ -->
+  <section class="punch">
+    <div class="lede-beat">The thing you were optimising · was the wrong thing</div>
+    <h2>The prompt is the <em>least</em> of it.</h2>
 
     <p>
-      The first reference.md is never exactly right. The first verifier catches the obvious; it misses
-      the interesting. <b>You only discover what the kit was missing by running the task and reading what
-      fired.</b> The compounding move is: after the run, read the contrast (packaged vs. un-packaged),
-      then tighten reference.md against what drifted, recalibrate the verifier against what it missed or
-      over-triggered on, and improve plan.md's format based on where the agent got confused mid-run.
-      Then re-send. Each pass, the kit earns its shape from real failure rather than prophylactic policy —
-      and the verifier becomes the first eval, which is the foundation the team-scale eval practice later
-      builds on.
+      Here is the move most people get backwards. They labour over the prompt — phrasing the objective just
+      so, stacking caveats, hoping a perfect paragraph will survive a four-hour run. It won't.
+      A long agent task has a physics problem: <b>the context window fills from the bottom</b>, recent tokens
+      outweigh early ones, and by hour two the careful objective you typed is scroll archaeology. The agent
+      navigates from recency, not intent. No paragraph, however well-built, anchors against that.
+    </p>
+
+    <p class="turn">
+      <b>So stop writing the prompt and start building the run.</b> The agent re-orients against files
+      on disk, not against the sentence that launched it — so that is where the steering lives.
     </p>
 
     <p>
-      The contrast with the un-packaged baseline depends on the report being <em>candid evidence</em>,
-      not encouragement. If the two runs look the same, the packaging wasn't doing work — and that's
-      signal too. It means the dominant failure on this task is upstream (bad scope, wrong slice, missing
-      context that packaging can't supply). That's more useful to know than a run that passes because
-      nobody was really checking.
+      Three failure modes do most of the damage on long runs, and practitioners who've hit the wall name them
+      consistently (Ronacher, Cherny, Klaassen — a <em>convergent pattern</em>, not an official Claude Code taxonomy):
+      <b>drift</b>, where the goal shifts as recency overwrites intent; <b>rot</b>, where the agent cold-starts after
+      a session restart and re-invents the plan from nothing; and <b>plausible-but-wrong</b>, where the output reads
+      correct because nothing checked it against a stable definition of done — and a model trained to be helpful
+      will frame a partial failure as a partial success. You cannot out-phrase these. You package against them.
     </p>
   </section>
 
-  <!-- ============ DIAGRAM 3 — COMPOUNDING LOOP ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 420" role="img" aria-label="Closed loop: send off packaged, agent runs reads reference and plan.md, verifier fires, read the contrast, sharpen reference plan.md verifier against what fired, back to send off. Each pass the kit label at the top reads richer.">
-      <defs>
-        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/>
-          <stop offset="1" stop-color="#ffb347" stop-opacity=".7"/>
-        </linearGradient>
-        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%">
-          <stop offset="0" stop-color="#9bffe9"/>
-          <stop offset=".55" stop-color="#3fe0c8"/>
-          <stop offset="1" stop-color="#1d8d80"/>
-        </radialGradient>
-        <radialGradient id="d3-amber" cx="35%" cy="30%" r="70%">
-          <stop offset="0" stop-color="#ffe0a8"/>
-          <stop offset=".55" stop-color="#ffb347"/>
-          <stop offset="1" stop-color="#a86a1f"/>
-        </radialGradient>
-        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-      </defs>
+  <!-- ============ T2 PUNCH — BEAT TWO: the kit, one artefact per failure ============ -->
+  <section class="punch">
+    <div class="lede-beat amber">What does the work instead · one file per failure mode</div>
 
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE COMPOUNDING LOOP · KIT EARNS ITS SHAPE FROM REAL FAILURE</text>
-
-      <!-- the loop ring -->
-      <circle cx="320" cy="220" r="150" fill="none" stroke="url(#d3-ring)" stroke-width="2" stroke-dasharray="650 100" stroke-linecap="round" transform="rotate(-90 320 220)"/>
-
-      <!-- pulse travelling the loop -->
-      <circle r="3.6" fill="#aeffee">
-        <animateMotion dur="10s" repeatCount="indefinite" path="M320,70 a150,150 0 1,1 -0.1,0"/>
-        <animate attributeName="opacity" values=".3;1;1;.3" dur="10s" repeatCount="indefinite"/>
-      </circle>
-
-      <!-- 4 nodes -->
-      <!-- top: send off -->
-      <g>
-        <circle cx="320" cy="70" r="24" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-        <text x="320" y="75" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">1</text>
-        <text x="320" y="44" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Send off packaged</text>
-        <text x="320" y="28" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".18em" fill="#3fe0c8">KIT RICHER EACH PASS</text>
-      </g>
-      <!-- right: agent runs -->
-      <g>
-        <circle cx="470" cy="220" r="24" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-        <text x="470" y="225" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">2</text>
-        <text x="508" y="213" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Agent runs</text>
-        <text x="508" y="229" font-family="'Spline Sans',sans-serif" font-size="11" fill="#9bffe9" font-style="italic">reads reference + plan.md</text>
-      </g>
-      <!-- bottom: verifier + contrast -->
-      <g>
-        <circle cx="320" cy="370" r="24" fill="url(#d3-amber)" filter="url(#d3-glow)"/>
-        <text x="320" y="375" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">3</text>
-        <text x="320" y="402" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#fff4e2">Verifier fires · read the contrast</text>
-        <text x="320" y="416" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#a86a1f" font-style="italic">pass or fail — both are evidence</text>
-      </g>
-      <!-- left: sharpen -->
-      <g>
-        <circle cx="170" cy="220" r="24" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-        <text x="170" y="225" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">4</text>
-        <text x="138" y="213" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Sharpen the kit</text>
-        <text x="138" y="229" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="11" fill="#9bffe9" font-style="italic">reference · plan.md · verifier</text>
-      </g>
-
-      <!-- RIGHT HALF: the kit densifying across passes -->
-      <g transform="translate(620,40)">
-        <!-- pass 1 -->
-        <g>
-          <rect x="0" y="10" width="120" height="180" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.22)"/>
-          <rect x="0" y="10" width="120" height="18" rx="5" fill="rgba(63,224,200,.08)"/>
-          <text x="8" y="24" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">kit v1</text>
-          <text x="88" y="24" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">thin</text>
-          <g stroke="#6f8a85" stroke-width="2" opacity=".5">
-            <line x1="10" y1="50" x2="76" y2="50"/>
-            <line x1="10" y1="68" x2="108" y2="68"/>
-            <line x1="10" y1="86" x2="60" y2="86"/>
-          </g>
-          <text x="60" y="206" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#5d6a68">PASS 1</text>
-        </g>
-        <!-- arrow -->
-        <g transform="translate(130,100)">
-          <path d="M0,0 L22,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".6"/>
-          <polygon points="22,0 14,-5 14,5" fill="#3fe0c8" opacity=".7"/>
-        </g>
-        <!-- pass 2 -->
-        <g transform="translate(156,0)">
-          <rect x="0" y="10" width="120" height="200" rx="8" fill="rgba(8,17,18,.78)" stroke="rgba(63,224,200,.35)"/>
-          <rect x="0" y="10" width="120" height="18" rx="5" fill="rgba(63,224,200,.12)"/>
-          <text x="8" y="24" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">kit v2</text>
-          <text x="88" y="24" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">calibrated</text>
-          <g stroke="#9bffe9" stroke-width="2" opacity=".7">
-            <line x1="10" y1="50" x2="108" y2="50"/>
-            <line x1="10" y1="68" x2="92" y2="68"/>
-            <line x1="10" y1="86" x2="110" y2="86"/>
-            <line x1="10" y1="104" x2="76" y2="104"/>
-            <line x1="10" y1="122" x2="96" y2="122"/>
-          </g>
-          <g stroke="#ffb347" stroke-width="2" opacity=".7">
-            <line x1="10" y1="142" x2="108" y2="142"/>
-            <line x1="10" y1="160" x2="84" y2="160"/>
-          </g>
-          <text x="60" y="226" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#9bffe9">PASS 2</text>
-        </g>
-        <!-- arrow -->
-        <g transform="translate(288,110)">
-          <path d="M0,0 L22,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".6"/>
-          <polygon points="22,0 14,-5 14,5" fill="#3fe0c8" opacity=".7"/>
-        </g>
-        <!-- pass 3 -->
-        <g transform="translate(314,0)">
-          <rect x="0" y="0" width="120" height="230" rx="8" fill="rgba(8,17,18,.85)" stroke="url(#d3-ring)" stroke-width="1.4" filter="url(#d3-glow)"/>
-          <rect x="0" y="0" width="120" height="18" rx="5" fill="rgba(255,179,71,.14)"/>
-          <text x="8" y="14" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">kit v3</text>
-          <text x="88" y="14" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">sharp</text>
-          <g stroke="#ffb347" stroke-width="2.2">
-            <line x1="10" y1="36" x2="110" y2="36"/>
-            <line x1="10" y1="54" x2="92" y2="54"/>
-          </g>
-          <g stroke="#9bffe9" stroke-width="2" opacity=".8">
-            <line x1="10" y1="76" x2="108" y2="76"/>
-            <line x1="10" y1="94" x2="88" y2="94"/>
-            <line x1="10" y1="112" x2="100" y2="112"/>
-            <line x1="10" y1="130" x2="112" y2="130"/>
-            <line x1="10" y1="148" x2="84" y2="148"/>
-            <line x1="10" y1="166" x2="96" y2="166"/>
-            <line x1="10" y1="184" x2="104" y2="184"/>
-            <line x1="10" y1="202" x2="88" y2="202"/>
-          </g>
-          <text x="60" y="254" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#ffb347">PASS 3 · LOAD-BEARING</text>
-        </g>
-        <!-- legend -->
-        <g transform="translate(0,278)">
-          <rect x="0" y="0" width="14" height="3" fill="#ffb347"/>
-          <text x="22" y="4" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".14em" fill="#a86a1f">RULES EARNED FROM REAL FAILURE</text>
-          <rect x="0" y="14" width="14" height="3" fill="#9bffe9"/>
-          <text x="22" y="18" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".14em" fill="#1d8d80">SCAFFOLDING · STILL CALIBRATING</text>
-        </g>
-      </g>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 03</span>The verifier becomes the first eval. <b>Each pass tightens reference, calibrates verifier, improves plan.md format</b> — the team eval practice grows from here, not from prophylactic policy.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 4 — what Test means here ============ -->
-  <section class="prose">
-    <div class="sec-label amber">What the test is · not a confidence score</div>
-    <h2 class="amber">The test is the <em>diff</em>.</h2>
+    <div class="kit-strip">
+      <div class="kit-cell">
+        <div class="fname">reference.md</div>
+        <div class="closes">closes <b>drift</b></div>
+        <p>Half a page: the goal as a <b>testable outcome</b>, the constraints the agent must not violate, the definition of done. Task-local — it lives beside the run, not in your codebase rules. The agent re-reads it to confirm goal.</p>
+      </div>
+      <div class="kit-cell">
+        <div class="fname">plan.md</div>
+        <div class="closes">closes <b>rot</b></div>
+        <p>The <b>state carrier</b>. It reads clean on a cold start, so the agent picks up where it left off across a session restart and you never re-explain where it got to. Mid-run, when it drifts, it re-reads this instead of improvising.</p>
+      </div>
+      <div class="kit-cell amber">
+        <div class="fname">verifier · stable path</div>
+        <div class="closes">closes <b>plausible-but-wrong</b></div>
+        <p>A check at a fixed path — <span class="mono amber">shell-hook</span>, LLM-judge, or Ralph re-feed. Pick the shape against your <b>dominant</b> failure, not the safest one. It fires pass-or-fail on the output, so self-report stops being the only gate.</p>
+      </div>
+    </div>
 
     <p>
-      You know packaging worked when the re-send prompt is short and reads like an invocation rather than
-      an explanation. <b>The agent opens the session, reads reference.md to confirm goal, reads plan.md to
-      pick up where it left off, and runs without you recapping anything.</b> Mid-run, when it drifts, it
-      re-reads plan.md rather than improvising. The verifier fires on at least one output before you declare
-      done. And the packaged artefact is materially different — more coherent, more complete, more correct
-      against the stated done criteria — than the un-packaged baseline. If the two runs look identical, the
-      packaging wasn't doing work. That's a finding, not a failure.
+      One thing makes the lesson legible: <b>pin the SHA</b> before you touch anything. Commit current state on a
+      named branch, record the short SHA, and fork the packaged re-send from it. Now the un-packaged run and the
+      packaged run start from the same codebase, and the diff between them reads as clean signal rather than confound.
+      <em>That contrast is the whole point.</em> If the two runs come out the same, packaging wasn't doing work — which
+      tells you the real failure is upstream (bad scope, wrong slice, missing context no kit can supply). More useful
+      to know that than to ship a run nobody was really checking.
     </p>
 
     <p>
-      The cost arithmetic favours packaging independently: a fresh-session re-send avoids paying
-      cache-read on the full scrollback of a drifted run —
-      <b>⚠ ILLUSTRATIVE ESTIMATE: practitioners report $20–30 savings at Opus pricing; actual savings vary
-      by model and context length</b> — but the bigger saving is you don't read a plausible-but-wrong
-      artefact at 9 AM and spend Tuesday debugging what the model confidently constructed on Monday.
+      And it compounds, because the first reference.md is never quite right and the first verifier catches the obvious
+      while missing the interesting. <b>You only learn what the kit was missing by reading what fired.</b> After each run,
+      tighten reference.md against what drifted, recalibrate the verifier against what it missed, improve plan.md's format
+      where the agent got confused — then re-send. The kit earns its shape from real failure, not prophylactic policy, and
+      <b>that verifier quietly becomes your first eval</b> — the foundation the team-scale eval practice is later built on.
+      This is the personal-reliability floor of the software lane: you can't promote a packaged send-off the team hasn't
+      seen you run, and the whole kit is three markdown files, a short script, and two git commands — all of it in your
+      terminal before you say a word to anyone.
+    </p>
+
+    <p class="now">
+      <b>Right now:</b> open the last long-running task you sent off and ask it the plain question —
+      <span class="do">does it have a plan.md? a reference.md? a verifier at a stable path?</span>
+      Pick the one that's missing, write the half-page version in the next fifteen minutes — goal, constraints,
+      done criteria — pin the SHA, and send the same task again. Read the two runs side by side.
     </p>
   </section>
 
-  <!-- ============ USE WHEN · BUILD · TEST ============ -->
-  <div class="plates">
-    <div class="plate use">
-      <div class="beat-label amber"><b>Use when</b></div>
-      <p class="body">
-        <b>You're about to send a multi-hour, multi-file task</b> and the only thing between you and the keyboard
-        is a <span class="grey">vague prompt</span>. The task is real — the kind you'd rather step away from than babysit.
-        You have a rough idea of done. The model isn't the problem; <b>the missing reference is.</b>
-      </p>
-    </div>
-    <div class="plate build">
-      <div class="beat-label"><b>Build</b></div>
-      <p class="body">
-        Three named artefacts: <b>reference.md</b> (goal + constraints + done criteria, task-scoped),
-        <b>plan.md</b> (state carrier, re-readable on cold start), and a <b>verifier at a stable path</b>
-        (shell-hook, LLM-judge, or Ralph re-feed — pick against the dominant failure mode).
-        Plus the pinned SHA on a named branch.
-      </p>
-    </div>
-    <div class="plate test">
-      <div class="beat-label amber"><b>Test</b></div>
-      <p class="body">
-        The re-send prompt is short — <em>"an invocation, not an explanation."</em><br>
-        The verifier fires before you declare done.<br>
-        The packaged artefact diffs materially from the baseline.<br>
-        <em class="no">If the two runs look the same, the packaging wasn't doing work.</em>
-      </p>
-    </div>
-  </div>
-
-  <!-- ============ CORE MOVES ============ -->
-  <section class="moves">
-    <div class="beat-label"><b>Core moves</b></div>
-    <div class="moves-head">
-      <h2>From improvisation to engineered send-off</h2>
-      <span class="lede">Five steps. Each one closes a gap.</span>
-    </div>
-
-    <div class="move-rail">
-      <div class="thread"></div>
-      <div class="step">
-        <div class="bead">1</div>
-        <h3>Pin the goal and the SHA</h3>
-        <p>Commit current state on a named branch. <b>Record the short SHA.</b> This is the anchor the re-send forks from.</p>
-      </div>
-      <div class="step">
-        <div class="bead">2</div>
-        <h3>Write the reference.md</h3>
-        <p>Half a page: goal as testable outcome, constraints, done criteria. <b>Task-local, not codebase rules.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">3</div>
-        <h3>Author plan.md</h3>
-        <p>The state carrier. Reads clean on cold start. <b>The agent re-reads it when it drifts.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">4</div>
-        <h3>Build the verifier</h3>
-        <p>Pick the shape against the dominant failure. <b>Shell-hook · LLM-judge · Ralph re-feed.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">5</div>
-        <h3>Re-send packaged</h3>
-        <p>Same task, pinned SHA, new session. <b>Short prompt — the kit does the explaining.</b></p>
-      </div>
-    </div>
-
-    <div class="compound">
-      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
-        <defs><linearGradient id="lg-pkg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
-        </linearGradient></defs>
-        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg-pkg)" stroke-width="2.4"
-          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
-        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
-        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
-        <circle r="3" fill="#aeffee">
-          <animateMotion dur="5s" repeatCount="indefinite"
-            path="M37,11 a26,26 0 1,1 -0.1,0"/>
-        </circle>
-      </svg>
-      <div class="ctext">
-        <div class="cyc">send packaged<span class="arr">→</span>verifier fires<span class="arr">→</span>read contrast<span class="arr">→</span>sharpen kit<span class="arr">→</span>repeat</div>
-        <p>Then it's a habit, not a task: <b>compound interest on a run kit.</b> Each pass earns the rules from real failure — the verifier becomes the first eval, which is where team-scale quality practice begins.</p>
-      </div>
-    </div>
-
-    <p class="aside">
-      <b>Monday move:</b> open the last long-running agent task you sent.
-      <span class="mono">Does it have a plan.md? A reference.md? A verifier at a stable path?</span>
-      Pick the one artefact that's missing. Write the half-page version — task goal, constraints, done criteria — in the next 15 minutes. Then send the same task again.
-    </p>
-  </section>
-
-  <!-- ============ WHY ============ -->
-  <section class="why">
-    <div class="beat-label"><b>Why</b></div>
-
-    <div class="principle-block">
-      <div class="principle-label">The principle</div>
-      <p class="principle-line">Packaging is <em>steering</em>, not bureaucracy — the agent isn't generic; your task constraints are.</p>
-    </div>
-
-    <p class="quote">"The packaging does the explaining; the prompt invokes it."</p>
-    <p class="gloss">
-      Context windows have limits. Long runs generate more scrollback than any model holds cleanly.
-      Without a plan.md, the agent navigates from recency, not from intent. Without a reference, "done"
-      is whatever <em>feels</em> done. Without a verifier shaped to your dominant failure, the agent's
-      self-report is the only quality gate — and RLHF will frame partial failures as partial successes.
-      <b>The three-part kit (reference + plan.md + verifier) maps one intervention to each of the three
-      failure modes</b> — drift, rot, plausible-but-wrong — that account for most of the damage in long
-      runs. This is a <em>convergent practitioner pattern</em> (Ronacher, Cherny, Klaassen), not
-      official Claude Code taxonomy; the shape is re-discovered from your own artefacts, not prescribed.
-    </p>
-    <p class="gloss">
-      The economics are simple once you see them. A vague prompt invites the agent to construct the goal
-      as it goes. That's not laziness — it's a reasonable response to underspecification. Give it a stable
-      reference and the agent re-orients against intent rather than recency. Give it a plan.md and it
-      cold-starts smarter than the last session ended. Give it a verifier and you replace RLHF-shaped
-      self-report with a machine that distinguishes <em>plausible</em> from <em>correct</em>. Three files.
-      <b>Each one earns its shape from a specific failure mode</b> — not from ceremony.
-    </p>
-    <div class="corollary"><span class="sd"></span>A vague prompt is a prayer. A packaged run is a contract.</div>
-  </section>
-
-  <!-- ============ SYSTEMIC CONTRIBUTION ============ -->
-  <section class="practice">
-    <div class="beat-label"><b>Where this sits</b></div>
-    <p>
-      This is the <b>personal-reliability foundation of the software lane</b>. Every team-scale practice —
-      shared verifiers, CI evals, promoted team kit — is downstream of an individual CTO or engineer who
-      has learned to send packaged runs. You can't promote what you haven't built, and you can't
-      diagnose team-level drift without the contrast that packaging makes visible. Master the packaged
-      send-off personally; then the team-scale upgrade is one step, not a cultural lift from nothing.
-    </p>
-    <p>
-      <b>No-permission framing:</b> three markdown files and a short script.
-      <span class="mono">No platform. No budget. No sign-off.</span>
-      The SHA pin is one git command. The worktree fork is one more. Everything here runs in your terminal
-      on your current repo before you say a word to anyone.
-    </p>
-  </section>
+  <p class="seal">
+    You were never paid to write a better prompt. <b>You were paid to build a run that finishes the job while you're somewhere else</b> — and the prompt is just the doorbell.
+  </p>
 
   <!-- ============ CONNECTS TO ============ -->
   <section class="connects">
@@ -1112,32 +428,32 @@
     <div class="web">
       <svg viewBox="0 0 1080 300" aria-hidden="true">
         <defs>
-          <linearGradient id="t1-pkg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t2-pkg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t3-pkg" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t4-pkg" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#6f8a85" stop-opacity=".5"/></linearGradient>
-          <linearGradient id="t5-pkg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#9bffe9" stop-opacity=".6"/></linearGradient>
-          <filter id="wglow-pkg" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="t1-pkr" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t2-pkr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t3-pkr" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t4-pkr" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#6f8a85" stop-opacity=".5"/></linearGradient>
+          <linearGradient id="t5-pkr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#9bffe9" stop-opacity=".6"/></linearGradient>
+          <filter id="wglow-pkr" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         </defs>
 
         <circle cx="150" cy="150" r="30" fill="none" stroke="#3fe0c8" stroke-width="1.2" opacity=".5"/>
-        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#wglow-pkg)"/>
+        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#wglow-pkr)"/>
         <circle cx="150" cy="150" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
 
-        <path id="pkg-t1" d="M150,150 C360,60 540,44 760,48" stroke="url(#t1-pkg)" stroke-width="2.2" fill="none"/>
-        <path id="pkg-t2" d="M150,150 C360,110 560,108 760,112" stroke="url(#t2-pkg)" stroke-width="2.2" fill="none"/>
-        <path id="pkg-t3" d="M150,150 C360,154 560,156 760,160" stroke="url(#t3-pkg)" stroke-width="2.2" fill="none"/>
-        <path id="pkg-t4" d="M150,150 C360,196 560,202 760,206" stroke="url(#t4-pkg)" stroke-width="1.8" fill="none"/>
-        <path id="pkg-t5" d="M150,150 C360,240 540,258 760,262" stroke="url(#t5-pkg)" stroke-width="1.6" stroke-dasharray="4 6" fill="none"/>
+        <path id="pkr-t1" d="M150,150 C360,60 540,44 760,48" stroke="url(#t1-pkr)" stroke-width="2.2" fill="none"/>
+        <path id="pkr-t2" d="M150,150 C360,110 560,108 760,112" stroke="url(#t2-pkr)" stroke-width="2.2" fill="none"/>
+        <path id="pkr-t3" d="M150,150 C360,154 560,156 760,160" stroke="url(#t3-pkr)" stroke-width="2.2" fill="none"/>
+        <path id="pkr-t4" d="M150,150 C360,196 560,202 760,206" stroke="url(#t4-pkr)" stroke-width="1.8" fill="none"/>
+        <path id="pkr-t5" d="M150,150 C360,240 540,258 760,262" stroke="url(#t5-pkr)" stroke-width="1.6" stroke-dasharray="4 6" fill="none"/>
 
-        <circle r="2.8" fill="#aeffee"><animateMotion dur="4.8s" repeatCount="indefinite"><mpath href="#pkg-t1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="4.8s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.2s" begin=".5s" repeatCount="indefinite"><mpath href="#pkg-t2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.2s" begin=".5s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#9bffe9"><animateMotion dur="5.6s" begin="1s" repeatCount="indefinite"><mpath href="#pkg-t3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.6s" begin="1s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#ffce85"><animateMotion dur="6s" begin="1.5s" repeatCount="indefinite"><mpath href="#pkg-t4"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="6s" begin="1.5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="4.8s" repeatCount="indefinite"><mpath href="#pkr-t1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="4.8s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.2s" begin=".5s" repeatCount="indefinite"><mpath href="#pkr-t2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.2s" begin=".5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#9bffe9"><animateMotion dur="5.6s" begin="1s" repeatCount="indefinite"><mpath href="#pkr-t3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.6s" begin="1s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="6s" begin="1.5s" repeatCount="indefinite"><mpath href="#pkr-t4"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="6s" begin="1.5s" repeatCount="indefinite"/></circle>
       </svg>
 
       <div class="neighbours">
-        <div class="origin-chip" style="left:13.8%;top:50%">Package before you step away<small>software · the work · you are here</small></div>
+        <div class="origin-chip" style="left:13.8%;top:50%">Packaging a run<small>software · the work · you are here</small></div>
         <a class="nb" href="walk-and-fill-before-sendoff.html" style="left:73%;top:16%"><span class="sd"></span>walk-and-fill-before-sendoff</a>
         <a class="nb" href="compound-from-evidence.html" style="left:73%;top:37.3%"><span class="sd"></span>compound-from-evidence</a>
         <a class="nb" href="verifier-shaped-to-failure.html" style="left:73%;top:53.3%"><span class="sd"></span>verifier-shaped-to-failure</a>
@@ -1149,7 +465,7 @@
 
   <!-- ============ FOOTER ============ -->
   <footer class="floor">
-    <span class="door">Three markdown files and a short script. No platform, no budget, no permission required.</span>
+    <span class="door">Two files, a verifier, and one SHA to pin — modest paperwork for a four-hour run that stops drifting.</span>
     <span class="meta">The Big Picture · Pattern Language</span>
   </footer>
 

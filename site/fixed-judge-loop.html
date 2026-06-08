@@ -105,7 +105,7 @@
   }
   .hero-cap b{color:var(--amber)}
 
-  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
+  /* ============ READING-PROSE ============ */
   .prose{
     margin-top:34px;max-width:760px;
   }
@@ -144,7 +144,7 @@
   }
   .prose .pull b{color:var(--amber);font-weight:500;font-style:normal}
 
-  /* ============ PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
+  /* ============ PROCESS DIAGRAMS ============ */
   .diagram{
     margin:26px 0 6px;border:1px solid var(--hairline-a);border-radius:14px;overflow:hidden;
     background:
@@ -166,7 +166,7 @@
     letter-spacing:.26em;text-transform:uppercase;color:var(--amber-dim);margin-right:10px;
   }
 
-  /* ============ RECIPE SECTION BEATS ============ */
+  /* ============ SECTION BEATS ============ */
   .beat-label{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
     text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
@@ -178,77 +178,6 @@
   .beat-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
   .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
 
-  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
-  .plates{
-    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
-  }
-  .plate{
-    border:1px solid var(--hairline-a);border-radius:14px;padding:18px 20px 20px;
-    background:rgba(18,15,9,.5);backdrop-filter:blur(2px);position:relative;
-  }
-  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
-  .plate .body b{color:var(--spore);font-weight:500}
-  .plate .body .grey{color:var(--grey)}
-  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.06), transparent 55%),rgba(18,15,9,.5)}
-  .plate.test .body em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:15.5px}
-  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
-
-  /* ============ CORE MOVES ============ */
-  .moves{margin-top:46px}
-  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
-  .moves-head h2{
-    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
-  }
-  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
-  .move-rail{
-    margin-top:20px;position:relative;
-    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
-  }
-  .move-rail .thread{
-    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
-    background:linear-gradient(90deg,
-      rgba(255,179,71,0) 0%, rgba(168,106,31,.5) 6%,
-      rgba(255,179,71,.7) 50%, rgba(63,224,200,.6) 94%, rgba(63,224,200,0) 100%);
-  }
-  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
-  .step:first-child{padding-left:0}
-  .step .bead{
-    width:42px;height:42px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
-    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
-    margin-bottom:13px;
-  }
-  /* the last move — walk away — turns teal: the hand-off out of the loop */
-  .step:nth-child(6) .bead{
-    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
-  }
-  .step h3{
-    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
-  }
-  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
-  .step p b{color:var(--ink);font-weight:500}
-
-  .compound{
-    margin-top:26px;border:1px solid rgba(255,179,71,.18);border-radius:14px;
-    padding:18px 22px;position:relative;overflow:hidden;
-    background:
-      radial-gradient(120% 140% at 100% 0%, rgba(255,179,71,.07), transparent 60%),
-      rgba(18,15,9,.55);
-    display:flex;align-items:center;gap:20px;
-  }
-  .compound .loop-ico{flex:none}
-  .compound .ctext{flex:1}
-  .compound .ctext .cyc{
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--amber);
-  }
-  .compound .ctext .cyc .lock{color:var(--teal)}
-  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
-  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
-  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
-
   .aside{
     margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
     border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
@@ -256,60 +185,22 @@
   .aside b{color:var(--amber);font-weight:500}
   .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
 
-  /* ============ WHY ============ */
-  .why{
-    margin-top:46px;border:1px solid var(--hairline-a);border-radius:16px;
-    padding:26px 30px 28px;position:relative;overflow:hidden;
+  /* ============ REFUSAL BAND — the unamendable standard ============ */
+  .refusal{
+    margin-top:34px;border:1px solid rgba(255,179,71,.2);border-radius:14px;
+    padding:22px 26px 24px;position:relative;overflow:hidden;max-width:820px;
     background:
-      radial-gradient(130% 150% at 90% 0%, rgba(255,179,71,.08), transparent 55%),
-      radial-gradient(100% 120% at 0% 100%, rgba(63,224,200,.05), transparent 55%),
-      rgba(16,13,9,.6);
+      radial-gradient(120% 150% at 100% 0%, rgba(255,179,71,.07), transparent 58%),
+      rgba(18,15,9,.55);
   }
-  .why .beat-label{margin-bottom:14px}
-  .why .principle-block{
-    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline-a);
+  .refusal .beat-label{margin-bottom:12px}
+  .refusal p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:12px}
+  .refusal p b{color:var(--spore);font-weight:500}
+  .refusal p .no{color:var(--grey);font-style:italic}
+  .refusal .verdict{
+    font-family:'Fraunces',serif;font-style:italic;font-size:19px;line-height:1.35;
+    color:var(--amber);margin-top:14px;text-shadow:0 0 24px rgba(255,179,71,.22);
   }
-  .why .principle-label{
-    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
-    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
-  }
-  .why .principle-line{
-    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
-    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
-  }
-  .why .principle-line em{font-style:italic;color:var(--amber)}
-  .why .quote{
-    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:clamp(21px,3vw,29px);line-height:1.22;color:var(--amber);letter-spacing:.004em;
-    text-shadow:0 0 30px rgba(255,179,71,.24);max-width:860px;
-  }
-  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
-  .why .gloss b{color:var(--spore);font-weight:500}
-  .why .gloss em{font-style:italic;color:var(--ink-dim)}
-  .why .gloss + .gloss{margin-top:12px}
-  .why .corollary{
-    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--teal);
-    border:1px dashed var(--teal-dim);border-radius:30px;padding:8px 16px 9px;
-  }
-  .why .corollary .sd{
-    width:7px;height:7px;border-radius:50%;background:var(--teal);flex:none;
-    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 11px 2px rgba(63,224,200,.5);
-  }
-
-  /* ============ TEST-IN-PRACTICE inline panel ============ */
-  .practice{
-    margin-top:34px;border:1px solid var(--hairline-a);border-radius:14px;
-    padding:22px 26px 24px;
-    background:
-      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
-      rgba(18,15,9,.5);
-  }
-  .practice .beat-label{margin-bottom:12px}
-  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
-  .practice p b{color:var(--spore);font-weight:500}
-  .practice p em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:16px}
-  .practice p .mono{font-family:'Spline Sans Mono',monospace;color:var(--teal);font-size:13px}
 
   /* ============ SYSTEMIC BAND ============ */
   .systemic{
@@ -361,15 +252,6 @@
   .nb:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9);transform:translate(-50%,-50%) scale(1.05)}
   .nb.teal:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9)}
   .nb:hover .sd{animation:throb 1s ease-in-out infinite}
-  .nb.soon{opacity:.62}
-  .nb.soon::after{
-    content:"soon";
-    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--ink-faint);
-    border:1px solid var(--ink-faint);border-radius:20px;
-    padding:2px 7px 3px;margin-left:4px;
-  }
-  .nb.soon:hover{opacity:1}
   .nb .twin{
     font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--teal-dim);
@@ -408,19 +290,64 @@
   }
   .breathe{animation:breathe 4.2s ease-in-out infinite}
 
-  @media (max-width:860px){
-    .plates{grid-template-columns:1fr 1fr}
-    .plate.use{grid-column:1 / -1}
+  /* ============ T3 — FIELD-LOG (one lap, logged) ============ */
+  .fieldlog{
+    margin-top:34px;border:1px solid var(--hairline-a);border-radius:14px;
+    padding:22px 26px 24px;max-width:820px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
+      rgba(18,15,9,.5);
   }
+  .fieldlog .beat-label{margin-bottom:6px}
+  .fieldlog .log-lede{
+    font-size:14.5px;line-height:1.55;color:var(--ink);margin-top:12px;margin-bottom:6px;
+  }
+  .fieldlog .log-lede b{color:var(--spore);font-weight:500}
+  .log-entry{
+    display:grid;grid-template-columns:96px 1fr;gap:16px;
+    padding:14px 0;border-top:1px dashed var(--hairline-a);
+  }
+  .log-entry:first-of-type{border-top:none}
+  .log-entry .stamp{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--amber-dim);padding-top:2px;line-height:1.5;
+  }
+  .log-entry .stamp.teal{color:var(--teal-dim)}
+  .log-entry .body{font-size:14.5px;line-height:1.58;color:var(--ink)}
+  .log-entry .body b{color:var(--spore);font-weight:500}
+  .log-entry .body em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:15.5px}
+  .log-entry .body .mono{font-family:'Spline Sans Mono',monospace;font-size:12.5px;color:var(--teal)}
+
+  /* ============ T3 — COMPRESSED FOOTER LEDGER ============ */
+  .ledger{
+    margin-top:34px;border:1px solid var(--hairline-a);border-radius:14px;
+    padding:22px 26px 24px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 150% at 100% 0%, rgba(255,179,71,.06), transparent 58%),
+      radial-gradient(100% 120% at 0% 100%, rgba(63,224,200,.04), transparent 58%),
+      rgba(16,13,9,.55);
+  }
+  .ledger .beat-label{margin-bottom:14px}
+  .ledger-row{
+    display:grid;grid-template-columns:128px 1fr;gap:18px;align-items:baseline;
+    padding:11px 0;border-top:1px dashed var(--hairline-a);
+  }
+  .ledger-row:first-of-type{border-top:none;padding-top:0}
+  .ledger-row .lk{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--amber-dim);padding-top:3px;
+  }
+  .ledger-row .lk.teal{color:var(--teal-dim)}
+  .ledger-row .lv{font-size:14px;line-height:1.55;color:var(--ink)}
+  .ledger-row .lv b{color:var(--spore);font-weight:500}
+  .ledger-row .lv em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:15px}
+  .ledger-row .lv .mono{font-family:'Spline Sans Mono',monospace;font-size:12.5px;color:var(--amber)}
+
   @media (max-width:780px){
-    .plates{grid-template-columns:1fr}
-    .plate.use{grid-column:1}
-    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
-    .move-rail .thread{display:none}
-    .step{padding:0}
-    .compound{flex-direction:column;align-items:flex-start;gap:14px}
-    .neighbours .nb{font-size:11px;padding:6px 10px}
     .prose p{font-size:14.5px}
+    .log-entry{grid-template-columns:1fr;gap:5px}
+    .ledger-row{grid-template-columns:1fr;gap:5px}
+    .neighbours .nb{font-size:11px;padding:6px 10px}
   }
 </style>
 </head>
@@ -439,36 +366,37 @@
       <span class="lane">· business lane · phase: verification</span>
     </div>
     <h1>The fixed-judge <em>loop</em></h1>
-    <p class="principle">The principle: <b>a yardstick you rewrite is not a yardstick</b> — freeze the standard and the work will chase it.</p>
+    <p class="principle">The principle: <b>a yardstick you rewrite is not a yardstick</b> — freeze the standard and let the work chase it.</p>
     <p class="essence">
-      Stop reviewing every output by hand. <b>Freeze the judge you already trust</b>, let a separate generator
-      chase it round after round, and feed every correction into the tactic file — never the judge. The standard
-      holds still so the work can move; <span class="sys">that's how quality stops being one desk and becomes infrastructure a whole team runs unattended.</span>
+      Treat the standard like the platinum cylinder that <em>was</em> the kilogram — one object held still on purpose, never edited — then put the rest down and work in real agent terms.
+      You write your quality bar into one <b>judge.md</b>, point a <b>separate generator agent</b> at it, and feed every correction the judge returns into a <b>tactic file — never the judge.</b>
+      One file moves round after round; one never does.
+      <span class="sys">That's how a standard stops being one desk you sit at and becomes a file a whole team's agents can run against, unattended.</span>
     </p>
   </header>
 
-  <!-- ============ HERO PICTURE: one file grows, one file is locked ============ -->
+  <!-- ============ HERO PICTURE — KEPT FROM PROTOTYPE: one file grows, one file is locked ============ -->
   <div class="hero-frame">
     <svg viewBox="0 0 1080 408" role="img" aria-label="Two files under one locked frame: a tactic.md file growing richer across three rounds on the left, a locked judge.md file byte-identical across all three on the right, one dotted feedback arrow running from judge to tactic, and a score line climbing round one to two to three. Only one file is allowed to move.">
       <defs>
-        <radialGradient id="hwell" cx="22%" cy="44%" r="64%">
+        <radialGradient id="fjl-hwell" cx="22%" cy="44%" r="64%">
           <stop offset="0%" stop-color="#ffd99a" stop-opacity=".20"/>
           <stop offset="46%" stop-color="#ffb347" stop-opacity=".06"/>
           <stop offset="100%" stop-color="#ffb347" stop-opacity="0"/>
         </radialGradient>
-        <linearGradient id="tacGrow" x1="0" y1="1" x2="0" y2="0">
+        <linearGradient id="fjl-tacGrow" x1="0" y1="1" x2="0" y2="0">
           <stop offset="0" stop-color="#a86a1f" stop-opacity=".3"/>
           <stop offset="1" stop-color="#ffb347" stop-opacity=".85"/>
         </linearGradient>
-        <linearGradient id="scoreLine" x1="0" y1="0" x2="1" y2="0">
+        <linearGradient id="fjl-scoreLine" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0" stop-color="#a86a1f" stop-opacity=".5"/>
           <stop offset="1" stop-color="#ffce85" stop-opacity=".95"/>
         </linearGradient>
-        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
+        <filter id="fjl-hglow" x="-60%" y="-60%" width="220%" height="220%">
           <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
       </defs>
-      <rect x="0" y="0" width="1080" height="408" fill="url(#hwell)"/>
+      <rect x="0" y="0" width="1080" height="408" fill="url(#fjl-hwell)"/>
 
       <!-- locked outer frame: the whole run lives under one standard -->
       <rect x="28" y="22" width="1024" height="344" rx="16" fill="none" stroke="rgba(63,224,200,.28)" stroke-width="1.2" stroke-dasharray="2 7"/>
@@ -481,7 +409,7 @@
       <g>
         <rect x="60" y="100" width="120" height="120" rx="9" fill="rgba(18,15,9,.7)" stroke="rgba(255,179,71,.3)"/>
         <text x="72" y="120" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#a86a1f">R1</text>
-        <g stroke="url(#tacGrow)" stroke-width="2.4" opacity=".8">
+        <g stroke="url(#fjl-tacGrow)" stroke-width="2.4" opacity=".8">
           <line x1="74" y1="140" x2="150" y2="140"/>
           <line x1="74" y1="158" x2="166" y2="158"/>
         </g>
@@ -490,7 +418,7 @@
       <g>
         <rect x="200" y="92" width="120" height="136" rx="9" fill="rgba(18,15,9,.78)" stroke="rgba(255,179,71,.42)"/>
         <text x="212" y="112" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#a86a1f">R2</text>
-        <g stroke="url(#tacGrow)" stroke-width="2.4" opacity=".85">
+        <g stroke="url(#fjl-tacGrow)" stroke-width="2.4" opacity=".85">
           <line x1="214" y1="132" x2="296" y2="132"/>
           <line x1="214" y1="150" x2="306" y2="150"/>
           <line x1="214" y1="168" x2="280" y2="168"/>
@@ -499,7 +427,7 @@
       </g>
       <!-- round 3 — richest -->
       <g>
-        <rect x="340" y="80" width="120" height="160" rx="9" fill="rgba(18,15,9,.85)" stroke="#ffb347" stroke-width="1.5" filter="url(#hglow)"/>
+        <rect x="340" y="80" width="120" height="160" rx="9" fill="rgba(18,15,9,.85)" stroke="#ffb347" stroke-width="1.5" filter="url(#fjl-hglow)"/>
         <text x="352" y="100" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#ffb347">R3</text>
         <g stroke="#ffce85" stroke-width="2.4">
           <line x1="354" y1="120" x2="446" y2="120"/>
@@ -547,7 +475,7 @@
       <g>
         <line x1="60" y1="340" x2="1020" y2="340" stroke="rgba(255,179,71,.16)" stroke-width="1"/>
         <text x="60" y="332" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">SCORE · SAME YARDSTICK</text>
-        <path d="M250,332 C440,326 640,304 980,290" stroke="url(#scoreLine)" stroke-width="2.4" fill="none" filter="url(#hglow)"/>
+        <path d="M250,332 C440,326 640,304 980,290" stroke="url(#fjl-scoreLine)" stroke-width="2.4" fill="none" filter="url(#fjl-hglow)"/>
         <g fill="#ffce85">
           <circle cx="250" cy="332" r="4.2"/><circle cx="615" cy="312" r="4.6"/>
           <circle cx="980" cy="290" r="5.4" class="breathe"/>
@@ -557,51 +485,51 @@
         <text x="980" y="312" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">R3 ↑</text>
       </g>
     </svg>
-    <div class="hero-cap">Only one file is allowed to move. <b>The tactic chases; the judge holds.</b></div>
+    <div class="hero-cap">One agent loop, three rounds. <b>tactic.md chases; judge.md holds.</b></div>
   </div>
 
   <!-- ============================================================ -->
   <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
   <!-- ============================================================ -->
   <section class="prose">
-    <div class="sec-label">The mechanism · why a later score means anything at all</div>
-    <h2>Move the yardstick and you've measured <em>nothing</em>.</h2>
+    <div class="sec-label">The mechanism · which file is allowed to move</div>
+    <h2>Pin the standard; let the work <em>chase it</em>.</h2>
 
     <p>
-      Here is the trap nearly every leader walks into, because it feels like diligence. You set out to improve a
-      recurring output, so each round you tweak the work — and, while you're at it, you tweak the standard too.
-      A sharper rubric here, a kinder threshold there. Round three looks better than round one, and you congratulate
-      yourself. But you've learned <em>nothing</em>: the work and the yardstick both moved, so you cannot tell whether
-      the work got better or the bar got softer. <b>A score is only comparable when the thing producing it stays fixed.</b>
-      That single fact is the whole pattern. Freeze the judge, and round three's number finally has something to say
-      about round one.
+      Start with the inversion, because it's the whole pattern. In <em class="amber">make output yours</em> you steer a fresh
+      agent by changing the <em>input</em> — you edit the prompt, the <span class="mono">CLAUDE.md</span>, the sources in
+      context, until the output drifts to follow. Here you run it backwards: you <b>pin the standard so the output can't
+      hide behind a moving target</b>, and let the generation chase it. The standard lives in one file — call it
+      <span class="mono">judge.md</span> — and you declare it untouchable for the run. The generator's how-to lives in a
+      second file, <span class="mono">tactic.md</span>, and that one is allowed to thicken. One file moves; one does not.
     </p>
 
     <p>
-      Notice this is the exact inverse of how a fresh agent gets steered. In <em class="amber">make output yours</em>,
-      you change the input and the output drifts to follow — same words, different answer. Here you do the opposite:
-      you <b>pin the standard so the output can't hide behind a moving target</b>, and let the generation drift toward it.
-      One file is allowed to move; one is not. The skill is the discipline to keep them straight under the pressure to
-      "just nudge the rubric" when a round disappoints.
+      Lose that discipline and you measure nothing. The seductive failure feels like diligence: you set out to improve a
+      recurring output, so each round you sharpen the work — and, while you're in there, you sharpen
+      <span class="mono">judge.md</span> too. A tighter criterion here, a kinder threshold there. Round three scores higher
+      than round one and you congratulate yourself. But the work and the yardstick both moved, so the number is hollow: you
+      cannot tell whether the work got better or the bar got softer. <b>A score is only comparable when the thing producing
+      it stays fixed.</b> Freeze the judge, and round three's number finally has something honest to say about round one.
     </p>
   </section>
 
   <!-- ============ DIAGRAM 1 — THE MECHANISM: generator → fixed judge → climbing score ============ -->
   <div class="diagram">
-    <svg viewBox="0 0 1080 420" role="img" aria-label="One generator feeds one fixed judge, which emits a score; across three rounds the generator's output improves and the score climbs, while the judge node is annotated as pinned and unchanged. A later round is comparable to an earlier one only because the standard held still.">
+    <svg viewBox="0 0 1080 420" role="img" aria-label="One generator agent feeds one fixed judge, which emits a score; across three rounds the generator's output improves and the score climbs, while the judge node is annotated as pinned and unchanged. A later round is comparable to an earlier one only because the standard held still.">
       <defs>
-        <radialGradient id="d1-gen" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#ffe0a8"/><stop offset=".55" stop-color="#ffb347"/><stop offset="1" stop-color="#5a3a10"/></radialGradient>
-        <radialGradient id="d1-judge" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#9bffe9"/><stop offset=".55" stop-color="#3fe0c8"/><stop offset="1" stop-color="#0c2b2a"/></radialGradient>
-        <linearGradient id="d1-climb" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#a86a1f" stop-opacity=".5"/><stop offset="1" stop-color="#ffce85" stop-opacity=".95"/></linearGradient>
-        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <radialGradient id="fjl-d1-gen" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#ffe0a8"/><stop offset=".55" stop-color="#ffb347"/><stop offset="1" stop-color="#5a3a10"/></radialGradient>
+        <radialGradient id="fjl-d1-judge" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#9bffe9"/><stop offset=".55" stop-color="#3fe0c8"/><stop offset="1" stop-color="#0c2b2a"/></radialGradient>
+        <linearGradient id="fjl-d1-climb" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#a86a1f" stop-opacity=".5"/><stop offset="1" stop-color="#ffce85" stop-opacity=".95"/></linearGradient>
+        <filter id="fjl-d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
 
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">ONE GENERATOR · ONE PINNED JUDGE · A SCORE THAT CLIMBS BECAUSE THE STANDARD HELD STILL</text>
+      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">ONE GENERATOR AGENT · ONE PINNED JUDGE · A SCORE THAT CLIMBS BECAUSE THE STANDARD HELD STILL</text>
 
       <!-- the flow: generator → judge → score -->
       <g transform="translate(0,40)">
         <!-- generator -->
-        <circle cx="150" cy="150" r="34" fill="url(#d1-gen)" filter="url(#d1-glow)"/>
+        <circle cx="150" cy="150" r="34" fill="url(#fjl-d1-gen)" filter="url(#fjl-d1-glow)"/>
         <text x="150" y="155" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="1.5" fill="#3a2608">GEN</text>
         <text x="150" y="206" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#ffb347" font-style="italic">writes the work</text>
 
@@ -611,7 +539,7 @@
         <text x="255" y="138" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">draft</text>
 
         <!-- judge — pinned -->
-        <circle cx="370" cy="150" r="34" fill="url(#d1-judge)" filter="url(#d1-glow)"/>
+        <circle cx="370" cy="150" r="34" fill="url(#fjl-d1-judge)" filter="url(#fjl-d1-glow)"/>
         <text x="370" y="155" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="1.5" fill="#04201e">JUDGE</text>
         <!-- pin glyph -->
         <g transform="translate(392,118)">
@@ -634,422 +562,151 @@
         <line x1="40" y1="40" x2="40" y2="240" stroke="rgba(255,179,71,.25)" stroke-width="1"/>
         <line x1="40" y1="240" x2="430" y2="240" stroke="rgba(255,179,71,.25)" stroke-width="1"/>
         <!-- climbing line -->
-        <path d="M90,210 C190,196 250,150 250,150 C320,150 360,96 380,80" stroke="url(#d1-climb)" stroke-width="3" fill="none" filter="url(#d1-glow)"/>
+        <path d="M90,210 C190,196 250,150 250,150 C320,150 360,96 380,80" stroke="url(#fjl-d1-climb)" stroke-width="3" fill="none" filter="url(#fjl-d1-glow)"/>
         <g fill="#ffce85" font-family="'Spline Sans Mono',monospace" font-size="9">
           <circle cx="90" cy="210" r="5"/><text x="90" y="262" text-anchor="middle" fill="#a86a1f">R1</text>
           <circle cx="250" cy="150" r="5.4"/><text x="250" y="262" text-anchor="middle" fill="#a86a1f">R2</text>
           <circle cx="380" cy="80" r="6.4" class="breathe"/><text x="380" y="262" text-anchor="middle" fill="#ffb347">R3</text>
         </g>
-        <text x="230" y="280" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3b524e">SAME INPUT-SHAPE · BETTER OUTPUT · BECAUSE THE TACTIC MOVED AND THE JUDGE DIDN'T</text>
+        <text x="230" y="280" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3b524e">SAME JUDGE · BETTER OUTPUT · BECAUSE THE TACTIC MOVED AND THE JUDGE DIDN'T</text>
       </g>
     </svg>
-    <div class="dcap"><span class="num">Process diagram · 01</span>The inverse of <em>"context shifted."</em> Here the standard is pinned and the work moves toward it — <b>a later round is comparable to an earlier one only because the judge held still</b>.</div>
+    <div class="dcap"><span class="num">Process diagram · 01</span>The inverse of steering. Here the standard is pinned and the work moves toward it — <b>a later round is comparable to an earlier one only because the judge held still</b>.</div>
   </div>
 
-  <!-- ============ PROSE BLOCK 2 — separation + the upgrade intro ============ -->
+  <!-- ============ PROSE BLOCK 2 — separation, then the upgrade ============ -->
   <section class="prose">
     <p>
-      One structural rule makes the whole thing honest: <b>the agent that writes the work and the agent that grades it
-      must be different.</b> A generator that marks its own homework drifts, slowly and plausibly, toward flattering
-      itself — not out of malice, but because the cheapest way to score higher is to soften what counts as good. The
-      asymmetry is the design: one part writes and wants to pass, one part rejects and owes nothing. Keep them in
-      separate sessions, separate files, and the judge stays a judge instead of quietly becoming the generator's
-      press secretary.
+      One structural rule makes the whole thing honest: <b>the agent that writes the work and the agent that grades it must
+      be different.</b> Run them as two separate sessions, with two separate prompts — the generator reads
+      <span class="mono">tactic.md</span> and writes a draft; the grader reads <span class="mono">judge.md</span> and the
+      draft, and returns flags. A single agent grading its own output drifts, slowly and plausibly, toward flattering
+      itself — not from malice, but because inside one context the cheapest way to score higher is to soften what counts as
+      good. The asymmetry is the design: one part writes and wants to pass, one part rejects and owes nothing. Nothing marks
+      its own homework.
     </p>
 
     <p class="pull">
-      Freezing the judge looks like giving up control. It is the opposite: <b>it's your taste, delegated and made durable.</b>
+      Freezing the judge looks like giving up control. It's the opposite: <b>it's your taste, delegated and made durable.</b>
     </p>
 
-    <div class="sec-label teal">The upgrade · from your desk to a loop that runs without you</div>
-    <h2 class="teal">From reading <em>every draft</em> to designing the loop that reads them.</h2>
+    <div class="sec-label teal">The upgrade · from reading every draft to designing the loop</div>
+    <h2 class="teal">You stop reviewing outputs. You start <em>designing the loop</em>.</h2>
 
     <p>
-      The reason this matters to a busy leader is brutally practical. Today the recurring check — the weekly board
-      narrative, the customer release blurb, the renewal-risk read — runs because <em>you</em> run it. You are the
-      bottleneck and the quality bar at once, and the day you're on a plane the bar travels with you. The upgrade is
-      to lift your standard out of your head and into a frozen judge, so a generator can chase it while you do
-      something else entirely. <b>You stop reviewing every output; you start designing the loop that reviews them.</b>
-      That is the move from operator to owner, and it costs nothing but the restraint to leave the judge alone.
+      The reason this matters to you is brutally practical. Today the recurring check — the weekly board narrative, the
+      customer release blurb, the renewal-risk read — runs because <b>you</b> run it. You are the bottleneck and the quality
+      bar at once, and the day you're on a plane the bar travels with you. Lift your standard out of your head into
+      <span class="mono">judge.md</span>, and a generator agent can chase it while you do something else entirely. The
+      restraint to leave that one file alone is the entire price of admission — and it's the move from operator to owner.
     </p>
   </section>
 
-  <!-- ============ DIAGRAM 2 — THE UPGRADE: hand-review → looped, step out of the room ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 380" role="img" aria-label="On the left a tired figure at a desk reads a tall stack of drafts by hand, one at a time. On the right the leader has stepped out of the room while a self-running loop of generator, fixed judge and tactic file does the reviewing. The label reads: you stop reviewing outputs, you start designing the loop.">
-      <defs>
-        <linearGradient id="d2-stack" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5d6a68" stop-opacity=".7"/><stop offset="1" stop-color="#39423f" stop-opacity=".3"/></linearGradient>
-        <linearGradient id="d2-loop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffb347" stop-opacity=".7"/><stop offset="1" stop-color="#3fe0c8" stop-opacity=".6"/></linearGradient>
-        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
+  <!-- ============================================================ -->
+  <!-- ============ MOVEMENT — ONE LAP, LOGGED (T3 field-log) ===== -->
+  <!-- ============================================================ -->
+  <section class="fieldlog">
+    <div class="beat-label"><b>One lap, logged</b></div>
+    <p class="log-lede">
+      Not a recipe — a single run, in order. <b>Pick one recurring output you currently sanity-check yourself</b> — the
+      weekly board note, the customer release blurb. Then watch which file is allowed to move.
+    </p>
 
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME QUALITY BAR · YOU NO LONGER HOLD IT BY HAND</text>
+    <div class="log-entry">
+      <div class="stamp">00:00 · write</div>
+      <div class="body">
+        Write the standard that output must meet into a one-page <b>judge.md</b> — the criteria you'd apply by hand. Then make
+        one promise: <em>I do not touch this file again this run.</em> Save it. From here it's the cylinder under glass.
+      </div>
+    </div>
 
-      <!-- LEFT: manual hand review -->
-      <g>
-        <text x="80" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#5d6a68">MANUAL · YOU ARE THE BOTTLENECK</text>
+    <div class="log-entry">
+      <div class="stamp">00:04 · split</div>
+      <div class="body">
+        Open <b>two separate agent sessions</b> — one writes the draft against <b>tactic.md</b>, one grades it against the
+        frozen <b>judge.md</b>. Nothing marks its own homework; the separation is the whole integrity of the lap.
+      </div>
+    </div>
 
-        <!-- the stack of drafts -->
-        <g>
-          <rect x="120" y="120" width="150" height="40" rx="4" fill="url(#d2-stack)" stroke="rgba(155,168,165,.3)"/>
-          <rect x="110" y="158" width="170" height="40" rx="4" fill="url(#d2-stack)" stroke="rgba(155,168,165,.3)"/>
-          <rect x="124" y="196" width="142" height="40" rx="4" fill="url(#d2-stack)" stroke="rgba(155,168,165,.3)"/>
-          <rect x="114" y="234" width="162" height="40" rx="4" fill="url(#d2-stack)" stroke="rgba(155,168,165,.3)"/>
-          <g stroke="#39423f" stroke-width="1.4" opacity=".7">
-            <line x1="130" y1="135" x2="240" y2="135"/><line x1="120" y1="173" x2="250" y2="173"/>
-            <line x1="134" y1="211" x2="236" y2="211"/><line x1="124" y1="249" x2="246" y2="249"/>
-          </g>
-        </g>
-        <!-- tired figure -->
-        <g opacity=".85">
-          <circle cx="320" cy="150" r="14" fill="none" stroke="#6f8a85" stroke-width="1.4"/>
-          <path d="M306,178 a14,18 0 0 1 28,0" fill="none" stroke="#6f8a85" stroke-width="1.4"/>
-          <text x="320" y="124" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#5d6a68">zzz</text>
-        </g>
-        <text x="200" y="306" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#5d6a68">every draft, by hand, every week</text>
-      </g>
+    <div class="log-entry">
+      <div class="stamp">00:10 · round one</div>
+      <div class="body">
+        Generate the draft. The grader returns its flags. Feed every flag into <b>tactic.md</b> — and never back into the
+        judge. The judge absorbs nothing; the tactic absorbs everything and visibly thickens.
+      </div>
+    </div>
 
-      <!-- arrow / transformation -->
-      <g transform="translate(470,180)">
-        <path d="M0,0 L70,0" stroke="#ffb347" stroke-width="1.4" fill="none" opacity=".7"/>
-        <polygon points="70,0 60,-6 60,6" fill="#ffb347" opacity=".8"/>
-        <text x="36" y="-12" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".24em" fill="#ffb347">UPGRADE</text>
-        <text x="36" y="22" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#6f8a85">leave the room</text>
-      </g>
+    <div class="log-entry">
+      <div class="stamp teal">00:22 · round two</div>
+      <div class="body">
+        Re-run the draft with the thicker tactic, grade it against the <span class="mono">byte-identical</span> judge. If
+        round two beats round one against a judge that did not move, <b>you've felt the loop</b> — not believed in it, felt it.
+      </div>
+    </div>
 
-      <!-- RIGHT: the self-running loop, leader stepped out -->
-      <g transform="translate(560,40)">
-        <text x="20" y="34" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#ffb347">LOOPED · THE STANDARD RUNS WITHOUT YOU</text>
+    <div class="log-entry">
+      <div class="stamp">00:30 · carry</div>
+      <div class="body">
+        Three markdown files, two sessions, about thirty minutes. You keep the round-by-round trail — the score, what the
+        judge kept catching — so you walk into the make-this-a-team-check conversation holding a <b>score trail, not a
+        pitch</b>.
+      </div>
+    </div>
+  </section>
 
-        <!-- the loop ring -->
-        <g transform="translate(200,150)">
-          <circle r="92" fill="none" stroke="url(#d2-loop)" stroke-width="2.2" stroke-dasharray="380 50" stroke-linecap="round" transform="rotate(-90)"/>
-          <circle r="3.4" fill="#ffce85"><animateMotion dur="7s" repeatCount="indefinite" path="M0,-92 a92,92 0 1,1 -0.1,0"/><animate attributeName="opacity" values=".3;1;1;.3" dur="7s" repeatCount="indefinite"/></circle>
-          <!-- gen node -->
-          <circle cx="0" cy="-92" r="17" fill="#ffb347" filter="url(#d2-glow)"/>
-          <text x="0" y="-122" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#ffb347">GEN</text>
-          <!-- judge node (frozen) -->
-          <circle cx="92" cy="0" r="17" fill="#3fe0c8" filter="url(#d2-glow)"/>
-          <text x="124" y="4" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#3fe0c8">JUDGE ✦ frozen</text>
-          <!-- tactic node -->
-          <circle cx="0" cy="92" r="17" fill="#ffce85" filter="url(#d2-glow)"/>
-          <text x="0" y="122" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#ffce85">TACTIC</text>
-          <circle cx="-92" cy="0" r="6" fill="rgba(255,179,71,.3)" stroke="#ffb347" stroke-width="1"/>
-          <text x="-124" y="4" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#a86a1f">re-run</text>
-        </g>
-
-        <!-- leader stepped out, through a door -->
-        <g transform="translate(420,90)">
-          <rect x="0" y="0" width="52" height="120" rx="3" fill="rgba(8,17,18,.6)" stroke="rgba(255,179,71,.3)"/>
-          <rect x="6" y="6" width="40" height="108" rx="2" fill="rgba(255,179,71,.06)"/>
-          <circle cx="38" cy="60" r="2.4" fill="#ffb347"/>
-          <!-- walking figure, half out -->
-          <circle cx="64" cy="48" r="9" fill="none" stroke="#ffce85" stroke-width="1.3"/>
-          <path d="M55,70 a9,12 0 0 1 18,0" fill="none" stroke="#ffce85" stroke-width="1.3"/>
-          <path d="M58,82 l-6,12 M70,82 l6,12" stroke="#ffce85" stroke-width="1.3"/>
-          <text x="40" y="138" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="11.5" fill="#ffb347">you, elsewhere</text>
-        </g>
-      </g>
-
-      <text x="540" y="364" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">YOU STOP REVIEWING OUTPUTS. YOU START DESIGNING THE LOOP.</text>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 02</span>Ephemeral hand-review → durable delegated taste. <b>The frozen judge is the only reason the loop can run while you're not in the room</b>.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 3 — the compounding intro ============ -->
-  <section class="prose">
-    <div class="sec-label">The compounding loop · what is allowed to thicken</div>
-    <h2>The tactic gets <em>thicker</em>; the judge stays a stone.</h2>
-
+  <!-- ============ REFUSAL BAND — the unamendable standard (hard, not scholarly) ============ -->
+  <section class="refusal">
+    <div class="beat-label"><b>Refuse the kind advice</b></div>
     <p>
-      The loop has four beats — generate, judge, rewrite the tactic, re-run — and the whole craft is in which node
-      grows. Each round you read what the judge flagged and write the catch <b>into the tactic file, never the judge.</b>
-      The tactic is the generator's how-to; it accretes every correction and visibly thickens pass over pass. The
-      judge accretes nothing. Picture it as the diagram below: one node fattening with each loop, one node sitting
-      there like a stone. And keep the round-by-round trail — the score, what the judge kept catching, what the tactic
-      never managed to absorb. That trail is your evidence the loop works, not your faith that it does — and it's also
-      what you'll hand the room when you ask to make this an always-on team check.
+      The fast-iteration playbook will tell you to co-evolve: sharpen the work and sharpen the rubric together each round,
+      "as your taste develops." <b>Refuse it.</b> A standard you are allowed to amend mid-run is not a standard — it is a
+      mood. The moment <span class="mono">judge.md</span> is editable by the same hand that wants the score to go up, the
+      grade is worthless: you have <span class="no">co-authored the verdict with the defendant.</span>
     </p>
-  </section>
-
-  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP (tactic thickens, judge unchanged) ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 420" role="img" aria-label="A closed four-beat loop — generate, judge which is fixed, rewrite the tactic, re-run — with the tactic file shown growing denser across passes one two and three on the right, while the judge file stays byte-identical. Caption: the work sharpens because the standard does not.">
-      <defs>
-        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffb347" stop-opacity=".8"/><stop offset="1" stop-color="#3fe0c8" stop-opacity=".6"/></linearGradient>
-        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#ffe0a8"/><stop offset=".55" stop-color="#ffb347"/><stop offset="1" stop-color="#5a3a10"/></radialGradient>
-        <radialGradient id="d3-judge" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#9bffe9"/><stop offset=".55" stop-color="#3fe0c8"/><stop offset="1" stop-color="#0c2b2a"/></radialGradient>
-        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE WORK SHARPENS BECAUSE THE STANDARD DOESN'T · WHAT THICKENS BETWEEN PASSES</text>
-
-      <!-- ===== LEFT HALF: the loop ===== -->
-      <g transform="translate(40,60)">
-        <circle cx="200" cy="170" r="130" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="540 60" stroke-linecap="round" transform="rotate(-90 200 170)"/>
-        <circle r="3.6" fill="#ffce85">
-          <animateMotion dur="9s" repeatCount="indefinite" path="M200,40 a130,130 0 1,1 -0.1,0"/>
-          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
-        </circle>
-
-        <!-- beat 1 — Generate -->
-        <g>
-          <circle cx="200" cy="40" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="200" y="45" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">1</text>
-          <text x="200" y="20" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#ffe0a8">Generate</text>
-        </g>
-        <!-- beat 2 — Judge (fixed) — teal, the stone -->
-        <g>
-          <circle cx="330" cy="170" r="22" fill="url(#d3-judge)" filter="url(#d3-glow)"/>
-          <text x="330" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#04201e" font-weight="500">2</text>
-          <text x="362" y="167" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#9bffe9">Judge</text>
-          <text x="362" y="183" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#1d8d80">fixed</text>
-        </g>
-        <!-- beat 3 — Rewrite tactic -->
-        <g>
-          <circle cx="200" cy="300" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="200" y="305" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">3</text>
-          <text x="200" y="338" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#ffe0a8">Rewrite the tactic</text>
-        </g>
-        <!-- beat 4 — Re-run -->
-        <g>
-          <circle cx="70" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="70" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">4</text>
-          <text x="38" y="173" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#ffe0a8">Re-run</text>
-        </g>
-
-        <text x="200" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">ONE WAY ONLY</text>
-        <text x="200" y="184" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#ffb347">corrections → tactic</text>
-      </g>
-
-      <!-- ===== RIGHT HALF: the tactic densifying / the judge unchanged ===== -->
-      <g transform="translate(540,68)">
-
-        <!-- pass 1 — thin tactic -->
-        <g>
-          <rect x="0" y="14" width="150" height="200" rx="8" fill="rgba(18,15,9,.7)" stroke="rgba(255,179,71,.25)"/>
-          <rect x="0" y="14" width="150" height="20" rx="6" fill="rgba(255,179,71,.12)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">tactic.md</text>
-          <text x="120" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v1</text>
-          <g stroke="#a86a1f" stroke-width="2" opacity=".6">
-            <line x1="12" y1="58" x2="98" y2="58"/><line x1="12" y1="78" x2="130" y2="78"/><line x1="12" y1="98" x2="78" y2="98"/>
-          </g>
-          <text x="75" y="240" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#5d6a68">PASS 1 · THIN</text>
-        </g>
-
-        <g transform="translate(158,114)">
-          <path d="M0,0 L24,0" stroke="#ffb347" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="24,0 16,-5 16,5" fill="#ffb347" opacity=".75"/>
-        </g>
-
-        <!-- pass 2 — denser tactic -->
-        <g transform="translate(188,0)">
-          <rect x="0" y="14" width="150" height="220" rx="8" fill="rgba(18,15,9,.78)" stroke="rgba(255,179,71,.4)"/>
-          <rect x="0" y="14" width="150" height="20" rx="6" fill="rgba(255,179,71,.16)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">tactic.md</text>
-          <text x="120" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v2</text>
-          <g stroke="#ffce85" stroke-width="2" opacity=".8">
-            <line x1="12" y1="58" x2="120" y2="58"/><line x1="12" y1="78" x2="134" y2="78"/><line x1="12" y1="98" x2="98" y2="98"/>
-            <line x1="12" y1="118" x2="128" y2="118"/><line x1="12" y1="138" x2="108" y2="138"/>
-          </g>
-          <g stroke="#ffb347" stroke-width="2.2">
-            <line x1="12" y1="158" x2="126" y2="158"/><line x1="12" y1="178" x2="92" y2="178"/>
-          </g>
-          <text x="75" y="252" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#ffce85">PASS 2 · DENSER</text>
-        </g>
-
-        <g transform="translate(346,124)">
-          <path d="M0,0 L24,0" stroke="#ffb347" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="24,0 16,-5 16,5" fill="#ffb347" opacity=".75"/>
-        </g>
-
-        <!-- pass 3 — richest tactic -->
-        <g transform="translate(376,0)">
-          <rect x="0" y="0" width="150" height="260" rx="8" fill="rgba(18,15,9,.85)" stroke="url(#d3-ring)" stroke-width="1.5" filter="url(#d3-glow)"/>
-          <rect x="0" y="0" width="150" height="20" rx="6" fill="rgba(255,179,71,.2)"/>
-          <text x="10" y="15" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">tactic.md</text>
-          <text x="120" y="15" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v3</text>
-          <g stroke="#ffce85" stroke-width="2.1">
-            <line x1="12" y1="40" x2="134" y2="40"/><line x1="12" y1="60" x2="116" y2="60"/><line x1="12" y1="80" x2="138" y2="80"/>
-            <line x1="12" y1="100" x2="110" y2="100"/><line x1="12" y1="120" x2="130" y2="120"/><line x1="12" y1="140" x2="104" y2="140"/>
-            <line x1="12" y1="160" x2="128" y2="160"/><line x1="12" y1="180" x2="118" y2="180"/><line x1="12" y1="200" x2="134" y2="200"/>
-            <line x1="12" y1="220" x2="100" y2="220"/>
-          </g>
-          <text x="75" y="280" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#ffb347">PASS 3 · RICH</text>
-        </g>
-
-        <!-- the judge — same stone in all three passes, under it all -->
-        <g transform="translate(0,302)">
-          <rect x="0" y="0" width="526" height="46" rx="8" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.3)"/>
-          <g transform="translate(14,12)">
-            <rect x="0" y="6" width="16" height="12" rx="2.4" fill="rgba(63,224,200,.2)" stroke="#3fe0c8" stroke-width="1"/>
-            <path d="M3,6 V3.6 a5,5 0 0 1 10,0 V6" fill="none" stroke="#3fe0c8" stroke-width="1.1"/>
-          </g>
-          <text x="40" y="22" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#3fe0c8">judge.md</text>
-          <text x="40" y="36" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".1em" fill="#1d8d80">v1 = v2 = v3 · byte-identical · the stone the work chases</text>
-        </g>
-      </g>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 03</span><em>The work sharpens because the standard doesn't.</em> The tactic absorbs every correction and thickens; <b>the judge stays a byte-identical stone across all three passes</b>.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 4 — the integrity test ============ -->
-  <section class="prose">
-    <div class="sec-label teal">What "Test" actually means · the question that catches self-flattery</div>
-    <h2 class="teal">The test isn't a better score — it's a <em>trail you can read</em>.</h2>
-
     <p>
-      You know the loop worked when the later output is better <b>by the same yardstick</b> and you can point at the
-      score trail rather than your gut — and when the tactic diffs read like a learning record a colleague could
-      follow. But the test that earns its keep is the one that catches the loop quietly cheating. Ask it:
-      <em class="amber">"which rule did you claim to remove but actually kept under another name? Quote both lines."</em>
-      If generation could secretly edit the judge, that question has nowhere honest to land. And the negative test is
-      blunt: if your "improvement" came from loosening the judge mid-run, you didn't tighten the work — you moved the
-      goalposts. A rewritten yardstick is not a yardstick.
+      And do not soften the rule when a round disappoints and the obvious fix is to relax one criterion. Ask the loop
+      instead: <em>"which rule did you claim to remove but actually kept under another name? Quote both lines."</em> If
+      generation could secretly edit the judge, that question has nowhere honest to land. If your "improvement" came from
+      loosening the judge, you didn't tighten the work — you moved the goalposts.
     </p>
-  </section>
-
-  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
-  <div class="plates">
-    <div class="plate use">
-      <div class="beat-label"><b>Use when</b></div>
-      <p class="body">
-        The same check has to run <span class="grey">again and again — a weekly board note, a customer release blurb,
-        a renewal-risk score</span> — and <b>you're the bottleneck running it.</b> You've already benchmarked a judge
-        you trust; now the work needs to keep clearing that bar without you reading every draft.
-      </p>
-    </div>
-    <div class="plate build">
-      <div class="beat-label"><b>Build</b></div>
-      <p class="body">
-        A re-runnable loop with three separated parts: a <b>frozen judge</b>, a <b>separate generator</b>, and an
-        <b>evolving tactic file</b> — plus the inspectable round trail of scores and tactic diffs.
-      </p>
-    </div>
-    <div class="plate test">
-      <div class="beat-label"><b>Test</b></div>
-      <p class="body">
-        Later output is better <em>by the same yardstick</em>, and the trail shows it.<br>
-        Not better because you <em class="no">softened the bar.</em>
-      </p>
-    </div>
-  </div>
-
-  <!-- ============ CORE MOVES — actionable heart ============ -->
-  <section class="moves">
-    <div class="beat-label"><b>Core moves</b></div>
-    <div class="moves-head">
-      <h2>The action, in sequence</h2>
-      <span class="lede">Which file is allowed to move, round to round.</span>
-    </div>
-
-    <div class="move-rail">
-      <div class="thread"></div>
-      <div class="step">
-        <div class="bead">1</div>
-        <h3>Freeze the judge</h3>
-        <p>Lift the benchmarked judge out of the loop. <b>Declare it untouchable</b> for the run.</p>
-      </div>
-      <div class="step">
-        <div class="bead">2</div>
-        <h3>Split writer from grader</h3>
-        <p>Separate agents. <b>Nothing marks its own homework.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">3</div>
-        <h3>Feed catches to the tactic</h3>
-        <p>Every flag rewrites the tactic file. <b>The judge absorbs none.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">4</div>
-        <h3>Keep the trail inspectable</h3>
-        <p>Score + tactic diffs. <b>Evidence the loop learned</b>, not faith.</p>
-      </div>
-      <div class="step">
-        <div class="bead">5</div>
-        <h3>Then walk away</h3>
-        <p>The loop holds. <b>Stop sitting in the room for it.</b></p>
-      </div>
-    </div>
-
-    <div class="compound">
-      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
-        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#ffb347"/><stop offset="100%" stop-color="#3fe0c8"/>
-        </linearGradient></defs>
-        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
-          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
-        <polygon points="37,8 30,16 44,16" fill="#ffb347"/>
-        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
-        <circle r="3" fill="#ffce85">
-          <animateMotion dur="5s" repeatCount="indefinite"
-            path="M37,11 a26,26 0 1,1 -0.1,0"/>
-        </circle>
-      </svg>
-      <div class="ctext">
-        <div class="cyc">generate<span class="arr">→</span>judge <span class="lock">[frozen]</span><span class="arr">→</span>rewrite the tactic<span class="arr">→</span>re-run<span class="arr">→</span>repeat</div>
-        <p>Then it's infrastructure, not a chore: <b>the work sharpens because the standard doesn't.</b> Each round leaves the tactic richer and the judge untouched — the verification primitive you reuse on every recurring output.</p>
-      </div>
-    </div>
-
-    <!-- the Monday-move / no-permission aside -->
-    <p class="aside">
-      <b>Monday move: pick one output you sanity-check yourself.</b> Write its standard as a one-page judge prompt and resolve never to edit it this run.
-      <span class="mono">Three markdown files · two separate agent sessions · no platform · no budget · no sign-off · ~30 min.</span>
-      Run the draft twice, feeding only the judge's flags into a tactic note. If round two beats round one against the unchanged judge, you've felt the loop — and you arrive at the team-check conversation with a score trail, not a pitch.
-    </p>
-  </section>
-
-  <!-- ============ WHY — the conviction ============ -->
-  <section class="why">
-    <div class="beat-label"><b>Why</b></div>
-
-    <div class="principle-block">
-      <div class="principle-label">The principle</div>
-      <p class="principle-line">A yardstick you rewrite is <em>not a yardstick</em>. You move up a level by refusing to move the standard.</p>
-    </div>
-
-    <p class="quote">"Freeze the standard and the work will chase it. Move the standard and you've learned nothing."</p>
-    <p class="gloss">
-      The counterintuitive bit a leader feels in the gut: freezing the judge looks like surrendering control, and is
-      the opposite. <b>The frozen judge is your taste, delegated and made durable</b> — so the generator can chase it
-      while you do something else, and the self-improving generator becomes the work you no longer do by hand. The
-      discipline that makes it real is the separation: a generator that grades itself drifts toward flattering itself,
-      so the asymmetry — one part writes, one part rejects — is the whole design.
-    </p>
-    <p class="gloss">
-      This is the same shape the software lane calls <em>verifier-shaped-to-failure</em>: freeze the check, evolve
-      the code. Different surface, identical move — pin the standard, let the work chase it. <b>Verification is where
-      autonomy is earned</b>, and a standard that holds still is what makes the chasing mean anything.
-    </p>
-    <div class="corollary"><span class="sd"></span>The work moves. The judge doesn't. That's the integrity of the loop.</div>
+    <p class="verdict">A yardstick you rewrite is not a yardstick. The standard does not get a vote on its own grade.</p>
   </section>
 
   <!-- ============ SYSTEMIC BAND — personal → team / company cross ============ -->
   <section class="systemic">
     <div class="lab">Where this sits <span class="cross">· personal → team → company</span></div>
     <p>
-      A fixed judge is the <b>verification primitive a company's autonomy rests on.</b> Alone it raises one person off
-      the bottleneck; shared, it lets a team run the same standard unattended; and once your taste lives in a frozen
-      judge that separate agents are scored against, <span class="scope">quality stops being a person reviewing every
-      output and becomes infrastructure the whole company can trust agent work against — one standard, not one desk at
-      a time.</span> That trust is the precondition everything above it composes on.
+      A fixed judge is the <b>verification primitive a company's autonomy rests on.</b> Alone it raises one person off the
+      bottleneck; shared, it lets a team run the same standard unattended; and once your taste lives in a frozen
+      <span class="mono">judge.md</span> that separate agents are scored against, <span class="scope">quality stops being a
+      person reviewing every output and becomes infrastructure the whole company can trust agent work against — one standard,
+      not one desk at a time.</span> That trust is the precondition everything above it composes on. It's the same shape the
+      software lane calls <em>verifier-shaped-to-failure</em>: freeze the check, evolve the code — different surface,
+      identical move.
     </p>
   </section>
 
-  <!-- ============ TEST-IN-PRACTICE ============ -->
-  <div class="practice">
-    <div class="beat-label teal"><b>Test · in practice</b></div>
-    <p>
-      For two-audience work the <b>two-register output</b> shape plugs straight in: the same content in two registers —
-      an engineer changelog and a customer announce, or a board narrative and an ops dashboard — held under
-      <em>one fixed editorial judge</em> so the registers don't drift apart. <span class="mono">(One shape, the way a
-      cookbook names a dish — not a measured result.)</span> The integrity question still applies: ask the loop which
-      rule it claimed to drop but kept under another name, and make it quote both lines.
-    </p>
-  </div>
+  <!-- ============ LEDGER — compressed: what you built · integrity · where it sits ============ -->
+  <section class="ledger">
+    <div class="beat-label"><b>The ledger · in one glance</b></div>
 
-  <!-- ============ CONNECTS TO — neighbour patterns ============ -->
+    <div class="ledger-row">
+      <div class="lk">What you built</div>
+      <div class="lv">A frozen <span class="mono">judge.md</span>, a <b>separate generator agent</b>, an evolving <span class="mono">tactic.md</span>, and the round-by-round trail of scores and tactic diffs. One file moves; one never does.</div>
+    </div>
+
+    <div class="ledger-row">
+      <div class="lk teal">The integrity test</div>
+      <div class="lv">Ask the loop: <em>"which rule did you claim to remove but actually kept under another name? Quote both lines."</em> If generation could secretly edit the judge, that question has nowhere honest to land.</div>
+    </div>
+
+    <div class="ledger-row">
+      <div class="lk">Monday move</div>
+      <div class="lv">Pick one output you sanity-check yourself. Write its standard as a one-page <span class="mono">judge.md</span> and resolve never to edit it this run. <b>Three markdown files · two agent sessions · ~30 min · nothing to buy or clear first.</b></div>
+    </div>
+  </section>
+
+  <!-- ============ CONNECTS TO — neighbour patterns (real slugs) ============ -->
   <section class="connects">
     <h2>Connects to</h2>
     <div class="sub">Threads leaving this node · the pattern language</div>
@@ -1057,30 +714,30 @@
     <div class="web">
       <svg viewBox="0 0 1080 300" aria-hidden="true">
         <defs>
-          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#a86a1f" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".55"/></linearGradient>
-          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="fjl-t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="fjl-t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#a86a1f" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="fjl-t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="fjl-t4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".55"/></linearGradient>
+          <filter id="fjl-wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         </defs>
 
         <circle cx="150" cy="150" r="30" fill="none" stroke="#ffb347" stroke-width="1.2" opacity=".5"/>
-        <circle cx="150" cy="150" r="11" fill="#ffb347" filter="url(#wglow)"/>
+        <circle cx="150" cy="150" r="11" fill="#ffb347" filter="url(#fjl-wglow)"/>
         <circle cx="150" cy="150" r="46" fill="none" stroke="#ffb347" stroke-width=".7" opacity=".25"/>
 
         <!-- prerequisite: benchmark-the-judge (amber, dense) -->
-        <path id="th1" d="M150,150 C360,70 540,52 760,56" stroke="url(#t1)" stroke-width="2.2" fill="none"/>
+        <path id="fjl-th1" d="M150,150 C360,70 540,52 760,56" stroke="url(#fjl-t1)" stroke-width="2.2" fill="none"/>
         <!-- the taste: make-output-yours (amber) -->
-        <path id="th2" d="M150,150 C380,118 560,116 760,118" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
+        <path id="fjl-th2" d="M150,150 C380,118 560,116 760,118" stroke="url(#fjl-t2)" stroke-width="2.2" fill="none"/>
         <!-- what it earns: earn-the-next-rung (amber→teal) -->
-        <path id="th3" d="M150,150 C380,186 560,188 760,188" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
+        <path id="fjl-th3" d="M150,150 C380,186 560,188 760,188" stroke="url(#fjl-t3)" stroke-width="2.2" fill="none"/>
         <!-- the software twin: verifier-shaped-to-failure (light similarity thread, dashed) -->
-        <path id="th4" d="M150,150 C360,232 540,250 760,250" stroke="url(#t4)" stroke-width="1.6" stroke-dasharray="4 7" fill="none"/>
+        <path id="fjl-th4" d="M150,150 C360,232 540,250 760,250" stroke="url(#fjl-t4)" stroke-width="1.6" stroke-dasharray="4 7" fill="none"/>
 
-        <circle r="2.8" fill="#ffce85"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#ffb347"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#9bffe9"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
-        <circle r="2.4" fill="#3fe0c8"><animateMotion dur="6.4s" begin="1.6s" repeatCount="indefinite"><mpath href="#th4"/></animateMotion><animate attributeName="opacity" values="0;.8;.8;0" dur="6.4s" begin="1.6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#fjl-th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffb347"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#fjl-th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#9bffe9"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#fjl-th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+        <circle r="2.4" fill="#3fe0c8"><animateMotion dur="6.4s" begin="1.6s" repeatCount="indefinite"><mpath href="#fjl-th4"/></animateMotion><animate attributeName="opacity" values="0;.8;.8;0" dur="6.4s" begin="1.6s" repeatCount="indefinite"/></circle>
       </svg>
 
       <div class="neighbours">
@@ -1095,7 +752,7 @@
 
   <!-- ============ FOOTER ============ -->
   <footer class="floor">
-    <span class="door">A door, not a destination — the judge is a markdown file, the loop is two sessions and a third file. No platform, no vendor, no permission. The only cost is the restraint to leave the judge alone.</span>
+    <span class="door">Steering ran one way: you moved the words until the answer followed. Run it backwards — leave the judge a stone and let the work walk toward it, round after round. Two markdown files where only one is ever allowed to move, and round two arrives as a score trail you can hand the room.</span>
     <span class="meta">The Big Picture · Pattern Language</span>
   </footer>
 

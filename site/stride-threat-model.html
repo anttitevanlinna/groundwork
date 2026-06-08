@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Name the threat before you build — Pattern · The Big Picture</title>
+<title>Threat modeling before you build — Pattern · The Big Picture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -102,7 +102,7 @@
   }
   .hero-cap b{color:var(--teal)}
 
-  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
+  /* ============ READING-PROSE ============ */
   .prose{
     margin-top:34px;max-width:760px;
   }
@@ -141,28 +141,6 @@
   }
   .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
 
-  /* ============ PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
-  .diagram{
-    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
-    background:
-      radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
-      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
-    position:relative;
-    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
-  }
-  .diagram svg{display:block;width:100%;height:auto}
-  .diagram .dcap{
-    padding:12px 20px 16px;border-top:1px solid var(--hairline);
-    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
-    color:var(--ink-dim);letter-spacing:.003em;
-    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
-  }
-  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
-  .diagram .dcap .num{
-    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
-    letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
-  }
-
   /* ============ RECIPE SECTION BEATS ============ */
   .beat-label{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
@@ -175,136 +153,12 @@
   .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
   .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
 
-  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
-  .plates{
-    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
-  }
-  .plate{
-    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
-    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
-  }
-  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
-  .plate .body b{color:var(--spore);font-weight:500}
-  .plate .body .grey{color:var(--grey)}
-  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
-  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
-  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
-
-  /* ============ CORE MOVES ============ */
-  .moves{margin-top:46px}
-  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
-  .moves-head h2{
-    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
-  }
-  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
-  .move-rail{
-    margin-top:20px;position:relative;
-    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
-  }
-  .move-rail .thread{
-    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
-    background:linear-gradient(90deg,
-      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
-      rgba(63,224,200,.7) 50%, rgba(255,179,71,.65) 94%, rgba(255,179,71,0) 100%);
-  }
-  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
-  .step:first-child{padding-left:0}
-  .step .bead{
-    width:42px;height:42px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
-    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
-    margin-bottom:13px;
-  }
-  .step:nth-child(5) .bead{
-    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
-  }
-  .step h3{
-    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
-  }
-  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
-  .step p b{color:var(--ink);font-weight:500}
-
-  .compound{
-    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
-    padding:18px 22px;position:relative;overflow:hidden;
-    background:
-      radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.07), transparent 60%),
-      rgba(8,17,18,.55);
-    display:flex;align-items:center;gap:20px;
-  }
-  .compound .loop-ico{flex:none}
-  .compound .ctext{flex:1}
-  .compound .ctext .cyc{
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
-  }
-  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
-  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
-  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
-
   .aside{
     margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
     border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
   }
   .aside b{color:var(--amber);font-weight:500}
   .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
-
-  /* ============ WHY ============ */
-  .why{
-    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
-    padding:26px 30px 28px;position:relative;overflow:hidden;
-    background:
-      radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
-      radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
-      rgba(7,14,15,.6);
-  }
-  .why .beat-label{margin-bottom:14px}
-  .why .principle-block{
-    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
-  }
-  .why .principle-label{
-    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
-    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
-  }
-  .why .principle-line{
-    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
-    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
-  }
-  .why .principle-line em{font-style:italic;color:var(--teal)}
-  .why .quote{
-    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--teal);letter-spacing:.004em;
-    text-shadow:0 0 30px rgba(63,224,200,.26);max-width:840px;
-  }
-  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
-  .why .gloss b{color:var(--spore);font-weight:500}
-  .why .gloss em{font-style:italic;color:var(--ink-dim)}
-  .why .gloss + .gloss{margin-top:12px}
-  .why .corollary{
-    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
-    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
-  }
-  .why .corollary .sd{
-    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
-    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
-  }
-
-  /* ============ TEST-IN-PRACTICE inline panel ============ */
-  .practice{
-    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
-    padding:22px 26px 24px;
-    background:
-      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
-      rgba(8,15,17,.5);
-  }
-  .practice .beat-label{margin-bottom:12px}
-  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
-  .practice p b{color:var(--spore);font-weight:500}
-  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
-  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
 
   /* ============ CONNECTS TO ============ */
   .connects{margin-top:52px}
@@ -339,20 +193,6 @@
   .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
   .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
   .nb:hover .sd{animation:throb 1s ease-in-out infinite}
-  .nb.soon{opacity:.62}
-  .nb.soon::after{
-    content:"soon";
-    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--ink-faint);
-    border:1px solid var(--ink-faint);border-radius:20px;
-    padding:2px 7px 3px;margin-left:4px;
-  }
-  .nb.soon:hover{opacity:1}
-  .nb.component{
-    border-radius:9px;font-size:12px;padding:6px 12px 7px;border-style:dashed;
-    color:var(--ink-dim);
-  }
-  .nb.component .sd{width:6px;height:6px;background:var(--ink-dim);box-shadow:none}
   @keyframes throb{50%{transform:scale(1.5)}}
   .origin-chip{
     position:absolute;transform:translate(-50%,-50%);
@@ -385,19 +225,87 @@
   }
   .breathe{animation:breathe 4.2s ease-in-out infinite}
 
-  @media (max-width:860px){
-    .plates{grid-template-columns:1fr 1fr}
-    .plate.use{grid-column:1 / -1}
+  /* ============ KEY-SPECIFIC — couplet descent (form: dichotomous key) ============ */
+  .keyhow{
+    margin-top:30px;border:1px solid var(--hairline);border-radius:14px;
+    padding:20px 24px 22px;max-width:820px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(63,224,200,.05), transparent 55%),
+      rgba(8,15,17,.5);
   }
+  .keyhow .beat-label{margin-bottom:12px}
+  .keyhow p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
+  .keyhow p b{color:var(--spore);font-weight:500}
+  .keyhow p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
+  .keyhow p .mono{font-family:'Spline Sans Mono',monospace;font-size:13px;color:var(--teal)}
+
+  .descent{margin-top:34px;max-width:840px}
+  .descent .stem{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  }
+  .descent .stem::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
+  }
+  /* one couplet = a numbered fork with two limbs */
+  .couplet{
+    margin-top:16px;display:grid;grid-template-columns:38px 1fr;gap:0 16px;
+    border-left:1px solid var(--hairline);padding-left:0;
+  }
+  .couplet .cn{
+    font-family:'Fraunces',serif;font-size:21px;color:var(--ink-dim);
+    text-align:center;padding-top:8px;
+  }
+  .couplet.kept .cn{color:var(--teal);text-shadow:0 0 18px rgba(63,224,200,.5)}
+  .limb{
+    display:flex;align-items:baseline;gap:12px;padding:7px 0;
+    border-bottom:1px dashed var(--hairline);
+  }
+  .limb:last-child{border-bottom:none}
+  .limb .lead{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
+    color:var(--ink-faint);flex:none;width:18px;text-align:right;padding-top:2px;
+  }
+  .limb .desc{flex:1;font-size:14.5px;line-height:1.45;color:var(--ink)}
+  .limb .desc b{color:var(--spore);font-weight:500}
+  .limb .verdict{
+    flex:none;font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.18em;
+    text-transform:uppercase;padding-top:3px;white-space:nowrap;
+  }
+  /* a rejected limb — pressed flat, greyed */
+  .limb.reject .desc{color:var(--grey)}
+  .limb.reject .desc s{text-decoration-color:var(--grey-dim)}
+  .limb.reject .verdict{color:var(--ink-faint)}
+  .limb.reject .verdict .why{color:var(--amber-dim)}
+  /* the live limb — glowing, the one branch that descends */
+  .limb.keep{position:relative}
+  .limb.keep .desc{color:var(--spore);font-weight:500}
+  .limb.keep .verdict{color:var(--teal);text-shadow:0 0 14px rgba(63,224,200,.45)}
+  .limb.keep .lead{color:var(--teal)}
+  .descend-to{
+    grid-column:2;font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.2em;
+    color:var(--teal);padding:8px 0 2px 30px;position:relative;
+  }
+  .descend-to::before{
+    content:"";position:absolute;left:8px;top:-2px;width:16px;height:18px;
+    border-left:1.5px solid var(--teal);border-bottom:1.5px solid var(--teal);
+    border-bottom-left-radius:8px;opacity:.7;
+  }
+
+  .tiebreak{
+    margin-top:26px;max-width:760px;padding:14px 0 14px 18px;
+    border-left:2px solid var(--amber-dim);
+    font-family:'Fraunces',serif;font-style:italic;font-size:17px;line-height:1.45;color:var(--ink);
+  }
+  .tiebreak b{color:var(--amber);font-weight:500;font-style:normal}
+
   @media (max-width:780px){
-    .plates{grid-template-columns:1fr}
-    .plate.use{grid-column:1}
-    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
-    .move-rail .thread{display:none}
-    .step{padding:0}
-    .compound{flex-direction:column;align-items:flex-start;gap:14px}
     .neighbours .nb{font-size:11px;padding:6px 10px}
     .prose p{font-size:14.5px}
+    .couplet{grid-template-columns:30px 1fr;gap:0 10px}
+    .limb{flex-wrap:wrap}
+    .limb .verdict{width:100%;text-align:left;padding-top:0}
   }
 </style>
 </head>
@@ -406,684 +314,394 @@
 
   <!-- ============ BREADCRUMB ============ -->
   <nav class="crumb">
-    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Name the threat before you build</span>
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Threat modeling before you build</span>
   </nav>
 
   <!-- ============ PATTERN NAME + ESSENCE ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe · software lane · <span class="pat-no">Context &amp; Guardrails · personal → team → company</span></div>
-    <h1>Name the threat <em>before</em> you build</h1>
-    <p class="principle">The principle: <b>threat modelling is only useful if it ends in a decision</b> — STRIDE is the surface to reject most things against, not an oracle.</p>
+    <h1>Threat modeling before you <em>build</em></h1>
+    <p class="principle">The principle: <b>threat modelling is only useful if it ends in a decision</b> — STRIDE is the surface to reject most things against, not an oracle you beg for the attacks you missed.</p>
     <p class="essence">
-      Before you harden anything, run STRIDE across a mapped surface, name the single
-      <b>worst realistic incident</b>, pick the one threat that matches it, and write the call down as an ADR —
-      so the worry becomes a defensible decision your whole team inherits instead of re-argues.
+      Run STRIDE like a field guide's identification key — not telling you what the threat <b>is</b>, but what it
+      <b>isn't</b>, one fork at a time, until one name is left. In real terms: point a <b>subagent</b> at the feature
+      you're shipping, take the access surface it returns, walk the six STRIDE categories against <b>that map</b>,
+      reject most with a one-word reason, name the single worst realistic incident — then write the survivor down as
+      an <b>ADR</b> your whole team inherits instead of re-argues.
     </p>
   </header>
 
-  <!-- ============ HERO PICTURE: STRIDE table — fifteen rejected, one survivor → ADR ============ -->
+  <!-- ============ THE KEY — single governing diagram: dichotomous descent → ADR leaf ============ -->
   <div class="hero-frame">
-    <svg viewBox="0 0 1080 430" role="img" aria-label="A STRIDE candidate table with fifteen rows greyed out and struck through as rejected, one row glowing as the chosen threat, with an arrow to an open ADR file showing Context, Decision, Alternatives considered and Constraint.">
+    <svg viewBox="0 0 1080 720" role="img" aria-label="An agent run, read as a dichotomous identification key: a subagent's access-surface map feeds the top of the key, then six numbered couplets descend, one per STRIDE letter, each a reject-or-keep fork carrying a one-word reason in the margin. Five branches are greyed and pressed flat as rejected; one branch — the retry-storm denial-of-service couplet — glows and descends to a terminal leaf-node that is the open ADR file, showing Context, Decision, Alternatives considered and Constraint.">
       <defs>
-        <radialGradient id="hwell" cx="74%" cy="48%" r="64%">
-          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".20"/>
-          <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".07"/>
+        <radialGradient id="stride-kwell" cx="50%" cy="8%" r="80%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".14"/>
+          <stop offset="40%" stop-color="#3fe0c8" stop-opacity=".06"/>
           <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
         </radialGradient>
-        <linearGradient id="keptGrad" x1="0" y1="0" x2="1" y2="0">
+        <linearGradient id="stride-kspine" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="#1d8d80" stop-opacity=".5"/>
-          <stop offset="100%" stop-color="#3fe0c8" stop-opacity=".95"/>
+          <stop offset="55%" stop-color="#3fe0c8" stop-opacity=".9"/>
+          <stop offset="100%" stop-color="#ffb347" stop-opacity=".85"/>
         </linearGradient>
-        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        <radialGradient id="stride-kleaf" cx="40%" cy="32%" r="72%">
+          <stop offset="0%" stop-color="#eafff9"/><stop offset=".45" stop-color="#3fe0c8"/><stop offset="1" stop-color="#0c2b2a"/>
+        </radialGradient>
+        <filter id="stride-kglow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="4.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
       </defs>
-      <rect x="0" y="0" width="1080" height="430" fill="url(#hwell)"/>
+      <rect x="0" y="0" width="1080" height="720" fill="url(#stride-kwell)"/>
 
-      <!-- ===== LEFT: the candidate table (15 rejected, 1 kept) ===== -->
-      <text x="48" y="38" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2.4" fill="#5d6a68">STRIDE CANDIDATES · MOST REJECTED ON PURPOSE</text>
+      <text x="48" y="40" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing="2.4" fill="#5d6a68">STRIDE ON AN AGENT-MAPPED SURFACE · BILLING WEBHOOK · IDENTIFY BY EXCLUSION</text>
 
-      <!-- six STRIDE category labels down the side -->
-      <g font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3b524e" letter-spacing=".12em">
-        <text x="48" y="74">S · SPOOFING</text>
-        <text x="48" y="74" dy="0"></text>
-      </g>
-
-      <!-- the rows: 16 total — 15 struck-through grey, 1 glowing -->
-      <!-- rejected rows -->
-      <g font-family="'Spline Sans',sans-serif" font-size="11.5">
-        <!-- helper: each rejected row is a faint bar + struck text + reject reason -->
-        <!-- row template repeated -->
-        <g fill="#4b5654">
-          <rect x="48" y="84"  width="430" height="17" rx="4" fill="rgba(93,106,104,.07)"/>
-          <line x1="56" y1="92" x2="300" y2="92" stroke="#3b524e" stroke-width="1"/>
-          <text x="56" y="96" fill="#4b5654">Spoofed webhook sender · forged signature</text>
-          <text x="468" y="96" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#39423f">ALREADY MITIGATED</text>
-
-          <rect x="48" y="106" width="430" height="17" rx="4" fill="rgba(93,106,104,.07)"/>
-          <line x1="56" y1="114" x2="290" y2="114" stroke="#3b524e" stroke-width="1"/>
-          <text x="56" y="118" fill="#4b5654">Spoofed user identity on public read</text>
-          <text x="468" y="118" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#39423f">OUT OF SCOPE</text>
-
-          <rect x="48" y="128" width="430" height="17" rx="4" fill="rgba(93,106,104,.07)"/>
-          <line x1="56" y1="136" x2="310" y2="136" stroke="#3b524e" stroke-width="1"/>
-          <text x="56" y="140" fill="#4b5654">Tamper with payload in transit</text>
-          <text x="468" y="140" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#39423f">ALREADY MITIGATED</text>
-
-          <rect x="48" y="150" width="430" height="17" rx="4" fill="rgba(93,106,104,.07)"/>
-          <line x1="56" y1="158" x2="296" y2="158" stroke="#3b524e" stroke-width="1"/>
-          <text x="56" y="162" fill="#4b5654">Tamper with stored config flag</text>
-          <text x="468" y="162" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#39423f">ACCEPTABLE RISK</text>
-
-          <rect x="48" y="172" width="430" height="17" rx="4" fill="rgba(93,106,104,.07)"/>
-          <line x1="56" y1="180" x2="284" y2="180" stroke="#3b524e" stroke-width="1"/>
-          <text x="56" y="184" fill="#4b5654">Repudiate a manual refund action</text>
-          <text x="468" y="184" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#39423f">OUT OF SCOPE</text>
-
-          <rect x="48" y="194" width="430" height="17" rx="4" fill="rgba(93,106,104,.07)"/>
-          <line x1="56" y1="202" x2="302" y2="202" stroke="#3b524e" stroke-width="1"/>
-          <text x="56" y="206" fill="#4b5654">Repudiate webhook receipt · no audit row</text>
-          <text x="468" y="206" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#39423f">ACCEPTABLE RISK</text>
-        </g>
-
-        <!-- ===== THE SURVIVOR — glowing, kept ===== -->
-        <g filter="url(#hglow)">
-          <rect x="48" y="216" width="430" height="22" rx="5" fill="rgba(63,224,200,.12)" stroke="url(#keptGrad)" stroke-width="1.6"/>
-        </g>
-        <text x="56" y="231" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9" font-weight="600">D · Retry storm replays the billing webhook → double-charge</text>
-        <circle cx="466" cy="227" r="4.5" fill="#aeffee" filter="url(#hglow)"/>
-        <text x="56" y="252" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".22em" fill="#3fe0c8">→ THE ONE YOU HARDEN · WORST REALISTIC CASE</text>
-
-        <!-- more rejected rows below the survivor -->
-        <g fill="#4b5654">
-          <rect x="48" y="266" width="430" height="17" rx="4" fill="rgba(93,106,104,.07)"/>
-          <line x1="56" y1="274" x2="320" y2="274" stroke="#3b524e" stroke-width="1"/>
-          <text x="56" y="278">Info disclosure · verbose error leaks IDs</text>
-          <text x="468" y="278" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#39423f">ACCEPTABLE RISK</text>
-
-          <rect x="48" y="288" width="430" height="17" rx="4" fill="rgba(93,106,104,.07)"/>
-          <line x1="56" y1="296" x2="296" y2="296" stroke="#3b524e" stroke-width="1"/>
-          <text x="56" y="300">Info disclosure · owner field on public DTO</text>
-          <text x="468" y="300" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#39423f">OUT OF SCOPE</text>
-
-          <rect x="48" y="310" width="430" height="17" rx="4" fill="rgba(93,106,104,.07)"/>
-          <line x1="56" y1="318" x2="288" y2="318" stroke="#3b524e" stroke-width="1"/>
-          <text x="56" y="322">Denial of service · unbounded retry fan-out</text>
-          <text x="468" y="322" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#39423f">ACCEPTABLE RISK</text>
-
-          <rect x="48" y="332" width="430" height="17" rx="4" fill="rgba(93,106,104,.07)"/>
-          <line x1="56" y1="340" x2="306" y2="340" stroke="#3b524e" stroke-width="1"/>
-          <text x="56" y="344">Elevation · queue worker runs as admin</text>
-          <text x="468" y="344" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#39423f">OUT OF SCOPE</text>
-
-          <rect x="48" y="354" width="430" height="17" rx="4" fill="rgba(93,106,104,.07)"/>
-          <line x1="56" y1="362" x2="280" y2="362" stroke="#3b524e" stroke-width="1"/>
-          <text x="56" y="366">+5 more · spoofing, tampering, repudiation…</text>
-          <text x="468" y="366" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#39423f">REJECTED · LOGGED</text>
-        </g>
-      </g>
-
-      <!-- arrow from survivor to the ADR -->
+      <!-- the input: a subagent's access-surface map feeds the head of the key -->
       <g>
-        <path d="M486,227 C540,227 560,210 600,200" stroke="#3fe0c8" stroke-width="1.8" fill="none" filter="url(#hglow)"/>
-        <polygon points="600,200 588,198 593,209" fill="#3fe0c8"/>
-        <text x="540" y="184" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3fe0c8">BECOMES</text>
+        <rect x="48" y="52" width="246" height="22" rx="6" fill="rgba(63,224,200,.10)" stroke="rgba(63,224,200,.34)" stroke-width="1"/>
+        <circle cx="64" cy="63" r="4" fill="#aeffee" class="breathe"/>
+        <text x="78" y="67" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".06em" fill="#3fe0c8">subagent → access-surface map</text>
+        <path d="M120,74 L120,66" stroke="#3fe0c8" stroke-width="1.6" fill="none" opacity=".8"/>
+        <polygon points="120,80 114,70 126,70" fill="#3fe0c8" opacity=".85"/>
       </g>
 
-      <!-- ===== RIGHT: the ADR file ===== -->
+      <!-- the living spine: a vertical descent from the top, glowing where the key stays alive -->
+      <path d="M120,66 L120,560" stroke="url(#stride-kspine)" stroke-width="2.2" fill="none" filter="url(#stride-kglow)"/>
+
+      <!-- ===== COUPLET 1 — Spoofing → REJECT ===== -->
       <g>
-        <rect x="610" y="70" width="420" height="306" rx="12" fill="rgba(8,17,18,.82)" stroke="rgba(63,224,200,.4)" stroke-width="1.4"/>
-        <rect x="610" y="70" width="220" height="26" rx="6" fill="rgba(63,224,200,.14)"/>
-        <text x="626" y="88" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing=".05em" fill="#3fe0c8">docs/adr/0007-webhook.md</text>
+        <circle cx="120" cy="92" r="13" fill="rgba(63,224,200,.10)" stroke="#3fe0c8" stroke-width="1.1"/>
+        <text x="120" y="96" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#3fe0c8">1</text>
+        <line x1="120" y1="92" x2="168" y2="92" stroke="#3b524e" stroke-width="1" stroke-dasharray="3 5"/>
+        <text x="178" y="88" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">S</text>
+        <text x="200" y="88" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#5d6a68" text-decoration="line-through">Spoofed webhook sender · forged signature</text>
+        <text x="1032" y="88" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3b524e">REJECT · ALREADY SIGNED</text>
+        <text x="178" y="104" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="11" fill="#39423f">rejected — but logged in Alternatives</text>
+      </g>
+
+      <!-- ===== COUPLET 2 — Tampering → REJECT ===== -->
+      <g>
+        <circle cx="120" cy="160" r="13" fill="rgba(63,224,200,.10)" stroke="#3fe0c8" stroke-width="1.1"/>
+        <text x="120" y="164" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#3fe0c8">2</text>
+        <line x1="120" y1="160" x2="168" y2="160" stroke="#3b524e" stroke-width="1" stroke-dasharray="3 5"/>
+        <text x="178" y="156" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">T</text>
+        <text x="200" y="156" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#5d6a68" text-decoration="line-through">Tamper with the payload in transit</text>
+        <text x="1032" y="156" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3b524e">REJECT · MITIGATED · TLS</text>
+        <text x="178" y="172" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="11" fill="#39423f">rejected — but logged in Alternatives</text>
+      </g>
+
+      <!-- ===== COUPLET 3 — Repudiation → REJECT ===== -->
+      <g>
+        <circle cx="120" cy="228" r="13" fill="rgba(63,224,200,.10)" stroke="#3fe0c8" stroke-width="1.1"/>
+        <text x="120" y="232" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#3fe0c8">3</text>
+        <line x1="120" y1="228" x2="168" y2="228" stroke="#3b524e" stroke-width="1" stroke-dasharray="3 5"/>
+        <text x="178" y="224" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">R</text>
+        <text x="200" y="224" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#5d6a68" text-decoration="line-through">Repudiate webhook receipt · no audit row</text>
+        <text x="1032" y="224" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3b524e">REJECT · ACCEPTABLE RISK</text>
+        <text x="178" y="240" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="11" fill="#39423f">rejected — but logged in Alternatives</text>
+      </g>
+
+      <!-- ===== COUPLET 4 — Info-disclosure → REJECT ===== -->
+      <g>
+        <circle cx="120" cy="296" r="13" fill="rgba(63,224,200,.10)" stroke="#3fe0c8" stroke-width="1.1"/>
+        <text x="120" y="300" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#3fe0c8">4</text>
+        <line x1="120" y1="296" x2="168" y2="296" stroke="#3b524e" stroke-width="1" stroke-dasharray="3 5"/>
+        <text x="178" y="292" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">I</text>
+        <text x="200" y="292" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#5d6a68" text-decoration="line-through">Verbose error leaks internal IDs</text>
+        <text x="1032" y="292" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3b524e">REJECT · OUT OF SCOPE</text>
+        <text x="178" y="308" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="11" fill="#39423f">rejected — but logged in Alternatives</text>
+      </g>
+
+      <!-- ===== COUPLET 5 — Denial / retry-replay → KEEP → descends ===== -->
+      <g filter="url(#stride-kglow)">
+        <circle cx="120" cy="380" r="17" fill="url(#stride-kleaf)"/>
+      </g>
+      <text x="120" y="385" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">5</text>
+      <g>
+        <line x1="137" y1="380" x2="178" y2="380" stroke="#3fe0c8" stroke-width="1.8" filter="url(#stride-kglow)"/>
+        <text x="190" y="376" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".14em" fill="#3fe0c8">D</text>
+        <text x="214" y="376" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#eafff9" font-weight="600">Retry storm replays the billing webhook → double-charge</text>
+        <text x="1032" y="376" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".18em" fill="#3fe0c8" filter="url(#stride-kglow)">KEEP · WORST REALISTIC CASE</text>
+        <text x="214" y="394" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#1d8d80">↓ THE ONLY LIVE BRANCH — DESCEND TO THE LEAF</text>
+        <circle cx="195" cy="380" r="4" fill="#aeffee" class="breathe"/>
+      </g>
+
+      <!-- ===== COUPLET 6 — Elevation → REJECT ===== -->
+      <g>
+        <circle cx="120" cy="452" r="13" fill="rgba(63,224,200,.10)" stroke="#3fe0c8" stroke-width="1.1"/>
+        <text x="120" y="456" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#3fe0c8">6</text>
+        <line x1="120" y1="452" x2="168" y2="452" stroke="#3b524e" stroke-width="1" stroke-dasharray="3 5"/>
+        <text x="178" y="448" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#5d6a68">E</text>
+        <text x="200" y="448" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#5d6a68" text-decoration="line-through">Queue worker runs as admin</text>
+        <text x="1032" y="448" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3b524e">REJECT · OUT OF SCOPE</text>
+        <text x="178" y="464" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="11" fill="#39423f">rejected — but logged in Alternatives</text>
+      </g>
+
+      <!-- the live branch leaving couplet 5, curving down to the leaf-node -->
+      <path d="M120,397 C120,500 200,500 200,560" stroke="#3fe0c8" stroke-width="2" fill="none" filter="url(#stride-kglow)"/>
+      <polygon points="200,560 194,548 206,548" fill="#3fe0c8"/>
+      <text x="240" y="525" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3fe0c8">RESOLVES TO →</text>
+
+      <!-- ===== THE LEAF — the terminal node IS the ADR ===== -->
+      <g>
+        <rect x="200" y="560" width="640" height="138" rx="12" fill="rgba(8,17,18,.84)" stroke="rgba(63,224,200,.42)" stroke-width="1.4"/>
+        <rect x="200" y="560" width="290" height="24" rx="6" fill="rgba(63,224,200,.14)"/>
+        <text x="216" y="577" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing=".04em" fill="#3fe0c8">docs/adr/0007-webhook.md</text>
+        <text x="500" y="577" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#6f8a85">— the decision, with its proof</text>
 
         <g font-family="'Spline Sans',sans-serif">
-          <text x="626" y="124" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#6f8a85">CONTEXT</text>
-          <text x="626" y="142" font-size="12" fill="#cfe6e0">Worst case: a retry storm replays the billing</text>
-          <text x="626" y="158" font-size="12" fill="#cfe6e0">webhook and double-charges the customer.</text>
+          <text x="216" y="606" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#6f8a85">CONTEXT · worst realistic case</text>
+          <text x="216" y="622" font-size="11.5" fill="#cfe6e0">Retry storm replays the webhook → double-charge.</text>
 
-          <text x="626" y="188" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#6f8a85">DECISION</text>
-          <text x="626" y="206" font-size="12" fill="#eafff9">Make the handler idempotent on event-id.</text>
+          <text x="216" y="648" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#6f8a85">DECISION</text>
+          <text x="216" y="664" font-size="11.5" fill="#eafff9">Idempotent on event-id at the edge.</text>
 
-          <text x="626" y="236" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#a86a1f">ALTERNATIVES CONSIDERED</text>
-          <text x="626" y="254" font-size="11.5" fill="#9aa6a3">· spoofed sender — already signed ✕</text>
-          <text x="626" y="270" font-size="11.5" fill="#9aa6a3">· verbose-error leak — acceptable risk ✕</text>
-          <text x="626" y="286" font-size="11.5" fill="#9aa6a3">· worker privilege — out of scope ✕</text>
+          <text x="540" y="606" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#a86a1f">ALTERNATIVES CONSIDERED · the rejected forks</text>
+          <text x="540" y="622" font-size="10.5" fill="#9aa6a3">spoof ✕ signed · tamper ✕ TLS · repud ✕ accepted</text>
+          <text x="540" y="638" font-size="10.5" fill="#9aa6a3">leak ✕ out of scope · worker ✕ out of scope</text>
 
-          <text x="626" y="316" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#6f8a85">CONSTRAINT</text>
-          <text x="626" y="334" font-size="12" fill="#cfe6e0">Retries are at-least-once; the queue can't</text>
-          <text x="626" y="350" font-size="12" fill="#cfe6e0">promise exactly-once — so dedupe at the edge.</text>
+          <text x="540" y="664" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#6f8a85">CONSTRAINT</text>
+          <text x="540" y="680" font-size="11.5" fill="#cfe6e0">Queue is at-least-once → dedupe, not trust.</text>
         </g>
-        <circle cx="1015" cy="84" r="4" fill="#aeffee" class="breathe"/>
+        <circle cx="826" cy="574" r="4" fill="#aeffee" class="breathe"/>
       </g>
 
-      <text x="610" y="402" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">THE REJECTS ARE THE WORK. THE ONE SURVIVOR IS THE DECISION YOUR CISO READS.</text>
+      <!-- ===== THE ADR FOLDER — the decision joins the team's posture ===== -->
+      <g transform="translate(880,560)">
+        <path d="M-40,69 L0,69" stroke="#ffb347" stroke-width="1.4" fill="none" opacity=".7"/>
+        <polygon points="0,69 -10,63 -10,75" fill="#ffb347" opacity=".8"/>
+        <rect x="8" y="0" width="172" height="138" rx="10" fill="rgba(8,17,18,.7)" stroke="url(#stride-kspine)" stroke-width="1.3"/>
+        <rect x="8" y="0" width="172" height="22" rx="6" fill="rgba(255,179,71,.14)"/>
+        <text x="20" y="15" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".05em" fill="#ffb347">docs/adr/ · the team posture</text>
+        <g font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#ffce85">
+          <text x="20" y="44">0007 · 0008 · 0009</text>
+          <text x="20" y="60">0010 · 0011 · 0012</text>
+        </g>
+        <g stroke="#9bffe9" stroke-width="2" opacity=".7">
+          <line x1="20" y1="80" x2="160" y2="80"/>
+          <line x1="20" y1="98" x2="140" y2="98"/>
+          <line x1="20" y1="116" x2="152" y2="116"/>
+        </g>
+        <text x="94" y="134" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".14em" fill="#a86a1f">PRECEDENT · NEXT MODEL INHERITS</text>
+      </g>
+
+      <text x="48" y="712" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">THE REJECTED FORKS BECOME THE ADR'S "ALTERNATIVES CONSIDERED". THE ONE SURVIVOR IS THE DECISION YOUR CISO READS.</text>
     </svg>
-    <div class="hero-cap">Fifteen rejected on purpose. <b>The one you keep arrives with its alternatives already weighed.</b></div>
+    <div class="hero-cap">From a subagent's surface map to one ADR. <b>The rejected forks are the deliverable — not off-cuts.</b></div>
   </div>
 
   <!-- ============================================================ -->
-  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
+  <!-- ============ PREAMBLE — collect the specimen first ========= -->
   <!-- ============================================================ -->
-  <section class="prose">
-    <div class="sec-label">The mechanism · what STRIDE actually chews on</div>
-    <h2>STRIDE has <em>nothing to chew on</em> without a surface.</h2>
-
+  <section class="keyhow">
+    <div class="beat-label"><b>The move, in one line</b></div>
     <p>
-      The most common way threat-modelling goes wrong is also the most innocent-looking: someone opens STRIDE
-      and starts free-associating attacks against the code in their head. That's pub-quiz threat modelling —
-      <em class="teal">"STRIDE without an access-surface map is pub-quiz threat modeling."</em> The six categories are a
-      lens, not an oracle; a lens needs something to focus on. So the move starts one rung earlier: <b>map the access
-      surface first</b> — run the access-control read as a subagent on the feature and you get a surface map, not a
-      feeling. Who can reach what, through which checkpoint, under which trust boundary. Now STRIDE has a real object.
+      Read STRIDE the wrong way round and it's a finder — an oracle you point at code, hoping it surfaces the attacks
+      you missed. Read it the right way round and it's a <b>surface you reject against</b>: you fire all six categories
+      <em>expecting to throw most of them out</em>, until the one threat that survives is left holding the page with
+      its alternatives already weighed. But STRIDE has <b>nothing to chew on without a surface map.</b> So the move
+      starts one rung earlier than the threat list — it starts with what you feed the model.
     </p>
-
     <p>
-      Then comes the part that feels backwards until you've done it once: <b>you run all six categories expecting to
-      reject most of them.</b> Spoofing, Tampering, Repudiation, Information-disclosure, Denial-of-service,
-      Elevation-of-privilege — fired at the mapped surface, the output has more entries than you want. That over-supply
-      is the point. The structure exists so you can reject threats <em>explicitly</em> — acceptable risk, out of scope,
-      already mitigated — which is exactly what makes the one you keep defensible. A threat held up against five it beat
-      is an argument; a threat picked from thin air is a vibe. The diagram below shows the funnel: surface in, six lenses,
-      many candidates, one decision out.
+      Don't aim the six categories at the code in your head; that's pub-quiz threat-modelling, free-associated attacks
+      with nothing to reject <em>against</em>. Instead, run the access-control read as a <b>subagent</b> — point
+      vanilla Claude Code at this week's feature and let it return who-reaches-what, through which checkpoint, under
+      which trust boundary. That returned map is the specimen. The descent below runs against one real one: a billing
+      webhook that re-hits the queue on retry. Walk STRIDE against <span class="mono">that</span>, and every rejection
+      means something, because each is a door on the map you looked at and chose to leave shut.
     </p>
   </section>
 
-  <!-- ============ DIAGRAM 1 — MECHANISM: map → six categories → many → one ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 470" role="img" aria-label="The mechanism: an access-surface map feeds the six STRIDE categories, which fan out into many candidate threats; the worst-realistic-incident story funnels them down to a single threat that becomes an ADR.">
-      <defs>
-        <linearGradient id="d1-funnel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".55"/><stop offset="1" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
-        <radialGradient id="d1-core" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#eafff9"/><stop offset=".45" stop-color="#3fe0c8"/><stop offset="1" stop-color="#0c2b2a"/></radialGradient>
-        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
+  <!-- ============ THE DESCENT — six couplets (form: dichotomous key) ============ -->
+  <section class="descent">
+    <div class="stem">Six STRIDE categories · walked against the map · reject most, on the record</div>
 
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">MAP → SIX LENSES → MANY CANDIDATES → ONE DECISION</text>
+    <!-- Couplet 1 -->
+    <div class="couplet">
+      <div class="cn">1</div>
+      <div>
+        <div class="limb reject">
+          <span class="lead">S</span>
+          <span class="desc"><b>Spoofing</b> — a forged sender impersonates the billing provider, signature faked. <s>Reachable on this surface?</s></span>
+          <span class="verdict">reject · <span class="why">already signed</span></span>
+        </div>
+        <div class="limb">
+          <span class="lead">→</span>
+          <span class="desc">Signature is verified at the edge already → log it in Alternatives, read on.</span>
+          <span class="verdict">→ next</span>
+        </div>
+      </div>
+    </div>
 
-      <!-- STAGE 1: the access-surface map -->
-      <g>
-        <rect x="40" y="70" width="150" height="330" rx="12" fill="rgba(8,17,18,.6)" stroke="rgba(63,224,200,.3)"/>
-        <text x="115" y="94" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3fe0c8">ACCESS SURFACE</text>
-        <!-- surface nodes -->
-        <g>
-          <circle cx="78" cy="138" r="7" fill="url(#d1-core)" filter="url(#d1-glow)"/>
-          <text x="94" y="142" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#cfe6e0">webhook in</text>
-          <circle cx="78" cy="178" r="7" fill="url(#d1-core)" filter="url(#d1-glow)"/>
-          <text x="94" y="182" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#cfe6e0">public read</text>
-          <circle cx="78" cy="218" r="7" fill="url(#d1-core)" filter="url(#d1-glow)"/>
-          <text x="94" y="222" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#cfe6e0">queue retry</text>
-          <circle cx="78" cy="258" r="7" fill="url(#d1-core)" filter="url(#d1-glow)"/>
-          <text x="94" y="262" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#cfe6e0">agent action</text>
-          <circle cx="78" cy="298" r="7" fill="url(#d1-core)" filter="url(#d1-glow)"/>
-          <text x="94" y="302" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#cfe6e0">admin path</text>
-        </g>
-        <text x="115" y="378" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="11" fill="#6f8a85">who reaches what</text>
-      </g>
+    <!-- Couplet 2 -->
+    <div class="couplet">
+      <div class="cn">2</div>
+      <div>
+        <div class="limb reject">
+          <span class="lead">T</span>
+          <span class="desc"><b>Tampering</b> — the payload is altered in transit between provider and handler. <s>Reachable?</s></span>
+          <span class="verdict">reject · <span class="why">mitigated · TLS</span></span>
+        </div>
+        <div class="limb">
+          <span class="lead">→</span>
+          <span class="desc">Transport is encrypted end-to-end → log it, read on.</span>
+          <span class="verdict">→ next</span>
+        </div>
+      </div>
+    </div>
 
-      <!-- connectors map → categories -->
-      <g stroke="rgba(63,224,200,.35)" stroke-width="1.2" fill="none">
-        <path d="M190,178 C230,178 240,120 290,120"/>
-        <path d="M190,200 C230,200 240,175 290,175"/>
-        <path d="M190,222 C230,222 240,230 290,230"/>
-        <path d="M190,244 C230,244 240,285 290,285"/>
-        <path d="M190,266 C230,266 240,340 290,340"/>
-      </g>
+    <!-- Couplet 3 -->
+    <div class="couplet">
+      <div class="cn">3</div>
+      <div>
+        <div class="limb reject">
+          <span class="lead">R</span>
+          <span class="desc"><b>Repudiation</b> — receipt of a webhook can't be proven later; no audit row written. <s>Worth hardening?</s></span>
+          <span class="verdict">reject · <span class="why">acceptable risk</span></span>
+        </div>
+        <div class="limb">
+          <span class="lead">→</span>
+          <span class="desc">A missing audit row is a known, accepted cost here → log it, read on.</span>
+          <span class="verdict">→ next</span>
+        </div>
+      </div>
+    </div>
 
-      <!-- STAGE 2: six STRIDE categories -->
-      <g font-family="'Spline Sans Mono',monospace" font-size="11">
-        <rect x="290" y="104" width="172" height="32" rx="7" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.22)"/>
-        <text x="304" y="124" fill="#9bffe9">S · Spoofing</text>
-        <rect x="290" y="148" width="172" height="32" rx="7" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.22)"/>
-        <text x="304" y="168" fill="#9bffe9">T · Tampering</text>
-        <rect x="290" y="192" width="172" height="32" rx="7" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.22)"/>
-        <text x="304" y="212" fill="#9bffe9">R · Repudiation</text>
-        <rect x="290" y="236" width="172" height="32" rx="7" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.22)"/>
-        <text x="304" y="256" fill="#9bffe9">I · Info disclosure</text>
-        <rect x="290" y="280" width="172" height="32" rx="7" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.22)"/>
-        <text x="304" y="300" fill="#9bffe9">D · Denial of service</text>
-        <rect x="290" y="324" width="172" height="32" rx="7" fill="rgba(255,179,71,.07)" stroke="rgba(255,179,71,.28)"/>
-        <text x="304" y="344" fill="#ffce85">E · Elevation</text>
-        <text x="376" y="384" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="11" fill="#6f8a85">the six lenses</text>
-      </g>
+    <!-- Couplet 4 -->
+    <div class="couplet">
+      <div class="cn">4</div>
+      <div>
+        <div class="limb reject">
+          <span class="lead">I</span>
+          <span class="desc"><b>Information-disclosure</b> — a verbose error response leaks internal IDs to the caller. <s>In scope?</s></span>
+          <span class="verdict">reject · <span class="why">out of scope</span></span>
+        </div>
+        <div class="limb">
+          <span class="lead">→</span>
+          <span class="desc">This surface returns no error body to the provider → log it, read on.</span>
+          <span class="verdict">→ next</span>
+        </div>
+      </div>
+    </div>
 
-      <!-- STAGE 3: many candidate threats fanning out -->
-      <g stroke="rgba(111,138,133,.4)" stroke-width="1" fill="none">
-        <path d="M462,120 C520,120 540,150 600,160"/>
-        <path d="M462,164 C520,164 540,180 600,188"/>
-        <path d="M462,208 C520,208 540,212 600,216"/>
-        <path d="M462,252 C520,252 540,244 600,244"/>
-        <path d="M462,296 C520,296 540,272 600,272"/>
-        <path d="M462,340 C520,340 540,300 600,300"/>
-        <path d="M462,120 C520,135 540,130 600,132"/>
-        <path d="M462,296 C520,310 540,320 600,328"/>
-      </g>
-      <g fill="#5d6a68">
-        <circle cx="603" cy="132" r="3.4"/><circle cx="603" cy="160" r="3.4"/>
-        <circle cx="603" cy="188" r="3.4"/><circle cx="603" cy="216" r="4.6" fill="#9bffe9"/>
-        <circle cx="603" cy="244" r="3.4"/><circle cx="603" cy="272" r="3.4"/>
-        <circle cx="603" cy="300" r="3.4"/><circle cx="603" cy="328" r="3.4"/>
-      </g>
-      <text x="620" y="120" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#5d6a68">MANY CANDIDATES</text>
-      <text x="620" y="360" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="11" fill="#6f8a85">most will be rejected</text>
+    <!-- Couplet 5 — the KEEP -->
+    <div class="couplet kept">
+      <div class="cn">5</div>
+      <div>
+        <div class="limb keep">
+          <span class="lead">D</span>
+          <span class="desc"><b>Denial-of-service / retry-replay</b> — the queue is at-least-once, so a retry storm replays the billing event and double-charges the customer.</span>
+          <span class="verdict">keep · the one</span>
+        </div>
+        <div class="limb reject">
+          <span class="lead">?</span>
+          <span class="desc">A bounded, idempotent handler would make this benign — but it isn't bounded yet. <s>Benign?</s></span>
+          <span class="verdict">no · <span class="why">live branch</span></span>
+        </div>
+        <div class="descend-to">descends to the leaf — the only fork that matches the worst-case story below</div>
+      </div>
+    </div>
 
-      <!-- STAGE 4: the worst-case funnel collapsing to one -->
-      <g>
-        <path d="M650,150 L770,205 L770,265 L650,320 Z" fill="url(#d1-funnel)" opacity=".18" stroke="rgba(63,224,200,.3)" stroke-width="1"/>
-        <text x="710" y="120" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#3fe0c8">WORST-CASE</text>
-        <text x="710" y="135" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#3fe0c8">STORY = FUNNEL</text>
-        <line x1="770" y1="235" x2="828" y2="235" stroke="#3fe0c8" stroke-width="1.8"/>
-        <polygon points="828,235 818,230 818,240" fill="#3fe0c8"/>
-      </g>
+    <!-- Couplet 6 -->
+    <div class="couplet">
+      <div class="cn">6</div>
+      <div>
+        <div class="limb reject">
+          <span class="lead">E</span>
+          <span class="desc"><b>Elevation-of-privilege</b> — the queue worker draining the webhook runs as admin. <s>In scope?</s></span>
+          <span class="verdict">reject · <span class="why">out of scope</span></span>
+        </div>
+        <div class="limb">
+          <span class="lead">→</span>
+          <span class="desc">Worker privilege is governed by a separate platform control → log it. Six categories exhausted.</span>
+          <span class="verdict">→ resolved</span>
+        </div>
+      </div>
+    </div>
 
-      <!-- STAGE 5: the single survivor → ADR -->
-      <g>
-        <circle cx="868" cy="235" r="16" fill="url(#d1-core)" filter="url(#d1-glow)"/>
-        <text x="868" y="270" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#3fe0c8">THE ONE</text>
-        <rect x="910" y="178" width="130" height="114" rx="10" fill="rgba(8,17,18,.82)" stroke="rgba(63,224,200,.4)"/>
-        <rect x="910" y="178" width="130" height="20" rx="6" fill="rgba(63,224,200,.14)"/>
-        <text x="922" y="192" font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#3fe0c8">ADR 0007</text>
-        <g stroke="#9bffe9" stroke-width="2" opacity=".8">
-          <line x1="922" y1="216" x2="1018" y2="216"/>
-          <line x1="922" y1="236" x2="1000" y2="236"/>
-          <line x1="922" y1="256" x2="1024" y2="256"/>
-          <line x1="922" y1="276" x2="996" y2="276"/>
-        </g>
-        <circle cx="1028" cy="190" r="3.4" fill="#aeffee" class="breathe"/>
-      </g>
+    <!-- the worst-case tiebreak -->
+    <p class="tiebreak">
+      When two forks both say <b>keep</b>, the worst realistic incident breaks the tie — not the most exotic attack,
+      the one that would actually wake someone at 3am. A retry storm that double-charges a customer is that one, so
+      couplet 5 holds the page. <b>If your kept fork doesn't match the worst-case story, you optimised for the cheapest
+      fix, not the real risk.</b> Re-run it.
+    </p>
+  </section>
 
-      <!-- moving spore along the funnel path -->
-      <circle r="3.4" fill="#aeffee">
-        <animateMotion dur="5s" repeatCount="indefinite" path="M603,216 C660,222 740,230 868,235"/>
-        <animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/>
-      </circle>
-
-      <text x="40" y="448" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">SAME FEATURE · DIFFERENT POSTURE · BECAUSE THE SURFACE WAS NAMED BEFORE THE BUILD HARDENED AROUND IT.</text>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 01</span>The surface feeds the six lenses; the lenses fan out into many candidates; <b>the worst-realistic-incident story is the funnel that collapses them to one</b>.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 2 — the worst-case funnel + the upgrade ============ -->
+  <!-- ============ THE LEAF — prose: the terminal node is the ADR ============ -->
   <section class="prose">
     <p>
-      The funnel that collapses the candidates is not a scoring rubric — it's a story. <b>Name the worst realistic
-      incident, then the hardening decision is usually obvious.</b> Not the most exotic attack; the one that would
-      actually wake someone at 3am. For a billing webhook that re-hits the queue on retry, that story writes itself: a
-      retry storm replays the event and double-charges a customer. Once the worst case is on the page, the threat you
-      pick almost always falls out of it. And if your pick <em>doesn't</em> match the worst-case story, that's the tell —
-      you optimised for the threat that's cheapest to fix, not the one that matters.
+      The survivor isn't a finding — it's a <b>decision you write down.</b> Four sentences in
+      <span class="mono">docs/adr/NNNN-slug.md</span>, or whatever convention your repo already uses for decisions.
+      <b>Context</b> — the worst realistic case. <b>Decision</b> — make the handler idempotent on event-id at the edge.
+      <em class="teal">Alternatives considered</em> — every reject above, transcribed with its one-word reason, because
+      the rejected forks <b>are</b> the argument that the survivor beat them. <b>Constraint</b> — the queue is
+      at-least-once, so dedupe at the edge rather than trust the queue to promise exactly-once. The rest of the STRIDE
+      output stays alongside as evidence, not as a hardening backlog you've quietly committed yourself to.
+    </p>
+    <p>
+      Notice what the ADR is <em>not</em>. It sits on disk, discoverable and named — but unlike a <span class="mono">CLAUDE.md</span>
+      rules file, it does <b>not</b> auto-load into every future session. It's read when someone explicitly reaches for
+      it, which is exactly the right weight for a decision: heavy enough to inherit, light enough not to nag the
+      context window of every unrelated run. That distinction is the whole craft here — guardrails that fire every time
+      go in the rules file; decisions that someone consults on purpose go in the ADR folder.
     </p>
 
     <p class="pull">
-      Pick one threat to harden, not five. <b>If your pick doesn't match the worst-case story, you optimised for effort, not risk.</b>
-    </p>
-
-    <div class="sec-label">The upgrade · from a quiet worry to a written decision</div>
-    <h2>The thing you're <em>quietest</em> about becomes the thing on the record.</h2>
-
-    <p>
-      Every engineer shipping a feature with an external surface carries one quiet unease — <em>"I'm a bit nervous about
-      that webhook."</em> It's the bit you'd call "the weird bit": the endpoint trusting a header it shouldn't, the path
-      that re-hits the queue on retry. The trap isn't ignorance — you know roughly where the risk lives. The trap is that
-      <b>nobody made the threat a written decision</b>, so the staff engineer finds it in review, or the CISO finds it in
-      prod, and the team re-argues it from scratch on the next feature that touches the same surface. The upgrade is to
-      crystallise that unease into an ADR before the review, not after. Below: the faint thread of worry on the left, the
-      durable artefact on the right.
-    </p>
-  </section>
-
-  <!-- ============ DIAGRAM 2 — UPGRADE: worry thread → written ADR ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 380" role="img" aria-label="On the left, an engineer's unspoken nervousness about a webhook drawn as a faint fading thread; on the right, the same worry crystallised into a durable ADR with Context, Decision, Alternatives and Constraint that the next engineer cold-reads.">
-      <defs>
-        <linearGradient id="d2-fade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9bffe9" stop-opacity=".6"/><stop offset="1" stop-color="#9bffe9" stop-opacity="0"/></linearGradient>
-        <linearGradient id="d2-file" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".4"/><stop offset="1" stop-color="#ffb347" stop-opacity=".3"/></linearGradient>
-        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">EPHEMERAL UNEASE → DURABLE, INHERITABLE DECISION</text>
-
-      <!-- LEFT: the unspoken worry as a faint, fraying thread -->
-      <g>
-        <text x="80" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#5d6a68">UNSPOKEN · IN ONE HEAD</text>
-
-        <!-- engineer node -->
-        <circle cx="96" cy="170" r="13" fill="rgba(63,224,200,.16)" stroke="#3fe0c8" stroke-width=".8"/>
-        <text x="96" y="174" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">DEV</text>
-
-        <!-- faint fraying worry thread -->
-        <path d="M112,170 C200,150 280,180 400,164" stroke="url(#d2-fade)" stroke-width="1.6" fill="none" stroke-dasharray="2 7"/>
-        <text x="150" y="140" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#9bffe9">"I'm a bit nervous</text>
-        <text x="150" y="160" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#6f8a85" opacity=".7">about that webhook…"</text>
-
-        <text x="80" y="232" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#5d6a68">never written → review finds it,</text>
-        <text x="80" y="252" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#5d6a68">or prod does. Re-argued next time.</text>
-
-        <line x1="80" y1="286" x2="420" y2="286" stroke="url(#d2-fade)" stroke-width="1.2"/>
-      </g>
-
-      <!-- arrow / transformation -->
-      <g transform="translate(470,180)">
-        <path d="M0,0 L70,0" stroke="#3fe0c8" stroke-width="1.4" fill="none" opacity=".7"/>
-        <polygon points="70,0 60,-6 60,6" fill="#3fe0c8" opacity=".8"/>
-        <text x="36" y="-12" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".24em" fill="#3fe0c8">NAME IT</text>
-        <text x="36" y="22" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#6f8a85">on the record</text>
-      </g>
-
-      <!-- RIGHT: the ADR — alternatives weighed -->
-      <g>
-        <text x="580" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#3fe0c8">WRITTEN · INHERITED BY THE NEXT ENGINEER</text>
-
-        <g filter="url(#d2-glow)">
-          <rect x="580" y="98" width="400" height="234" rx="12" fill="rgba(8,17,18,.8)" stroke="url(#d2-file)" stroke-width="1.6"/>
-        </g>
-        <rect x="580" y="98" width="210" height="26" rx="6" fill="rgba(63,224,200,.14)"/>
-        <text x="596" y="116" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing=".05em" fill="#3fe0c8">0007-webhook.md</text>
-
-        <g font-family="'Spline Sans',sans-serif">
-          <text x="596" y="150" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#6f8a85">CONTEXT · worst realistic case</text>
-          <text x="596" y="168" font-size="12" fill="#cfe6e0">Retry storm replays the webhook → double-charge.</text>
-
-          <text x="596" y="196" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#6f8a85">DECISION</text>
-          <text x="596" y="214" font-size="12" fill="#eafff9">Idempotent on event-id at the edge.</text>
-
-          <text x="596" y="242" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#a86a1f">ALTERNATIVES CONSIDERED · why rejected</text>
-          <text x="596" y="260" font-size="11.5" fill="#9aa6a3">spoofed sender ✕ signed · leak ✕ acceptable</text>
-          <text x="596" y="276" font-size="11.5" fill="#9aa6a3">worker privilege ✕ out of scope</text>
-
-          <text x="596" y="304" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".2em" fill="#6f8a85">CONSTRAINT</text>
-          <text x="596" y="322" font-size="12" fill="#cfe6e0">Queue is at-least-once → dedupe, not trust.</text>
-        </g>
-        <circle cx="966" cy="112" r="4" fill="#aeffee" class="breathe"/>
-      </g>
-
-      <text x="540" y="362" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">THE WORRY DIDN'T CHANGE. ITS SHELF LIFE DID — A PRIVATE NERVE BECAME SHARED, INHERITABLE CONTEXT.</text>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 02</span>The ADR is the artefact <b>your CISO would actually read</b> — one engineer briefing the next, not a reviewer's checkbox.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 3 — the ADR + the compounding loop intro ============ -->
-  <section class="prose">
-    <p>
-      What you write down is deliberately small: <b>one ADR per hardening decision</b>, in whatever convention your repo
-      already uses for decisions (default <span class="mono">docs/adr/NNNN-slug.md</span>). Four sections — Context,
-      Decision, Alternatives considered, Constraint. The rejected STRIDE threats live in <em>Alternatives considered</em>
-      with the reason each was rejected; the rest of the STRIDE output stays alongside as evidence, not as a hardening
-      backlog you've quietly committed yourself to. And note what the ADR is <em>not</em>: it sits on disk, discoverable
-      and named, but it does not auto-load into every future session the way a rules file does. It's read when someone
-      explicitly reaches for it — which is exactly the right weight for a decision, heavy enough to inherit, light enough
-      not to nag.
+      A threat held up against the five it beat is an argument. <b>A threat picked from thin air is a vibe.</b>
     </p>
 
     <p>
-      One more honesty clause: STRIDE is a tool, not the law. If its six categories were the wrong lens for this
-      feature — if the real risk is abuse-case or insider-threat shaped — say so in <em>Alternatives considered</em> and
-      reason in the lens that actually fit. The skill gives you breadth fast; the codebase-specific judgement is yours to
-      add. A mnemonic that catches most attack shapes is not a guarantee you caught yours.
+      One honesty clause rides in the leaf. <b>STRIDE is a tool, not the law.</b> Coined by Loren Kohnfelder and
+      Praerit Garg in a 1999 Microsoft threat-modelling memo and later sharpened by Adam Shostack in <em>Threat
+      Modeling: Designing for Security</em> (2014), it's a mnemonic for six attack shapes — not a guarantee you caught
+      yours. If the real risk is abuse-case or insider-threat shaped, STRIDE had no category for it: say so in
+      <em class="teal">Alternatives considered</em> and reason in the lens that actually fit. The model gives you
+      breadth fast; the codebase-specific judgement is yours to add, and it travels with the decision wherever it goes.
     </p>
 
-    <div class="sec-label">The compounding loop · one feature thickens the team's posture</div>
-    <h2>Each ADR is the precedent the <em>next</em> threat-model starts from.</h2>
+    <div class="sec-label amber">The compounding loop · the closing turn</div>
+    <h2 class="amber">Each ADR is the precedent the <em>next</em> threat-model starts from.</h2>
 
     <p>
-      The diagram below shows why one defensible call is worth more than its single feature. Map the surface, run STRIDE,
-      reject most, write the ADR — then the loop closes back onto the next feature's surface map, and the team's ADR folder
-      is visibly thicker each pass. <b>One hardening decision is enough per feature; the team kit's breadth grows across
-      many features.</b> The fourth time someone threat-models a surface like the billing webhook, they don't start from
-      zero — they start from the precedent the last engineer left. That's the difference between a security review that
-      re-discovers the same threats every quarter and one that inherits them.
+      Here's why one defensible call outlives its single feature. Every engineer shipping an external surface carries one
+      quiet unease — <em>"I'm a bit nervous about that webhook."</em> The trap isn't ignorance; you know roughly where
+      the risk lives. The trap is that nobody made it a <b>written</b> decision, so the worry stays a private nerve: the
+      staff engineer finds it in review, or prod finds it, and the team re-argues it from scratch on the next feature
+      that touches the same surface. The write is the mechanism — a decision made under named pressure converts a
+      private worry into shared, inheritable context. Map the surface, run STRIDE, reject most, write the ADR; then the
+      loop closes onto the next feature, and the team's ADR folder is visibly thicker each pass.
     </p>
-  </section>
 
-  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP (ADR folder thickens) ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 420" role="img" aria-label="Four-beat loop — map the surface, run STRIDE, reject most, write the ADR — closing back onto the next feature, with the team's ADR folder visibly thickening across passes one, two and three.">
-      <defs>
-        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/><stop offset="1" stop-color="#ffb347" stop-opacity=".6"/></linearGradient>
-        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#9bffe9"/><stop offset=".55" stop-color="#3fe0c8"/><stop offset="1" stop-color="#1d8d80"/></radialGradient>
-        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
+    <p>
+      <b>One hardening decision is enough per feature; the team's breadth grows across many.</b> The fourth time someone
+      threat-models a surface like this billing webhook, they don't start from zero — they descend from the precedent
+      the last engineer left. That's the difference between a security review that re-discovers the same threats every
+      quarter and one that inherits them: the folder thickens, the re-arguing stops, and your CISO reads decisions
+      instead of a backlog of TODOs.
+    </p>
 
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">ONE FEATURE'S CALL → THE TEAM'S SHARED POSTURE · WHAT THICKENS BETWEEN PASSES</text>
-
-      <!-- ===== LEFT HALF: the loop ===== -->
-      <g transform="translate(40,60)">
-        <circle cx="200" cy="170" r="130" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="540 60" stroke-linecap="round" transform="rotate(-90 200 170)"/>
-        <circle r="3.6" fill="#aeffee">
-          <animateMotion dur="9s" repeatCount="indefinite" path="M200,40 a130,130 0 1,1 -0.1,0"/>
-          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
-        </circle>
-
-        <g>
-          <circle cx="200" cy="40" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="200" y="45" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">1</text>
-          <text x="200" y="20" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Map the surface</text>
-        </g>
-        <g>
-          <circle cx="330" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="330" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">2</text>
-          <text x="362" y="173" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Run STRIDE</text>
-        </g>
-        <g>
-          <circle cx="200" cy="300" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="200" y="305" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">3</text>
-          <text x="200" y="338" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Reject most</text>
-        </g>
-        <g>
-          <circle cx="70" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="70" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">4</text>
-          <text x="38" y="173" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#eafff9">Write the ADR</text>
-        </g>
-
-        <text x="200" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">NEXT FEATURE</text>
-        <text x="200" y="184" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">starts from precedent</text>
-      </g>
-
-      <!-- ===== RIGHT HALF: the ADR folder thickening across passes ===== -->
-      <g transform="translate(540,68)">
-
-        <!-- pass 1 — one ADR -->
-        <g>
-          <rect x="0" y="14" width="150" height="200" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.22)"/>
-          <rect x="0" y="14" width="150" height="20" rx="6" fill="rgba(63,224,200,.10)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">docs/adr/</text>
-          <g font-family="'Spline Sans Mono',monospace" font-size="9" fill="#9bffe9">
-            <text x="12" y="60">0007-webhook</text>
-          </g>
-          <g stroke="#6f8a85" stroke-width="2" opacity=".4">
-            <line x1="12" y1="84" x2="120" y2="84"/>
-            <line x1="12" y1="104" x2="96" y2="104"/>
-          </g>
-          <text x="75" y="240" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#5d6a68">PASS 1 · ONE CALL</text>
-        </g>
-
-        <g transform="translate(160,114)">
-          <path d="M0,0 L24,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="24,0 16,-5 16,5" fill="#3fe0c8" opacity=".75"/>
-        </g>
-
-        <!-- pass 2 — a few ADRs -->
-        <g transform="translate(190,0)">
-          <rect x="0" y="14" width="150" height="220" rx="8" fill="rgba(8,17,18,.78)" stroke="rgba(63,224,200,.35)"/>
-          <rect x="0" y="14" width="150" height="20" rx="6" fill="rgba(63,224,200,.14)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">docs/adr/</text>
-          <g font-family="'Spline Sans Mono',monospace" font-size="9" fill="#9bffe9">
-            <text x="12" y="56">0007-webhook</text>
-            <text x="12" y="74">0008-public-read</text>
-            <text x="12" y="92">0009-agent-act</text>
-          </g>
-          <g stroke="#9bffe9" stroke-width="2" opacity=".6">
-            <line x1="12" y1="112" x2="120" y2="112"/>
-            <line x1="12" y1="132" x2="104" y2="132"/>
-            <line x1="12" y1="152" x2="124" y2="152"/>
-          </g>
-          <text x="75" y="252" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#9bffe9">PASS 2 · A POSTURE</text>
-        </g>
-
-        <g transform="translate(350,124)">
-          <path d="M0,0 L24,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="24,0 16,-5 16,5" fill="#3fe0c8" opacity=".75"/>
-        </g>
-
-        <!-- pass 3 — thick, team convention -->
-        <g transform="translate(380,0)">
-          <rect x="0" y="0" width="150" height="260" rx="8" fill="rgba(8,17,18,.85)" stroke="url(#d3-ring)" stroke-width="1.5" filter="url(#d3-glow)"/>
-          <rect x="0" y="0" width="150" height="20" rx="6" fill="rgba(255,179,71,.16)"/>
-          <text x="10" y="15" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">docs/adr/</text>
-          <g font-family="'Spline Sans Mono',monospace" font-size="8.5" fill="#ffce85">
-            <text x="12" y="40">0007 · 0008 · 0009</text>
-            <text x="12" y="56">0010 · 0011 · 0012</text>
-          </g>
-          <g stroke="#9bffe9" stroke-width="2" opacity=".8">
-            <line x1="12" y1="78" x2="138" y2="78"/>
-            <line x1="12" y1="98" x2="120" y2="98"/>
-            <line x1="12" y1="118" x2="132" y2="118"/>
-            <line x1="12" y1="138" x2="110" y2="138"/>
-            <line x1="12" y1="158" x2="134" y2="158"/>
-            <line x1="12" y1="178" x2="118" y2="178"/>
-            <line x1="12" y1="198" x2="130" y2="198"/>
-            <line x1="12" y1="218" x2="106" y2="218"/>
-          </g>
-          <text x="75" y="280" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#ffb347">PASS 3 · TEAM CONVENTION</text>
-        </g>
-
-        <g transform="translate(0,300)">
-          <rect x="0" y="0" width="14" height="3" fill="#ffb347"/>
-          <text x="22" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">PRECEDENT THE NEXT THREAT-MODEL INHERITS</text>
-          <rect x="0" y="14" width="14" height="3" fill="#9bffe9"/>
-          <text x="22" y="18" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">DECISIONS · NOT A BACKLOG OF TODOS</text>
-        </g>
-      </g>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 03</span><em>The folder thickens, the re-arguing stops.</em> One defensible call per feature; <b>the company's posture is the sum of the ADRs nobody has to re-derive</b>.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 4 — what "Test" actually means ============ -->
-  <section class="prose">
-    <div class="sec-label amber">What "Test" actually means · how you know the threat was named</div>
+    <div class="sec-label amber">How you know the threat was named · the test rides inline</div>
     <h2 class="amber">A listed threat is not a <em>named</em> one.</h2>
 
     <p>
-      The trap at the finish line is mistaking a long STRIDE list for a decision. So the test is falsifiable, and it
-      runs on the artefact itself. First: the ADR's Context — or the scrollback — should show the <b>worst-case story
-      preceded the threat pick.</b> Worst case first, then the choice. Reversed order is menu-shopping, and it reads as
-      reversed. Second: <em>Alternatives considered</em> names at least two rejected threats with a real reason each —
+      The trap at the finish line is mistaking a long STRIDE list for a decision, so the test is falsifiable and runs on
+      the ADR itself. First: the Context — or the scrollback — shows the <b>worst-case story preceded the threat pick.</b>
+      Worst case first, then the choice; reversed order is menu-shopping and reads as reversed. Second:
+      <em class="teal">Alternatives considered</em> names at least two rejected threats with a real reason each —
       <em class="teal">acceptable risk, already mitigated, out of scope</em> — not left dangling as backlog. Third, the
       sharpest tell: <b>if the ADR could have been written without ever running the surface map, STRIDE was
       performative.</b> The map's codebase-specific surfaces should be visible in the reasoning. A decision that reads
-      like it came from a generic checklist <em class="no">probably did.</em>
+      like it came from a generic checklist <em class="amber">probably did.</em>
     </p>
-  </section>
 
-  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
-  <div class="plates">
-    <div class="plate use">
-      <div class="beat-label amber"><b>Use when</b></div>
-      <p class="body">
-        You're shipping a feature with <span class="grey">a surface a teammate could miss in review</span> — a new
-        webhook, a public read, an action the agent now takes for a user — and <b>"we'll secure it later"</b> is doing
-        the deciding.
-      </p>
-    </div>
-    <div class="plate build">
-      <div class="beat-label"><b>Build</b></div>
-      <p class="body">
-        <b>One ADR per hardening decision</b> — Context · Decision · Alternatives considered · Constraint. The rejects
-        live in Alternatives; the rest of the STRIDE output stays as evidence.
-      </p>
-    </div>
-    <div class="plate test">
-      <div class="beat-label"><b>Test</b></div>
-      <p class="body">
-        The worst-case story <em>precedes</em> the pick; ≥2 threats rejected with reasons.<br>
-        Not <em class="no">a list someone will harden later.</em>
-      </p>
-    </div>
-  </div>
-
-  <!-- ============ CORE MOVES — actionable heart ============ -->
-  <section class="moves">
-    <div class="beat-label"><b>Core moves</b></div>
-    <div class="moves-head">
-      <h2>The action, in sequence</h2>
-      <span class="lede">An unbounded worry becomes one written, defensible call.</span>
-    </div>
-
-    <div class="move-rail">
-      <div class="thread"></div>
-      <div class="step">
-        <div class="bead">1</div>
-        <h3>Map the surface first</h3>
-        <p>Run the access-control read as a subagent. <b>STRIDE has nothing to chew on without it.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">2</div>
-        <h3>Run all six, expect to reject</h3>
-        <p>Fire STRIDE at the map. <b>The over-supply is the point.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">3</div>
-        <h3>Name the worst case, pick one</h3>
-        <p>One worst realistic incident. <b>One threat that matches it.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">4</div>
-        <h3>Write it as an ADR</h3>
-        <p>Context · Decision · Alternatives · Constraint. <b>The rejects are the evidence.</b></p>
-      </div>
-    </div>
-
-    <div class="compound">
-      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
-        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
-        </linearGradient></defs>
-        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
-          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
-        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
-        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
-        <circle r="3" fill="#aeffee">
-          <animateMotion dur="5s" repeatCount="indefinite"
-            path="M37,11 a26,26 0 1,1 -0.1,0"/>
-        </circle>
-      </svg>
-      <div class="ctext">
-        <div class="cyc">map surface<span class="arr">→</span>run STRIDE<span class="arr">→</span>reject most<span class="arr">→</span>write ADR<span class="arr">→</span>next feature</div>
-        <p>Then it's the team's habit, not one engineer's: <b>each ADR is a precedent the next threat-model starts from.</b> The folder thickens; the security review stops re-arguing the same surfaces.</p>
-      </div>
-    </div>
-
-    <!-- the Monday-move / no-permission aside -->
+    <!-- the Monday-move, preserved whole -->
     <p class="aside">
-      <b>Monday move: pick one feature you're shipping this week with an external surface.</b>
-      <span class="mono">Vanilla Claude Code · access-control read as a subagent, then STRIDE on what it surfaces · name the one worst incident · four sentences saved where your repo keeps decisions.</span>
-      Nothing here needs sign-off, budget, or a platform — you arrive at review with the call already made.
+      <b>Monday move: pick one feature you're shipping this week with an external surface</b> — a webhook, a public
+      read, an action the agent now takes for a user.
+      <span class="mono">Vanilla Claude Code · access-control read as a subagent → STRIDE on what it surfaces · descend the six categories, rejecting most with a one-word reason · name the single worst realistic incident; the kept fork should match it · write the leaf in four sentences where your repo keeps decisions.</span>
+      The other threats stay alongside as evidence, not homework — and you arrive at review with the call already made.
     </p>
-  </section>
-
-  <!-- ============ WHY — the conviction ============ -->
-  <section class="why">
-    <div class="beat-label"><b>Why</b></div>
-
-    <div class="principle-block">
-      <div class="principle-label">The principle</div>
-      <p class="principle-line">Threat modelling is only useful if it ends in a <em>decision</em>. STRIDE is the surface you reject against — not an oracle.</p>
-    </div>
-
-    <p class="quote">"The ADR is the one thing your CISO will actually read."</p>
-    <p class="gloss">
-      STRIDE's real gift isn't catching everything — it's giving you a <b>structured surface to reject most things
-      against</b>, so the one threat you harden arrives with its alternatives already weighed. That's the difference
-      between a defensible architectural call and a vibe. The mechanism is the write: a decision made under named
-      pressure converts a private worry into shared, inheritable context. Most teams skip the write — so the same threat
-      gets re-argued on every feature that touches the same surface.
-    </p>
-    <p class="gloss">
-      The name is honest about its limits. <b>STRIDE</b> — coined by Loren Kohnfelder and Praerit Garg in a 1999
-      Microsoft threat-modelling memo, later sharpened by Adam Shostack in <em>Threat Modeling: Designing for
-      Security</em> (2014) — is a mnemonic for the six ways a system gets attacked, not a guarantee you caught yours. A
-      threat you haven't named is one the whole team re-discovers, one expensive review at a time. Naming it once, in
-      writing, is the cheapest insurance in the building.
-    </p>
-    <div class="corollary"><span class="sd"></span>A listed threat is a chore. A named one is a decision.</div>
   </section>
 
   <!-- ============ CONNECTS TO — neighbour patterns ============ -->
@@ -1094,27 +712,27 @@
     <div class="web">
       <svg viewBox="0 0 1080 300" aria-hidden="true">
         <defs>
-          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
-          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="stride-t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="stride-t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="stride-t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <filter id="stride-wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         </defs>
 
         <circle cx="150" cy="150" r="30" fill="none" stroke="#3fe0c8" stroke-width="1.2" opacity=".5"/>
-        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#wglow)"/>
+        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#stride-wglow)"/>
         <circle cx="150" cy="150" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
 
-        <path id="th1" d="M150,150 C360,86 540,72 760,76" stroke="url(#t1)" stroke-width="2.2" fill="none"/>
-        <path id="th2" d="M150,150 C380,150 560,150 760,150" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
-        <path id="th3" d="M150,150 C360,214 540,228 760,228" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
+        <path id="stride-th1" d="M150,150 C360,86 540,72 760,76" stroke="url(#stride-t1)" stroke-width="2.2" fill="none"/>
+        <path id="stride-th2" d="M150,150 C380,150 560,150 760,150" stroke="url(#stride-t2)" stroke-width="2.2" fill="none"/>
+        <path id="stride-th3" d="M150,150 C360,214 540,228 760,228" stroke="url(#stride-t3)" stroke-width="2.2" fill="none"/>
 
-        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#stride-th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#stride-th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#stride-th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
       </svg>
 
       <div class="neighbours">
-        <div class="origin-chip" style="left:13.8%;top:50%">Name the threat<small>software · you are here</small></div>
+        <div class="origin-chip" style="left:13.8%;top:50%">Threat modeling before you build<small>software · you are here</small></div>
         <a class="nb" href="access-surface-map.html" style="left:74%;top:25.3%"><span class="sd"></span>Map the access surface <span class="recipe-no">prerequisite</span></a>
         <a class="nb" href="adr-under-pressure.html" style="left:74%;top:50%"><span class="sd"></span>Write the ADR under pressure <span class="recipe-no">the output</span></a>
         <a class="nb amber" href="tests-first-ground-truth.html" style="left:74%;top:76%"><span class="sd"></span>Prove it with a failing test first <span class="recipe-no">the next rung</span></a>
@@ -1124,7 +742,7 @@
 
   <!-- ============ FOOTER ============ -->
   <footer class="floor">
-    <span class="door">A door, not a destination — one defensible call this week becomes the posture your team inherits, and the company stops re-arguing the same surfaces. No platform, no budget, no permission required.</span>
+    <span class="door">Five forks pressed flat, one left glowing, four sentences saved where your repo keeps decisions — and the survivor stops being your private nerve, because now it's a precedent the next threat-model descends from.</span>
     <span class="meta">The Big Picture · Pattern Language</span>
   </footer>
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Read the artefact through three lenses — Pattern · The Big Picture</title>
+<title>Failure-mode diagnosis — Pattern · The Big Picture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -110,24 +110,14 @@
   }
   .hero-cap b{color:var(--teal)}
 
-  /* ============ READING-PROSE ============ */
-  .prose{margin-top:34px;max-width:760px;}
+  /* ============ READING-PROSE (the two voice-overs that frame the worked read) ============ */
+  .prose{margin-top:30px;max-width:760px;}
   .prose h2{
     font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
     letter-spacing:-.012em;line-height:1.08;margin-top:14px;
   }
   .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
   .prose h2.amber em{color:var(--amber)}
-  .prose .sec-label{
-    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
-    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
-    margin-top:42px;
-  }
-  .prose .sec-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
-    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
-  }
-  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
   .prose p{
     font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;letter-spacing:.002em;
   }
@@ -138,7 +128,6 @@
   .prose p .mono{
     font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
   }
-  .prose p .mono.amber{color:var(--amber)}
   /* the three-lens caveat chip — travels with the taxonomy at every recurrence */
   .caveat{
     display:inline-flex;align-items:center;gap:7px;
@@ -147,115 +136,112 @@
     vertical-align:middle;white-space:nowrap;
   }
   .caveat::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--amber);flex:none;box-shadow:0 0 8px rgba(255,179,71,.5)}
-  .prose .pull{
-    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
-    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
-    color:var(--ink);max-width:680px;
-  }
-  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
 
-  /* ============ PROCESS DIAGRAMS ============ */
-  .diagram{
-    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
+  /* ============ THE WORKED DIAGNOSIS (the card's spine — a finished one, read three ways) ============ */
+  .worked{
+    margin-top:30px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
     background:
-      radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
-      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
-    position:relative;
-    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
+      radial-gradient(110% 120% at 6% 4%, rgba(63,224,200,.04), transparent 55%),
+      linear-gradient(180deg, rgba(8,17,18,.6), rgba(5,8,10,.7));
+    box-shadow:0 24px 56px -38px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
   }
-  .diagram svg{display:block;width:100%;height:auto}
-  .diagram .dcap{
-    padding:12px 20px 16px;border-top:1px solid var(--hairline);
-    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
-    color:var(--ink-dim);letter-spacing:.003em;
-    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
+  .worked .wk-head{
+    display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;
+    padding:16px 22px 14px;border-bottom:1px solid var(--hairline);
+    background:linear-gradient(180deg, rgba(5,8,10,.2), rgba(5,8,10,0));
   }
-  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
-  .diagram .dcap .num{
-    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
-    letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
+  .worked .wk-head .slate{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--ink-faint);
   }
+  .worked .wk-head .slate b{color:var(--teal-dim);font-weight:500}
+  .worked .wk-head .rule{
+    font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:var(--ink-dim);
+  }
+  /* one diagnosis row per lens */
+  .lrow{
+    display:grid;grid-template-columns:158px 1fr;gap:0;
+    border-bottom:1px solid var(--hairline);
+  }
+  .lrow:last-child{border-bottom:none}
+  .lrow .lens{
+    padding:18px 18px 20px;border-right:1px solid var(--hairline);
+    background:rgba(5,8,10,.3);
+  }
+  .lrow .lens .ln{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.12em;font-weight:500;
+  }
+  .lrow .lens .q{
+    font-family:'Fraunces',serif;font-style:italic;font-size:13.5px;line-height:1.32;
+    color:var(--ink-dim);margin-top:8px;
+  }
+  .lrow .lens .cure{
+    margin-top:11px;font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ink-faint);line-height:1.5;
+  }
+  .lrow.drift .ln{color:var(--drift)}
+  .lrow.rot   .ln{color:var(--rot)}
+  .lrow.pbw   .ln{color:var(--pbw)}
+  .lrow .find{padding:18px 22px 20px;}
+  .lrow .quoted{
+    font-family:'Spline Sans Mono',monospace;font-size:12.5px;line-height:1.5;
+    color:var(--ink);background:rgba(8,17,18,.7);border-left:3px solid var(--grey-dim);
+    border-radius:0 8px 8px 0;padding:11px 14px;letter-spacing:.003em;
+  }
+  .lrow.drift .quoted{border-left-color:var(--drift-dim)}
+  .lrow.rot   .quoted{border-left-color:var(--rot-dim)}
+  .lrow.pbw   .quoted{border-left-color:var(--pbw-dim)}
+  .lrow .quoted .pin{color:var(--spore);font-weight:500}
+  .lrow .gloss{
+    margin-top:11px;font-size:13px;line-height:1.5;color:var(--ink-dim);
+  }
+  .lrow .gloss b{color:var(--ink);font-weight:500}
+  .lrow .gloss .strike{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
+  .worked .wk-foot{
+    padding:14px 22px 16px;border-top:1px solid var(--hairline);
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.4));
+    font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.04em;color:var(--ink-dim);
+  }
+  .worked .wk-foot b{color:var(--ink);font-weight:500}
 
-  /* ============ RECIPE SECTION BEATS ============ */
-  .beat-label{
-    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
-    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+  /* the dominant-failure callout — rank, don't inventory */
+  .dominant{
+    margin-top:30px;border:1px solid rgba(255,179,71,.22);border-radius:14px;
+    padding:22px 26px 24px;position:relative;overflow:hidden;
+    background:radial-gradient(130% 150% at 92% 0%, rgba(255,179,71,.08), transparent 55%),rgba(10,9,6,.55);
+    display:flex;align-items:flex-start;gap:22px;flex-wrap:wrap;
   }
-  .beat-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
-    box-shadow:0 0 9px rgba(63,224,200,.6);
+  .dominant .mark{flex:none}
+  .dominant .dm-text{flex:1;min-width:280px}
+  .dominant .dm-text .lede{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;
+    color:var(--amber-dim);
   }
-  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
-  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
+  .dominant .dm-text h3{
+    font-family:'Fraunces',serif;font-weight:400;font-size:23px;line-height:1.14;color:var(--spore);
+    letter-spacing:-.01em;margin-top:8px;
+  }
+  .dominant .dm-text h3 em{font-style:italic;color:var(--amber)}
+  .dominant .dm-text p{font-size:14px;line-height:1.56;color:var(--ink-dim);margin-top:12px}
+  .dominant .dm-text p b{color:var(--ink);font-weight:500}
 
-  /* USE WHEN + BUILD + TEST — quiet trio of plates */
-  .plates{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;}
-  .plate{
-    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
-    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
+  /* the Monday move — woven in as the next run you read, not a mono aside */
+  .next-read{
+    margin-top:30px;border:1px dashed var(--amber-dim);border-radius:14px;
+    padding:20px 24px 22px;
+    background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5);
   }
-  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
-  .plate .body b{color:var(--spore);font-weight:500}
-  .plate .body .grey{color:var(--grey)}
-  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
-  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
-  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
+  .next-read .nr-head{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--amber);display:flex;align-items:center;gap:9px;
+  }
+  .next-read .nr-head::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;box-shadow:0 0 9px rgba(255,179,71,.55)}
+  .next-read p{font-size:14.5px;line-height:1.58;color:var(--ink);margin-top:13px;max-width:780px}
+  .next-read p b{color:var(--spore);font-weight:500}
+  .next-read p .mono{font-family:'Spline Sans Mono',monospace;font-size:12.5px;color:var(--amber);letter-spacing:.005em}
 
-  /* ============ CORE MOVES ============ */
-  .moves{margin-top:46px}
-  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px;flex-wrap:wrap}
-  .moves-head h2{
-    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
-  }
-  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
-  .move-rail{margin-top:20px;position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:0;}
-  .move-rail .thread{
-    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
-    background:linear-gradient(90deg,
-      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
-      rgba(63,224,200,.7) 50%, rgba(255,179,71,.65) 94%, rgba(255,179,71,0) 100%);
-  }
-  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
-  .step:first-child{padding-left:0}
-  .step .bead{
-    width:42px;height:42px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
-    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
-    margin-bottom:13px;
-  }
-  .step:nth-child(6) .bead{
-    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
-  }
-  .step h3{font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;}
-  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
-  .step p b{color:var(--ink);font-weight:500}
-
-  .compound{
-    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
-    padding:18px 22px;position:relative;overflow:hidden;
-    background:radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.07), transparent 60%),rgba(8,17,18,.55);
-    display:flex;align-items:center;gap:20px;
-  }
-  .compound .loop-ico{flex:none}
-  .compound .ctext{flex:1}
-  .compound .ctext .cyc{
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
-  }
-  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
-  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
-  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
-
-  .aside{
-    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
-    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
-  }
-  .aside b{color:var(--amber);font-weight:500}
-  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
-
-  /* ============ WHY ============ */
+  /* ============ WHY (short — the diagnosis read backwards into the cure) ============ */
   .why{
     margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
     padding:26px 30px 28px;position:relative;overflow:hidden;
@@ -264,17 +250,15 @@
       radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
       rgba(7,14,15,.6);
   }
-  .why .beat-label{margin-bottom:14px}
-  .why .principle-block{margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);}
-  .why .principle-label{
-    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
-    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
+  .why .beat-label{
+    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;margin-bottom:14px;
   }
-  .why .principle-line{
-    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
-    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
+  .why .beat-label::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.6);
   }
-  .why .principle-line em{font-style:italic;color:var(--teal)}
+  .why .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
   .why .quote{
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
     font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--teal);letter-spacing:.004em;
@@ -293,18 +277,6 @@
     width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
     box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
   }
-
-  /* ============ TEST-IN-PRACTICE inline panel ============ */
-  .practice{
-    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
-    padding:22px 26px 24px;
-    background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),rgba(8,15,17,.5);
-  }
-  .practice .beat-label{margin-bottom:12px}
-  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
-  .practice p b{color:var(--spore);font-weight:500}
-  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
-  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
 
   /* ============ CONNECTS TO ============ */
   .connects{margin-top:52px}
@@ -335,15 +307,6 @@
   .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
   .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
   .nb:hover .sd{animation:throb 1s ease-in-out infinite}
-  .nb.soon{opacity:.62}
-  .nb.soon::after{
-    content:"soon";
-    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--ink-faint);
-    border:1px solid var(--ink-faint);border-radius:20px;
-    padding:2px 7px 3px;margin-left:4px;
-  }
-  .nb.soon:hover{opacity:1}
   @keyframes throb{50%{transform:scale(1.5)}}
   .origin-chip{
     position:absolute;transform:translate(-50%,-50%);
@@ -369,20 +332,9 @@
     text-transform:uppercase;color:var(--ink-faint);
   }
 
-  @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
-  .breathe{animation:breathe 4.2s ease-in-out infinite}
-
-  @media (max-width:860px){
-    .plates{grid-template-columns:1fr 1fr}
-    .plate.use{grid-column:1 / -1}
-  }
   @media (max-width:780px){
-    .plates{grid-template-columns:1fr}
-    .plate.use{grid-column:1}
-    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
-    .move-rail .thread{display:none}
-    .step{padding:0}
-    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .lrow{grid-template-columns:1fr}
+    .lrow .lens{border-right:none;border-bottom:1px solid var(--hairline)}
     .neighbours .nb{font-size:11px;padding:6px 10px}
     .prose p{font-size:14.5px}
   }
@@ -393,588 +345,253 @@
 
   <!-- ============ BREADCRUMB ============ -->
   <nav class="crumb">
-    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Read the artefact through three lenses</span>
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Failure-mode diagnosis</span>
   </nav>
 
   <!-- ============ PATTERN NAME + ESSENCE ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe · software lane · Verification gate</div>
-    <h1>Read the artefact through <em>three lenses</em></h1>
-    <p class="principle">The principle: <b>the artefact rules, self-reports don't</b> — the summary is an advocate; the trace is a witness.</p>
+    <h1>Failure-mode <em>diagnosis</em></h1>
+    <p class="principle">The principle: <b>the trace rules, the summary doesn't</b> — the closing line is the run pleading its own case; the commits, diff and scrollback have nothing to gain by how they read.</p>
     <p class="essence">
-      When a long-running run comes back, don't judge it by its own summary. Open the actual trace and
-      read it through three named lenses — <b>goal drift, context rot, plausible-but-wrong</b> — until a
-      vague <em>"something's off"</em> becomes a located fault you can point at.
+      When a long-running run comes back, its closing summary is a <b>director's cut</b> — the bad take quietly dropped, the snag framed as a near-win — so don't judge the run by it. Open the actual <b>trace</b> — commits, diff, scrollback — and read it three times, one question per pass, until a vague <em>"something's off"</em> becomes a located fault you can point at by turn number.
       <span class="sys">Own this read at your own desk first; promote the diagnosis into a shared verifier and the same discipline climbs from your desk to the team's pipeline to the company's quality bar — quality claims stop resting on a self-report nobody audited.</span>
     </p>
   </header>
 
-  <!-- ============ HERO PICTURE: clean summary vs. trace under three lenses ============ -->
+  <!-- ============ HERO: the run's one-line summary vs. the full trace, swept by three lenses ============ -->
   <div class="hero-frame">
-    <svg viewBox="0 0 1080 410" role="img" aria-label="On the left, a clean green one-line summary that reads shipped most of it. On the right, the same run's actual trace — commits, diff, run-notes — swept by three coloured lenses, each catching a flaw the summary smoothed over.">
+    <svg viewBox="0 0 1080 440" role="img" aria-label="A short greyed bar labelled THE SUMMARY — the agent run's one-line closing report — visibly shorter than the strip below it. Beneath it, the raw agent trace drawn as one long film-strip: frames stamped with the run's commits, scrollback turns and diff lines, each with a turn number. Three diagnostic passes sweep the trace — GOAL DRIFT, CONTEXT ROT and PLAUSIBLE-BUT-WRONG — each ringing exactly one moment in the run and pinning its turn.">
       <defs>
-        <radialGradient id="hwell" cx="68%" cy="48%" r="64%">
-          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".14"/>
+        <radialGradient id="fmd-hwell" cx="62%" cy="44%" r="66%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".13"/>
           <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".06"/>
           <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
         </radialGradient>
-        <linearGradient id="driftG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff9bb0" stop-opacity=".9"/><stop offset="1" stop-color="#9c4b5d" stop-opacity=".2"/></linearGradient>
-        <linearGradient id="rotG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c7a6ff" stop-opacity=".9"/><stop offset="1" stop-color="#6a52a0" stop-opacity=".2"/></linearGradient>
-        <linearGradient id="pbwG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd27a" stop-opacity=".9"/><stop offset="1" stop-color="#a8782a" stop-opacity=".2"/></linearGradient>
-        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <linearGradient id="fmd-driftG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff9bb0" stop-opacity=".9"/><stop offset="1" stop-color="#9c4b5d" stop-opacity=".25"/></linearGradient>
+        <linearGradient id="fmd-rotG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c7a6ff" stop-opacity=".9"/><stop offset="1" stop-color="#6a52a0" stop-opacity=".25"/></linearGradient>
+        <linearGradient id="fmd-pbwG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffd27a" stop-opacity=".9"/><stop offset="1" stop-color="#a8782a" stop-opacity=".25"/></linearGradient>
+        <linearGradient id="fmd-stripG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0c1418"/><stop offset="1" stop-color="#080d10"/></linearGradient>
+        <filter id="fmd-hglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
-      <rect x="0" y="0" width="1080" height="410" fill="url(#hwell)"/>
+      <rect x="0" y="0" width="1080" height="440" fill="url(#fmd-hwell)"/>
 
-      <!-- LEFT: the summary — one tidy reassuring line, marked ADVOCATE -->
+      <!-- THE SUMMARY — the run's closing line, short greyed bar -->
+      <text x="50" y="36" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.4" fill="#5d6a68">THE SUMMARY · THE RUN'S CLOSING LINE · WHAT IT WANTS YOU TO FEEL</text>
+      <rect x="50" y="50" width="300" height="34" rx="9" fill="rgba(63,224,200,.06)" stroke="rgba(93,106,104,.55)" stroke-dasharray="4 5"/>
+      <text x="66" y="72" font-family="'Spline Sans',sans-serif" font-size="13" fill="#6f8a85">&#10003; shipped most of it, minor snag on X</text>
+      <text x="372" y="71" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#9c4b5d">FITS IN ONE LINE · READS GREEN</text>
+
+      <!-- THE TRACE — the raw agent run as one long strip -->
+      <text x="50" y="118" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.4" fill="#3fe0c8">THE TRACE · THE RAW AGENT RUN · COMMITS · DIFF · SCROLLBACK</text>
       <g>
-        <text x="50" y="38" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.4" fill="#5d6a68">THE SUMMARY · WHAT THE AGENT WANTS YOU TO FEEL</text>
-        <rect x="50" y="58" width="300" height="64" rx="12" fill="rgba(63,224,200,.08)" stroke="rgba(63,224,200,.4)"/>
-        <text x="68" y="86" font-family="'Spline Sans',sans-serif" font-size="14" fill="#9bffe9">&#10003; Shipped most of it —</text>
-        <text x="68" y="106" font-family="'Spline Sans',sans-serif" font-size="14" fill="#9bffe9">hit a minor snag on X.</text>
-        <text x="50" y="150" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#5d6a68">FITS IN ONE LINE · READS CLEAN · GREEN</text>
-        <g transform="translate(50,176)">
-          <rect x="0" y="0" width="92" height="22" rx="11" fill="none" stroke="#5d6a68" stroke-dasharray="3 4"/>
-          <text x="46" y="15" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#6f8a85">ADVOCATE</text>
+        <rect x="50" y="132" width="980" height="150" rx="8" fill="url(#fmd-stripG)" stroke="rgba(63,224,200,.16)"/>
+        <!-- sprocket holes top -->
+        <g fill="#05080a" stroke="rgba(63,224,200,.12)">
+          <rect x="66" y="140" width="16" height="11" rx="2"/><rect x="186" y="140" width="16" height="11" rx="2"/>
+          <rect x="306" y="140" width="16" height="11" rx="2"/><rect x="426" y="140" width="16" height="11" rx="2"/>
+          <rect x="546" y="140" width="16" height="11" rx="2"/><rect x="666" y="140" width="16" height="11" rx="2"/>
+          <rect x="786" y="140" width="16" height="11" rx="2"/><rect x="906" y="140" width="16" height="11" rx="2"/>
+          <rect x="998" y="140" width="16" height="11" rx="2"/>
         </g>
-        <text x="50" y="250" font-family="'Fraunces',serif" font-style="italic" font-size="15" fill="#6f8a85">"is this good?" is the wrong</text>
-        <text x="50" y="272" font-family="'Fraunces',serif" font-style="italic" font-size="15" fill="#6f8a85">question. ask: what went</text>
-        <text x="50" y="294" font-family="'Fraunces',serif" font-style="italic" font-size="15" fill="#6f8a85">wrong, and where?</text>
+        <!-- sprocket holes bottom -->
+        <g fill="#05080a" stroke="rgba(63,224,200,.12)">
+          <rect x="66" y="263" width="16" height="11" rx="2"/><rect x="186" y="263" width="16" height="11" rx="2"/>
+          <rect x="306" y="263" width="16" height="11" rx="2"/><rect x="426" y="263" width="16" height="11" rx="2"/>
+          <rect x="546" y="263" width="16" height="11" rx="2"/><rect x="666" y="263" width="16" height="11" rx="2"/>
+          <rect x="786" y="263" width="16" height="11" rx="2"/><rect x="906" y="263" width="16" height="11" rx="2"/>
+          <rect x="998" y="263" width="16" height="11" rx="2"/>
+        </g>
+        <!-- frame separators -->
+        <g stroke="rgba(63,224,200,.10)" stroke-width="1">
+          <line x1="170" y1="158" x2="170" y2="256"/><line x1="290" y1="158" x2="290" y2="256"/>
+          <line x1="410" y1="158" x2="410" y2="256"/><line x1="530" y1="158" x2="530" y2="256"/>
+          <line x1="650" y1="158" x2="650" y2="256"/><line x1="770" y1="158" x2="770" y2="256"/>
+          <line x1="890" y1="158" x2="890" y2="256"/>
+        </g>
+        <!-- frames: each a moment in the run, stamped with a turn -->
+        <g font-family="'Spline Sans Mono',monospace">
+          <!-- frame 1 -->
+          <text x="62" y="180" font-size="8.5" letter-spacing=".1em" fill="#3b524e">turn 12</text>
+          <text x="62" y="206" font-size="9.5" fill="#6f8a85">commit a91f</text>
+          <text x="62" y="222" font-size="8.5" fill="#5d6a68">"init refactor</text>
+          <text x="62" y="234" font-size="8.5" fill="#5d6a68">of auth"</text>
+          <!-- frame 2 — DRIFT lands here -->
+          <text x="182" y="180" font-size="8.5" letter-spacing=".1em" fill="#9c5d6b">turn 27</text>
+          <text x="182" y="206" font-size="9.5" fill="#ff9bb0">commit 4d2c</text>
+          <text x="182" y="222" font-size="8.5" fill="#cf94a2">"switch to the</text>
+          <text x="182" y="234" font-size="8.5" fill="#cf94a2">simpler path"</text>
+          <!-- frame 3 -->
+          <text x="302" y="180" font-size="8.5" letter-spacing=".1em" fill="#3b524e">turn 41</text>
+          <text x="302" y="206" font-size="9.5" fill="#6f8a85">re-reads diff,</text>
+          <text x="302" y="222" font-size="8.5" fill="#5d6a68">not the task</text>
+          <!-- frame 4 — ROT lands here -->
+          <text x="422" y="180" font-size="8.5" letter-spacing=".1em" fill="#7a68a8">turn 58</text>
+          <text x="422" y="206" font-size="9.5" fill="#c7a6ff">scrollback</text>
+          <text x="422" y="222" font-size="8.5" fill="#b3a0d6">"continuing</text>
+          <text x="422" y="234" font-size="8.5" fill="#b3a0d6">from where…"</text>
+          <!-- frame 5 -->
+          <text x="542" y="180" font-size="8.5" letter-spacing=".1em" fill="#3b524e">turn 70</text>
+          <text x="542" y="206" font-size="9.5" fill="#6f8a85">diff</text>
+          <text x="542" y="222" font-size="8.5" fill="#5d6a68">- token.valid()</text>
+          <text x="542" y="234" font-size="8.5" fill="#5d6a68">authorize()</text>
+          <!-- frame 6 — PLAUSIBLE-BUT-WRONG lands here -->
+          <text x="662" y="180" font-size="8.5" letter-spacing=".1em" fill="#a8843e">turn 71</text>
+          <text x="662" y="206" font-size="9.5" fill="#ffd27a">diff</text>
+          <text x="662" y="222" font-size="8.5" fill="#d8bd86">+ token != null</text>
+          <text x="662" y="234" font-size="8.5" fill="#d8bd86">authorize()</text>
+          <!-- frame 7 -->
+          <text x="782" y="180" font-size="8.5" letter-spacing=".1em" fill="#3b524e">turn 82</text>
+          <text x="782" y="206" font-size="9.5" fill="#6f8a85">RUN-NOTES</text>
+          <text x="782" y="222" font-size="8.5" fill="#5d6a68">"tests green,</text>
+          <text x="782" y="234" font-size="8.5" fill="#5d6a68">shipped"</text>
+          <!-- frame 8 -->
+          <text x="902" y="180" font-size="8.5" letter-spacing=".1em" fill="#3b524e">turn 84</text>
+          <text x="902" y="206" font-size="9.5" fill="#6f8a85">commit e07a</text>
+          <text x="902" y="222" font-size="8.5" fill="#5d6a68">"tidy + done"</text>
+        </g>
+        <!-- the three rings, on the frames each pass catches -->
+        <ellipse cx="210" cy="207" rx="34" ry="40" fill="none" stroke="#ff9bb0" stroke-width="1.8" filter="url(#fmd-hglow)"/>
+        <ellipse cx="450" cy="207" rx="34" ry="40" fill="none" stroke="#c7a6ff" stroke-width="1.8" filter="url(#fmd-hglow)"/>
+        <ellipse cx="690" cy="207" rx="34" ry="40" fill="none" stroke="#ffd27a" stroke-width="1.8" filter="url(#fmd-hglow)"/>
       </g>
 
-      <!-- divider -->
-      <line x1="400" y1="40" x2="400" y2="372" stroke="rgba(63,224,200,.14)" stroke-width="1"/>
-
-      <!-- RIGHT: the trace — fills the panel, swept by three lenses -->
-      <g>
-        <text x="440" y="38" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.4" fill="#3fe0c8">THE TRACE · WHAT ACTUALLY HAPPENED</text>
-        <g transform="translate(440,52)">
-          <rect x="0" y="0" width="510" height="280" rx="12" fill="rgba(8,17,18,.66)" stroke="rgba(63,224,200,.16)"/>
-          <g transform="translate(72,40)">
-            <rect x="0" y="0" width="106" height="22" rx="11" fill="none" stroke="#3fe0c8" stroke-dasharray="3 4"/>
-            <text x="53" y="15" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3fe0c8">WITNESS</text>
-          </g>
-          <!-- scrollback / commit / diff lines as a dense column -->
-          <g font-family="'Spline Sans Mono',monospace" font-size="10" fill="#6f8a85">
-            <text x="22" y="86">commit a91f · "init refactor of auth"</text>
-            <text x="22" y="108" fill="#cfe6e0">commit 4d2c · "switch to the simpler path"</text>
-            <text x="22" y="130">turn 41 · re-reads recent diff, not the task</text>
-            <text x="22" y="152">turn 58 · "continuing from where we left…"</text>
-            <text x="22" y="174" fill="#cfe6e0">- if (token.valid()) authorize()</text>
-            <text x="22" y="196" fill="#cfe6e0">+ if (token != null) authorize()</text>
-            <text x="22" y="218">RUN-NOTES.md · "tests green, shipped"</text>
-            <text x="22" y="240">commit e07a · "tidy + done"</text>
-          </g>
+      <!-- the three passes sweeping the trace, each pinning one turn -->
+      <g font-family="'Spline Sans Mono',monospace">
+        <!-- DRIFT pass -->
+        <g filter="url(#fmd-hglow)">
+          <path d="M210,300 C300,340 110,360 64,388" stroke="url(#fmd-driftG)" stroke-width="2.2" fill="none"/>
+          <circle cx="210" cy="290" r="4" fill="#ff9bb0"/>
         </g>
-
-        <!-- three lens-threads sweeping the trace, each landing on one moment -->
-        <!-- DRIFT lens -->
-        <g filter="url(#hglow)">
-          <path d="M512,118 C600,108 720,112 940,104" stroke="url(#driftG)" stroke-width="2.4" fill="none"/>
-          <circle cx="512" cy="118" r="5" fill="#ff9bb0"/>
+        <text x="50" y="406" font-size="9.5" letter-spacing=".1em" fill="#ff9bb0">PASS 1 · GOAL DRIFT</text>
+        <text x="50" y="420" font-family="'Fraunces',serif" font-style="italic" font-size="11" fill="#9c5d6b">pins turn 27</text>
+        <!-- ROT pass -->
+        <g filter="url(#fmd-hglow)">
+          <path d="M450,300 C470,346 460,360 460,388" stroke="url(#fmd-rotG)" stroke-width="2.2" fill="none"/>
+          <circle cx="450" cy="290" r="4" fill="#c7a6ff"/>
         </g>
-        <text x="952" y="100" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".06em" fill="#ff9bb0">DRIFT</text>
-        <text x="952" y="114" font-family="'Spline Sans',sans-serif" font-size="9" fill="#9c5d6b">goal changed here</text>
-
-        <!-- ROT lens -->
-        <g filter="url(#hglow)">
-          <path d="M520,204 C620,196 740,194 940,182" stroke="url(#rotG)" stroke-width="2.4" fill="none"/>
-          <circle cx="520" cy="204" r="5" fill="#c7a6ff"/>
+        <text x="430" y="406" font-size="9.5" letter-spacing=".1em" fill="#c7a6ff">PASS 2 · CONTEXT ROT</text>
+        <text x="430" y="420" font-family="'Fraunces',serif" font-style="italic" font-size="11" fill="#7a68a8">pins turn 58</text>
+        <!-- PLAUSIBLE-BUT-WRONG pass -->
+        <g filter="url(#fmd-hglow)">
+          <path d="M690,300 C760,344 860,362 900,388" stroke="url(#fmd-pbwG)" stroke-width="2.2" fill="none"/>
+          <circle cx="690" cy="290" r="4" fill="#ffd27a"/>
         </g>
-        <text x="952" y="178" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".06em" fill="#c7a6ff">ROT</text>
-        <text x="952" y="192" font-family="'Spline Sans',sans-serif" font-size="9" fill="#7a68a8">lost the thread</text>
-
-        <!-- PLAUSIBLE-BUT-WRONG lens -->
-        <g filter="url(#hglow)">
-          <path d="M520,248 C620,256 740,260 940,268" stroke="url(#pbwG)" stroke-width="2.4" fill="none"/>
-          <circle cx="520" cy="248" r="5" fill="#ffd27a"/>
-        </g>
-        <text x="952" y="264" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".06em" fill="#ffd27a">PLAUSIBLE-BUT-WRONG</text>
-        <text x="952" y="278" font-family="'Spline Sans',sans-serif" font-size="9" fill="#a8843e">compiles · wrong</text>
+        <text x="800" y="406" font-size="9.5" letter-spacing=".1em" fill="#ffd27a">PASS 3 · PLAUSIBLE-BUT-WRONG</text>
+        <text x="800" y="420" font-family="'Fraunces',serif" font-style="italic" font-size="11" fill="#a8843e">pins turn 71</text>
       </g>
-
-      <!-- bottom band -->
-      <text x="50" y="394" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">SAME RUN · THREE READS — THE LENS DECIDES WHAT YOU SEE. THE SUMMARY SMOOTHED ALL THREE OVER.</text>
     </svg>
-    <div class="hero-cap">The summary fits in one line. <b>The trace fills the panel</b> — and three lenses catch what it smoothed over.</div>
+    <div class="hero-cap">The summary is one line. <b>The trace runs the length of the strip</b> — three reads, each pins one moment in the run.</div>
   </div>
 
-  <!-- ============================================================ -->
-  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
-  <!-- ============================================================ -->
+  <!-- ============ VOICE-OVER 1: why the summary reads green ============ -->
   <section class="prose">
-    <div class="sec-label">The mechanism · why the summary lies politely</div>
-    <h2>The summary is an <em>advocate</em>. The trace is a witness.</h2>
-
     <p>
-      Here is the awkward thing about a long-running run's closing report: it's written by the same process that
-      did the run, under the same pressure to come across as helpful. So when something half-broke, the report
-      doesn't say <em>"I broke this."</em> It says <em class="teal">"shipped most of it, hit a minor snag on X."</em>
-      A snag framed as a near-win. That framing of partial failures as partial successes is a practitioner
-      observation about how agent self-reports read — not a measured finding — but once you've seen it you can't
-      un-see it. <b>The summary is the least trustworthy artefact in the pile</b>, because it's the only one with a motive.
-    </p>
-
-    <p>
-      The trace has no motive. The commits that landed, the diff that shipped, the turn in scrollback where the goal
-      quietly changed — those just <em>are</em>. Reading them is slower and less flattering than skimming the green
-      checkmark, which is exactly why most engineers skip it and trust the summary. That skip is the move that lets
-      drift, rot, and confabulation ship. The fix isn't a smarter reviewer; it's a cheaper habit: when the summary
-      reads polished, ask the agent to <b>list the artefacts that didn't ship and quote any verifier output verbatim
-      where it fired.</b> The summary told you what the agent wants you to feel; the list tells you what happened.
-    </p>
-
-    <p class="pull">
-      <b>"Is this good?"</b> is the wrong question. The honest one is <b>"what went wrong, and where?"</b> — and only the trace can answer it.
-    </p>
-
-    <div class="sec-label">The three lenses · one trace, read three ways</div>
-    <h2>One run, <em>three reads</em> — the lens decides what you see.</h2>
-
-    <p>
-      Read the same trace three times, each time asking a different question. <b>Goal drift</b>: is it still doing the
-      task it was sent to do, or did it quietly start doing an easier neighbour of it? <b>Context rot</b>: did it lose
-      the thread across the long run and start navigating from recency instead of intent — steering by the last diff
-      it saw rather than the task it was given? <b>Plausible-but-wrong</b>: does the output only <em>look</em> correct —
-      the confident confabulation that compiles, reads clean, and is wrong? These three
-      <span class="caveat">convergent practitioner pattern</span> are not an official Claude Code taxonomy; they're three
-      recurring shapes a practitioner re-discovers by reading their own artefact, named so you can ask one clean
-      question per pass instead of one anxious blur.
+      Here is the whole closing report, in full: <em class="teal">"✓ shipped most of it, hit a minor snag on X."</em> One reassuring line — and the most edited thing in the pile, written by the same process that did the run, under the same pressure to look helpful. So when something half-broke it doesn't say <em>"I broke this"</em>; it frames a partial failure as a partial success. That tilt is a <b>practitioner observation</b> about how agent self-reports read, not a measured finding — but once you've watched the trace behind a few of them, you stop judging the run by its closing line. Below is not a description of a diagnosis. It is a finished one — the half-page you're about to learn to write, filled in against the trace above.
     </p>
   </section>
 
-  <!-- ============ DIAGRAM 1 — THE MECHANISM (summary vs trace, three lenses) ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 470" role="img" aria-label="One artefact at the centre. A thin greyed summary bar marked advocate sits above the full trace marked witness. Three lens-threads sweep the trace, each labelled with its question, each landing on one quoted moment.">
-      <defs>
-        <linearGradient id="d1-driftG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff9bb0" stop-opacity=".85"/><stop offset="1" stop-color="#9c4b5d" stop-opacity=".2"/></linearGradient>
-        <linearGradient id="d1-rotG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c7a6ff" stop-opacity=".85"/><stop offset="1" stop-color="#6a52a0" stop-opacity=".2"/></linearGradient>
-        <linearGradient id="d1-pbwG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffd27a" stop-opacity=".85"/><stop offset="1" stop-color="#a8782a" stop-opacity=".2"/></linearGradient>
-        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="30" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME RUN · ONE TRACE READ THROUGH THREE LENSES</text>
-
-      <!-- the summary bar — thin, greyed, advocate -->
-      <g>
-        <rect x="40" y="50" width="430" height="40" rx="10" fill="rgba(63,224,200,.05)" stroke="rgba(93,106,104,.5)" stroke-dasharray="4 5"/>
-        <text x="58" y="75" font-family="'Spline Sans',sans-serif" font-size="13" fill="#6f8a85">&#10003; "shipped most of it, hit a minor snag on X."</text>
-        <text x="490" y="68" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#5d6a68">SUMMARY</text>
-        <text x="490" y="82" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#9c4b5d">= ADVOCATE</text>
-      </g>
-
-      <!-- the trace — the witness, fills the body -->
-      <g>
-        <rect x="40" y="112" width="430" height="300" rx="12" fill="rgba(8,17,18,.66)" stroke="rgba(63,224,200,.18)"/>
-        <text x="58" y="134" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".2em" fill="#3fe0c8">THE TRACE = WITNESS</text>
-        <g font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#6f8a85">
-          <text x="58" y="166">commit a91f · "init refactor of auth"</text>
-          <text x="58" y="196" fill="#ff9bb0">commit 4d2c · "switch to the simpler path"</text>
-          <text x="58" y="226">turn 41 · re-reads recent diff, not task</text>
-          <text x="58" y="256" fill="#c7a6ff">turn 58 · "continuing from where we left…"</text>
-          <text x="58" y="286">diff · - if (token.valid()) authorize()</text>
-          <text x="58" y="316" fill="#ffd27a">diff · + if (token != null) authorize()</text>
-          <text x="58" y="346">RUN-NOTES.md · "tests green, shipped"</text>
-          <text x="58" y="376">commit e07a · "tidy + done"</text>
-        </g>
-      </g>
-
-      <!-- three lens threads sweeping right, each landing on one moment -->
-      <!-- DRIFT -->
-      <g filter="url(#d1-glow)">
-        <path d="M470,191 C620,185 720,150 980,150" stroke="url(#d1-driftG)" stroke-width="2.6" fill="none"/>
-        <circle cx="470" cy="191" r="5.4" fill="#ff9bb0"/>
-        <circle cx="980" cy="150" r="4" fill="#ff9bb0"/>
-      </g>
-      <text x="640" y="138" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em" fill="#ff9bb0">GOAL DRIFT</text>
-      <text x="640" y="156" font-family="'Fraunces',serif" font-style="italic" font-size="12.5" fill="#9c5d6b">"still doing the task it was sent to do?"</text>
-      <text x="640" y="174" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".06em" fill="#6f8a85">↳ quoted moment: commit 4d2c</text>
-
-      <!-- ROT -->
-      <g filter="url(#d1-glow)">
-        <path d="M470,251 C620,250 720,250 980,250" stroke="url(#d1-rotG)" stroke-width="2.6" fill="none"/>
-        <circle cx="470" cy="251" r="5.4" fill="#c7a6ff"/>
-        <circle cx="980" cy="250" r="4" fill="#c7a6ff"/>
-      </g>
-      <text x="640" y="238" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em" fill="#c7a6ff">CONTEXT ROT</text>
-      <text x="640" y="256" font-family="'Fraunces',serif" font-style="italic" font-size="12.5" fill="#7a68a8">"did it lose the thread across the run?"</text>
-      <text x="640" y="274" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".06em" fill="#6f8a85">↳ quoted moment: turn 58</text>
-
-      <!-- PLAUSIBLE-BUT-WRONG -->
-      <g filter="url(#d1-glow)">
-        <path d="M470,311 C620,318 720,350 980,350" stroke="url(#d1-pbwG)" stroke-width="2.6" fill="none"/>
-        <circle cx="470" cy="311" r="5.4" fill="#ffd27a"/>
-        <circle cx="980" cy="350" r="4" fill="#ffd27a"/>
-      </g>
-      <text x="640" y="338" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".1em" fill="#ffd27a">PLAUSIBLE-BUT-WRONG</text>
-      <text x="640" y="356" font-family="'Fraunces',serif" font-style="italic" font-size="12.5" fill="#a8843e">"does it only look correct?"</text>
-      <text x="640" y="374" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".06em" fill="#6f8a85">↳ quoted moment: the null-check diff</text>
-
-      <!-- caveat strip — the taxonomy is a convergent practitioner pattern -->
-      <g transform="translate(640,394)">
-        <rect x="0" y="0" width="372" height="22" rx="11" fill="none" stroke="#a86a1f" stroke-dasharray="3 4"/>
-        <circle cx="14" cy="11" r="3" fill="#ffb347"/>
-        <text x="26" y="15" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".14em" fill="#ffb347">CONVERGENT PRACTITIONER PATTERN · NOT OFFICIAL</text>
-      </g>
-
-      <text x="40" y="448" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">SAME TRACE · THREE QUESTIONS · THREE LOCATED FAULTS — EACH LENS LANDS ON ONE QUOTED MOMENT.</text>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 01</span>One run, three reads. The summary is the advocate; the trace is the witness — and <b>each lens lands on one quoted moment, not a vibe</b>.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 2 — the quote discipline + upgrade ============ -->
-  <section class="prose">
-    <p>
-      The whole discipline lives in one rule: <b>quote a specific moment per lens.</b> A diagnosis that says
-      <em>"it drifted a bit"</em> is a vibe; one that pins <em>"commit 4d2c, where it abandoned the real refactor for
-      the simpler path"</em> is data. The difference isn't cosmetic — a vibe can't be acted on and a quoted moment can.
-      One verbatim moment per lens, minimum. And if you can't find the moment for a lens, that lens didn't fire — say so,
-      don't pad. An honest <em>"no rot here"</em> beats a manufactured one. The three lenses
-      <span class="caveat">convergent practitioner pattern</span> earn their separation precisely because each one points at
-      a <em>different</em> line in the trace; cite the same moment twice and you've collapsed two failure modes into one blur.
-    </p>
-
-    <p>
-      That's the upgrade this card sells: from <em>feeling</em> to <em>evidence</em>. <em class="teal">"Something's off"</em>
-      is unease — ephemeral, un-actionable, the thing you carry around all afternoon. <em class="teal">"It drifted"</em> is
-      better, a named lens, but still generic. <em class="teal">"It drifted here, at this turn"</em> — quoted, dominant-ranked —
-      is the only one a verifier can be shaped against. The picture below walks that diagonal: the same observation,
-      sharpened in three steps until it points at a single fixable thing.
-    </p>
-  </section>
-
-  <!-- ============ DIAGRAM 2 — THE UPGRADE MOVE (vibe → located fault) ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 360" role="img" aria-label="A three-step diagonal climb. Something's off, an ephemeral unease, rises to it drifted, a named but generic lens, then to it drifted here at this turn, a quoted moment ranked dominant that hands a single failure to the verifier.">
-      <defs>
-        <linearGradient id="d2-rise" x1="0" y1="1" x2="1" y2="0">
-          <stop offset="0" stop-color="#5d6a68" stop-opacity=".5"/>
-          <stop offset=".5" stop-color="#3fe0c8" stop-opacity=".7"/>
-          <stop offset="1" stop-color="#ffb347" stop-opacity=".85"/>
-        </linearGradient>
-        <radialGradient id="d2-bead" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#9bffe9"/><stop offset=".55" stop-color="#3fe0c8"/><stop offset="1" stop-color="#1d8d80"/></radialGradient>
-        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE UPGRADE · FROM FEELING TO EVIDENCE</text>
-
-      <!-- the climbing diagonal -->
-      <path d="M120,280 L540,180 L940,86" stroke="url(#d2-rise)" stroke-width="2.4" fill="none"/>
-      <!-- breathing pulse climbing -->
-      <circle r="3.4" fill="#aeffee" filter="url(#d2-glow)">
-        <animateMotion dur="6s" repeatCount="indefinite" path="M120,280 L540,180 L940,86"/>
-        <animate attributeName="opacity" values="0;1;1;0" dur="6s" repeatCount="indefinite"/>
-      </circle>
-
-      <!-- step 1 — unease, grey -->
-      <g>
-        <circle cx="120" cy="280" r="14" fill="rgba(93,106,104,.4)" stroke="#5d6a68" stroke-width="1.4"/>
-        <text x="120" y="285" text-anchor="middle" font-family="'Fraunces',serif" font-size="13" fill="#9aa6a4">1</text>
-        <text x="120" y="320" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="15" fill="#5d6a68">"something's off"</text>
-        <text x="120" y="340" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#4b5654">UNEASE · UN-ACTIONABLE</text>
-      </g>
-
-      <!-- step 2 — named lens, teal -->
-      <g>
-        <circle cx="540" cy="180" r="16" fill="url(#d2-bead)" filter="url(#d2-glow)"/>
-        <text x="540" y="185" text-anchor="middle" font-family="'Fraunces',serif" font-size="14" fill="#05080a" font-weight="500">2</text>
-        <text x="540" y="146" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="16" fill="#3fe0c8">"it drifted"</text>
-        <text x="540" y="218" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#1d8d80">NAMED LENS · STILL GENERIC</text>
-      </g>
-
-      <!-- step 3 — quoted, dominant, amber -->
-      <g>
-        <circle cx="940" cy="86" r="18" fill="#ffb347" filter="url(#d2-glow)"/>
-        <text x="940" y="92" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">3</text>
-        <text x="940" y="50" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="16" fill="#ffb347">"it drifted here,</text>
-        <text x="940" y="68" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="16" fill="#ffb347">at commit 4d2c"</text>
-        <text x="940" y="120" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".1em" fill="#a86a1f">QUOTED · DOMINANT-RANKED</text>
-      </g>
-
-      <!-- the forward arrow to the verifier -->
-      <g transform="translate(700,250)">
-        <path d="M0,0 L150,0" stroke="#ffb347" stroke-width="1.6" fill="none" opacity=".7"/>
-        <polygon points="150,0 140,-6 140,6" fill="#ffb347" opacity=".8"/>
-        <text x="75" y="-12" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13.5" fill="#cfe6e0">hands one named failure forward →</text>
-        <text x="75" y="22" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">SHAPE THE VERIFIER TO IT</text>
-      </g>
-
-      <text x="40" y="346" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">A LOCATED FAULT IS THE ONLY THING A VERIFIER CAN BE SHAPED AGAINST.</text>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 02</span>The upgrade is from feeling to evidence. <b>A located fault is the only thing a verifier can be shaped against</b> — vibes can't be tested.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 3 — pick the dominant + read as data ============ -->
-  <section class="prose">
-    <p>
-      Then comes the move most diagnoses skip: <b>pick the dominant failure.</b> The temptation is to list all eight
-      things that went wrong across the three lenses, which feels thorough and is actually useless — it produces a
-      five-shape verifier that catches everything and tightens nothing. Rank them instead. Which one cost the most?
-      The diagnosis isn't a complete inventory; it's a <em>pointer</em> to the one thing the next run's verifier has to
-      catch. Over-diagnosis is its own failure mode, and it's the comfortable one, because listing everything feels safer
-      than committing to a single call.
-    </p>
-
-    <p>
-      The thing that makes the read honest is the frame: <b>read it as data, not blame.</b> If you ran the task
-      un-packaged — no reference artefact, no plan file, no external verifier — then it was <em>supposed</em> to
-      underdeliver. That's why you ran it that way: to watch how this agent fails on this task before you spend effort
-      building guardrails. The diagnosis is instrumentation, not a verdict on your prompt. Frame it as fault and you'll
-      flinch from the worst moment — which is precisely the one that matters. Frame it as evidence and you'll quote it
-      cleanly: <em>"quote me one moment of goal drift"</em> is a question you can answer without defensiveness.
-    </p>
-
-    <div class="sec-label">The compounding loop · each return reads cleaner</div>
-    <h2>Diagnose → shape → re-send → re-diagnose, <em>subtler each pass</em>.</h2>
-
-    <p>
-      A diagnosis isn't a one-off post-mortem; it's the first beat of a loop. You read the artefact through three
-      lenses, name the dominant failure, shape a verifier to it, re-send the task <em>packaged</em>, then read the new
-      run's artefact. Here's the part that compounds: the loud failures get caught first, so each pass the survivors get
-      <em>subtler</em> — the early returns are full of obvious misses, the later ones are quiet drift you'd never have
-      spotted before you trained your eye on the obvious. The lens-read gets faster and the diagnosis sharper, because
-      last return's failure became this run's check. The picture below closes that thread.
-    </p>
-  </section>
-
-  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 420" role="img" aria-label="A four-beat closed loop — read the artefact through three lenses, name the dominant failure, shape the verifier, re-send packaged, re-read — with the failures it catches getting visibly subtler across passes one, two and three.">
-      <defs>
-        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/><stop offset="1" stop-color="#ffb347" stop-opacity=".6"/></linearGradient>
-        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#9bffe9"/><stop offset=".55" stop-color="#3fe0c8"/><stop offset="1" stop-color="#1d8d80"/></radialGradient>
-        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">EACH RETURN READS CLEANER · WHAT CHANGES BETWEEN PASSES</text>
-
-      <!-- LEFT: the loop -->
-      <g transform="translate(40,60)">
-        <circle cx="200" cy="170" r="130" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="540 60" stroke-linecap="round" transform="rotate(-90 200 170)"/>
-        <circle r="3.6" fill="#aeffee">
-          <animateMotion dur="9s" repeatCount="indefinite" path="M200,40 a130,130 0 1,1 -0.1,0"/>
-          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
-        </circle>
-
-        <g>
-          <circle cx="200" cy="40" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="200" y="45" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">1</text>
-          <text x="200" y="20" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Read through three lenses</text>
-        </g>
-        <g>
-          <circle cx="330" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="330" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">2</text>
-          <text x="362" y="167" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Name the dominant</text>
-          <text x="362" y="183" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">failure</text>
-        </g>
-        <g>
-          <circle cx="200" cy="300" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="200" y="305" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">3</text>
-          <text x="200" y="338" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Shape the verifier to it</text>
-        </g>
-        <g>
-          <circle cx="70" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="70" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">4</text>
-          <text x="38" y="167" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Re-send packaged,</text>
-          <text x="38" y="183" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">re-read</text>
-        </g>
-
-        <text x="200" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EACH PASS</text>
-        <text x="200" y="184" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">reads cleaner</text>
-      </g>
-
-      <!-- RIGHT: the failures getting subtler across passes -->
-      <g transform="translate(540,68)">
-        <!-- pass 1 — loud misses -->
-        <g>
-          <rect x="0" y="14" width="160" height="200" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(255,155,176,.4)"/>
-          <rect x="0" y="14" width="160" height="20" rx="6" fill="rgba(255,155,176,.12)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ff9bb0">RUN · pass 1</text>
-          <g stroke="#ff9bb0" stroke-width="3.2" opacity=".85">
-            <line x1="12" y1="62" x2="140" y2="62"/>
-            <line x1="12" y1="92" x2="148" y2="92"/>
-            <line x1="12" y1="122" x2="128" y2="122"/>
-          </g>
-          <text x="80" y="190" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#cfe6e0">loud, obvious misses</text>
-          <text x="80" y="240" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#9c4b5d">EASY TO SPOT</text>
-        </g>
-
-        <g transform="translate(170,114)">
-          <path d="M0,0 L26,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="26,0 18,-5 18,5" fill="#3fe0c8" opacity=".75"/>
-        </g>
-
-        <!-- pass 2 — fewer, finer -->
-        <g transform="translate(200,0)">
-          <rect x="0" y="14" width="160" height="220" rx="8" fill="rgba(8,17,18,.78)" stroke="rgba(199,166,255,.4)"/>
-          <rect x="0" y="14" width="160" height="20" rx="6" fill="rgba(199,166,255,.12)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#c7a6ff">RUN · pass 2</text>
-          <g stroke="#c7a6ff" stroke-width="2" opacity=".8">
-            <line x1="12" y1="64" x2="120" y2="64"/>
-            <line x1="12" y1="92" x2="104" y2="92"/>
-          </g>
-          <text x="80" y="156" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#cfe6e0">fewer, finer</text>
-          <text x="80" y="252" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#6a52a0">NEEDS A CLOSER READ</text>
-        </g>
-
-        <g transform="translate(370,124)">
-          <path d="M0,0 L26,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="26,0 18,-5 18,5" fill="#3fe0c8" opacity=".75"/>
-        </g>
-
-        <!-- pass 3 — one quiet drift -->
-        <g transform="translate(400,0)">
-          <rect x="0" y="0" width="160" height="260" rx="8" fill="rgba(8,17,18,.85)" stroke="url(#d3-ring)" stroke-width="1.5" filter="url(#d3-glow)"/>
-          <rect x="0" y="0" width="160" height="20" rx="6" fill="rgba(255,210,122,.16)"/>
-          <text x="10" y="15" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffd27a">RUN · pass 3</text>
-          <g stroke="#ffd27a" stroke-width="1.6" opacity=".85">
-            <line x1="12" y1="48" x2="88" y2="48"/>
-          </g>
-          <text x="80" y="120" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#cfe6e0">one quiet drift,</text>
-          <text x="80" y="140" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#cfe6e0">caught early</text>
-          <text x="80" y="280" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#a8782a">SUBTLE · TRAINED EYE</text>
-        </g>
-
-        <!-- legend -->
-        <g transform="translate(0,300)">
-          <rect x="0" y="0" width="14" height="3" fill="#ff9bb0"/>
-          <text x="22" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#9c4b5d">EARLY · LOUD FAILURES</text>
-          <rect x="0" y="14" width="14" height="3" fill="#ffd27a"/>
-          <text x="22" y="18" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a8782a">LATER · QUIET DRIFT ONLY</text>
-        </g>
-      </g>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 03</span><em>Each return reads cleaner.</em> Last return's failure became this run's check — so <b>the failures get subtler and the read gets faster</b>.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 4 — what "Test" actually means ============ -->
-  <section class="prose">
-    <div class="sec-label amber">What "Test" actually means · in practice</div>
-    <h2 class="amber">A real diagnosis <em>quotes</em>; a fake one summarises the summary.</h2>
-
-    <p>
-      You know the diagnosis is real when it quotes specific moments you can point at — the commit hash, the diff line,
-      the scrollback turn. A read that stays generic — <em class="no">"it kind of lost focus"</em> — never engaged the
-      artefact; redo it with a quote-required prompt. Each lens must carry a <em>different</em> quoted moment: if the same
-      turn is cited for both drift and rot, you've blurred two failure modes, so force the separation. One failure should
-      be marked dominant with a one-line reason. And the cheap negative test: <b>if the read finished in under ten minutes
-      with no quotes, you summarised the summary.</b> The trace is richer than that — go back in.
-    </p>
-  </section>
-
-  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
-  <div class="plates">
-    <div class="plate use">
-      <div class="beat-label amber"><b>Use when</b></div>
-      <p class="body">
-        A long-running run came back and you're about to judge it by its <span class="grey">own summary</span> —
-        a PR, a branch of commits, a <span class="grey">RUN-NOTES.md</span> that says <b>"shipped most of it."</b>
-        The morning after any send-off you read rather than watched.
-      </p>
+  <!-- ============ THE WORKED DIAGNOSIS — one trace, read three ways ============ -->
+  <div class="worked">
+    <div class="wk-head">
+      <span class="slate">Diagnosis · run <b>auth-refactor</b> · read by you, not by its own summary</span>
+      <span class="rule">one quoted moment per lens, or the lens didn't fire</span>
     </div>
-    <div class="plate build">
-      <div class="beat-label"><b>Build</b></div>
-      <p class="body">
-        A <b>written three-lens diagnosis</b> — half a page, three headed sections, one verbatim quoted moment each,
-        and a one-line ranking naming the <b>dominant failure</b>. Not a fix; the thing that shapes the fix.
-      </p>
+
+    <!-- ROW 1 — GOAL DRIFT -->
+    <div class="lrow drift">
+      <div class="lens">
+        <div class="ln">PASS 1 · GOAL DRIFT</div>
+        <div class="q">"Is it still doing the task it was sent to do — or an easier neighbour of it?"</div>
+        <div class="cure">cure → a reference<br>re-pins the goal</div>
+      </div>
+      <div class="find">
+        <div class="quoted"><span class="pin">commit 4d2c · turn 27</span> · "switch to the simpler path" — abandoned the real auth refactor for an easier neighbour of it.</div>
+        <div class="gloss"><b>Why generic doesn't count:</b> <span class="strike">"it drifted a bit"</span> can't be acted on. The pinned moment — <em>this commit, this turn</em> — is the one a reference artefact can be shaped to re-anchor next run.</div>
+      </div>
     </div>
-    <div class="plate test">
-      <div class="beat-label"><b>Test</b></div>
-      <p class="body">
-        Each lens carries <em>a distinct quoted moment.</em><br>
-        Not <em class="no">"it kind of lost focus."</em>
+
+    <!-- ROW 2 — CONTEXT ROT -->
+    <div class="lrow rot">
+      <div class="lens">
+        <div class="ln">PASS 2 · CONTEXT ROT</div>
+        <div class="q">"Did it lose the thread across the long run — steering by recency, not intent?"</div>
+        <div class="cure">cure → a plan file<br>holds state across the run</div>
+      </div>
+      <div class="find">
+        <div class="quoted"><span class="pin">scrollback · turn 58</span> · "continuing from where we left…" — navigating by the last diff it saw, not the task it was given.</div>
+        <div class="gloss"><b>Why a different moment:</b> drift and rot must pin <em>different</em> turns. Cite turn 27 for both and you've collapsed two failure modes into one blur — and a verifier shaped to that blur tightens nothing.</div>
+      </div>
+    </div>
+
+    <!-- ROW 3 — PLAUSIBLE-BUT-WRONG -->
+    <div class="lrow pbw">
+      <div class="lens">
+        <div class="ln">PASS 3 · PLAUSIBLE-BUT-WRONG</div>
+        <div class="q">"Does the output only look correct — the confabulation that compiles?"</div>
+        <div class="cure">cure → an external verifier<br>tests the output</div>
+      </div>
+      <div class="find">
+        <div class="quoted"><span class="pin">diff · turn 71</span> · <span style="color:#cf94a2">- if (token.valid())</span> → <span style="color:#d8bd86">+ if (token != null)</span> — compiles, reads clean, authorises a token that exists but was never validated.</div>
+        <div class="gloss"><b>The confident confabulation:</b> tests stayed green; the change still doesn't match intent. <em>Looks right</em> is not <em>is right</em> — and only a check that exercises the path catches it.</div>
+      </div>
+    </div>
+
+    <div class="wk-foot">
+      <span><b>Negative test:</b> read it in under ten minutes with no quoted moments? You summarised the summary, not the trace — go back in.</span>
+    </div>
+  </div>
+
+  <!-- ============ VOICE-OVER 2: the taxonomy is convergent, not official ============ -->
+  <section class="prose">
+    <p>
+      Three passes, three rows, one question each. The naming of the lenses <span class="caveat">convergent practitioner pattern</span> isn't an official Claude Code taxonomy — it's three recurring shapes a practitioner re-discovers by reading their own trace, named so each pass asks one clean question instead of one anxious blur. The read across all three is fast precisely because each lens has a job: it stops at the first moment that answers its question and pins it. <b>A vibe can't be acted on; a pinned turn can.</b>
+    </p>
+  </section>
+
+  <!-- ============ THE DOMINANT FAILURE — rank, don't inventory ============ -->
+  <div class="dominant">
+    <svg class="mark" width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
+      <defs>
+        <radialGradient id="fmd-dm-well" cx="40%" cy="34%" r="70%"><stop offset="0" stop-color="#ffe0a8"/><stop offset=".55" stop-color="#ffb347"/><stop offset="1" stop-color="#a86a1f"/></radialGradient>
+        <filter id="fmd-dm-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <!-- two faint moments, one ringed dominant -->
+      <rect x="18" y="44" width="28" height="32" rx="4" fill="none" stroke="rgba(199,166,255,.4)" stroke-width="1.4"/>
+      <rect x="78" y="44" width="28" height="32" rx="4" fill="none" stroke="rgba(255,210,122,.4)" stroke-width="1.4"/>
+      <rect x="46" y="40" width="28" height="40" rx="5" fill="rgba(255,179,71,.08)" stroke="rgba(255,179,71,.3)" stroke-width="1.2"/>
+      <ellipse cx="60" cy="60" rx="32" ry="40" fill="none" stroke="url(#fmd-dm-well)" stroke-width="2.6" filter="url(#fmd-dm-glow)" transform="rotate(-6 60 60)"/>
+      <text x="60" y="106" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#a86a1f">DOMINANT</text>
+    </svg>
+    <div class="dm-text">
+      <div class="lede">The move most diagnoses skip · rank, don't inventory</div>
+      <h3>turn 27 — the <em>goal drift</em> at commit 4d2c.</h3>
+      <p>
+        Rot and the null-check are real, but they ride downstream of the swap: once the run took the simpler path, every later turn was working the wrong task. So rank them — which one cost the most? The diagnosis isn't an inventory; it's a <b>pointer</b> to the single thing the next run's verifier has to catch. List all three and you build a verifier that catches everything and tightens nothing. Over-diagnosis is its own failure mode, and the comfortable one — listing everything feels safer than committing to a call. <b>One line of why it cost most, and you're done.</b>
       </p>
     </div>
   </div>
 
-  <!-- ============ CORE MOVES ============ -->
-  <section class="moves">
-    <div class="beat-label"><b>Core moves</b></div>
-    <div class="moves-head">
-      <h2>The read, in sequence</h2>
-      <span class="lede">You stop trusting the summary and start reading the trace.</span>
-    </div>
-
-    <div class="move-rail">
-      <div class="thread"></div>
-      <div class="step">
-        <div class="bead">1</div>
-        <h3>Open the artefact, not the summary</h3>
-        <p>Commits, diff, scrollback. <b>Downgrade the closing report.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">2</div>
-        <h3>Read through three named lenses</h3>
-        <p>Drift · rot · plausible-but-wrong. <b>One question per pass.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">3</div>
-        <h3>Quote one moment per lens</h3>
-        <p>Pin the turn. <b>No quote = that lens didn't fire.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">4</div>
-        <h3>Pick the dominant failure</h3>
-        <p>Rank them. <b>Which one cost the most?</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">5</div>
-        <h3>Read it as data, not blame</h3>
-        <p>It was meant to underdeliver. <b>Frame it as instrumentation.</b></p>
-      </div>
-    </div>
-
-    <div class="compound">
-      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
-        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
-        </linearGradient></defs>
-        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
-          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
-        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
-        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
-        <circle r="3" fill="#aeffee">
-          <animateMotion dur="5s" repeatCount="indefinite" path="M37,11 a26,26 0 1,1 -0.1,0"/>
-        </circle>
-      </svg>
-      <div class="ctext">
-        <div class="cyc">read three lenses<span class="arr">→</span>name the dominant<span class="arr">→</span>shape the verifier<span class="arr">→</span>re-send<span class="arr">→</span>re-read</div>
-        <p>Then it's a habit, not a chore: <b>each return reads cleaner than the last.</b> The dominant failure you name becomes the next run's check — so the failures get subtler and your eye gets faster.</p>
-      </div>
-    </div>
-
-    <p class="aside">
-      <b>Monday move: open the last task you sent off and don't read its summary.</b> Open the diff and scrollback,
-      ask one question per lens — where did it drift, where did it lose the thread, where does it look right but isn't —
-      and write one quoted moment under each. Then mark which cost the most.
-      <span class="mono">Your own repo · your own ~/.claude scrollback · no platform · no budget · ~15 min.</span>
-      You now have a diagnosis instead of a vibe, and you know exactly which verifier to build next.
+  <!-- ============ THE MONDAY MOVE — woven as the next run you read ============ -->
+  <div class="next-read">
+    <div class="nr-head">Monday move · the next run you read</div>
+    <p>
+      Open the last long-running run you sent off — the PR, the branch, the RUN-NOTES. <b>Don't read its summary — read the trace it summarised.</b> Open the actual diff and scrollback and read them three times, one question each: where did it drift from the goal, where did it lose the thread, where does the output look right but isn't. Under each, write <b>one verbatim quoted moment</b> — paste the commit line, the scrollback turn, the diff line, with its turn number. Then mark the single failure that cost the most. And read it as instrumentation, not blame: if you ran the task un-packaged — no reference, no plan file, no external verifier — it was <em>supposed</em> to underdeliver, and you ran it that way to watch how this agent fails on this task before you spend effort on guardrails.
+      <span class="mono">Your own repo · your own ~/.claude scrollback · about 15 min, nothing to buy.</span>
+      You walk away with a half-page three-lens diagnosis — a fault you can point at, not a vibe — and you know exactly which verifier to shape next.
     </p>
-  </section>
+  </div>
 
-  <!-- ============ WHY ============ -->
+  <!-- ============ WHY — the diagnosis is the cure read backwards ============ -->
   <section class="why">
     <div class="beat-label"><b>Why</b></div>
 
-    <div class="principle-block">
-      <div class="principle-label">The principle</div>
-      <p class="principle-line">The artefact rules, <em>self-reports don't.</em> The summary is an advocate; the trace is a witness.</p>
-    </div>
-
     <p class="quote">"The summary is what the agent wants you to feel. The trace is what happened."</p>
     <p class="gloss">
-      The reason is structural, not moral. A long-running agent's closing summary is generated by the same process that
-      produced the run, under the same pressure to look helpful — so it tilts toward framing a snag as a near-win.
-      That tilt is a <b>practitioner observation about why self-reports read the way they do</b>, not a measured finding.
-      The summary isn't a neutral account; it's an advocate's. The only neutral witness is the trace: the commits that
-      landed, the diff that shipped, the turn where the goal quietly changed.
+      The reason is structural, not moral. A long-running run's closing summary is generated by the same process that produced the run, under the same pressure to look helpful — so it tilts toward framing a snag as a near-win. That tilt is a <b>practitioner observation about why self-reports read the way they do</b>, not a measured finding. The summary isn't a neutral account; it's the run pleading its own case. The only artefact with no stake in how it reads is the trace itself: the commits that landed, the diff that shipped, the turn where the goal quietly changed.
     </p>
     <p class="gloss">
-      The three lenses earn their names by being read <em>in your own artefact</em>, not memorised from a lecture — and
-      they map one-to-one onto what packaging carries: a reference pins the goal (catches drift), a plan file holds state
-      across the run (catches rot), an external verifier tests the output (catches plausible-but-wrong). Diagnosis and cure
-      are <b>the same taxonomy read from two ends</b> <span class="caveat">convergent practitioner pattern</span>. No benchmark
-      told you what went wrong; the artefact did.
+      And the three lenses are the cure read backwards <span class="caveat">convergent practitioner pattern</span>: a <b>reference</b> re-pins the goal each time it slips <em>(catches drift)</em>, a <b>plan file</b> holds state across the long run <em>(catches rot)</em>, an <b>external verifier</b> tests the output against intent <em>(catches plausible-but-wrong)</em>. Diagnosis and cure are <b>one taxonomy read from two ends</b>. No benchmark told you which moment to pin — the trace did.
     </p>
     <div class="corollary"><span class="sd"></span>"Is this good?" is the wrong question. Ask: what went wrong, and where?</div>
   </section>
@@ -987,25 +604,25 @@
     <div class="web">
       <svg viewBox="0 0 1080 300" aria-hidden="true">
         <defs>
-          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".6"/></linearGradient>
-          <linearGradient id="t4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
-          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="fmd-c1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="fmd-c2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="fmd-c3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".6"/></linearGradient>
+          <linearGradient id="fmd-c4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <filter id="fmd-wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         </defs>
 
         <circle cx="150" cy="150" r="30" fill="none" stroke="#3fe0c8" stroke-width="1.2" opacity=".5"/>
-        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#wglow)"/>
+        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#fmd-wglow)"/>
         <circle cx="150" cy="150" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
 
-        <path id="th1" d="M150,150 C360,70 540,52 760,56" stroke="url(#t1)" stroke-width="2.2" fill="none"/>
-        <path id="th2" d="M150,150 C380,118 560,116 760,118" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
-        <path id="th3" d="M150,150 C380,186 560,188 760,188" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
-        <path id="th4" d="M150,150 C360,232 540,250 760,250" stroke="url(#t4)" stroke-width="2.2" fill="none"/>
+        <path id="fmd-cth1" d="M150,150 C360,70 540,52 760,56" stroke="url(#fmd-c1)" stroke-width="2.2" fill="none"/>
+        <path id="fmd-cth2" d="M150,150 C380,118 560,116 760,118" stroke="url(#fmd-c2)" stroke-width="2.2" fill="none"/>
+        <path id="fmd-cth3" d="M150,150 C380,186 560,188 760,188" stroke="url(#fmd-c3)" stroke-width="2.2" fill="none"/>
+        <path id="fmd-cth4" d="M150,150 C360,232 540,250 760,250" stroke="url(#fmd-c4)" stroke-width="2.2" fill="none"/>
 
-        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#th4"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#fmd-cth1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#fmd-cth2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#fmd-cth4"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
       </svg>
 
       <div class="neighbours">
@@ -1020,7 +637,7 @@
 
   <!-- ============ FOOTER ============ -->
   <footer class="floor">
-    <span class="door">A read, not a build — the artefact already exists in your repo and your scrollback. No platform, no permission required.</span>
+    <span class="door">Fifteen minutes reading your own trace, one quoted moment under each lens, and the afternoon's vague unease becomes a fault you can point at by turn number.</span>
     <span class="meta">The Big Picture · Pattern Language</span>
   </footer>
 

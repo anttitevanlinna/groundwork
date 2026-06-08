@@ -37,7 +37,6 @@
     position:relative;
     overflow-x:hidden;
   }
-  /* atmospheric soil + light-well — business lane reads amber-forward, recedes for the long read */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
@@ -45,7 +44,6 @@
       radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.05) 0%, transparent 44%),
       linear-gradient(180deg, #2a1c06 0%, #13100a 10%, #05080a 42%, #04060a 100%);
   }
-  /* grain / spore dust */
   body::after{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
@@ -104,225 +102,91 @@
   }
   .hero-cap b{color:var(--amber)}
 
-  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
-  .prose{
-    margin-top:34px;max-width:760px;
-  }
-  .prose h2{
+  /* ============ THE SPINE — one lean column, no plate-grid, no bead-rail ============ */
+  .spine{margin-top:40px;max-width:768px}
+  .spine h2{
     font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
-    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
+    letter-spacing:-.012em;line-height:1.1;margin-top:6px;
   }
-  .prose h2 em{font-style:italic;color:var(--amber);font-weight:400}
-  .prose h2.teal em{color:var(--teal)}
-  .prose .sec-label{
-    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
-    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
-    margin-top:42px;
+  .spine h2 em{font-style:italic;color:var(--amber);font-weight:400}
+  .spine h2.teal em{color:var(--teal)}
+  .spine p{
+    font-size:15.5px;line-height:1.64;color:var(--ink);margin-top:16px;letter-spacing:.002em;
   }
-  .prose .sec-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);
-    box-shadow:0 0 9px rgba(255,179,71,.55);flex:none;
-  }
-  .prose .sec-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
-  .prose p{
-    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
-    letter-spacing:.002em;
-  }
-  .prose p b{color:var(--spore);font-weight:500}
-  .prose p em{font-style:italic;color:var(--ink-dim)}
-  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
-  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
-  .prose p .mono{
+  .spine p b{color:var(--spore);font-weight:500}
+  .spine p em{font-style:italic;color:var(--ink-dim)}
+  .spine p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
+  .spine .mono{
     font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--amber);letter-spacing:.005em;
   }
-  .prose p .mono.teal{color:var(--teal)}
-  .prose .pull{
-    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--amber-dim);
-    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
-    color:var(--ink);max-width:680px;
-  }
-  .prose .pull b{color:var(--amber);font-weight:500;font-style:normal}
+  .spine .mono.teal{color:var(--teal)}
 
-  /* ============ TEMPLATE / LABELLED-CLAIM STRIP — carries real epistemic content ============ */
-  .label-strip{
-    margin:22px 0 4px;border:1px dashed var(--amber-dim);border-radius:10px;
-    padding:13px 17px;background:rgba(31,24,13,.4);max-width:760px;
-    display:flex;gap:13px;align-items:flex-start;
+  /* the verdict line — the "I can't tell" pull, set apart */
+  .verdict-line{
+    margin:28px 0 6px;padding:18px 22px;border-radius:13px;
+    border:1px solid rgba(255,179,71,.2);
+    background:radial-gradient(130% 150% at 100% 0%, rgba(255,179,71,.07), transparent 60%), rgba(18,14,9,.55);
+    max-width:768px;
   }
-  .label-strip .tag{
+  .verdict-line .three{
+    display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.04em;
+  }
+  .verdict-line .three .v{padding:4px 11px;border-radius:20px;border:1px solid;}
+  .verdict-line .three .compliant{color:var(--teal);border-color:rgba(63,224,200,.35)}
+  .verdict-line .three .violating{color:var(--danger);border-color:rgba(224,119,95,.35)}
+  .verdict-line .three .cant{
+    color:#fff4e2;border-color:var(--amber);background:rgba(255,179,71,.08);
+    font-family:'Fraunces',serif;font-style:italic;font-size:13.5px;padding:5px 13px;letter-spacing:0;
+  }
+  .verdict-line p{font-size:14px;line-height:1.56;color:var(--ink-dim);margin-top:13px}
+  .verdict-line p b{color:var(--spore);font-weight:500}
+
+  /* the honest-frontier callout — "I can't tell" is a verdict, framed once */
+  .frontier{
+    margin:30px 0 6px;border-left:2px solid var(--amber-dim);padding:4px 0 4px 20px;
+    font-family:'Fraunces',serif;font-style:italic;font-size:19px;line-height:1.4;
+    color:var(--ink);max-width:700px;
+  }
+  .frontier b{color:var(--amber);font-weight:500;font-style:normal}
+
+  /* small-caps source/illustrative tags inline */
+  .src-note{
+    margin:18px 0 4px;border:1px dashed var(--amber-dim);border-radius:10px;
+    padding:12px 16px;background:rgba(31,24,13,.4);max-width:768px;
+    display:flex;gap:12px;align-items:flex-start;
+  }
+  .src-note .tag{
     font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
     color:var(--amber-dim);border:1px solid var(--amber-dim);border-radius:5px;padding:3px 8px;flex:none;margin-top:1px;
   }
-  .label-strip p{font-size:12.5px;line-height:1.52;color:var(--ink-dim);margin:0}
-  .label-strip p b{color:var(--amber);font-weight:500}
+  .src-note p{font-size:12.5px;line-height:1.52;color:var(--ink-dim);margin:0}
+  .src-note p b{color:var(--amber);font-weight:500}
 
-  /* ============ PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
-  .diagram{
-    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
-    background:
-      radial-gradient(110% 130% at 8% 8%, rgba(255,179,71,.05), transparent 55%),
-      linear-gradient(180deg, rgba(18,14,9,.55), rgba(5,8,10,.65));
-    position:relative;
-    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(255,179,71,.03) inset;
+  /* the Monday move, woven as a marginless inline directive — NOT a mono aside block */
+  .monday{
+    margin-top:26px;max-width:768px;font-size:15px;line-height:1.62;color:var(--ink);
   }
-  .diagram svg{display:block;width:100%;height:auto}
-  .diagram .dcap{
-    padding:12px 20px 16px;border-top:1px solid var(--hairline);
-    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
-    color:var(--ink-dim);letter-spacing:.003em;
-    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
-  }
-  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
-  .diagram .dcap .num{
-    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
-    letter-spacing:.26em;text-transform:uppercase;color:var(--amber-dim);margin-right:10px;
+  .monday b{color:var(--spore);font-weight:500}
+  .monday .do{
+    display:block;margin-top:10px;font-family:'Spline Sans Mono',monospace;font-size:12.5px;
+    line-height:1.7;color:var(--amber);letter-spacing:.01em;
   }
 
-  /* ============ RECIPE SECTION BEATS ============ */
-  .beat-label{
-    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
+  /* section divider label, sparing */
+  .sec-mark{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
     text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
+    margin-top:48px;
   }
-  .beat-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);flex:none;
-    box-shadow:0 0 9px rgba(255,179,71,.55);
+  .sec-mark::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);
+    box-shadow:0 0 9px rgba(255,179,71,.55);flex:none;
   }
-  .beat-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
-  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
-
-  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
-  .plates{
-    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
-  }
-  .plate{
-    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
-    background:rgba(18,14,9,.5);backdrop-filter:blur(2px);position:relative;
-  }
-  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
-  .plate .body b{color:var(--spore);font-weight:500}
-  .plate .body .grey{color:var(--grey)}
-  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.06), transparent 55%),rgba(18,14,9,.5)}
-  .plate.test .body em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:15.5px}
-  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
-
-  /* ============ CORE MOVES ============ */
-  .moves{margin-top:46px}
-  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px;flex-wrap:wrap}
-  .moves-head h2{
-    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
-  }
-  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
-  .move-rail{
-    margin-top:20px;position:relative;
-    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
-  }
-  .move-rail .thread{
-    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
-    background:linear-gradient(90deg,
-      rgba(255,179,71,0) 0%, rgba(168,106,31,.5) 6%,
-      rgba(255,179,71,.7) 50%, rgba(63,224,200,.65) 94%, rgba(63,224,200,0) 100%);
-  }
-  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
-  .step:first-child{padding-left:0}
-  .step .bead{
-    width:42px;height:42px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
-    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
-    margin-bottom:13px;
-  }
-  .step:nth-child(6) .bead{
-    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
-  }
-  .step h3{
-    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
-  }
-  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
-  .step p b{color:var(--ink);font-weight:500}
-
-  .compound{
-    margin-top:26px;border:1px solid rgba(255,179,71,.18);border-radius:14px;
-    padding:18px 22px;position:relative;overflow:hidden;
-    background:
-      radial-gradient(120% 140% at 100% 0%, rgba(255,179,71,.07), transparent 60%),
-      rgba(18,14,9,.55);
-    display:flex;align-items:center;gap:20px;
-  }
-  .compound .loop-ico{flex:none}
-  .compound .ctext{flex:1}
-  .compound .ctext .cyc{
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--amber);
-  }
-  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
-  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
-  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
-
-  .aside{
-    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
-    border-left:2px solid var(--teal-dim);padding:2px 0 2px 15px;max-width:760px;
-  }
-  .aside b{color:var(--teal);font-weight:500}
-  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
-
-  /* ============ WHY ============ */
-  .why{
-    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
-    padding:26px 30px 28px;position:relative;overflow:hidden;
-    background:
-      radial-gradient(130% 150% at 90% 0%, rgba(255,179,71,.08), transparent 55%),
-      radial-gradient(100% 120% at 0% 100%, rgba(63,224,200,.05), transparent 55%),
-      rgba(14,11,8,.6);
-  }
-  .why .beat-label{margin-bottom:14px}
-  .why .principle-block{
-    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
-  }
-  .why .principle-label{
-    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
-    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
-  }
-  .why .principle-line{
-    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
-    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
-  }
-  .why .principle-line em{font-style:italic;color:var(--amber)}
-  .why .quote{
-    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:clamp(21px,2.9vw,28px);line-height:1.22;color:var(--amber);letter-spacing:.004em;
-    text-shadow:0 0 30px rgba(255,179,71,.26);max-width:880px;
-  }
-  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
-  .why .gloss b{color:var(--spore);font-weight:500}
-  .why .gloss em{font-style:italic;color:var(--ink-dim)}
-  .why .gloss + .gloss{margin-top:12px}
-  .why .corollary{
-    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--teal);
-    border:1px dashed var(--teal-dim);border-radius:30px;padding:8px 16px 9px;
-  }
-  .why .corollary .sd{
-    width:7px;height:7px;border-radius:50%;background:var(--teal);flex:none;
-    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 11px 2px rgba(63,224,200,.5);
-  }
-
-  /* ============ TEST-IN-PRACTICE inline panel ============ */
-  .practice{
-    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
-    padding:22px 26px 24px;
-    background:
-      radial-gradient(120% 140% at 0% 0%, rgba(63,224,200,.04), transparent 55%),
-      rgba(18,14,9,.5);
-  }
-  .practice .beat-label{margin-bottom:12px}
-  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
-  .practice p b{color:var(--spore);font-weight:500}
-  .practice p em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:16px}
-  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+  .sec-mark.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
 
   /* ============ CONNECTS TO ============ */
-  .connects{margin-top:52px}
+  .connects{margin-top:54px}
   .connects h2{
     font-family:'Fraunces',serif;font-weight:400;font-size:26px;color:var(--spore);letter-spacing:-.01em;
   }
@@ -354,15 +218,6 @@
   .nb:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9);transform:translate(-50%,-50%) scale(1.05)}
   .nb.teal:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9)}
   .nb:hover .sd{animation:throb 1s ease-in-out infinite}
-  .nb.soon{opacity:.62}
-  .nb.soon::after{
-    content:"soon";
-    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--ink-faint);
-    border:1px solid var(--ink-faint);border-radius:20px;
-    padding:2px 7px 3px;margin-left:4px;
-  }
-  .nb.soon:hover{opacity:1}
   @keyframes throb{50%{transform:scale(1.5)}}
   .origin-chip{
     position:absolute;transform:translate(-50%,-50%);
@@ -388,27 +243,13 @@
     text-transform:uppercase;color:var(--ink-faint);
   }
 
-  /* breathing glow on the diagram spore-tips */
-  @keyframes breathe{
-    0%,100%{opacity:.55}
-    50%{opacity:1}
-  }
+  @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
   .breathe{animation:breathe 4.2s ease-in-out infinite}
 
-  @media (max-width:860px){
-    .plates{grid-template-columns:1fr 1fr}
-    .plate.use{grid-column:1 / -1}
-  }
   @media (max-width:780px){
-    .plates{grid-template-columns:1fr}
-    .plate.use{grid-column:1}
-    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
-    .move-rail .thread{display:none}
-    .step{padding:0}
-    .compound{flex-direction:column;align-items:flex-start;gap:14px}
     .neighbours .nb{font-size:11px;padding:6px 10px}
-    .prose p{font-size:14.5px}
-    .label-strip{flex-direction:column;gap:9px}
+    .spine p{font-size:14.5px}
+    .src-note{flex-direction:column;gap:9px}
   }
 </style>
 </head>
@@ -424,646 +265,223 @@
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· business lane · Context &amp; Guardrails · personal → company</span></div>
     <h1>Scope an agent your org can <em>trust</em></h1>
-    <p class="principle">The principle: <b>You can't tell if your agent is safe by looking at its output.</b> The failure modes don't live where you can read them.</p>
+    <p class="principle">The principle: <b>for a non-deterministic system, the clean bill of health never arrives — so the discipline is running the check, not waiting for it to pass.</b></p>
     <p class="essence">
-      Make an agent safe to point at real systems by <b>naming its residual risk</b> — running the check yourself, not
-      waiting for a clean bill of health that, for a non-deterministic system, will never arrive.
+      You can't tell if an agent is safe by reading its output — the failure modes don't live where you can read them.
+      So you walk five named risks across its blast radius, clip what you can, and <b>name the residual you can't</b>.
+      Here, <em>"I can't tell yet"</em> is a valid trust verdict — and usually the most useful one.
     </p>
   </header>
 
-  <!-- ============ HERO PICTURE: the bounded agent + the three-verdict report ============ -->
+  <!-- ============ HERO PICTURE: five risks → five mitigations → a named residual ============ -->
   <div class="hero-frame">
-    <svg viewBox="0 0 1080 430" role="img" aria-label="A single agent inside a hard boundary: a read-only arrow in from a shared inbox, a write-only arrow out to one Slack channel, every other connector cut by a heavy line. Below it, a three-row verdict report — compliant, violating, and a glowing I-can't-tell row — with one residual line marked accepted, owned, dated.">
+    <svg viewBox="0 0 1080 440" role="img" aria-label="On the left, five named agent-risk patterns enter the agent's blast radius: direct prompt injection, indirect prompt injection, secrets in context, tool confusion, skill supply-chain. They pass through five mitigation clips — scope, split, filter, gate, review — each clipping one edge. What emerges on the right is not zero, but one smaller residual, marked named, owned, dated, written into a CLAUDE.md rules file in the soil.">
       <defs>
-        <radialGradient id="hwell" cx="50%" cy="34%" r="64%">
-          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".20"/>
-          <stop offset="45%" stop-color="#ffb347" stop-opacity=".06"/>
+        <radialGradient id="sft-well" cx="50%" cy="34%" r="64%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".18"/>
+          <stop offset="48%" stop-color="#ffb347" stop-opacity=".05"/>
           <stop offset="100%" stop-color="#ffb347" stop-opacity="0"/>
         </radialGradient>
-        <radialGradient id="agentCore" cx="40%" cy="35%" r="70%">
+        <radialGradient id="sft-core" cx="40%" cy="35%" r="70%">
           <stop offset="0%" stop-color="#fff4e2"/>
           <stop offset="45%" stop-color="#ffb347"/>
           <stop offset="100%" stop-color="#2a1c06"/>
         </radialGradient>
-        <linearGradient id="readIn" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".15"/><stop offset="1" stop-color="#3fe0c8" stop-opacity=".9"/></linearGradient>
-        <linearGradient id="writeOut" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffb347" stop-opacity=".9"/><stop offset="1" stop-color="#a86a1f" stop-opacity=".25"/></linearGradient>
-        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
+        <linearGradient id="sft-riskIn" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#e0775f" stop-opacity=".15"/><stop offset="1" stop-color="#e0775f" stop-opacity=".85"/>
+        </linearGradient>
+        <linearGradient id="sft-clip" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#1d8d80" stop-opacity=".2"/><stop offset="1" stop-color="#3fe0c8" stop-opacity=".9"/>
+        </linearGradient>
+        <filter id="sft-glow" x="-60%" y="-60%" width="220%" height="220%">
           <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
       </defs>
-      <rect x="0" y="0" width="1080" height="430" fill="url(#hwell)"/>
+      <rect x="0" y="0" width="1080" height="440" fill="url(#sft-well)"/>
 
-      <!-- ===== top band: the bounded agent ===== -->
-      <text x="60" y="34" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#a86a1f">THE BOUNDARY IS THE DESIGN</text>
+      <text x="56" y="34" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#a86a1f">FIVE RISKS · FIVE CLIPS · ONE NAMED RESIDUAL — NEVER ZERO</text>
 
-      <!-- the hard boundary box around the agent -->
-      <rect x="430" y="56" width="220" height="150" rx="16" fill="rgba(18,14,9,.5)" stroke="#ffb347" stroke-width="1.6" stroke-dasharray="2 0"/>
-      <text x="540" y="80" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2.2" fill="#a86a1f">SCOPED SURFACE</text>
-
-      <!-- the agent core -->
-      <circle cx="540" cy="138" r="26" fill="url(#agentCore)" filter="url(#hglow)"/>
-      <circle cx="540" cy="138" r="26" fill="none" stroke="#ffe0a8" stroke-width="1" opacity=".6"/>
-      <text x="540" y="186" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#6f8a85">AGENT</text>
-
-      <!-- read-only arrow IN (left, teal) -->
-      <g>
-        <text x="60" y="120" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".12em" fill="#1d8d80">SHARED INBOX</text>
-        <rect x="60" y="128" width="120" height="34" rx="9" fill="rgba(63,224,200,.07)" stroke="rgba(63,224,200,.3)"/>
-        <text x="72" y="150" font-family="'Spline Sans',sans-serif" font-size="12" fill="#cfe6e0">retrieved mail</text>
-        <path d="M186,145 L428,138" stroke="url(#readIn)" stroke-width="2.4" fill="none"/>
-        <polygon points="428,138 416,132 417,144" fill="#3fe0c8"/>
-        <text x="300" y="128" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#1d8d80">READ ONLY →</text>
+      <!-- LEFT: the five named risks entering -->
+      <g font-family="'Spline Sans Mono',monospace" font-size="10.5">
+        <text x="40" y="72" letter-spacing=".14em" fill="#e0775f">THE BLAST RADIUS · WHAT CAN ENTER</text>
+      </g>
+      <g font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfe6e0">
+        <g><rect x="40" y="92" width="178" height="30" rx="8" fill="rgba(224,119,95,.06)" stroke="rgba(224,119,95,.3)"/><text x="54" y="111">prompt injection · direct</text></g>
+        <g><rect x="40" y="130" width="178" height="30" rx="8" fill="rgba(224,119,95,.06)" stroke="rgba(224,119,95,.3)"/><text x="54" y="149">prompt injection · indirect</text></g>
+        <g><rect x="40" y="168" width="178" height="30" rx="8" fill="rgba(224,119,95,.06)" stroke="rgba(224,119,95,.3)"/><text x="54" y="187">secrets in context</text></g>
+        <g><rect x="40" y="206" width="178" height="30" rx="8" fill="rgba(224,119,95,.06)" stroke="rgba(224,119,95,.3)"/><text x="54" y="225">tool confusion</text></g>
+        <g><rect x="40" y="244" width="178" height="30" rx="8" fill="rgba(224,119,95,.06)" stroke="rgba(224,119,95,.3)"/><text x="54" y="263">skill supply-chain</text></g>
       </g>
 
-      <!-- write-only arrow OUT (right, amber) -->
-      <g>
-        <path d="M652,138 L890,131" stroke="url(#writeOut)" stroke-width="2.4" fill="none"/>
-        <polygon points="890,131 878,125 879,137" fill="#a86a1f"/>
-        <text x="772" y="121" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#ffb347">→ WRITE ONLY</text>
-        <text x="900" y="120" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".12em" fill="#a86a1f">ONE SLACK CHANNEL</text>
-        <rect x="900" y="128" width="120" height="34" rx="9" fill="rgba(255,179,71,.07)" stroke="rgba(255,179,71,.3)"/>
-        <text x="912" y="150" font-family="'Spline Sans',sans-serif" font-size="12" fill="#fff4e2">#triage post</text>
+      <!-- arrows from risks converging toward the clip stack -->
+      <g stroke="url(#sft-riskIn)" stroke-width="1.8" fill="none" opacity=".8">
+        <path d="M218,107 C300,107 300,178 360,182"/>
+        <path d="M218,145 C300,145 310,182 360,186"/>
+        <path d="M218,183 L360,190"/>
+        <path d="M218,221 C300,221 310,196 360,196"/>
+        <path d="M218,259 C300,259 300,200 360,200"/>
       </g>
 
-      <!-- the cut connectors -->
+      <!-- MIDDLE: five mitigation clips, narrowing -->
       <g>
-        <text x="540" y="218" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".16em" fill="#5d6a68">EVERYTHING ELSE — CUT</text>
-        <g stroke="#4b5654" stroke-width="1.6" opacity=".8">
-          <line x1="470" y1="206" x2="445" y2="244"/>
-          <line x1="540" y1="206" x2="540" y2="248"/>
-          <line x1="610" y1="206" x2="635" y2="244"/>
-        </g>
-        <!-- heavy strike lines through them -->
-        <g stroke="#e0775f" stroke-width="2.4" opacity=".85">
-          <line x1="438" y1="224" x2="476" y2="226"/>
-          <line x1="521" y1="226" x2="559" y2="228"/>
-          <line x1="604" y1="226" x2="642" y2="224"/>
-        </g>
-        <g font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#5d6a68" font-style="italic" text-anchor="middle">
-          <text x="445" y="262">no reply</text>
-          <text x="540" y="266">no inbox mutation</text>
-          <text x="635" y="262">no ticket create</text>
-        </g>
+        <text x="372" y="72" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing=".14em" fill="#3fe0c8">CLIP EACH EDGE</text>
+      </g>
+      <g font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing=".04em">
+        <g><rect x="372" y="92" width="120" height="26" rx="13" fill="rgba(63,224,200,.05)" stroke="rgba(63,224,200,.35)"/><text x="432" y="109" text-anchor="middle" fill="#3fe0c8">scope</text></g>
+        <g><rect x="392" y="126" width="120" height="26" rx="13" fill="rgba(63,224,200,.05)" stroke="rgba(63,224,200,.32)"/><text x="452" y="143" text-anchor="middle" fill="#5cffe6">split</text></g>
+        <g><rect x="412" y="160" width="120" height="26" rx="13" fill="rgba(63,224,200,.05)" stroke="rgba(63,224,200,.3)"/><text x="472" y="177" text-anchor="middle" fill="#9bffe9">filter</text></g>
+        <g><rect x="392" y="194" width="120" height="26" rx="13" fill="rgba(255,179,71,.05)" stroke="rgba(255,179,71,.3)"/><text x="452" y="211" text-anchor="middle" fill="#ffb347">gate</text></g>
+        <g><rect x="372" y="228" width="120" height="26" rx="13" fill="rgba(255,179,71,.05)" stroke="rgba(255,179,71,.3)"/><text x="432" y="245" text-anchor="middle" fill="#ffce85">review</text></g>
       </g>
 
-      <!-- ===== bottom band: the three-verdict report ===== -->
+      <!-- the agent core sits behind the clips -->
+      <circle cx="568" cy="173" r="20" fill="url(#sft-core)" filter="url(#sft-glow)"/>
+      <text x="568" y="210" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing="2" fill="#6f8a85">AGENT</text>
+
+      <!-- arrows clips -> residual -->
+      <g stroke="url(#sft-clip)" stroke-width="1.8" fill="none" opacity=".75">
+        <path d="M512,173 C600,173 660,168 716,168"/>
+      </g>
+
+      <!-- RIGHT: the named residual -->
       <g>
-        <line x1="60" y1="292" x2="1020" y2="292" stroke="rgba(255,179,71,.14)" stroke-width="1"/>
-        <text x="60" y="312" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".2em" fill="#a86a1f">THE REPORT · ONE RULE, THREE ROWS</text>
+        <rect x="716" y="116" width="200" height="116" rx="13" fill="rgba(255,179,71,.09)" stroke="#ffb347" stroke-width="1.6" filter="url(#sft-glow)"/>
+        <circle cx="742" cy="146" r="6" fill="#ffce85" class="breathe"/>
+        <text x="760" y="150" font-family="'Fraunces',serif" font-style="italic" font-size="15" fill="#fff4e2">one residual</text>
+        <text x="732" y="178" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfe6e0">smaller than it was —</text>
+        <text x="732" y="195" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfe6e0">never zero</text>
+        <text x="732" y="220" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#ffb347">named · owned · dated</text>
+        <text x="938" y="110" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#ffb347">← WHAT YOU SHIP</text>
+      </g>
 
-        <!-- compliant -->
-        <rect x="60" y="324" width="300" height="32" rx="8" fill="rgba(63,224,200,.05)" stroke="rgba(63,224,200,.2)"/>
-        <circle cx="80" cy="340" r="5" fill="#3fe0c8"/>
-        <text x="98" y="344" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">compliant — reply blocked at the boundary</text>
+      <!-- the residual writes into CLAUDE.md in the soil -->
+      <g>
+        <path d="M816,232 C816,280 816,300 816,322" stroke="rgba(255,179,71,.5)" stroke-width="1.6" fill="none"/>
+        <polygon points="816,322 811,310 821,310" fill="#ffb347"/>
+        <rect x="716" y="324" width="200" height="56" rx="10" fill="rgba(18,14,9,.7)" stroke="rgba(255,179,71,.3)" stroke-dasharray="4 4"/>
+        <text x="732" y="346" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing=".04em" fill="#ffb347">CLAUDE.md</text>
+        <text x="732" y="366" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#6f8a85" font-style="italic">next session boots at this stricter line</text>
+      </g>
 
-        <!-- violating -->
-        <rect x="60" y="364" width="300" height="32" rx="8" fill="rgba(224,119,95,.05)" stroke="rgba(224,119,95,.22)"/>
-        <circle cx="80" cy="380" r="5" fill="#e0775f"/>
-        <text x="98" y="384" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">violating — would mutate the source inbox</text>
-
-        <!-- I can't tell — the find, glowing -->
-        <rect x="380" y="324" width="430" height="72" rx="10" fill="rgba(255,179,71,.09)" stroke="#ffb347" stroke-width="1.6" filter="url(#hglow)"/>
-        <circle cx="402" cy="350" r="6" fill="#ffce85" class="breathe"/>
-        <text x="420" y="346" font-family="'Fraunces',serif" font-style="italic" font-size="15" fill="#fff4e2">"I can't tell."</text>
-        <text x="420" y="368" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfe6e0">buried instruction in a retrieved email —</text>
-        <text x="420" y="384" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfe6e0">handed back to a human, ambiguity intact</text>
-        <text x="800" y="318" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#ffb347">← THE FIND</text>
-
-        <!-- residual line -->
-        <rect x="830" y="324" width="190" height="72" rx="10" fill="rgba(168,106,31,.10)" stroke="rgba(255,179,71,.3)" stroke-dasharray="4 4"/>
-        <text x="846" y="344" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#a86a1f">RESIDUAL</text>
-        <text x="846" y="364" font-family="'Spline Sans',sans-serif" font-size="11" fill="#cfe6e0">indirect injection,</text>
-        <text x="846" y="380" font-family="'Spline Sans',sans-serif" font-size="11" fill="#cfe6e0">not fully filtered</text>
-        <text x="846" y="392" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".1em" fill="#ffb347">accepted · owned · dated</text>
+      <!-- the existing-controls floor, unbroken beneath -->
+      <g>
+        <line x1="40" y1="404" x2="916" y2="404" stroke="rgba(63,224,200,.22)" stroke-width="1.2"/>
+        <text x="40" y="424" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#1d8d80">ALL OF IT SITS ON TOP OF — NEVER REPLACES — NETWORK · IAM · LOGGING · SUPPLIER REVIEW</text>
       </g>
     </svg>
-    <div class="hero-cap">The agent isn't trusted because it looks fine. <b>It's trusted because its boundary, and its one named residual, are on record.</b></div>
+    <div class="hero-cap">The agent isn't trusted because it looks fine. <b>It's trusted because its residual is named, owned, dated — and on the record.</b></div>
   </div>
 
-  <!-- ============================================================ -->
-  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================ -->
-  <!-- ============================================================ -->
-  <section class="prose">
-    <div class="sec-label">The mechanism · why the output can't tell you</div>
-    <h2>The failure isn't in the output. <em>It's in what you can't see.</em></h2>
-
+  <!-- ============ THE SPINE ============ -->
+  <section class="spine">
+    <h2>The demo is no evidence. <em>The failure isn't in the output.</em></h2>
     <p>
-      Here's the uncomfortable part of pointing an agent at anything real: <b>the demo is no evidence.</b>
-      The agent reads an inbox, a CRM, a repo, and it answers beautifully. The pull is to wire it to <em>act</em> —
-      route the thread, update the ticket, send the draft. But the failure modes that matter are not in the answer
-      you can read. They live in what an attacker buried inside a retrieved email, in what the agent quietly decided
-      to do with a tool, in what a borrowed skill carried in. You can re-read the output a hundred times and never
-      meet them. That is why the CTO instinct — <em>"wait for the security review to come back clean"</em> — never
-      fires: for a non-deterministic system, the clean report does not exist to wait for.
+      Here's the uncomfortable part of pointing an agent at anything real. It reads the inbox, the CRM, the repo, and it
+      answers beautifully — so the pull is to wire it to <em>act</em>: route the thread, update the ticket, send the draft.
+      But the failure modes that matter aren't in the answer you can read. They live in <b>what an attacker buried in a
+      retrieved email, what the agent quietly decided to do with a tool, what a borrowed skill carried in</b>. You can
+      re-read the output a hundred times and never meet them. So "wait for the security review to come back clean" never
+      fires — for a non-deterministic system, the clean report doesn't exist to wait for.
     </p>
 
     <p>
-      So the check carries <b>two lenses, not one.</b> A <b>policy lens</b> asks what your org has already decided is
-      off-limits — the data-usage, security and AI-use rules you point the agent at as source material. An
-      <b>agent-risk lens</b> asks the question classical perimeter security never thought to: <em>is this input
-      trying to steer or leak the agent?</em> The two see different things, and the gap between them is the whole
-      point. The diagram below shows one message entering, splitting through both lenses, and landing on a verdict
-      gate — with a third exit the binary classifier never had.
-    </p>
-  </section>
-
-  <!-- ============ DIAGRAM 1 — TWO LENSES, THREE ROWS ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 440" role="img" aria-label="One message splits through two parallel lenses — a policy lens asking does the business care, and an agent-risk lens asking is this trying to steer or leak — converging on a verdict gate with three exits: route, don't route, and I can't tell which hands the thread to a human.">
-      <defs>
-        <linearGradient id="d1-amber" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a86a1f" stop-opacity=".25"/><stop offset="1" stop-color="#ffb347" stop-opacity=".85"/></linearGradient>
-        <linearGradient id="d1-teal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d8d80" stop-opacity=".25"/><stop offset="1" stop-color="#3fe0c8" stop-opacity=".85"/></linearGradient>
-        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">ONE MESSAGE · TWO LENSES · THREE EXITS</text>
-
-      <!-- the incoming message -->
-      <g>
-        <rect x="40" y="186" width="150" height="68" rx="11" fill="rgba(18,14,9,.7)" stroke="rgba(255,179,71,.3)"/>
-        <text x="56" y="210" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">INPUT</text>
-        <text x="56" y="230" font-family="'Spline Sans',sans-serif" font-size="12" fill="#cfe6e0">a thread + a</text>
-        <text x="56" y="246" font-family="'Spline Sans',sans-serif" font-size="12" fill="#cfe6e0">retrieved email</text>
-      </g>
-
-      <!-- split into two lenses -->
-      <path d="M190,210 C260,210 280,128 360,128" stroke="url(#d1-amber)" stroke-width="2.2" fill="none"/>
-      <path d="M190,232 C260,232 280,312 360,312" stroke="url(#d1-teal)" stroke-width="2.2" fill="none"/>
-
-      <!-- POLICY LENS -->
-      <g>
-        <rect x="360" y="88" width="280" height="86" rx="13" fill="rgba(255,179,71,.06)" stroke="rgba(255,179,71,.3)"/>
-        <text x="380" y="114" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".18em" fill="#ffb347">POLICY LENS</text>
-        <text x="380" y="136" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#fff4e2">"Does the business care?"</text>
-        <text x="380" y="158" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfe6e0">your data / security / AI-use rules</text>
-      </g>
-
-      <!-- AGENT-RISK LENS -->
-      <g>
-        <rect x="360" y="266" width="280" height="86" rx="13" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.3)"/>
-        <text x="380" y="292" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".18em" fill="#3fe0c8">AGENT-RISK LENS</text>
-        <text x="380" y="314" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#eafff9">"Is this trying to steer or leak?"</text>
-        <text x="380" y="336" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#cfe6e0">the five named risk patterns</text>
-      </g>
-
-      <!-- converge on verdict gate -->
-      <path d="M640,128 C720,128 740,210 800,210" stroke="url(#d1-amber)" stroke-width="2.2" fill="none"/>
-      <path d="M640,312 C720,312 740,232 800,232" stroke="url(#d1-teal)" stroke-width="2.2" fill="none"/>
-
-      <!-- the verdict gate -->
-      <g>
-        <rect x="800" y="176" width="48" height="92" rx="14" fill="rgba(18,14,9,.8)" stroke="#ffb347" stroke-width="1.5"/>
-        <circle cx="824" cy="222" r="4" fill="#ffce85" filter="url(#d1-glow)"/>
-        <text x="824" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#ffb347">VERDICT</text>
-      </g>
-
-      <!-- three exits -->
-      <g>
-        <!-- route (compliant) -->
-        <path d="M848,196 C900,196 920,108 980,108" stroke="rgba(63,224,200,.55)" stroke-width="2" fill="none"/>
-        <text x="900" y="100" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".1em" fill="#3fe0c8">→ ROUTE</text>
-        <circle cx="980" cy="108" r="5" fill="#3fe0c8"/>
-
-        <!-- don't route (violating) -->
-        <path d="M848,222 C900,222 920,222 980,222" stroke="rgba(224,119,95,.6)" stroke-width="2" fill="none"/>
-        <text x="900" y="214" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".1em" fill="#e0775f">→ DON'T ROUTE</text>
-        <circle cx="980" cy="222" r="5" fill="#e0775f"/>
-
-        <!-- I can't tell -> human -->
-        <path d="M848,248 C900,248 920,336 980,336" stroke="rgba(255,179,71,.8)" stroke-width="2.4" fill="none"/>
-        <text x="892" y="328" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".1em" fill="#ffb347">→ "I CAN'T TELL"</text>
-        <circle cx="980" cy="336" r="6.5" fill="#ffce85" class="breathe"/>
-        <text x="996" y="340" font-family="'Fraunces',serif" font-style="italic" font-size="12.5" fill="#fff4e2">human</text>
-      </g>
-
-      <!-- footer line -->
-      <text x="40" y="420" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">SAME INPUT, DIFFERENT ROUTING — BECAUSE THE SECOND LENS SAW WHAT THE FIRST COULDN'T.</text>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 01</span>Two lenses, one check you authored, three verdicts. <b>The third row — "I can't tell" — is the find</b>, not the gap; it catches the ambiguity a binary classifier would have buried.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 2 — the five risk patterns + the third row ============ -->
-  <section class="prose">
-    <p>
-      Name the agent-risk patterns against <em>your</em> agent — and there's a closed set the source teaches as the
-      working vocabulary: <span class="mono">prompt injection direct</span> (planted in the user's own input),
-      <span class="mono">prompt injection indirect</span> (planted in a source the agent retrieves and reads),
-      <span class="mono">secrets-in-context</span>, <span class="mono">tool-confusion</span>, and
+      The check carries <b>two lenses, not one</b>. A <b>policy lens</b> asks what your org has already decided is
+      off-limits — the data-usage, security, and AI-use rules you point the agent at as source material. An
+      <b>agent-risk lens</b> asks the question classical perimeter security never thought to: <em>is this input trying to
+      steer or leak the agent?</em> The gap between them is the whole point — and the agent-risk lens has a closed working
+      vocabulary of five: <span class="mono">prompt injection direct</span>, <span class="mono">prompt injection
+      indirect</span>, <span class="mono">secrets-in-context</span>, <span class="mono">tool-confusion</span>, and
       <span class="mono">skill supply-chain</span>. Both injection classes turn well-formed English into the attack
-      surface — which is exactly why the firewall shrugs. <b>The attack is not malformed; it reads like a perfectly
-      polite sentence.</b> Walk each pattern against the specific agent and you stop reasoning about agents in general.
+      surface, which is exactly why the firewall shrugs: <b>the attack isn't malformed — it reads like a perfectly polite
+      sentence.</b>
     </p>
 
-    <div class="label-strip">
-      <span class="tag">Closed set · vocabulary</span>
+    <p>
+      Walk each of the five against <em>your</em> specific agent and you stop reasoning about agents in general. For every
+      rule, give it three rows, not two:
+    </p>
+
+    <div class="verdict-line">
+      <div class="three">
+        <span class="v compliant">compliant</span>
+        <span class="v violating">violating</span>
+        <span class="v cant">"I can't tell."</span>
+      </div>
       <p>
-        These five risk patterns — and the five mitigations below — are the <b>named sets from the source's R4 check: a working vocabulary, not an exhaustive taxonomy</b> of every possible agent attack or defence. Name them faithfully and completely; don't treat either list as the whole universe.
+        A binary classifier forces the ambiguous cases into false confidence — it has to pick a side, so it picks wrong
+        with a straight face. <b>The third row catches them and hands the ambiguity back, intact and named.</b> Most rows,
+        run honestly, land on the third. That's not the check failing — it's the first honest map of the surface.
       </p>
     </div>
 
-    <p>
-      Now the move most teams skip: <b>give every rule three rows, not two.</b> Compliant, violating, and
-      <em class="amber">"I can't tell."</em> A binary classifier forces the ambiguous cases into false confidence —
-      it has to pick a side, so it picks wrong with a straight face. The third row catches them and hands them back
-      with the ambiguity <em>intact, named, and addressable.</em> Most rows, run honestly, land on the third. That's
-      not the check failing. That is the first honest map of the surface — and "I can't tell" is a valid, useful
-      output for an agent to produce.
+    <p class="frontier">
+      <b>"I can't tell yet" is a trust verdict, not a failure to reach one.</b> A binary answer about an ambiguous input is
+      a confident lie — and the third row is where the real work lives.
     </p>
 
-    <p class="pull">
-      A binary verdict is a confident lie about an ambiguous input. <b>The third row is where the work actually lives.</b>
-    </p>
-  </section>
-
-  <!-- ============ DIAGRAM 2 — FIVE MITIGATIONS NARROW THE SURFACE ============ -->
-  <section class="prose">
-    <div class="sec-label teal">The upgrade · five mitigations narrow the surface</div>
-    <h2 class="teal">Risk gets smaller and <em>named</em> — never zero.</h2>
-
+    <h2 class="teal" style="margin-top:40px">Once a risk is named, you <em>clip</em> it.</h2>
     <p>
-      Once a risk is named, you clip it. Pick from the closed set of five mitigations:
-      <span class="mono teal">scope</span> (narrow what it can reach),
+      Pick from a matching closed set of five mitigations: <span class="mono teal">scope</span> (narrow what it can reach),
       <span class="mono teal">split</span> (separate the agent that reads from the one that acts),
       <span class="mono teal">filter</span> (strip the poison before it enters context),
-      <span class="mono teal">gate</span> (plan-mode review — the agent proposes, you approve, only then it executes), and
+      <span class="mono teal">gate</span> (plan-mode — the agent proposes, you approve, only then it executes), and
       <span class="mono teal">review</span> (a second pass before the action lands). Each clips one edge of the blast
-      radius. Crucially, <b>these sit on top of your existing controls — network, IAM, logging, supplier review — they
-      never replace them.</b> Loop design is additive. A leader who concludes "the agent check replaces security"
-      ships a breach.
+      radius. And crucially, <b>these sit on top of your existing controls — network, IAM, logging, supplier review — they
+      never replace them.</b> Loop design is additive. A leader who concludes "the agent check replaces security" ships a
+      breach.
     </p>
-  </section>
-
-  <div class="diagram">
-    <svg viewBox="0 0 1080 400" role="img" aria-label="A wide blast radius shrinking inward through five named mitigation layers — scope, split, filter, gate, review — each clipping one edge of the surface, all sitting above an unbroken floor of existing controls: network, IAM, logging, supplier review. The centre risk gets smaller and named, never zero.">
-      <defs>
-        <radialGradient id="d2-blast" cx="50%" cy="50%" r="60%">
-          <stop offset="0" stop-color="#e0775f" stop-opacity=".35"/>
-          <stop offset="60%" stop-color="#a86a1f" stop-opacity=".12"/>
-          <stop offset="100%" stop-color="#a86a1f" stop-opacity="0"/>
-        </radialGradient>
-        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">BLAST RADIUS · CLIPPED FIVE TIMES · NEVER TO ZERO</text>
-
-      <!-- nested narrowing rings (not a god's-eye circle motif: concentric clip-arcs, each labelled) -->
-      <rect x="50" y="56" width="660" height="300" fill="url(#d2-blast)" opacity=".5"/>
-
-      <!-- five mitigation arcs narrowing toward centre -->
-      <g fill="none" stroke-linecap="round">
-        <path d="M120,206 Q120,86 380,80" stroke="#a86a1f" stroke-width="2" opacity=".5"/>
-        <path d="M168,206 Q168,116 380,112" stroke="#bf8030" stroke-width="2" opacity=".62"/>
-        <path d="M216,206 Q216,146 380,142" stroke="#d99a42" stroke-width="2" opacity=".74"/>
-        <path d="M264,206 Q264,176 380,172" stroke="#ffb347" stroke-width="2.2" opacity=".86"/>
-        <path d="M312,206 Q312,196 380,200" stroke="#ffce85" stroke-width="2.4"/>
-      </g>
-
-      <!-- mitigation labels at each clip -->
-      <g font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing=".06em">
-        <text x="120" y="232" text-anchor="middle" fill="#a86a1f">scope</text>
-        <text x="168" y="252" text-anchor="middle" fill="#bf8030">split</text>
-        <text x="216" y="272" text-anchor="middle" fill="#d99a42">filter</text>
-        <text x="264" y="292" text-anchor="middle" fill="#ffb347">gate</text>
-        <text x="312" y="312" text-anchor="middle" fill="#ffce85">review</text>
-      </g>
-      <g font-family="'Spline Sans',sans-serif" font-size="9.5" fill="#6f8a85" font-style="italic">
-        <text x="120" y="246" text-anchor="middle">narrow reach</text>
-        <text x="168" y="266" text-anchor="middle">read ≠ act</text>
-        <text x="216" y="286" text-anchor="middle">strip poison</text>
-        <text x="264" y="306" text-anchor="middle">propose→approve</text>
-        <text x="312" y="326" text-anchor="middle">second pass</text>
-      </g>
-
-      <!-- the residual at centre — smaller, never zero -->
-      <g>
-        <circle cx="412" cy="200" r="22" fill="rgba(255,179,71,.12)" stroke="#ffb347" stroke-width="1.6" filter="url(#d2-glow)"/>
-        <circle cx="412" cy="200" r="6" fill="#ffce85" class="breathe"/>
-        <text x="412" y="248" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#ffb347">RESIDUAL</text>
-        <text x="412" y="262" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#fff4e2">smaller · named</text>
-      </g>
-
-      <!-- the existing-controls floor — unbroken, beneath everything -->
-      <g>
-        <rect x="760" y="76" width="280" height="260" rx="13" fill="rgba(63,224,200,.04)" stroke="rgba(63,224,200,.2)"/>
-        <text x="780" y="104" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".18em" fill="#1d8d80">EXISTING CONTROLS FLOOR</text>
-        <text x="780" y="122" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85" font-style="italic">the mitigations sit ON TOP — never replace</text>
-        <g font-family="'Spline Sans Mono',monospace" font-size="12" fill="#cfe6e0">
-          <text x="780" y="158">· network</text>
-          <text x="780" y="186">· IAM</text>
-          <text x="780" y="214">· logging</text>
-          <text x="780" y="242">· supplier review</text>
-        </g>
-        <line x1="780" y1="270" x2="1020" y2="270" stroke="rgba(63,224,200,.25)" stroke-width="1.4"/>
-        <text x="780" y="296" font-family="'Spline Sans',sans-serif" font-size="11" fill="#3fe0c8" font-style="italic">loop design is additive</text>
-        <text x="780" y="316" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#e0775f">"check replaces security" = a breach shipped</text>
-      </g>
-
-      <!-- connector showing the surface stack sits above the floor -->
-      <text x="40" y="384" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">RISK GETS SMALLER AND NAMED — IT NEVER GETS TO ZERO, AND IT NEVER REPLACES THE FLOOR.</text>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 02</span>Five named mitigations each clip one edge of the surface, <b>layered above the controls you already run</b> — never instead of them. Risk shrinks and gets named; it never reaches zero.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 3 — the compounding loop intro ============ -->
-  <section class="prose">
-    <div class="sec-label">The compounding loop · what survives the session</div>
-    <h2>The residual you name today is the <em>starting line</em> tomorrow.</h2>
 
     <p>
-      After the mitigation, something is still true. <b>Write it down — on record, owned, dated.</b> The report must
-      not pretend a narrower instruction erased the risk; it shows what changed and what stayed. Then comes the move
-      that turns a one-time audit into a standing boundary: <b>compound the operating rule back into the project's
-      <span class="mono">CLAUDE.md</span></b> — what this agent's failure modes are, what to check before it touches
-      the system. The next session reads it on cold start and begins at a stricter line. The loop closes through the
-      rules file in the soil; each pass, the starting line is stricter and the residual list is shorter and more honest.
+      After the mitigation, something is still true — so write it down: <b>on record, owned, dated.</b> Then comes the move
+      that turns a one-time audit into a standing boundary. <b>Compound the operating rule back into the project's
+      <span class="mono">CLAUDE.md</span></b>: what this agent's failure modes are, what to check before it touches the
+      system. The next session reads it on cold start and begins at a stricter line. Each pass, the starting line rises and
+      the residual list gets shorter and more honest — compound interest on a boundary.
     </p>
-  </section>
 
-  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 420" role="img" aria-label="A four-beat loop — run the check, surface the residual, mitigate one, name what remains — closing through a CLAUDE.md rules file in the soil, with the residual list visibly shrinking and the starting line rising stricter across passes one, two and three.">
-      <defs>
-        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#ffb347" stop-opacity=".8"/>
-          <stop offset="1" stop-color="#3fe0c8" stop-opacity=".6"/>
-        </linearGradient>
-        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%">
-          <stop offset="0" stop-color="#ffe0a8"/>
-          <stop offset=".55" stop-color="#ffb347"/>
-          <stop offset="1" stop-color="#a86a1f"/>
-        </radialGradient>
-        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">COMPOUND INTEREST ON A BOUNDARY · WHAT CHANGES BETWEEN PASSES</text>
-
-      <!-- ===== LEFT HALF: the loop ===== -->
-      <g transform="translate(40,60)">
-        <circle cx="200" cy="170" r="130" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="540 60" stroke-linecap="round" transform="rotate(-90 200 170)"/>
-        <circle r="3.6" fill="#ffce85">
-          <animateMotion dur="9s" repeatCount="indefinite" path="M200,40 a130,130 0 1,1 -0.1,0"/>
-          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
-        </circle>
-
-        <g>
-          <circle cx="200" cy="40" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="200" y="45" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">1</text>
-          <text x="200" y="20" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">Run the check</text>
-        </g>
-        <g>
-          <circle cx="330" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="330" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">2</text>
-          <text x="362" y="173" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">Surface the residual</text>
-        </g>
-        <g>
-          <circle cx="200" cy="300" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="200" y="305" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">3</text>
-          <text x="200" y="338" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">Mitigate one</text>
-        </g>
-        <g>
-          <circle cx="70" cy="170" r="22" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="70" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="16" fill="#05080a" font-weight="500">4</text>
-          <text x="38" y="173" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">Name what remains</text>
-        </g>
-
-        <text x="200" y="160" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">CLOSES THROUGH</text>
-        <text x="200" y="178" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing=".06em" fill="#ffb347">CLAUDE.md</text>
-      </g>
-
-      <!-- ===== RIGHT HALF: residual list shrinking, line rising ===== -->
-      <g transform="translate(540,68)">
-
-        <!-- pass 1 — fat residual list, low line -->
-        <g>
-          <rect x="0" y="14" width="160" height="200" rx="8" fill="rgba(18,14,9,.7)" stroke="rgba(255,179,71,.22)"/>
-          <rect x="0" y="14" width="160" height="20" rx="6" fill="rgba(255,179,71,.10)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">RESIDUALS</text>
-          <text x="120" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v1</text>
-          <g stroke="#e0775f" stroke-width="2.4" opacity=".7">
-            <line x1="12" y1="58" x2="140" y2="58"/>
-            <line x1="12" y1="80" x2="132" y2="80"/>
-            <line x1="12" y1="102" x2="146" y2="102"/>
-            <line x1="12" y1="124" x2="124" y2="124"/>
-            <line x1="12" y1="146" x2="138" y2="146"/>
-          </g>
-          <text x="80" y="240" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#5d6a68">PASS 1 · MANY</text>
-        </g>
-
-        <g transform="translate(170,114)">
-          <path d="M0,0 L26,0" stroke="#ffb347" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="26,0 18,-5 18,5" fill="#ffb347" opacity=".75"/>
-        </g>
-
-        <!-- pass 2 — fewer residuals -->
-        <g transform="translate(200,0)">
-          <rect x="0" y="14" width="160" height="200" rx="8" fill="rgba(18,14,9,.78)" stroke="rgba(255,179,71,.35)"/>
-          <rect x="0" y="14" width="160" height="20" rx="6" fill="rgba(255,179,71,.14)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#ffb347">RESIDUALS</text>
-          <text x="120" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v2</text>
-          <g stroke="#e0775f" stroke-width="2.4" opacity=".65">
-            <line x1="12" y1="58" x2="132" y2="58"/>
-            <line x1="12" y1="80" x2="120" y2="80"/>
-            <line x1="12" y1="102" x2="138" y2="102"/>
-          </g>
-          <!-- the rule line captured this pass, in teal -->
-          <g stroke="#3fe0c8" stroke-width="2" opacity=".7">
-            <line x1="12" y1="136" x2="128" y2="136"/>
-            <line x1="12" y1="158" x2="110" y2="158"/>
-          </g>
-          <text x="80" y="240" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#9bffe9">PASS 2 · FEWER</text>
-        </g>
-
-        <g transform="translate(370,114)">
-          <path d="M0,0 L26,0" stroke="#ffb347" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="26,0 18,-5 18,5" fill="#ffb347" opacity=".75"/>
-        </g>
-
-        <!-- pass 3 — one honest residual, stricter start -->
-        <g transform="translate(400,0)">
-          <rect x="0" y="0" width="160" height="220" rx="8" fill="rgba(18,14,9,.85)" stroke="url(#d3-ring)" stroke-width="1.5" filter="url(#d3-glow)"/>
-          <rect x="0" y="0" width="160" height="20" rx="6" fill="rgba(63,224,200,.16)"/>
-          <text x="10" y="15" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">RESIDUALS</text>
-          <text x="120" y="15" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">v3</text>
-          <!-- the one residual you can't flatten, amber+honest -->
-          <g stroke="#ffb347" stroke-width="2.4">
-            <line x1="12" y1="44" x2="138" y2="44"/>
-          </g>
-          <text x="12" y="64" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#a86a1f">↑ one you can't flatten</text>
-          <!-- the rest is now compounded rule, teal -->
-          <g stroke="#3fe0c8" stroke-width="2" opacity=".8">
-            <line x1="12" y1="92" x2="146" y2="92"/>
-            <line x1="12" y1="112" x2="120" y2="112"/>
-            <line x1="12" y1="132" x2="138" y2="132"/>
-            <line x1="12" y1="152" x2="110" y2="152"/>
-            <line x1="12" y1="172" x2="128" y2="172"/>
-            <line x1="12" y1="192" x2="138" y2="192"/>
-          </g>
-          <text x="80" y="244" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#ffb347">PASS 3 · NAMED &amp; OWNED</text>
-        </g>
-
-        <!-- legend -->
-        <g transform="translate(0,300)">
-          <rect x="0" y="0" width="14" height="3" fill="#ffb347"/>
-          <text x="22" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">RESIDUAL · NAMED, OWNED, DATED</text>
-          <rect x="0" y="14" width="14" height="3" fill="#3fe0c8"/>
-          <text x="22" y="18" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">COMPOUNDED RULE · CHECKED NEXT TIME</text>
-        </g>
-      </g>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 03</span><em>Compound interest on a boundary.</em> The loop closes through <b>CLAUDE.md</b> — each pass the starting line is stricter and the residual list shorter and more honest.</div>
-  </div>
-
-  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
-  <div class="plates">
-    <div class="plate use">
-      <div class="beat-label"><b>Use when</b></div>
-      <p class="body">
-        The agent is about to touch <b>real systems, real data, or a decision someone else relies on</b> —
-        and <span class="grey">"the output looks fine"</span> is the only check you have. Recurs at every new
-        connector, action class, data zone, or team inheriting the deployment.
-      </p>
-    </div>
-    <div class="plate build">
-      <div class="beat-label"><b>Build</b></div>
-      <p class="body">
-        A reusable <b>security check as a personal skill</b> (both lenses, travelling); a <b>report with residuals</b>
-        (three verdicts per rule + the risk you accepted, the one you mitigated, what changed); and <b>operating rules
-        in <span style="color:var(--amber);font-family:'Spline Sans Mono',monospace;font-size:13px">CLAUDE.md</span></b>
-        future sessions load first.
-      </p>
-    </div>
-    <div class="plate test">
-      <div class="beat-label"><b>Test</b></div>
-      <p class="body">
-        The report contains <em>at least one residual you cannot flatten.</em><br>
-        Not a clean sheet of <em class="no">all compliant.</em>
-      </p>
-    </div>
-  </div>
-
-  <!-- ============ CORE MOVES ============ -->
-  <section class="moves">
-    <div class="beat-label"><b>Core moves</b></div>
-    <div class="moves-head">
-      <h2>The action, in sequence</h2>
-      <span class="lede">Two lenses, one check you authored, three verdicts. You didn't become a security specialist — you knew what mattered and dictated it.</span>
-    </div>
-
-    <div class="move-rail">
-      <div class="thread"></div>
-      <div class="step">
-        <div class="bead">1</div>
-        <h3>Run the policy files raw</h3>
-        <p>Point it at your policies, once. <b>See the baseline</b> the reusable check must beat.</p>
-      </div>
-      <div class="step">
-        <div class="bead">2</div>
-        <h3>Name the five risk patterns</h3>
-        <p>Direct · indirect injection · secrets · tool-confusion · supply-chain. <b>Walk each against your agent.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">3</div>
-        <h3>Give every rule three rows</h3>
-        <p>Compliant · violating · <b>"I can't tell."</b> Most rows land on the third.</p>
-      </div>
-      <div class="step">
-        <div class="bead">4</div>
-        <h3>Mitigate one</h3>
-        <p>Scope · split · filter · gate · review. <b>On top of existing controls, never instead.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">5</div>
-        <h3>Name what remains</h3>
-        <p>The residual, owned and dated. <b>Then compound the rule into CLAUDE.md.</b></p>
-      </div>
-    </div>
-
-    <div class="compound">
-      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
-        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#ffb347"/><stop offset="100%" stop-color="#3fe0c8"/>
-        </linearGradient></defs>
-        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
-          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
-        <polygon points="37,8 30,16 44,16" fill="#ffb347"/>
-        <circle cx="37" cy="37" r="6" fill="#ffb347" opacity=".25"/>
-        <circle r="3" fill="#ffce85">
-          <animateMotion dur="5s" repeatCount="indefinite"
-            path="M37,11 a26,26 0 1,1 -0.1,0"/>
-        </circle>
-      </svg>
-      <div class="ctext">
-        <div class="cyc">run the check<span class="arr">→</span>surface the residual<span class="arr">→</span>mitigate one<span class="arr">→</span>name what remains<span class="arr">→</span>compound</div>
-        <p>Then it's a standing boundary, not a one-time audit: <b>compound interest on a residual list.</b> The next agent you build starts at a stricter line because of this one.</p>
-      </div>
-    </div>
-
-    <!-- the Monday-move / no-permission aside -->
-    <p class="aside">
-      <b>Monday move: pick one agent you already use that touches real data.</b>
-      <span class="mono">Open a file · three columns: rule · verdict · evidence · run the five risk patterns · write compliant / violating / "I can't tell."</span>
-      You'll land on "I can't tell" more than you expect — that's the first honest map. Pick the residual that bothers you most, write one sentence naming it. No platform, no budget, no sign-off.
-    </p>
-  </section>
-
-  <!-- ============ TEST IN PRACTICE — the procurement-blocker vignette ============ -->
-  <div class="practice">
-    <div class="beat-label teal"><b>Test · how you know it's scoped</b></div>
-    <p>
-      The honest tell: <b>the agent-risk lens caught something the policy lens shrugged at</b> — or vice versa.
-      Blend them and you'd miss it. In one team's worked example from the cookbook, a procurement-blocker thread read
-      like routine billing all the way through; the only signal was a watched account name on a buried CC, and that
-      match was what the policy lens caught while the risk lens was still shrugging. <em>Blended lenses route it
-      low-priority and miss it.</em>
-    </p>
-    <p>
-      And the negative test: if every row came back <em class="no">compliant</em> or <em class="no">violating</em> and
-      <b>none came back "I can't tell," you forced false confidence.</b> The third row exists precisely because a
-      non-deterministic system produces ambiguity — hiding it <em>is</em> the failure.
-    </p>
-    <div class="label-strip" style="margin-top:18px">
-      <span class="tag">Illustrative · one team</span>
+    <!-- the source-fidelity note -->
+    <div class="src-note">
+      <span class="tag">Closed set · vocabulary</span>
       <p>
-        The procurement-blocker example — and the rough shape of "about five 'I can't tell' threads a week, a few of them the most important" — is <b>one pseudonymised team's experience as told in the cookbook (a B2B SaaS support team), illustrative of the shape</b>, not a benchmark or a rate to expect.
+        The five risk patterns and the five mitigations are the <b>named sets from the source's R4 check — a working
+        vocabulary, not an exhaustive taxonomy</b> of every agent attack or defence. Name them faithfully and completely;
+        don't treat either list as the whole universe. (STRIDE appears only as historical background, adapted from
+        Microsoft's SDL — not the audit's scaffold, so the lens can't collapse into closed-loop self-grading.)
       </p>
     </div>
-  </div>
 
-  <!-- ============ WHY — the conviction ============ -->
-  <section class="why">
-    <div class="beat-label"><b>Why</b></div>
-
-    <div class="principle-block">
-      <div class="principle-label">The principle</div>
-      <p class="principle-line">Certainty about agent safety is a <em>fantasy</em>. The discipline is running the check — not waiting for it to come back clean.</p>
-    </div>
-
-    <p class="quote">"A scoped agent isn't one with no risk. It's one whose residual risk is named, owned, and visible to the next session."</p>
-    <p class="gloss">
-      None of this is exotic to a regulated firm. Normal security work already carries <b>residual-risk vocabulary,
-      accepted-risk registers, named owners</b> — every SVP in a Nordic bank or insurer has met the concept. Agent
-      security inherits all of it and adds three things on top: non-determinism, unbounded text inputs, and emergent
-      tool use. You never get a proof. <b>You get a loop.</b>
+    <!-- the Monday move, woven in -->
+    <p class="monday">
+      <b>This Monday:</b> pick one agent you already use that touches real data — running the check on your own agents needs
+      no permission. Then walk it.
+      <span class="do">open a file → three columns: rule · verdict · evidence<br>run the five risk patterns → write compliant / violating / "I can't tell"<br>pick the residual that bothers you most → write one sentence naming it</span>
+      You'll land on "I can't tell" more than you expect — that's the first honest map. The report you want isn't a clean
+      sheet of <em>all compliant</em>; it's one that contains <b>at least one residual you cannot flatten</b>.
     </p>
-    <p class="gloss">
-      Most teams stall right here — they treat the absent clean report as a blocker instead of treating the
-      <b>named residual as the deliverable.</b> One footnote on the vocabulary: STRIDE shows up only as historical
-      background — adapted from Microsoft's SDL, <em>not used as the audit's scaffold here.</em> R4 names the attack
-      classes directly on purpose, so the lens can't collapse into closed-loop self-grading.
-    </p>
-    <div class="corollary"><span class="sd"></span>"I can't tell" is a valid agent output — and usually the most valuable one.</div>
-  </section>
 
-  <!-- ============ SYSTEMIC LINE — surfaced ============ -->
-  <section class="prose">
-    <div class="sec-label">Where it sits · personal → company</div>
-    <p>
-      This is the <b>foundation guardrail layer.</b> Run on your own agents, the check needs no permission — but its
-      output travels: the named-residual report plus the <span class="mono">CLAUDE.md</span> rule are exactly what
-      let a CTO put agents <b>near regulated company systems</b> with a documented, inheritable risk position instead
-      of an unprovable promise of safety. Scope-for-trust is what every higher-autonomy and company-wide deployment
-      rests on — the prerequisite for <em>earning the next autonomy rung</em>, and the boundary the whole organisation
-      stops re-arguing once it's on record.
+    <!-- the honest tell -->
+    <div class="sec-mark teal">The honest tell</div>
+    <p style="margin-top:16px">
+      You know the two lenses are doing real work when <b>one catches what the other shrugged at</b>. In one
+      pseudonymised B2B SaaS support team's worked example from the cookbook, a procurement-blocker thread read like
+      routine billing all the way through; the only signal was a watched account name on a buried CC — a match the policy
+      lens caught while the risk lens was still shrugging. Blend the two into one score and you route it low-priority and
+      miss it. <b>The blend is the false economy</b>; the lenses earn their keep precisely because they disagree.
+      (That team's rough shape — "about five 'I can't tell' threads a week, a few of them the most important" — is
+      illustrative of the texture, not a rate to expect.)
+    </p>
+
+    <!-- the systemic / company-scope line -->
+    <div class="sec-mark">Where it sits · personal → company</div>
+    <p style="margin-top:16px">
+      This is the <b>foundation guardrail layer</b>. None of it is exotic to a regulated firm — every SVP in a Nordic bank
+      or insurer has met <em>residual-risk vocabulary, accepted-risk registers, named owners</em>. Agent security
+      inherits all of it and adds three things on top: non-determinism, unbounded text inputs, emergent tool use. You never
+      get a proof; you get a loop. And its output travels: the named-residual report plus the
+      <span class="mono">CLAUDE.md</span> rule are exactly what let you put agents <b>near regulated company systems</b>
+      with a documented, inheritable risk position instead of an unprovable promise of safety. Scope-for-trust is the
+      prerequisite for <em>earning the next autonomy rung</em> — and the boundary the whole organisation stops re-arguing
+      once it's on record.
     </p>
   </section>
 
@@ -1075,26 +493,26 @@
     <div class="web">
       <svg viewBox="0 0 1080 300" aria-hidden="true">
         <defs>
-          <linearGradient id="ct1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="ct2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="ct3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="ct4" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".6"/></linearGradient>
-          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="sft-ct1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="sft-ct2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="sft-ct3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="sft-ct4" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".6"/></linearGradient>
+          <filter id="sft-wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         </defs>
 
         <circle cx="150" cy="150" r="30" fill="none" stroke="#ffb347" stroke-width="1.2" opacity=".5"/>
-        <circle cx="150" cy="150" r="11" fill="#ffb347" filter="url(#wglow)"/>
+        <circle cx="150" cy="150" r="11" fill="#ffb347" filter="url(#sft-wglow)"/>
         <circle cx="150" cy="150" r="46" fill="none" stroke="#ffb347" stroke-width=".7" opacity=".25"/>
 
-        <path id="cth1" d="M150,150 C360,70 540,52 760,56" stroke="url(#ct1)" stroke-width="2.2" fill="none"/>
-        <path id="cth2" d="M150,150 C380,116 560,112 760,112" stroke="url(#ct2)" stroke-width="2.2" fill="none"/>
-        <path id="cth3" d="M150,150 C380,184 560,188 760,188" stroke="url(#ct3)" stroke-width="2.2" fill="none"/>
-        <path id="cth4" d="M150,150 C360,232 540,248 760,248" stroke="url(#ct4)" stroke-width="2.2" fill="none"/>
+        <path id="sft-cth1" d="M150,150 C360,70 540,52 760,56" stroke="url(#sft-ct1)" stroke-width="2.2" fill="none"/>
+        <path id="sft-cth2" d="M150,150 C380,116 560,112 760,112" stroke="url(#sft-ct2)" stroke-width="2.2" fill="none"/>
+        <path id="sft-cth3" d="M150,150 C380,184 560,188 760,188" stroke="url(#sft-ct3)" stroke-width="2.2" fill="none"/>
+        <path id="sft-cth4" d="M150,150 C360,232 540,248 760,248" stroke="url(#sft-ct4)" stroke-width="2.2" fill="none"/>
 
-        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#cth1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#cth2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#cth3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#ffce85"><animateMotion dur="6.2s" begin="1.6s" repeatCount="indefinite"><mpath href="#cth4"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="6.2s" begin="1.6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#sft-cth1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#sft-cth2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#sft-cth3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="6.2s" begin="1.6s" repeatCount="indefinite"><mpath href="#sft-cth4"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="6.2s" begin="1.6s" repeatCount="indefinite"/></circle>
       </svg>
 
       <div class="neighbours">
@@ -1109,7 +527,7 @@
 
   <!-- ============ FOOTER ============ -->
   <footer class="floor">
-    <span class="door">A door, not a destination — the named residual is the deliverable, not the blocker. One honest map this week becomes the boundary your whole org stops re-arguing. No platform, no budget, no permission required.</span>
+    <span class="door">Spend an afternoon adjudicating your own rules into three rows, and you walk away with one residual named, owned, and dated.</span>
     <span class="meta">The Big Picture · Pattern Language</span>
   </footer>
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Two reads, one approval — Pattern · The Big Picture</title>
+<title>Two-pass plan review — Pattern · The Big Picture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -35,7 +35,7 @@
     position:relative;
     overflow-x:hidden;
   }
-  /* atmospheric soil + light-well — recedes for the long read */
+  /* atmospheric soil + light-well */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
@@ -98,213 +98,19 @@
   .hero-cap{
     position:absolute;left:18px;bottom:13px;z-index:3;
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;
-    color:var(--ink-dim);text-transform:uppercase;
+    color:var(--ink-dim);text-transform:uppercase;max-width:62%;line-height:1.5;
   }
   .hero-cap b{color:var(--teal)}
 
-  /* ============ READING-PROSE — the SAFe-density texture between diagrams ============ */
-  .prose{
-    margin-top:34px;max-width:760px;
-  }
-  .prose h2{
-    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
-    letter-spacing:-.012em;line-height:1.08;margin-top:14px;
-  }
-  .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
-  .prose h2.amber em{color:var(--amber)}
-  .prose .sec-label{
-    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
-    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
-    margin-top:42px;
-  }
-  .prose .sec-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
-    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
-  }
-  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
-  .prose p{
-    font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
-    letter-spacing:.002em;
-  }
-  .prose p b{color:var(--spore);font-weight:500}
-  .prose p em{font-style:italic;color:var(--ink-dim)}
-  .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
-  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
-  .prose p .mono{
-    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
-  }
-  .prose p .mono.amber{color:var(--amber)}
-  .prose .pull{
-    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
-    font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
-    color:var(--ink);max-width:680px;
-  }
-  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
+  /* ============ COLD-OPEN PROSE ============ */
+  .open{margin-top:34px;max-width:740px}
+  .open p{font-size:16px;line-height:1.6;color:var(--ink);letter-spacing:.002em}
+  .open p b{color:var(--spore);font-weight:500}
+  .open p em{font-style:italic;color:var(--ink-dim)}
 
-  /* ============ PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
-  .diagram{
-    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
-    background:
-      radial-gradient(110% 130% at 8% 8%, rgba(63,224,200,.05), transparent 55%),
-      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
-    position:relative;
-    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
-  }
-  .diagram svg{display:block;width:100%;height:auto}
-  .diagram .dcap{
-    padding:12px 20px 16px;border-top:1px solid var(--hairline);
-    font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
-    color:var(--ink-dim);letter-spacing:.003em;
-    background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
-  }
-  .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
-  .diagram .dcap .num{
-    font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
-    letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
-  }
-
-  /* ============ RECIPE SECTION BEATS ============ */
-  .beat-label{
-    font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.28em;
-    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
-  }
-  .beat-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
-    box-shadow:0 0 9px rgba(63,224,200,.6);
-  }
-  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
-  .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
-
-  /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
-  .plates{
-    display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
-  }
-  .plate{
-    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
-    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
-  }
-  .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
-  .plate .body b{color:var(--spore);font-weight:500}
-  .plate .body .grey{color:var(--grey)}
-  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
-  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
-  .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
-
-  /* ============ CORE MOVES ============ */
-  .moves{margin-top:46px}
-  .moves-head{display:flex;align-items:baseline;gap:14px;margin-top:8px}
-  .moves-head h2{
-    font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);letter-spacing:-.01em;
-  }
-  .moves-head .lede{font-size:13px;color:var(--ink-dim);letter-spacing:.01em}
-  .move-rail{
-    margin-top:20px;position:relative;
-    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
-  }
-  .move-rail .thread{
-    position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
-    background:linear-gradient(90deg,
-      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
-      rgba(63,224,200,.7) 50%, rgba(255,179,71,.65) 94%, rgba(255,179,71,0) 100%);
-  }
-  .step{position:relative;z-index:1;padding:0 9px;text-align:left}
-  .step:first-child{padding-left:0}
-  .step .bead{
-    width:42px;height:42px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
-    background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
-    margin-bottom:13px;
-  }
-  .step:nth-child(6) .bead{
-    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
-  }
-  .step h3{
-    font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;
-  }
-  .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
-  .step p b{color:var(--ink);font-weight:500}
-
-  .compound{
-    margin-top:26px;border:1px solid rgba(63,224,200,.18);border-radius:14px;
-    padding:18px 22px;position:relative;overflow:hidden;
-    background:
-      radial-gradient(120% 140% at 100% 0%, rgba(63,224,200,.07), transparent 60%),
-      rgba(8,17,18,.55);
-    display:flex;align-items:center;gap:20px;
-  }
-  .compound .loop-ico{flex:none}
-  .compound .ctext{flex:1}
-  .compound .ctext .cyc{
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
-  }
-  .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
-  .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
-  .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
-
-  .aside{
-    margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
-    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
-  }
-  .aside b{color:var(--amber);font-weight:500}
-  .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
-
-  /* ============ WHY ============ */
-  .why{
-    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
-    padding:26px 30px 28px;position:relative;overflow:hidden;
-    background:
-      radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
-      radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
-      rgba(7,14,15,.6);
-  }
-  .why .beat-label{margin-bottom:14px}
-  .why .principle-block{
-    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
-  }
-  .why .principle-label{
-    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
-    text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;
-  }
-  .why .principle-line{
-    font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
-    line-height:1.2;color:var(--spore);letter-spacing:-.005em;
-  }
-  .why .principle-line em{font-style:italic;color:var(--teal)}
-  .why .quote{
-    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--teal);letter-spacing:.004em;
-    text-shadow:0 0 30px rgba(63,224,200,.26);max-width:840px;
-  }
-  .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
-  .why .gloss b{color:var(--spore);font-weight:500}
-  .why .gloss em{font-style:italic;color:var(--ink-dim)}
-  .why .gloss + .gloss{margin-top:12px}
-  .why .corollary{
-    margin-top:18px;display:inline-flex;align-items:center;gap:11px;
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
-    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
-  }
-  .why .corollary .sd{
-    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
-    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
-  }
-
-  /* ============ TEST-IN-PRACTICE inline panel ============ */
-  .practice{
-    margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
-    padding:22px 26px 24px;
-    background:
-      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
-      rgba(8,15,17,.5);
-  }
-  .practice .beat-label{margin-bottom:12px}
-  .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
-  .practice p b{color:var(--spore);font-weight:500}
-  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
-  .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
+  /* breathing glow on the diagram spore-tips */
+  @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
+  .breathe{animation:breathe 4.2s ease-in-out infinite}
 
   /* ============ CONNECTS TO ============ */
   .connects{margin-top:52px}
@@ -339,15 +145,6 @@
   .nb:hover{border-color:var(--teal);color:var(--spore);background:rgba(10,28,27,.9);transform:translate(-50%,-50%) scale(1.05)}
   .nb.amber:hover{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.9)}
   .nb:hover .sd{animation:throb 1s ease-in-out infinite}
-  .nb.soon{opacity:.62}
-  .nb.soon::after{
-    content:"soon";
-    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--ink-faint);
-    border:1px solid var(--ink-faint);border-radius:20px;
-    padding:2px 7px 3px;margin-left:4px;
-  }
-  .nb.soon:hover{opacity:1}
   @keyframes throb{50%{transform:scale(1.5)}}
   .origin-chip{
     position:absolute;transform:translate(-50%,-50%);
@@ -373,611 +170,313 @@
     text-transform:uppercase;color:var(--ink-faint);
   }
 
-  /* breathing glow on the diagram spore-tips */
-  @keyframes breathe{
-    0%,100%{opacity:.55}
-    50%{opacity:1}
+  /* ============ T2 RE-FORMED: the stereogram eyes — left-eye / right-eye fuse ============ */
+  /* the two body beats sit as two columns the layout fuses to one centred Monday-line */
+  .eyes{
+    margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:0;
+    border:1px solid var(--hairline);border-radius:16px 16px 0 0;overflow:hidden;
+    background:
+      radial-gradient(110% 130% at 0% 0%, rgba(63,224,200,.05), transparent 52%),
+      radial-gradient(110% 130% at 100% 100%, rgba(255,179,71,.045), transparent 52%),
+      rgba(7,14,15,.55);
+    box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
   }
-  .breathe{animation:breathe 4.2s ease-in-out infinite}
+  .eye{padding:28px 30px 32px}
+  .eye.left{border-right:1px solid var(--hairline)}
+  .eye .eye-tag{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.28em;
+    text-transform:uppercase;display:flex;align-items:center;gap:9px;
+  }
+  .eye .eye-tag::before{content:"";width:7px;height:7px;border-radius:50%;flex:none}
+  .eye.left .eye-tag{color:var(--teal-dim)}
+  .eye.left .eye-tag::before{background:var(--teal);box-shadow:0 0 10px rgba(63,224,200,.6)}
+  .eye.right .eye-tag{color:var(--amber-dim)}
+  .eye.right .eye-tag::before{background:var(--amber);box-shadow:0 0 10px rgba(255,179,71,.55)}
+  .eye h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:25px;line-height:1.06;
+    color:var(--spore);letter-spacing:-.01em;margin-top:12px;
+  }
+  .eye.left h2 em{font-style:italic;color:var(--teal);font-weight:400}
+  .eye.right h2 em{font-style:italic;color:var(--amber);font-weight:400}
+  .eye p{font-size:14.5px;line-height:1.62;color:var(--ink);margin-top:14px}
+  .eye p b{color:var(--spore);font-weight:500}
+  .eye p em{font-style:italic;color:var(--ink-dim)}
+  .eye p .mono{font-family:'Spline Sans Mono',monospace;font-size:13px;color:var(--teal)}
+  .eye.right p .mono{color:var(--amber)}
+  .eye .move-quote{
+    margin-top:16px;font-family:'Fraunces',serif;font-style:italic;font-size:16px;line-height:1.4;
+    padding-left:15px;
+  }
+  .eye.left .move-quote{border-left:2px solid var(--teal-dim);color:#9bffe9}
+  .eye.right .move-quote{border-left:2px solid var(--amber-dim);color:#fff4e2}
+  .eye .move-quote .no{
+    color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-style:italic;
+  }
+  .eye .guard{
+    margin-top:13px;font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.04em;
+    line-height:1.55;
+  }
+  .eye.left .guard{color:var(--teal-dim)}
+  .eye.right .guard{color:var(--amber-dim)}
 
-  @media (max-width:860px){
-    .plates{grid-template-columns:1fr 1fr}
-    .plate.use{grid-column:1 / -1}
+  /* the fuse — one centred Monday-line the two eyes resolve into */
+  .fuse{
+    margin-top:0;padding:32px 30px 36px;text-align:center;position:relative;
+    border:1px solid rgba(63,224,200,.16);border-top:none;border-radius:0 0 16px 16px;
+    background:
+      radial-gradient(120% 200% at 50% 0%, rgba(63,224,200,.09), transparent 60%),
+      rgba(8,17,18,.6);
   }
+  .fuse .fuse-tag{
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+  .fuse .fuse-line{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(20px,2.6vw,27px);line-height:1.26;color:var(--spore);
+    letter-spacing:-.004em;margin-top:14px;max-width:780px;margin-left:auto;margin-right:auto;
+  }
+  .fuse .fuse-line b{color:var(--teal);font-weight:500;font-style:normal}
+  .fuse .fuse-test{
+    margin-top:18px;font-size:14px;line-height:1.6;color:var(--ink-dim);
+    max-width:680px;margin-left:auto;margin-right:auto;
+  }
+  .fuse .fuse-test b{color:var(--amber);font-weight:500}
+  .fuse .systemic{
+    margin-top:20px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
+    max-width:640px;margin-left:auto;margin-right:auto;
+    padding-top:16px;border-top:1px dashed var(--hairline);
+  }
+  .fuse .systemic b{color:var(--ink-dim);font-weight:500}
+
   @media (max-width:780px){
-    .plates{grid-template-columns:1fr}
-    .plate.use{grid-column:1}
-    .move-rail{grid-template-columns:repeat(2,1fr);gap:24px 0}
-    .move-rail .thread{display:none}
-    .step{padding:0}
-    .compound{flex-direction:column;align-items:flex-start;gap:14px}
+    .eyes{grid-template-columns:1fr}
+    .eye.left{border-right:none;border-bottom:1px solid var(--hairline)}
     .neighbours .nb{font-size:11px;padding:6px 10px}
-    .prose p{font-size:14.5px}
   }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <!-- ============ BREADCRUMB ============ -->
+  <!-- ============ BREADCRUMB (strippable) ============ -->
   <nav class="crumb">
-    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Two reads, one approval</span>
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Two-pass plan review</span>
   </nav>
 
   <!-- ============ PATTERN NAME + ESSENCE ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe · software · Context &amp; Guardrails · <span class="pat-no">the read that earns the approval</span></div>
-    <h1>Two reads, <em>one approval</em></h1>
-    <p class="principle">The principle: <b>one kind of scrutiny catches one kind of miss</b> — a human read and an agent's branch-walk catch different things.</p>
+    <h1>Two-pass <em>plan review</em></h1>
+    <p class="principle">The clever way to hold it: <b>a plan is flat to either eye alone</b> &mdash; the depth you're approving lives in the disparity between two reads, never inside one.</p>
     <p class="essence">
-      Before you approve an agent's plan for a multi-file change, give it <b>two different kinds of scrutiny</b> —
-      your situated read for the soft item only you can feel, and a second agent's branch-walk for everything
-      you'd never hold in working memory — because neither read alone is complete.
+      Before you approve an agent's plan for a multi-file change, read it the way two eyes build depth &mdash; with
+      <b>two reads that catch different things</b>: your situated read for the soft item only you can feel, and a second
+      agent's branch-walk for everything you'd never hold in working memory. Neither read alone is the approval. The depth
+      is computed from the gap.
     </p>
   </header>
 
-  <!-- ============ HERO PICTURE: one plan, two passes, one approve ============ -->
+  <!-- ============ HERO PICTURE: the stereogram — one plan, two offset views, depth at centre ============ -->
   <div class="hero-frame">
-    <svg viewBox="0 0 1080 400" role="img" aria-label="A single plan at the terminal approval prompt, annotated by two passes in different colours — a teal human push-back quoting a specific step, and an amber thread of resolved branch-questions — converging on one approve.">
+    <svg viewBox="0 0 1080 470" role="img" aria-label="A stereogram: the same flat plan drawn twice, slightly offset — a left view annotated by a teal quoted-step push-back, a right view annotated by an amber thread of resolved branch-questions. The horizontal offset between the two views is exactly what fuses, at centre, into a depth cue: a complete read that is present in neither image alone.">
       <defs>
-        <radialGradient id="hwell" cx="50%" cy="46%" r="64%">
-          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".16"/>
+        <radialGradient id="t2hero-well" cx="50%" cy="50%" r="62%">
+          <stop offset="0%" stop-color="#ffd99a" stop-opacity=".15"/>
           <stop offset="45%" stop-color="#3fe0c8" stop-opacity=".06"/>
           <stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
         </radialGradient>
-        <linearGradient id="h-approve" x1="0" y1="0" x2="1" y2="0">
+        <linearGradient id="t2hero-fuse" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".9"/>
           <stop offset="100%" stop-color="#ffce85" stop-opacity=".95"/>
         </linearGradient>
-        <filter id="hglow" x="-60%" y="-60%" width="220%" height="220%">
+        <filter id="t2hero-glow" x="-60%" y="-60%" width="220%" height="220%">
           <feGaussianBlur stdDeviation="4.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
       </defs>
-      <rect x="0" y="0" width="1080" height="400" fill="url(#hwell)"/>
+      <rect x="0" y="0" width="1080" height="470" fill="url(#t2hero-well)"/>
 
-      <!-- the plan, dead centre -->
-      <text x="540" y="34" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">ONE PLAN · AT THE APPROVAL PROMPT</text>
-      <rect x="370" y="56" width="340" height="262" rx="13" fill="rgba(8,17,18,.72)" stroke="rgba(63,224,200,.28)" stroke-width="1.2"/>
-      <rect x="370" y="56" width="340" height="24" rx="6" fill="rgba(63,224,200,.10)"/>
-      <text x="386" y="73" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".06em" fill="#3fe0c8">PLAN · 3 files · 7 steps</text>
+      <text x="540" y="34" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">ONE AGENT PLAN · TWO READS · APPROVAL LIVES IN THE DISPARITY</text>
 
-      <!-- plan body rows -->
-      <g font-family="'Spline Sans Mono',monospace" font-size="11" fill="#9fb6b1">
-        <text x="386" y="106">1  scaffold the route</text>
-        <text x="386" y="130">2  add the DTO</text>
-        <text x="386" y="178">4  wire the handler</text>
-        <text x="386" y="202">5  add tests</text>
-        <text x="386" y="226">6  run the suite</text>
-        <text x="386" y="250">7  open the PR</text>
-      </g>
-
-      <!-- step 3 — the soft item the human flags (teal) -->
-      <rect x="380" y="142" width="320" height="24" rx="6" fill="rgba(63,224,200,.10)" stroke="#3fe0c8" stroke-width="1"/>
-      <text x="386" y="159" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#eafff9">3  update the auth helper</text>
-
-      <!-- approve bar -->
-      <rect x="386" y="278" width="308" height="26" rx="7" fill="none" stroke="url(#h-approve)" stroke-width="1.6"/>
-      <text x="540" y="295" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11" letter-spacing=".1em" fill="#aeffee">[ approve ]</text>
-
-      <!-- ===== LEFT: the human read — situated, shallow ===== -->
+      <!-- ===== LEFT EYE VIEW — teal, the situated read ===== -->
       <g>
-        <text x="40" y="92" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".2em" fill="#3fe0c8">YOUR READ</text>
-        <text x="40" y="108" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#6f8a85" font-style="italic">shallow · situated</text>
-        <!-- margin note tying to step 3 -->
-        <rect x="40" y="126" width="232" height="64" rx="10" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.4)"/>
-        <text x="54" y="148" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">keep planning: &ldquo;step&nbsp;3 &mdash;</text>
-        <text x="54" y="166" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">&lsquo;update the auth helper&rsquo;</text>
-        <text x="54" y="184" font-family="'Spline Sans',sans-serif" font-size="12" fill="#9bffe9">that touches the wrong file&rdquo;</text>
-        <!-- thread to step 3 -->
-        <path d="M272,158 C320,158 350,154 380,154" stroke="#3fe0c8" stroke-width="1.4" fill="none" filter="url(#hglow)"/>
-        <circle cx="380" cy="154" r="3.4" fill="#aeffee" filter="url(#hglow)"/>
-        <text x="40" y="216" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#1d8d80">→ THE SOFT ITEM</text>
-      </g>
-
-      <!-- ===== RIGHT: the agent walk-down — exhaustive, unsituated ===== -->
-      <g>
-        <text x="1040" y="92" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".2em" fill="#ffb347">SECOND READ · AGENT WALK-DOWN</text>
-        <text x="1040" y="108" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#6f8a85" font-style="italic">exhaustive · unsituated</text>
-        <!-- amber thread of resolved branch-questions running down -->
-        <g font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#ffce85" text-anchor="start">
-          <circle cx="772" cy="132" r="3.4" fill="#ffb347" filter="url(#hglow)"/>
-          <text x="786" y="136">Q: nullable id? → no</text>
-          <circle cx="772" cy="162" r="3.4" fill="#ffb347" filter="url(#hglow)"/>
-          <text x="786" y="166">Q: cache or live? → live</text>
-          <circle cx="772" cy="192" r="3.4" fill="#ffb347" filter="url(#hglow)"/>
-          <text x="786" y="196">Q: retry path? → ✗ rejected</text>
-          <circle cx="772" cy="222" r="3.4" fill="#ffb347" filter="url(#hglow)"/>
-          <text x="786" y="226">Q: error surface? → toast</text>
+        <text x="150" y="78" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".2em" fill="#3fe0c8">LEFT EYE · YOUR READ</text>
+        <text x="150" y="94" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#6f8a85" font-style="italic">shallow · situated</text>
+        <rect x="56" y="112" width="300" height="252" rx="12" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.3)" stroke-width="1.2"/>
+        <rect x="56" y="112" width="300" height="22" rx="6" fill="rgba(63,224,200,.10)"/>
+        <text x="70" y="128" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#3fe0c8">PLAN · 3 files · 7 steps</text>
+        <g font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#9fb6b1">
+          <text x="70" y="160">1  scaffold the route</text>
+          <text x="70" y="182">2  add the DTO</text>
+          <text x="70" y="228">4  wire the handler</text>
+          <text x="70" y="250">5  add tests</text>
+          <text x="70" y="272">6  run the suite</text>
+          <text x="70" y="294">7  open the PR</text>
         </g>
-        <path d="M772,132 C772,170 772,200 772,222" stroke="#ffb347" stroke-width="1.4" fill="none" opacity=".55"/>
-        <!-- thread from plan to the walk-down -->
-        <path d="M710,200 C730,200 750,150 772,134" stroke="#ffb347" stroke-width="1.4" fill="none" filter="url(#hglow)" opacity=".8"/>
-        <text x="1040" y="250" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".18em" fill="#a86a1f">→ EVERY UNRESOLVED BRANCH</text>
+        <!-- step 3 — the soft item the left eye catches (teal) -->
+        <rect x="64" y="194" width="284" height="22" rx="6" fill="rgba(63,224,200,.10)" stroke="#3fe0c8" stroke-width="1"/>
+        <text x="70" y="210" font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#eafff9">3  update the auth helper</text>
+        <!-- margin push-back tied to step 3 -->
+        <rect x="56" y="320" width="300" height="32" rx="8" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.4)"/>
+        <text x="70" y="340" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#9bffe9">&ldquo;step 3 &mdash; wrong file for this change&rdquo;</text>
       </g>
 
-      <!-- both converge on one approve -->
+      <!-- ===== RIGHT EYE VIEW — amber, the branch-walk, the SAME plan offset ===== -->
       <g>
-        <path d="M156,190 C200,300 360,330 530,310" stroke="#3fe0c8" stroke-width="1" fill="none" opacity=".3" stroke-dasharray="3 6"/>
-        <path d="M900,228 C880,300 700,332 550,312" stroke="#ffb347" stroke-width="1" fill="none" opacity=".3" stroke-dasharray="3 6"/>
-        <text x="540" y="360" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#3fe0c8" font-style="italic">one plan · two reads · one approval</text>
-        <text x="540" y="382" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">NEITHER READ ALONE WAS COMPLETE</text>
+        <text x="930" y="78" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="10" letter-spacing=".2em" fill="#ffb347">RIGHT EYE · AGENT WALK-DOWN</text>
+        <text x="930" y="94" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="11.5" fill="#6f8a85" font-style="italic">exhaustive · unsituated</text>
+        <!-- the same plan, horizontally offset (the disparity) -->
+        <rect x="724" y="112" width="300" height="252" rx="12" fill="rgba(8,17,18,.7)" stroke="rgba(255,179,71,.3)" stroke-width="1.2"/>
+        <rect x="724" y="112" width="300" height="22" rx="6" fill="rgba(255,179,71,.09)"/>
+        <text x="738" y="128" font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#ffb347">PLAN · 3 files · 7 steps</text>
+        <g font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#9fb6b1">
+          <text x="738" y="160">1  scaffold the route</text>
+          <text x="738" y="182">2  add the DTO</text>
+          <text x="738" y="204">3  update the auth helper</text>
+          <text x="738" y="226">4  wire the handler</text>
+          <text x="738" y="248">5  add tests</text>
+        </g>
+        <!-- amber thread of resolved branch-questions running down the right view -->
+        <g font-family="'Spline Sans Mono',monospace" font-size="9.5" fill="#ffce85" text-anchor="start">
+          <circle cx="744" cy="278" r="3" fill="#ffb347" filter="url(#t2hero-glow)"/>
+          <text x="756" y="282">Q: nullable id? &rarr; no</text>
+          <circle cx="744" cy="302" r="3" fill="#ffb347" filter="url(#t2hero-glow)"/>
+          <text x="756" y="306">Q: cache or live? &rarr; live</text>
+          <circle cx="744" cy="326" r="3" fill="#ffb347" filter="url(#t2hero-glow)"/>
+          <text x="756" y="330">Q: retry path? &rarr; &#10007; rejected</text>
+          <circle cx="744" cy="350" r="3" fill="#ffb347" class="breathe"/>
+          <text x="756" y="354" fill="#fff4e2">&hellip; run to exhaustion</text>
+        </g>
+        <path d="M744,278 C744,310 744,330 744,350" stroke="#ffb347" stroke-width="1.2" fill="none" opacity=".5"/>
       </g>
 
-      <!-- pulse travelling the human thread into the plan -->
+      <!-- ===== THE DISPARITY → DEPTH AT CENTRE ===== -->
+      <g>
+        <path d="M356,238 C440,238 470,238 524,238" stroke="#3fe0c8" stroke-width="1.4" fill="none" filter="url(#t2hero-glow)" opacity=".8"/>
+        <path d="M724,238 C640,238 610,238 556,238" stroke="#ffb347" stroke-width="1.4" fill="none" filter="url(#t2hero-glow)" opacity=".8"/>
+        <!-- the fused depth-cue: a raised, complete plan floating between the eyes -->
+        <g filter="url(#t2hero-glow)">
+          <rect x="486" y="178" width="108" height="120" rx="11" fill="rgba(8,22,22,.92)" stroke="url(#t2hero-fuse)" stroke-width="1.8"/>
+        </g>
+        <text x="540" y="170" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#aeffee">THE PLAN · IN DEPTH</text>
+        <g stroke="#aeffee" stroke-width="2" opacity=".85">
+          <line x1="500" y1="200" x2="580" y2="200"/>
+          <line x1="500" y1="218" x2="570" y2="218"/>
+        </g>
+        <line x1="500" y1="236" x2="580" y2="236" stroke="#ffce85" stroke-width="2" opacity=".9"/>
+        <g stroke="#aeffee" stroke-width="2" opacity=".85">
+          <line x1="500" y1="254" x2="566" y2="254"/>
+        </g>
+        <!-- the earned approve, sitting on the fused plane -->
+        <rect x="498" y="270" width="84" height="20" rx="6" fill="none" stroke="url(#t2hero-fuse)" stroke-width="1.4"/>
+        <text x="540" y="284" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".08em" fill="#aeffee">approve</text>
+
+        <text x="540" y="334" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="13.5" fill="#3fe0c8" font-style="italic">the plan's depth was never on either read</text>
+        <text x="540" y="356" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".2em" fill="#3b524e">IT IS COMPUTED FROM THE GAP BETWEEN THE TWO READS</text>
+      </g>
+
+      <!-- a bracket showing the disparity = the depth-cue -->
+      <g opacity=".5">
+        <path d="M356,400 C420,400 460,400 484,400" stroke="#3fe0c8" stroke-width="1" fill="none" stroke-dasharray="3 5"/>
+        <path d="M724,400 C660,400 620,400 596,400" stroke="#ffb347" stroke-width="1" fill="none" stroke-dasharray="3 5"/>
+        <text x="540" y="404" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".18em" fill="#6f8a85">DISPARITY = THE READ</text>
+      </g>
+
+      <!-- pulses travelling each eye into the fuse -->
       <circle r="3" fill="#aeffee">
-        <animateMotion dur="4.6s" repeatCount="indefinite" path="M272,158 C320,158 350,154 380,154"/>
+        <animateMotion dur="4.6s" repeatCount="indefinite" path="M356,238 C440,238 470,238 524,238"/>
         <animate attributeName="opacity" values="0;1;1;0" dur="4.6s" repeatCount="indefinite"/>
       </circle>
+      <circle r="3" fill="#ffce85">
+        <animateMotion dur="5s" begin=".5s" repeatCount="indefinite" path="M724,238 C640,238 610,238 556,238"/>
+        <animate attributeName="opacity" values="0;1;1;0" dur="5s" begin=".5s" repeatCount="indefinite"/>
+      </circle>
     </svg>
-    <div class="hero-cap">The plan didn't get better because you stared harder. <b>It got read twice, two different ways.</b></div>
+    <div class="hero-cap">The plan didn't gain depth because you stared harder with one eye. <b>It was read twice, two different ways, and the gap fused.</b></div>
   </div>
 
-  <!-- ============================================================ -->
-  <!-- ============ PROSE BLOCK 1 — THE MECHANISM ================= -->
-  <!-- ============================================================ -->
-  <section class="prose">
-    <div class="sec-label">The mechanism · why one read isn't enough</div>
-    <h2>Two reads, <em>two different misses</em>.</h2>
-
+  <!-- ============ COLD OPEN (2 lines) ============ -->
+  <section class="open">
     <p>
-      Start with the honest tell, because everyone recognises it: when was the last time an agent wrote a plan
-      you approved without really reading? We all do it. The plan touches three files, lists verification steps,
-      reads like a decision — and the approve button is right there while you're on a tight slot. The trap isn't
-      laziness, it's structure. <b>A seven-item plan with headers looks like a decision even when it's still a draft.</b>
-      Structure is persuasive; that's exactly what makes it dangerous at the approval prompt.
-    </p>
-
-    <p>
-      The fix isn't reading harder. It's reading <em>twice, two different ways</em>, because a single pass can only
-      ever catch one shape of mistake. Your read is <b>shallow but situated</b> — you don't hold the whole design tree
-      in your head, but you can feel the soft item, the assumption that's wrong for <em>this</em> repo, the file
-      that shouldn't be touched at all. A second agent's walk-down is the inverse: <b>exhaustive but unsituated</b> —
-      it surfaces every unresolved branch in the design, including the dozen you'd never have kept in working memory,
-      but it has no nose for which one would quietly break your codebase. Below is the picture.
+      Close one eye and the agent's plan is a flat page: three files, seven steps, a verification list, and an approve
+      button already lit. Open the second eye and nothing on the page changes &mdash; yet now there's depth, and the depth
+      is the only thing you were ever approving. It doesn't live in either read. <b>It lives in the gap between them.</b>
     </p>
   </section>
 
-  <!-- ============ DIAGRAM 1 — TWO READS, DIFFERENT MISSES ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 440" role="img" aria-label="The same plan with two arrows leaving it — a human read that is shallow but situated, and an agent walk-down that is exhaustive but unsituated. The two catches overlap partially; the non-overlap on each side is what the other read would have missed.">
-      <defs>
-        <radialGradient id="d1-human" cx="50%" cy="50%" r="55%"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".22"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/></radialGradient>
-        <radialGradient id="d1-agent" cx="50%" cy="50%" r="55%"><stop offset="0" stop-color="#ffb347" stop-opacity=".20"/><stop offset="100%" stop-color="#ffb347" stop-opacity="0"/></radialGradient>
-        <filter id="d1-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
+  <!-- ============ THE TWO EYES — left column / right column the layout fuses ============ -->
+  <div class="eyes">
 
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">ONE PLAN · TWO READS · THE NON-OVERLAP IS THE POINT</text>
-
-      <!-- the plan at the left -->
-      <rect x="40" y="186" width="150" height="70" rx="12" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.3)" stroke-width="1.2"/>
-      <text x="115" y="216" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="11" fill="#3fe0c8">THE PLAN</text>
-      <text x="115" y="234" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="11" fill="#6f8a85" font-style="italic">3 files · 7 steps</text>
-
-      <!-- two arrows leaving -->
-      <path d="M190,206 C280,150 360,118 430,110" stroke="#3fe0c8" stroke-width="1.8" fill="none" opacity=".75"/>
-      <path d="M190,236 C280,300 360,330 430,338" stroke="#ffb347" stroke-width="1.8" fill="none" opacity=".7"/>
-
-      <!-- TWO overlapping catch-fields (venn) -->
-      <ellipse cx="640" cy="150" rx="200" ry="118" fill="url(#d1-human)" stroke="rgba(63,224,200,.45)" stroke-width="1.2"/>
-      <ellipse cx="760" cy="300" rx="220" ry="120" fill="url(#d1-agent)" stroke="rgba(255,179,71,.4)" stroke-width="1.2"/>
-
-      <!-- human-only crescent -->
-      <text x="500" y="120" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".18em" fill="#3fe0c8">HUMAN READ · SHALLOW BUT SITUATED</text>
-      <g font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#cfe6e0">
-        <text x="500" y="150">the soft item a senior would flag</text>
-        <text x="500" y="172">the assumption wrong for <tspan font-style="italic" fill="#9bffe9">this</tspan> repo</text>
-        <text x="500" y="194">the file that shouldn't be touched</text>
-      </g>
-
-      <!-- agent-only crescent -->
-      <text x="640" y="332" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".18em" fill="#ffb347">AGENT WALK-DOWN · EXHAUSTIVE BUT UNSITUATED</text>
-      <g font-family="'Spline Sans',sans-serif" font-size="12.5" fill="#fff4e2">
-        <text x="640" y="362">every unresolved design branch</text>
-        <text x="640" y="384">the dozen you'd never hold in your head</text>
-        <text x="640" y="406">each with a recommended default</text>
-      </g>
-
-      <!-- the overlap -->
-      <text x="700" y="232" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="13" fill="#aeffee">both catch the obvious</text>
-
-      <!-- the non-overlap callouts — what the OTHER read misses -->
-      <g>
-        <path d="M470,232 C455,250 450,262 452,272" stroke="#3fe0c8" stroke-width="1" fill="none" opacity=".6" stroke-dasharray="3 4"/>
-        <text x="452" y="288" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">↑ the walk-down would miss this</text>
-      </g>
-      <g>
-        <path d="M930,266 C948,250 952,238 950,228" stroke="#ffb347" stroke-width="1" fill="none" opacity=".55" stroke-dasharray="3 4"/>
-        <text x="950" y="214" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">↓ your read would miss this</text>
-      </g>
-
-      <!-- pulses -->
-      <circle r="2.8" fill="#aeffee"><animateMotion dur="4.4s" repeatCount="indefinite" path="M190,206 C280,150 360,118 430,110"/><animate attributeName="opacity" values="0;1;1;0" dur="4.4s" repeatCount="indefinite"/></circle>
-      <circle r="2.8" fill="#ffce85"><animateMotion dur="4.8s" begin=".5s" repeatCount="indefinite" path="M190,236 C280,300 360,330 430,338"/><animate attributeName="opacity" values="0;1;1;0" dur="4.8s" begin=".5s" repeatCount="indefinite"/></circle>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 01</span>Two reads, drawn as two catch-fields. They overlap on the obvious; <b>the gap on each side is what the other read alone would have missed</b>.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 2 — what your read carries that the agent's can't ============ -->
-  <section class="prose">
-    <p>
-      The non-overlap is the whole reason you run both. Your read carries voice-of-experience the agent's breadth
-      can't fake: you've seen what happens when <span class="mono">the auth helper</span> gets edited for a feature
-      that had nothing to do with auth. The agent has never shipped <em>your</em> code at 5pm on a Friday. The
-      walk-down, meanwhile, carries a completeness you can't match by squinting — it will dredge up the nullable-id
-      question, the cache-or-live question, the retry-path question, one at a time, until it runs out of branches.
-      <b>Pair the two and you get a complete read. Run either alone and you've shipped a draft you mistook for a decision.</b>
-    </p>
-
-    <p class="pull">
-      Assumption-silent isn't assumption-free. <b>Every plan assumes something; the good ones say what.</b>
-    </p>
-
-    <div class="sec-label">The upgrade · rubber-stamp → paired read</div>
-    <h2>From the <em>sixty-second nod</em> to a gate the plan has to cross.</h2>
-
-    <p>
-      The default move is a rubber-stamp: a plan approved in under a minute on a single glance, where the structure
-      did the persuading and your read added nothing. The upgrade is the same approval prompt run as a deliberate
-      two-pass gate. First, push back with <b>what only you can see</b> — and do it specifically. Pick
-      <em>keep planning with feedback</em>, find one step, and quote its number and a word from it: not
-      <em class="no">"looks good, one concern,"</em> but <em class="teal">"step 3 — 'update the auth helper' — that's the wrong file for this change."</em>
-      A quote forces the agent to revise the actual step instead of nodding at a vague worry. Then run the second read.
-      Below: the nod on the left, the gate on the right.
-    </p>
-  </section>
-
-  <!-- ============ DIAGRAM 2 — THE UPGRADE ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 384" role="img" aria-label="Left: a plan rubber-stamped in under sixty seconds with a single looks-good, one shallow read where the structure did the persuading. Right: the same plan crossing a two-pass gate — a quoted-step push-back loop and a branch-walk run to exhaustion before approve.">
-      <defs>
-        <linearGradient id="d2-stamp" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5d6a68" stop-opacity=".5"/><stop offset="1" stop-color="#5d6a68" stop-opacity="0"/></linearGradient>
-        <linearGradient id="d2-gate" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".5"/><stop offset="1" stop-color="#ffb347" stop-opacity=".5"/></linearGradient>
-        <filter id="d2-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">SAME PLAN · TWO WAYS TO REACH APPROVE</text>
-
-      <!-- LEFT: the rubber-stamp -->
-      <g>
-        <text x="80" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#5d6a68">RUBBER-STAMP · &lt; 60s · ONE SHALLOW READ</text>
-        <rect x="80" y="96" width="300" height="120" rx="12" fill="rgba(8,17,18,.6)" stroke="rgba(93,106,104,.4)"/>
-        <rect x="80" y="96" width="300" height="22" rx="6" fill="rgba(93,106,104,.16)"/>
-        <text x="94" y="112" font-family="'Spline Sans Mono',monospace" font-size="10" fill="#6f8a85">PLAN · 7 steps</text>
-        <g stroke="#4b5654" stroke-width="2" opacity=".6">
-          <line x1="96" y1="142" x2="300" y2="142"/>
-          <line x1="96" y1="162" x2="340" y2="162"/>
-          <line x1="96" y1="182" x2="270" y2="182"/>
-        </g>
-        <!-- single looks-good -->
-        <rect x="80" y="234" width="190" height="30" rx="9" fill="rgba(93,106,104,.12)" stroke="rgba(93,106,104,.5)"/>
-        <text x="96" y="254" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#6f8a85">"looks good" → approve</text>
-        <path d="M270,249 L360,249" stroke="url(#d2-stamp)" stroke-width="1.4" fill="none"/>
-        <text x="80" y="300" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#5d6a68">the structure persuaded you,</text>
-        <text x="80" y="320" font-family="'Spline Sans',sans-serif" font-style="italic" font-size="13" fill="#5d6a68">your read added nothing</text>
-      </g>
-
-      <!-- divider arrow -->
-      <g transform="translate(450,190)">
-        <path d="M0,0 L60,0" stroke="#3fe0c8" stroke-width="1.4" fill="none" opacity=".7"/>
-        <polygon points="60,0 51,-6 51,6" fill="#3fe0c8" opacity=".8"/>
-        <text x="30" y="-12" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3fe0c8">UPGRADE</text>
-        <text x="30" y="22" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="12" fill="#6f8a85">same prompt</text>
-      </g>
-
-      <!-- RIGHT: the two-pass gate -->
-      <g>
-        <text x="560" y="74" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".24em" fill="#3fe0c8">TWO-PASS GATE · THE PLAN HAS TO CROSS IT</text>
-        <g filter="url(#d2-glow)">
-          <rect x="560" y="96" width="420" height="220" rx="12" fill="rgba(8,17,18,.78)" stroke="url(#d2-gate)" stroke-width="1.6"/>
-        </g>
-        <!-- pass A: quoted push-back -->
-        <text x="578" y="124" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".18em" fill="#3fe0c8">PASS A · YOUR READ</text>
-        <rect x="578" y="132" width="384" height="44" rx="9" fill="rgba(63,224,200,.06)" stroke="rgba(63,224,200,.35)"/>
-        <text x="592" y="152" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">keep planning: "step 3 — 'update the auth</text>
-        <text x="592" y="168" font-family="'Spline Sans',sans-serif" font-size="12" fill="#9bffe9">helper' — wrong file for this change"</text>
-        <text x="970" y="190" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#1d8d80">↻ check it sharpened — don't accept a nod</text>
-
-        <!-- pass B: branch-walk to exhaustion -->
-        <text x="578" y="216" font-family="'Spline Sans Mono',monospace" font-size="9.5" letter-spacing=".18em" fill="#ffb347">PASS B · AGENT WALK-DOWN</text>
-        <g font-family="'Spline Sans Mono',monospace" font-size="10.5" fill="#ffce85">
-          <circle cx="586" cy="232" r="2.8" fill="#ffb347"/><text x="598" y="236">branch 1 → recommend</text>
-          <circle cx="586" cy="252" r="2.8" fill="#ffb347"/><text x="598" y="256">branch 2 → recommend</text>
-          <circle cx="586" cy="272" r="2.8" fill="#ffb347"/><text x="598" y="276">branch 3 → ✗ rejected, corrected</text>
-          <circle cx="586" cy="292" r="2.8" fill="#ffb347" class="breathe"/><text x="598" y="296" fill="#fff4e2">… run to exhaustion</text>
-        </g>
-        <text x="970" y="236" text-anchor="end" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".14em" fill="#a86a1f">one question at a time</text>
-
-        <!-- the approve, earned -->
-        <rect x="560" y="96" width="420" height="220" rx="12" fill="none" stroke="#3fe0c8" stroke-width=".6" opacity=".35"/>
-      </g>
-
-      <text x="770" y="346" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">APPROVE ONLY AFTER BOTH PASSES LAND · SAME PLAN, READ TWICE</text>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 02</span>The approval is the same button. <b>What changed is the gate the plan crosses to reach it</b> — a quoted push-back, then a branch-walk run to exhaustion.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 3 — the second read + the verify-it-sharpened trap ============ -->
-  <section class="prose">
-    <p>
-      Two things break the gate if you skip them. The first: <b>the agent will say "good point" and re-soften the same
-      step in the revised plan.</b> An acknowledgement is not a fix. Check the regenerated step — if it re-softened, push
-      again, same quote. The second: run the walk-down as a <em>Q-and-A sequence, not a one-shot dump.</em> Ask the agent
-      to walk the design tree it didn't resolve, branch by branch, one question with a recommended answer each, and let
-      it run until <em>it's</em> out of branches — you don't get to decide it's finished early. A prompt that returns
-      every branch in one list is a list; a sequence that resolves them one at a time is a read.
-    </p>
-
-    <div class="sec-label">The compounding loop · the plan-reading gets cheaper</div>
-    <h2>Each pass <em>pre-shapes</em> the next plan in this repo.</h2>
-
-    <p>
-      Here's the counterintuitive part, and it's also where the move stops being a chore. This feels expensive — two
-      reads on every plan? — but it's cheaper than it looks, for two reasons. One: <b>you don't have to execute a plan
-      to know it's good.</b> Making the plan good <em>is</em> the work; the running is just typing. Two: the branch that
-      sharpened how plans get made here doesn't evaporate when you approve. The same wrong-for-this-repo assumption your
-      push-back caught becomes a saved rule, and the next plan in this repo arrives <em>pre-shaped</em> by it — fewer soft
-      items, fewer unresolved branches, less pushing-back to land. The loop below shows it closing.
-    </p>
-  </section>
-
-  <!-- ============ DIAGRAM 3 — THE COMPOUNDING LOOP ============ -->
-  <div class="diagram">
-    <svg viewBox="0 0 1080 420" role="img" aria-label="A five-beat loop — read, push back, walk down the branches, approve, save the branch that sharpened plan-making as a rule — feeding back so the next plan arrives pre-shaped and needs less reading.">
-      <defs>
-        <linearGradient id="d3-ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fe0c8" stop-opacity=".8"/><stop offset="1" stop-color="#ffb347" stop-opacity=".6"/></linearGradient>
-        <radialGradient id="d3-bead" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#9bffe9"/><stop offset=".55" stop-color="#3fe0c8"/><stop offset="1" stop-color="#1d8d80"/></radialGradient>
-        <radialGradient id="d3-amber" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#ffe0a8"/><stop offset=".55" stop-color="#ffb347"/><stop offset="1" stop-color="#a86a1f"/></radialGradient>
-        <filter id="d3-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-
-      <text x="40" y="32" font-family="'Spline Sans Mono',monospace" font-size="10.5" letter-spacing="2.5" fill="#3b524e">THE PLAN-READING GETS CHEAPER · WHAT CHANGES BETWEEN PASSES</text>
-
-      <!-- ===== LEFT HALF: the loop ===== -->
-      <g transform="translate(20,52)">
-        <circle cx="200" cy="170" r="130" fill="none" stroke="url(#d3-ring)" stroke-width="2.2" stroke-dasharray="540 60" stroke-linecap="round" transform="rotate(-90 200 170)"/>
-        <circle r="3.6" fill="#aeffee">
-          <animateMotion dur="9s" repeatCount="indefinite" path="M200,40 a130,130 0 1,1 -0.1,0"/>
-          <animate attributeName="opacity" values=".3;1;1;.3" dur="9s" repeatCount="indefinite"/>
-        </circle>
-
-        <!-- five beads -->
-        <g>
-          <circle cx="200" cy="40" r="20" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="200" y="45" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">1</text>
-          <text x="200" y="20" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Read the plan</text>
-        </g>
-        <g>
-          <circle cx="324" cy="110" r="20" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="324" y="115" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">2</text>
-          <text x="352" y="106" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Push back</text>
-          <text x="352" y="122" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#6f8a85">the soft item</text>
-        </g>
-        <g>
-          <circle cx="324" cy="230" r="20" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="324" y="235" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">3</text>
-          <text x="352" y="226" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Walk down</text>
-          <text x="352" y="242" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#6f8a85">the branches</text>
-        </g>
-        <g>
-          <circle cx="200" cy="300" r="20" fill="url(#d3-bead)" filter="url(#d3-glow)"/>
-          <text x="200" y="305" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">4</text>
-          <text x="200" y="338" text-anchor="middle" font-family="'Spline Sans',sans-serif" font-size="12" fill="#eafff9">Approve</text>
-        </g>
-        <g>
-          <circle cx="76" cy="170" r="20" fill="url(#d3-amber)" filter="url(#d3-glow)"/>
-          <text x="76" y="175" text-anchor="middle" font-family="'Fraunces',serif" font-size="15" fill="#05080a" font-weight="500">5</text>
-          <text x="44" y="166" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="12" fill="#fff4e2">Save the branch</text>
-          <text x="44" y="182" text-anchor="end" font-family="'Spline Sans',sans-serif" font-size="10.5" fill="#a86a1f">as a rule</text>
-        </g>
-
-        <text x="200" y="166" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".22em" fill="#3b524e">EVERY PASS</text>
-        <text x="200" y="184" text-anchor="middle" font-family="'Fraunces',serif" font-style="italic" font-size="14" fill="#3fe0c8">cheaper to read</text>
-      </g>
-
-      <!-- ===== RIGHT HALF: the next plan arriving pre-shaped ===== -->
-      <g transform="translate(560,64)">
-        <!-- pass 1 plan — many soft items / open branches -->
-        <g>
-          <rect x="0" y="14" width="150" height="220" rx="8" fill="rgba(8,17,18,.7)" stroke="rgba(63,224,200,.22)"/>
-          <rect x="0" y="14" width="150" height="20" rx="6" fill="rgba(63,224,200,.10)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">PLAN</text>
-          <text x="112" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">pass 1</text>
-          <!-- many open branches (amber = unresolved) -->
-          <g stroke="#ffb347" stroke-width="2" opacity=".7">
-            <line x1="12" y1="58" x2="128" y2="58"/>
-            <line x1="12" y1="80" x2="110" y2="80"/>
-            <line x1="12" y1="102" x2="132" y2="102"/>
-            <line x1="12" y1="124" x2="96" y2="124"/>
-            <line x1="12" y1="146" x2="124" y2="146"/>
-            <line x1="12" y1="168" x2="108" y2="168"/>
-          </g>
-          <text x="75" y="208" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".14em" fill="#a86a1f">MANY OPEN BRANCHES</text>
-        </g>
-
-        <!-- arrow with the saved rule riding it -->
-        <g transform="translate(160,124)">
-          <path d="M0,0 L40,0" stroke="#3fe0c8" stroke-width="1.2" fill="none" opacity=".7"/>
-          <polygon points="40,0 32,-5 32,5" fill="#3fe0c8" opacity=".75"/>
-          <text x="20" y="-12" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8" letter-spacing=".14em" fill="#ffb347">+ saved rule</text>
-        </g>
-
-        <!-- pass 2 plan — pre-shaped, fewer open -->
-        <g transform="translate(210,0)">
-          <rect x="0" y="14" width="150" height="220" rx="8" fill="rgba(8,17,18,.8)" stroke="url(#d3-ring)" stroke-width="1.4" filter="url(#d3-glow)"/>
-          <rect x="0" y="14" width="150" height="20" rx="6" fill="rgba(63,224,200,.14)"/>
-          <text x="10" y="29" font-family="'Spline Sans Mono',monospace" font-size="9" fill="#3fe0c8">PLAN</text>
-          <text x="112" y="29" font-family="'Spline Sans Mono',monospace" font-size="8" fill="#3b524e" text-anchor="end">pass 2</text>
-          <!-- pre-resolved (teal) -->
-          <g stroke="#9bffe9" stroke-width="2" opacity=".85">
-            <line x1="12" y1="58" x2="128" y2="58"/>
-            <line x1="12" y1="80" x2="118" y2="80"/>
-            <line x1="12" y1="102" x2="124" y2="102"/>
-            <line x1="12" y1="124" x2="100" y2="124"/>
-          </g>
-          <!-- only one branch still open -->
-          <g stroke="#ffb347" stroke-width="2" opacity=".7">
-            <line x1="12" y1="146" x2="92" y2="146"/>
-          </g>
-          <text x="75" y="208" text-anchor="middle" font-family="'Spline Sans Mono',monospace" font-size="8.5" letter-spacing=".14em" fill="#3fe0c8">ARRIVES PRE-SHAPED</text>
-        </g>
-
-        <!-- legend -->
-        <g transform="translate(0,254)">
-          <rect x="0" y="0" width="14" height="3" fill="#ffb347"/>
-          <text x="22" y="4" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#a86a1f">UNRESOLVED · STILL NEEDS A READ</text>
-          <rect x="0" y="14" width="14" height="3" fill="#9bffe9"/>
-          <text x="22" y="18" font-family="'Spline Sans Mono',monospace" font-size="9" letter-spacing=".12em" fill="#1d8d80">PRE-RESOLVED BY A SAVED RULE</text>
-        </g>
-      </g>
-    </svg>
-    <div class="dcap"><span class="num">Process diagram · 03</span>The branch your push-back surfaced gets <b>saved as a rule</b> — and the next plan in this repo arrives pre-shaped, so the reading gets cheaper each pass.</div>
-  </div>
-
-  <!-- ============ PROSE BLOCK 4 — what Test actually means ============ -->
-  <section class="prose">
-    <div class="sec-label amber">What "Test" actually means · the negative check</div>
-    <h2 class="amber">If you can't name what your read caught, <em>the two reads collapsed into one</em>.</h2>
-
-    <p>
-      The clean test isn't "did I approve a plan." It's "can I prove it got <b>two distinct kinds</b> of scrutiny."
-      The scrollback should show a <em class="teal">keep-planning</em> message quoting a specific step number and a word
-      from it — not <em class="no">"looks good, one concern."</em> It should show a Q-and-A branch-walk that ran to
-      exhaustion, not a single dumped list. At least one walk-down recommendation should have been rejected and corrected
-      for this codebase — the recommendations are defaults, not prescriptions. And the honest negative test:
-      <b>name one thing your push-back caught that the agent's walk-down would have missed.</b> If you can't, the two reads
-      collapsed into one — the agent did both passes and your situated read added nothing. That's the failure mode hiding
-      behind a clean approval.
-    </p>
-  </section>
-
-  <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
-  <div class="plates">
-    <div class="plate use">
-      <div class="beat-label amber"><b>Use when</b></div>
-      <p class="body">
-        An agent hands you a <span class="grey">clean-looking plan for a multi-file change</span> and the approve
-        button is right there — the work is <b>non-trivial enough that touching the wrong file matters</b>, and the
-        plan's confidence outruns your actual read of it.
+    <!-- LEFT EYE -->
+    <div class="eye left">
+      <div class="eye-tag">Left eye · your read</div>
+      <h2>Shallow but <em>situated</em>.</h2>
+      <p>
+        You don't hold the whole design tree in working memory. What you hold is the nose: the soft item, the
+        assumption that's wrong for <em>this</em> repo, the file that shouldn't be touched at all. You've seen what
+        happens when <span class="mono">the auth helper</span> gets edited for a feature that had nothing to do with auth;
+        the agent has never shipped <em>your</em> code on a Friday afternoon. <b>That's the read no breadth can fake</b> &mdash;
+        and it's worthless until you make it specific.
+      </p>
+      <p>
+        So don't nod. In plan mode, pick <b>keep planning with feedback</b>, find one step, and quote its number and one
+        word from it &mdash; because a quote forces the agent to revise the actual step, not nod at a vague worry:
+      </p>
+      <p class="move-quote">
+        not <span class="no">&ldquo;looks good, one concern&rdquo;</span> &mdash; but &ldquo;step 3, &lsquo;update the
+        auth helper&rsquo; &mdash; that's the wrong file for this change.&rdquo;
+      </p>
+      <p class="guard">
+        &#8635; THEN CHECK THE REGENERATED STEP ACTUALLY SHARPENED.<br>&ldquo;GOOD POINT&rdquo; IS NOT A FIX. IF IT RE-SOFTENED, PUSH AGAIN &mdash; SAME QUOTE.
       </p>
     </div>
-    <div class="plate build">
-      <div class="beat-label"><b>Build</b></div>
-      <p class="body">
-        An approved plan file that <b>carries both reads in its history</b> — the gates you read, the soft items your
-        push-back hardened, the branches the walk-down resolved. Note the path: it's the input to the next phase.
+
+    <!-- RIGHT EYE -->
+    <div class="eye right">
+      <div class="eye-tag">Right eye · agent walk-down</div>
+      <h2>Exhaustive but <em>unsituated</em>.</h2>
+      <p>
+        The walk-down is your nose's inverse. Ask a second agent to dredge up every branch the plan left unresolved
+        &mdash; the <span class="mono">nullable-id</span> question, the cache-or-live question, the retry-path question
+        &mdash; including the dozen you'd never have kept in working memory. <b>What it lacks is the nose:</b> it can't
+        feel which default would quietly break your codebase.
+      </p>
+      <p>
+        So run it as a sequence, not a dump. A list returns every branch at once; a read resolves them one at a time.
+        Ask it to walk the branches it didn't resolve, <b>one question with a recommended answer at a time</b>, and let
+        it run until <em>it</em> is out of branches:
+      </p>
+      <p class="move-quote">
+        you don't get to call it done early &mdash; and the recommendations are <b>defaults, not prescriptions.</b>
+      </p>
+      <p class="guard">
+        &#8635; REJECT AT LEAST ONE RECOMMENDATION THAT'S WRONG FOR THIS REPO.<br>IF YOU REJECTED NONE, YOU RUBBER-STAMPED THE SECOND READ TOO.
       </p>
     </div>
-    <div class="plate test">
-      <div class="beat-label"><b>Test</b></div>
-      <p class="body">
-        You can <em>name one thing your push-back caught</em> the walk-down would have missed.<br>
-        If you can't — <em class="no">the two reads collapsed into one.</em>
+
+    <!-- THE FUSE — one centred Monday-line that is also its own negative test -->
+    <div class="fuse">
+      <div class="fuse-tag">Fuse the two · the Monday-move is one line</div>
+      <p class="fuse-line">
+        Next multi-file plan an agent hands you, don't approve it &mdash; read it with the left eye <b>and</b> the right
+        eye, approve only after both land, and the branch your push-back caught gets saved as a rule so the next plan
+        in this repo arrives pre-shaped and the reading gets cheaper.
+      </p>
+      <p class="fuse-test">
+        The proof you used both eyes, not one twice: <b>you can name one thing your eye caught that the agent's walk-down
+        never would have.</b> If you can't, you read with one eye and called it depth &mdash; the agent did both passes
+        and your situated read added nothing.
+      </p>
+      <p class="systemic">
+        <b>Where it sits:</b> this is the personal foundation of Context &amp; Guardrails. The same branch a second read
+        surfaces is what a team later hardens into a shared judge or CI check &mdash; so the company's plan-quality
+        stops depending on whether each person happened to read twice. <em>(Positioning, not a coined law.)</em>
       </p>
     </div>
+
   </div>
 
-  <!-- ============ CORE MOVES — actionable heart ============ -->
-  <section class="moves">
-    <div class="beat-label"><b>Core moves</b></div>
-    <div class="moves-head">
-      <h2>The action, in sequence</h2>
-      <span class="lede">Each move is built to catch a different kind of miss.</span>
-    </div>
-
-    <div class="move-rail">
-      <div class="thread"></div>
-      <div class="step">
-        <div class="bead">1</div>
-        <h3>Read it as three artefacts</h3>
-        <p>File list, verification steps, named assumptions — <b>separately, not one wall.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">2</div>
-        <h3>Push back with a quote</h3>
-        <p>Quote a step number and a word. <b>The soft item only you can see.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">3</div>
-        <h3>Check it sharpened</h3>
-        <p>Don't accept a nod. <b>If it re-softened, push again.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">4</div>
-        <h3>Walk down the branches</h3>
-        <p>One question at a time, <b>to exhaustion. You don't call it done.</b></p>
-      </div>
-      <div class="step">
-        <div class="bead">5</div>
-        <h3>Reject one, then approve</h3>
-        <p>Defaults, not prescriptions. <b>Then stop — you don't execute.</b></p>
-      </div>
-    </div>
-
-    <div class="compound">
-      <svg class="loop-ico" width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
-        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#3fe0c8"/><stop offset="100%" stop-color="#ffb347"/>
-        </linearGradient></defs>
-        <circle cx="37" cy="37" r="26" fill="none" stroke="url(#lg)" stroke-width="2.4"
-          stroke-dasharray="120 40" stroke-linecap="round" transform="rotate(-90 37 37)"/>
-        <polygon points="37,8 30,16 44,16" fill="#3fe0c8"/>
-        <circle cx="37" cy="37" r="6" fill="#3fe0c8" opacity=".25"/>
-        <circle r="3" fill="#aeffee">
-          <animateMotion dur="5s" repeatCount="indefinite"
-            path="M37,11 a26,26 0 1,1 -0.1,0"/>
-        </circle>
-      </svg>
-      <div class="ctext">
-        <div class="cyc">read<span class="arr">→</span>push back<span class="arr">→</span>walk down<span class="arr">→</span>approve<span class="arr">→</span>save the branch as a rule</div>
-        <p>The branch that sharpened plan-making here gets saved, and <b>the next plan arrives pre-shaped.</b> Making the plan good is the work — you don't have to execute it to know it's good.</p>
-      </div>
-    </div>
-
-    <!-- the Monday-move / no-permission aside -->
-    <p class="aside">
-      <b>Monday move: next plan an agent hands you, don't approve it.</b>
-      <span class="mono">Keep planning with feedback · quote one step + one word · then walk the branches one at a time · reject one · approve.</span>
-      No platform, no budget, no sign-off — push-back is a chat message, the walk-down is a prompt, all inside one session on a task already in your backlog.
-    </p>
-  </section>
-
-  <!-- ============ WHY — the conviction ============ -->
-  <section class="why">
-    <div class="beat-label"><b>Why</b></div>
-
-    <div class="principle-block">
-      <div class="principle-label">The principle</div>
-      <p class="principle-line">One kind of scrutiny catches <em>one</em> kind of miss. Pair two, and the gap between them is where the plan-reading skill lives.</p>
-    </div>
-
-    <p class="quote">"Plan mode makes the read possible; it isn't the read."</p>
-    <p class="gloss">
-      The mechanism is plain once you name it. Your read is <b>shallow but situated</b> — you feel the soft item,
-      the assumption that's wrong for this repo, the file that shouldn't be touched. The agent's walk-down is
-      <b>exhaustive but unsituated</b> — it surfaces every branch in the design tree, including the ones you'd never
-      have held in working memory. Reading a plan is finite; pair the two and you get a complete read. Neither alone does.
-    </p>
-    <p class="gloss">
-      And it's cheaper than it feels, because <b>you don't have to execute a plan to know it's good</b> — the approval
-      is the work, not the running. <em>Assumption-silent isn't assumption-free.</em> Every plan assumes something, and
-      the good ones say what; the two reads are how the silent assumptions get named before they cost you a file.
-    </p>
-    <div class="corollary"><span class="sd"></span>The structure persuaded you. Two reads is how you stop letting it.</div>
-  </section>
-
-  <!-- ============ SYSTEMIC LINE — surfaced panel ============ -->
-  <section class="practice">
-    <div class="beat-label amber"><b>Where it sits</b> · personal → team → company</div>
-    <p>
-      This is the <b>personal foundation</b> of Context &amp; Guardrails — the read-discipline an individual practises at
-      the approval prompt. It doesn't stay personal. The same branch a second read surfaces is what a team later hardens
-      into a shared judge or a CI check that catches it before any teammate has to ask — so that
-      <b>the company's plan-quality stops depending on whether each individual happened to read twice.</b>
-      The habit you build on one plan is the seed of a gate the whole org rests on. <em>(Positioning, not a coined law.)</em>
-    </p>
-  </section>
-
-  <!-- ============ CONNECTS TO — neighbour patterns ============ -->
+  <!-- ============ CONNECTS TO — neighbour patterns (strippable) ============ -->
   <section class="connects">
     <h2>Connects to</h2>
     <div class="sub">Threads leaving this node · the pattern language</div>
@@ -985,27 +484,27 @@
     <div class="web">
       <svg viewBox="0 0 1080 300" aria-hidden="true">
         <defs>
-          <linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
-          <linearGradient id="t3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
-          <filter id="wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="t2-th1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t2-th2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#1d8d80" stop-opacity=".7"/></linearGradient>
+          <linearGradient id="t2-th3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3fe0c8" stop-opacity=".1"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/></linearGradient>
+          <filter id="t2-wglow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         </defs>
 
         <circle cx="150" cy="150" r="30" fill="none" stroke="#3fe0c8" stroke-width="1.2" opacity=".5"/>
-        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#wglow)"/>
+        <circle cx="150" cy="150" r="11" fill="#3fe0c8" filter="url(#t2-wglow)"/>
         <circle cx="150" cy="150" r="46" fill="none" stroke="#3fe0c8" stroke-width=".7" opacity=".25"/>
 
-        <path id="th1" d="M150,150 C360,78 540,58 760,62" stroke="url(#t1)" stroke-width="2.2" fill="none"/>
-        <path id="th2" d="M150,150 C380,150 560,150 760,150" stroke="url(#t2)" stroke-width="2.2" fill="none"/>
-        <path id="th3" d="M150,150 C360,222 540,238 760,238" stroke="url(#t3)" stroke-width="2.2" fill="none"/>
+        <path id="t2-path1" d="M150,150 C360,78 540,58 760,62" stroke="url(#t2-th1)" stroke-width="2.2" fill="none"/>
+        <path id="t2-path2" d="M150,150 C380,150 560,150 760,150" stroke="url(#t2-th2)" stroke-width="2.2" fill="none"/>
+        <path id="t2-path3" d="M150,150 C360,222 540,238 760,238" stroke="url(#t2-th3)" stroke-width="2.2" fill="none"/>
 
-        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#th1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#th2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
-        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#th3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#aeffee"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#t2-path1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#5cffe6"><animateMotion dur="5.4s" begin=".6s" repeatCount="indefinite"><mpath href="#t2-path2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.4s" begin=".6s" repeatCount="indefinite"/></circle>
+        <circle r="2.8" fill="#ffce85"><animateMotion dur="5.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#t2-path3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" dur="5.8s" begin="1.1s" repeatCount="indefinite"/></circle>
       </svg>
 
       <div class="neighbours">
-        <div class="origin-chip" style="left:13.8%;top:50%">Two reads, one approval<small>software · you are here</small></div>
+        <div class="origin-chip" style="left:13.8%;top:50%">Two-pass plan review<small>software · you are here</small></div>
         <a class="nb"        href="orient-and-introspect.html" style="left:74%;top:20.7%"><span class="sd"></span>Orient and introspect <span class="recipe-no">upstream</span></a>
         <a class="nb amber"  href="plan-rule-extract.html" style="left:74%;top:50%"><span class="sd"></span>Extract the plan into a rule <span class="recipe-no">downstream</span></a>
         <a class="nb"        href="access-surface-map.html" style="left:74%;top:79.3%"><span class="sd"></span>Map the access surface <span class="recipe-no">sibling</span></a>
@@ -1013,9 +512,9 @@
     </div>
   </section>
 
-  <!-- ============ FOOTER ============ -->
+  <!-- ============ FOOTER (strippable) ============ -->
   <footer class="floor">
-    <span class="door">A door, not a destination — plan mode ships in the tool you already run. No platform, no vendor, no permission required.</span>
+    <span class="door">Read the next plan with both eyes &mdash; quote one step back, then walk the branches to exhaustion. The depth is in the gap.</span>
     <span class="meta">The Big Picture · Pattern Language</span>
   </footer>
 
