@@ -36,21 +36,23 @@
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
   }
 
-  /* ===== HEADER ===== */
-  header.top{display:flex;align-items:flex-end;justify-content:space-between;padding:13px 30px 7px;z-index:20;position:relative;}
-  .brand{display:flex;flex-direction:column;gap:1px}
+  /* ===== HEADER — magazine masthead on a shared register ===== */
+  header.top{
+    display:grid;grid-template-columns:auto minmax(0,430px);align-items:end;justify-content:space-between;
+    gap:36px;padding:14px 30px 10px;z-index:20;position:relative;
+    border-bottom:1px solid var(--hairline);
+  }
+  .brand{display:flex;flex-direction:column;gap:3px}
   .brand .eyebrow{font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.42em;text-transform:uppercase;color:var(--teal-dim);}
   .brand h1{font-family:'Fraunces',serif;font-weight:400;font-size:26px;line-height:1;color:var(--spore);letter-spacing:-.01em;}
   .brand h1 em{font-style:italic;color:var(--teal);font-weight:400}
 
-  /* Right: plain orient line + click cue */
-  .orient{text-align:right;display:flex;flex-direction:column;gap:4px;max-width:500px;}
-  .orient .headline{font-size:13px;color:var(--ink);line-height:1.4;font-family:'Spline Sans',sans-serif;}
-  .orient .headline strong{color:var(--spore);}
-  .orient .click-cue{font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal-dim);display:flex;align-items:center;gap:6px;justify-content:flex-end;}
-  .orient .click-cue::before{content:"";display:block;width:18px;height:1px;background:var(--teal-dim);opacity:.6;}
-  .orient .read-all{margin-top:8px;font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--spore);text-decoration:none;border-bottom:1px solid rgba(255,179,71,.35);padding-bottom:2px;align-self:flex-end;transition:border-color .2s,opacity .2s;opacity:.85;}
-  .orient .read-all:hover{opacity:1;border-color:var(--spore);}
+  /* Right: orientation note — one tidy stack sharing the header baseline */
+  .orient{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:9px;}
+  .orient .headline{font-size:13px;color:var(--ink);line-height:1.5;font-family:'Spline Sans',sans-serif;text-wrap:balance;max-width:42ch;}
+  .orient .headline strong{color:var(--spore);font-weight:500;}
+  .orient .read-all{font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);text-decoration:none;border-bottom:1px solid var(--teal-dim);padding-bottom:3px;transition:border-color .2s,color .2s;opacity:.9;}
+  .orient .read-all:hover{opacity:1;color:var(--spore);border-color:var(--teal);}
 
   /* ===== CANVAS ===== */
   .canvas{position:relative;min-height:0;}
@@ -75,9 +77,12 @@
   }
   .col-band:last-child .col-name{color:var(--amber);}
 
-  /* lane labels */
-  .lane-label{position:absolute;left:7px;z-index:5;writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.34em;text-transform:uppercase;}
-  .lane-label .big{font-family:'Fraunces',serif;writing-mode:vertical-rl;font-size:12.5px;letter-spacing:.06em;text-transform:none;font-style:italic}
+  /* lane labels — vertical rail: a colour tick · mono lane-tag · serif discipline name */
+  .lane-label{position:absolute;left:8px;z-index:5;writing-mode:vertical-rl;transform:rotate(180deg);
+    display:flex;align-items:center;gap:11px;}
+  .lane-label::before{content:"";display:block;width:1px;height:22px;background:currentColor;opacity:.55;}
+  .lane-label .tag{font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.36em;text-transform:uppercase;opacity:.72;}
+  .lane-label .big{font-family:'Fraunces',serif;font-size:13.5px;letter-spacing:.04em;text-transform:none;font-style:italic;}
   .lane-label.sw{top:7%;color:var(--teal)}
   .lane-label.bz{top:60%;color:var(--amber)}
 
@@ -88,11 +93,16 @@
     transform:translate(-50%,-50%);
     text-align:center;
   }
-  .wall-label .wl-text{
-    font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.24em;text-transform:uppercase;
-    color:rgba(255,179,71,.65);white-space:nowrap;
+  .wall-label .wl-title{
+    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.46em;text-transform:uppercase;
+    color:rgba(255,200,120,.95);display:flex;align-items:center;justify-content:center;gap:9px;margin:4px 0;
+    text-shadow:0 0 12px rgba(255,179,71,.45);
   }
-  .wall-label .wl-arrow{font-size:10px;color:rgba(255,179,71,.5);display:block;margin-top:1px;}
+  .wall-label .wl-title::before,.wall-label .wl-title::after{content:"";height:1px;width:16px;background:rgba(255,179,71,.55);}
+  .wall-label .wl-seam{
+    font-family:'Spline Sans Mono',monospace;font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;
+    color:rgba(255,179,71,.5);white-space:nowrap;display:block;
+  }
 
   /* ===== NODES ===== */
   .node{position:absolute;z-index:6;transform:translate(-50%,-50%);width:max-content;max-width:130px;cursor:default;text-decoration:none;
@@ -144,9 +154,12 @@
   .node.live .lbl{background:rgba(12,22,24,.82);box-shadow:0 0 16px rgba(174,240,221,.14);font-weight:500}
   .node.live.sw .lbl{border-color:rgba(63,224,200,.6)}
   .node.live.bz .lbl{border-color:rgba(255,179,71,.6)}
-  .node.live::after{content:"open ↗";position:absolute;left:50%;bottom:-12px;transform:translateX(-50%);font-family:'Spline Sans Mono',monospace;font-size:7px;letter-spacing:.2em;text-transform:uppercase;color:var(--spore);opacity:.72;white-space:nowrap;}
+  /* the "open" affordance is taught ONCE in the header — here it's silent at rest, revealed on reach (no 30× repetition) */
+  .node.live::after{content:"open ↗";position:absolute;left:50%;bottom:-12px;transform:translateX(-50%);font-family:'Spline Sans Mono',monospace;font-size:7px;letter-spacing:.2em;text-transform:uppercase;color:var(--spore);opacity:0;white-space:nowrap;transition:opacity .25s;}
+  .node.live:hover::after{opacity:.8;}
   /* hero live overrides gap badge */
-  .node.hero.live::after{content:"open ↗";font-size:7.5px;color:var(--spore);opacity:.9;border:none;background:none;padding:0;}
+  .node.hero.live::after{content:"open ↗";font-size:7.5px;color:var(--spore);opacity:0;border:none;background:none;padding:0;}
+  .node.hero.live:hover::after{opacity:.95;}
 
   /* seed */
   .node.seed .dot{background:var(--spore);box-shadow:0 0 0 3px rgba(234,255,249,.10),0 0 12px 2px rgba(174,240,221,.5)}
@@ -170,19 +183,19 @@
   .substrate .s-item.amberdot::before{background:var(--amber-dim);box-shadow:0 0 6px rgba(255,179,71,.5)}
   .substrate .s-item b{color:var(--ink);font-weight:500}
 
-  /* footer */
-  footer.floor{z-index:20;position:relative;display:grid;grid-template-columns:2fr 1fr 1.2fr;gap:24px;padding:7px 30px 10px;border-top:1px solid var(--hairline);background:linear-gradient(180deg,transparent,rgba(3,5,6,.7));}
-  .floor-block .ftitle{font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px;display:flex;align-items:center;gap:7px;}
+  /* footer — three blocks on a shared register, divided by hairlines (echo the column borders) */
+  footer.floor{z-index:20;position:relative;display:grid;grid-template-columns:1.7fr 1fr 1.1fr;gap:0;padding:9px 30px 12px;border-top:1px solid var(--hairline);background:linear-gradient(180deg,transparent,rgba(3,5,6,.7));}
+  .floor-block{padding:0 26px;}
+  .floor-block:first-child{padding-left:0;}
+  .floor-block:last-child{padding-right:0;}
+  .floor-block + .floor-block{border-left:1px solid var(--hairline);}
+  .floor-block .ftitle{font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px;display:flex;align-items:center;gap:7px;}
   .floor-block .ftitle::after{content:"";flex:1;height:1px;background:var(--hairline)}
-  .seeds{display:flex;flex-wrap:wrap;gap:3px 9px;}
-  .seeds span{font-size:9.3px;color:var(--ink-faint);letter-spacing:.005em;line-height:1.25;transition:color .3s;}
+  .seeds{display:flex;flex-direction:column;gap:4px;}
+  .seeds span{font-size:9.3px;color:var(--ink-faint);letter-spacing:.005em;line-height:1.3;transition:color .3s;}
   .seeds span:hover{color:var(--ink-dim)}
-  .seeds .math{font-family:'Spline Sans Mono',monospace;color:var(--teal-dim)}
+  .seeds .math{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);letter-spacing:.04em;}
   .roles span{color:var(--ink-dim)}
-  .adopt{display:flex;align-items:center;gap:0;flex-wrap:wrap}
-  .adopt span{font-size:9.3px;color:var(--ink-faint);font-family:'Spline Sans Mono',monospace;letter-spacing:.04em;position:relative;padding-right:15px;}
-  .adopt span:not(:last-child)::after{content:"→";position:absolute;right:3px;color:var(--ink-faint);opacity:.6;}
-  .adopt span:last-child{color:var(--amber-dim)}
 
   @media (max-height:820px){
     .brand h1{font-size:23px}
@@ -202,9 +215,8 @@
       <h1>Building with <em>agents</em>, end to end</h1>
     </div>
     <div class="orient">
-      <span class="headline"><strong>Each move you run yourself — and how it crosses the wall to your team, then your company.</strong></span>
-      <span class="click-cue">Two lanes · six repeating steps · personal → team → company</span>
-      <a class="read-all" href="whitepaper.html">Open any dot for the how-to — or read the whole guide end to end →</a>
+      <p class="headline">Each move you run yourself — and how it <strong>crosses the wall</strong> to your team, then your company.</p>
+      <a class="read-all" href="whitepaper.html">Open any dot, or read the guide end to end →</a>
     </div>
   </header>
 
@@ -224,6 +236,10 @@
         <radialGradient id="lightWell" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stop-color="#ffd99a" stop-opacity=".5"/><stop offset="40%" stop-color="#ffb347" stop-opacity=".18"/><stop offset="100%" stop-color="#ffb347" stop-opacity="0"/>
         </radialGradient>
+        <!-- cool origin pole — answers the warm lightWell; the dark soil where spores begin -->
+        <radialGradient id="originGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#aef0dd" stop-opacity=".20"/><stop offset="45%" stop-color="#3fe0c8" stop-opacity=".07"/><stop offset="100%" stop-color="#3fe0c8" stop-opacity="0"/>
+        </radialGradient>
         <linearGradient id="shipToValue" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="#3fe0c8" stop-opacity=".7"/><stop offset="100%" stop-color="#ffb347" stop-opacity=".7"/>
         </linearGradient>
@@ -242,6 +258,15 @@
 
       <rect x="0" y="0" width="1440" height="620" fill="url(#earth)"/>
       <ellipse cx="1320" cy="300" rx="300" ry="380" fill="url(#lightWell)"/>
+      <ellipse cx="40" cy="30" rx="300" ry="280" fill="url(#originGlow)"/>
+
+      <!-- emergent corner filaments — spores breaking from the cool soil toward the SW spine -->
+      <g stroke="#2a7e72" stroke-width="0.8" fill="none" opacity="0.45">
+        <path d="M-10,36 C60,52 110,86 168,140"/>
+        <path d="M34,-12 C58,46 78,96 126,150"/>
+        <path d="M-12,96 C70,104 128,118 206,150"/>
+        <path d="M70,-12 C86,40 96,86 132,142"/>
+      </g>
 
       <!-- faint root-mass texture -->
       <g stroke="#13413c" stroke-width="0.7" fill="none" opacity="0.45">
@@ -356,14 +381,14 @@
       <div class="col-band"><div class="col-num">06</div><div class="col-name">Outcome</div></div>
     </div>
 
-    <div class="lane-label sw">Software&nbsp; <span class="big">Agentic Engineering</span></div>
-    <div class="lane-label bz">Business&nbsp; <span class="big">Business agents</span></div>
+    <div class="lane-label sw"><span class="tag">Software</span><span class="big">Agentic engineering</span></div>
+    <div class="lane-label bz"><span class="tag">Business</span><span class="big">Business agents</span></div>
 
     <!-- Wall label (HTML overlay, centered on the SVG wall x=1082 ≈ 75% of 1440) -->
-    <div class="wall-label" style="left:75.1%;top:50%;">
-      <span class="wl-text">Personal → Team</span>
-      <span class="wl-arrow">↑ the wall ↑</span>
-      <span class="wl-text">Team → Company</span>
+    <div class="wall-label" style="left:75.1%;top:49%;">
+      <span class="wl-seam">Personal → Team</span>
+      <span class="wl-title">The wall</span>
+      <span class="wl-seam">Team → Company</span>
     </div>
 
     <!-- seed -->
@@ -463,8 +488,8 @@
     <div class="floor-block">
       <div class="ftitle">What it rests on</div>
       <div class="seeds">
-        <span>You build capability by <b>acting under uncertainty</b> — before the payoff is visible.</span>·
-        <span><b>Competence is the gate</b>; it can't be outsourced.</span>·
+        <span>You build capability by <b>acting under uncertainty</b> — before the payoff is visible.</span>
+        <span><b>Competence is the gate</b>; it can't be outsourced.</span>
         <span>A move only counts when it <b>crosses the wall</b> — so give it away.</span>
       </div>
     </div>
