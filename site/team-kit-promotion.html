@@ -23,6 +23,13 @@
     --hairline:rgba(63,224,200,.10);
     --grey:#5d6a68;
     --grey-dim:#39423f;
+    /* THE SECOND INK — the lived voice's material. Warm cream letterform on a
+       raised warm stratum; never appears without its ground. */
+    --ink-w:#f2e3c4;          /* warm cream — the human letterform */
+    --ink-w-dim:#c7a571;      /* warm dim — datelines inside the stratum */
+    --hairline-w:rgba(255,179,71,.20); /* the hairline register, warm token */
+    --stratum-0:#201507;      /* warm soil the human ink sits on */
+    --stratum-1:#291b09;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -35,12 +42,13 @@
     position:relative;
     overflow-x:hidden;
   }
+  /* atmospheric soil — COOL throughout. Under the two-ink pact, ambient warmth is
+     banned: warm ground appears on this page only where the lived voice speaks. */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.08) 0%, transparent 46%),
-      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.06) 0%, transparent 44%),
-      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+      radial-gradient(120% 72% at 10% 0%, rgba(63,224,200,.07) 0%, transparent 46%),
+      linear-gradient(180deg, #0a1417 0%, #071013 12%, #05080a 42%, #04060a 100%);
   }
   body::after{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
@@ -101,7 +109,6 @@
     letter-spacing:-.012em;line-height:1.08;margin-top:14px;
   }
   .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
-  .prose h2.amber em{color:var(--amber)}
   .prose p{
     font-size:15.5px;line-height:1.64;color:var(--ink);margin-top:18px;
     letter-spacing:.002em;
@@ -111,7 +118,6 @@
   .prose p .mono{
     font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
   }
-  .prose p .mono.amber{color:var(--amber)}
   .prose .lede-line{
     font-family:'Fraunces',serif;font-style:italic;font-size:20px;line-height:1.4;
     color:var(--ink);margin-top:20px;max-width:680px;
@@ -136,6 +142,8 @@
     background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 60%, #1d8d80);
     box-shadow:0 0 0 4px var(--soil-0), 0 0 14px 2px rgba(63,224,200,.5);
   }
+  /* the amber NODE survives — it is the rail's terminus semantics (the hero's CI
+     amber), a diagram signal, not a prose accent. The amber TEXT does not. */
   .vert.amber .node{
     background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 60%, #a86a1f);
     box-shadow:0 0 0 4px var(--soil-0), 0 0 14px 2px rgba(255,179,71,.5);
@@ -144,26 +152,22 @@
     font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.26em;
     text-transform:uppercase;color:var(--teal-dim);
   }
-  .vert.amber .tag{color:var(--amber-dim)}
   .vert h3{
     font-family:'Fraunces',serif;font-weight:400;font-size:21px;color:var(--spore);
     letter-spacing:-.008em;line-height:1.16;margin-top:4px;
   }
   .vert h3 em{font-style:italic;color:var(--teal)}
-  .vert.amber h3 em{color:var(--amber)}
   .vert p{font-size:14.5px;line-height:1.58;color:var(--ink);margin-top:9px;max-width:660px}
   .vert p b{color:var(--spore);font-weight:500}
   .vert p em{font-style:italic;color:var(--ink-dim)}
   .vert p .mono{font-family:'Spline Sans Mono',monospace;font-size:12.5px;color:var(--teal)}
-  .vert p .mono.amber{color:var(--amber)}
 
-  /* ============ CONTRARIAN BLOCK ============ */
+  /* ============ CONTRARIAN BLOCK — cool throughout under the pact ============ */
   .bet{
     margin-top:42px;border:1px solid rgba(63,224,200,.18);border-radius:16px;
     padding:26px 30px 28px;position:relative;overflow:hidden;max-width:760px;
     background:
       radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
-      radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
       rgba(7,14,15,.6);
   }
   .bet .tag{
@@ -179,7 +183,7 @@
   .bet p b{color:var(--spore);font-weight:500}
   .bet p em{font-style:italic;color:var(--ink-dim)}
 
-  /* ============ MONDAY (woven, not a uniform mono box) ============ */
+  /* ============ MONDAY ============ */
   .now{
     margin-top:34px;max-width:730px;
     border-left:2px solid var(--teal-dim);padding:4px 0 4px 20px;
@@ -241,19 +245,85 @@
     letter-spacing:.24em;text-transform:uppercase;color:var(--teal-dim);margin-top:3px;
   }
 
-  /* ============ FOOTER ============ */
+  /* ============ FOOTER — door demoted to the cool register ============ */
   footer.floor{
     margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
     display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   }
   footer.floor .door{
-    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
-    text-shadow:0 0 22px rgba(255,179,71,.3);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 22px rgba(63,224,200,.25);max-width:78%;
   }
   footer.floor .meta{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--ink-faint);
   }
+
+  /* ============ TWO INKS, ONE PAGE — the human ink ============
+     The lived voice is a MATERIAL, not an annotation: a full-bleed warm
+     stratum rises out of the cool soil wherever Antti's verbatim words run.
+     Three cues travel together: (1) the raised warm ground, edge to edge,
+     bounded by the warm token of the same hairline register; (2) warm-cream
+     ROMAN serif at reading size — never italic; (3) a dateline, which is
+     material (a citation), not a label. */
+  .ink-h{
+    position:relative;width:100vw;margin:44px 0 44px calc(50% - 50vw);
+    border-top:1px solid var(--hairline-w);border-bottom:1px solid var(--hairline-w);
+    background:
+      radial-gradient(90% 130% at 18% 0%, rgba(255,179,71,.10), transparent 60%),
+      linear-gradient(180deg, var(--stratum-1), var(--stratum-0));
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18), 0 22px 44px -30px rgba(255,179,71,.14);
+  }
+  .ink-h .inner{max-width:1080px;margin:0 auto;padding:30px 30px 26px}
+  .ink-h p{
+    font-family:'Fraunces',serif;font-weight:400;font-style:normal;
+    font-size:19px;line-height:1.72;color:var(--ink-w);letter-spacing:.002em;max-width:700px;
+  }
+  .ink-h p + p{margin-top:12px}
+  .ink-h .dateline{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.6;letter-spacing:.07em;
+    color:var(--ink-w-dim);display:block;margin-top:14px;
+  }
+  .ink-h .dateline b{color:var(--ink-w);font-weight:500}
+  /* the opening stratum — the first words spoken on the page are his */
+  .ink-h.lead{margin-top:30px;margin-bottom:0;border-bottom:none;box-shadow:0 -22px 44px -30px rgba(255,179,71,.18)}
+  .ink-h.lead .inner{padding:36px 30px 28px}
+  .ink-h.lead p{font-size:clamp(20px,2.6vw,24px);line-height:1.6;max-width:780px}
+
+  /* ============ THE PACT — taught once, at the first seam ============ */
+  .pact{width:100vw;margin:0 0 8px calc(50% - 50vw);border-bottom:1px solid var(--hairline)}
+  .pact .inner{
+    max-width:1080px;margin:0 auto;padding:0 30px;
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .pact .cell{padding:13px 18px 15px;font-size:13px;line-height:1.5}
+  .pact .cell.h{
+    font-family:'Fraunces',serif;color:var(--ink-w);
+    background:linear-gradient(180deg, var(--stratum-0), #150d05);
+    border-bottom:2px solid rgba(255,179,71,.45);
+  }
+  .pact .cell.m{
+    font-family:'Spline Sans',sans-serif;color:var(--ink);
+    border-bottom:2px solid rgba(63,224,200,.4);
+  }
+  .pact .cell .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px;
+  }
+  .pact .cell.h .who{color:var(--ink-w-dim)}
+  .pact .cell.m .who{color:var(--teal-dim)}
+
+  /* the ink colophon — machine accounting; subsumes "Lived, before it was a pattern" */
+  .seam-note{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+  }
+  .seam-note .seam-tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .seam-note a{color:var(--amber-dim);text-decoration:none}
+  .seam-note a:hover{color:var(--amber)}
 
   @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
   .breathe{animation:breathe 4.2s ease-in-out infinite}
@@ -262,6 +332,10 @@
   @media (max-width:780px){
     .neighbours .nb{font-size:11px;padding:6px 10px}
     .prose p{font-size:14.5px}
+    .pact .inner{grid-template-columns:1fr;padding:0}
+    .pact .cell{padding:13px 30px 15px}
+    .ink-h p{font-size:18px}
+    .ink-h.lead p{font-size:20px}
   }
 </style>
 </head>
@@ -273,16 +347,37 @@
     <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Promoting a skill to the team</span>
   </nav>
 
-  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <!-- ============ PATTERN NAME — the subject first, then the lived voice speaks ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· the wall-crossing pattern · personal → team / company</span></div>
     <h1>Promoting a skill <em>to the team</em></h1>
+  </header>
+
+  <!-- ============ THE WARM INK OPENS — the confessed organisational failure
+       the whole card answers, verbatim ============ -->
+  <div class="ink-h lead">
+    <div class="inner">
+      <p>We built good things. We failed to share them well. Cross-team knowledge transfer remains the unsolved problem. Agents can dissolve the technical barriers. The social and organisational barriers are still there.</p>
+      <span class="dateline"><b>Antti Tevanlinna</b> — “What I Know Now That I Didn’t Know Then” · Mar 2026 · the year-in retrospective</span>
+    </div>
+  </div>
+
+  <!-- ============ THE PACT — the page's one legend, set in the inks it describes ============ -->
+  <div class="pact">
+    <div class="inner">
+      <div class="cell h"><span class="who">The warm ink · serif, raised ground</span>The one who lived it — his words exactly, each with its date.</div>
+      <div class="cell m"><span class="who">The cool ink · sans, dark soil</span>The machine press — distilled from material like his, under his judgment.</div>
+    </div>
+  </div>
+
+  <!-- ============ ESSENCE — the press takes over ============ -->
+  <div class="pat-rest" style="max-width:900px;margin-top:26px">
     <p class="principle">The contrarian bet: <b>the kit crosses bottom-up, never on a launch</b> — it accretes one proven file at a time, and the announcement you were about to write is the part that fails.</p>
     <p class="essence">
       A skill in your <b>personal kit</b> is already catching real things on real code. The move is not to roll it out —
       it is to let it cross the wall the same way it earned its keep: through one conversation, carried by the evidence already in your scrollback.
     </p>
-  </header>
+  </div>
 
   <!-- ============ HERO PICTURE — one governing diagram ============ -->
   <div class="hero-frame">
@@ -401,7 +496,19 @@
       time" is, deservedly, low. The wiki page goes stale. The same gap resurfaces next sprint. The announcement felt
       like the crossing; it was noise.
     </p>
+  </section>
 
+  <!-- ============ WARM INK — the named failure, confessed: the machine just described
+       the launch that fails in general; his ink supplies the dated instance — the
+       sharing plan that never actioned ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>One of the big wants we had was to share learnings and good practices across sites and teams. We failed to imagine how that knowledge sharing could really work. Then we did not really action on that.</p>
+      <span class="dateline">“Failing and Succeeding at the Same Time” · Dec 2025 — on cross-site knowledge sharing</span>
+    </div>
+  </div>
+
+  <section class="prose" style="margin-top:0">
     <p class="lede-line">
       The contrarian read: a kit does not <em>get rolled out</em>. It <b>accretes</b> — and the unit of accretion is one
       file that already proved itself, carried by one conversation.
@@ -475,9 +582,19 @@
     </p>
   </section>
 
+  <!-- ============ WARM INK — his earlier doubt under the settled bet: the press
+       states accretion as law; six months before the retrospective he was still
+       arguing himself into it, against his own designer instinct ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>Sometimes I think I should just give teams the minimum viable process and let them evolve it. Start with the simplest thing that could possibly work. Let them hit the constraints. Let them discover what they actually need, not what I think they need.</p>
+      <span class="dateline">“The mechanical duck and processes” · Sep 2025 — on minimum viable process</span>
+    </div>
+  </div>
+
   <!-- ============ THE FALSIFIABLE TEST (woven, not a plate) ============ -->
-  <section class="prose">
-    <h2 class="amber">There is a wall <em>behind</em> the wall.</h2>
+  <section class="prose" style="margin-top:0">
+    <h2>There is a wall <em>behind</em> the wall.</h2>
     <p>
       The failure mode hides well because it looks like success: you mention the skill, a couple of people say "oh nice,"
       it gets added to the wiki — and it never fires in anyone else's session. So make the test falsifiable. The pattern
@@ -504,7 +621,12 @@
     The wall does not come down with a launch. It comes down <b>one proven file at a time</b> — and the next agent that cold-starts on the repo reads a kit that already knows what yours learned the hard way.
   </p>
 
-  <!-- ============ CONNECTS TO ============ -->
+  <!-- ============ THE INK COLOPHON — machine accounting; subsumes "Lived, before it was a pattern" ============ -->
+  <div class="seam-note">
+    <span class="seam-tag">The two inks, counted</span>
+    Three warm strata above carry Antti's words — verbatim, dated, three sources, six months apart — from the September he was still arguing with his own designer instinct to the spring he wrote the failure down. Everything on the dark soil, this line included, was machine-pressed from material like them, under his judgment. The pattern was lived before it was named: <a href="essays/index.html#predictions-2026">Predictions 2026 · Dec 2025 → the year-one essays, human-written and unedited</a>
+  </div>
+
   <section class="connects">
     <h2>Connects to</h2>
     <div class="sub">Threads leaving this node · the pattern language</div>

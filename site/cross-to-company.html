@@ -23,6 +23,13 @@
     --hairline:rgba(63,224,200,.10);
     --grey:#5d6a68;
     --grey-dim:#39423f;
+    /* THE SECOND INK — the lived voice's material. Warm cream letterform on a
+       raised warm stratum; never appears without its ground. */
+    --ink-w:#f2e3c4;          /* warm cream — the human letterform */
+    --ink-w-dim:#c7a571;      /* warm dim — datelines inside the stratum */
+    --hairline-w:rgba(255,179,71,.20); /* the hairline register, warm token */
+    --stratum-0:#201507;      /* warm soil the human ink sits on */
+    --stratum-1:#291b09;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -35,13 +42,15 @@
     position:relative;
     overflow-x:hidden;
   }
-  /* this card lives in the BUSINESS lane — atmosphere leans amber, teal recedes */
+  /* atmospheric soil — COOL throughout. Under the two-ink pact, ambient warmth is
+     banned: warm ground appears on this page only where the lived voice speaks,
+     so the strata stay legible as a material, not a mood. (Lane amber survives
+     in kicker chrome + diagram SVG semantics only.) */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.11) 0%, transparent 46%),
-      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.06) 0%, transparent 44%),
-      linear-gradient(180deg, #2a1c06 0%, #15110a 10%, #05080a 42%, #04060a 100%);
+      radial-gradient(120% 72% at 10% 0%, rgba(63,224,200,.07) 0%, transparent 46%),
+      linear-gradient(180deg, #0a1417 0%, #071013 12%, #05080a 42%, #04060a 100%);
   }
   body::after{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
@@ -80,12 +89,12 @@
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
     font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
   }
-  .principle b{color:var(--amber);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
   .essence{
     font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:740px;
   }
   .essence b{color:var(--spore);font-weight:500}
-  .essence .frontier{color:var(--amber);font-style:italic;font-family:'Fraunces',serif}
+  .essence .frontier{color:var(--teal);font-style:italic;font-family:'Fraunces',serif}
 
   /* ============ HERO PICTURE ============ */
   .hero-frame{
@@ -118,8 +127,8 @@
     margin-top:42px;
   }
   .prose .sec-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);
-    box-shadow:0 0 9px rgba(255,179,71,.55);flex:none;
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
   }
   .prose .sec-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
   .prose p{
@@ -135,25 +144,26 @@
   }
   .prose p .mono.amber{color:var(--amber)}
   .prose .pull{
-    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--amber-dim);
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
     font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
     color:var(--ink);max-width:680px;
   }
-  .prose .pull b{color:var(--amber);font-weight:500;font-style:normal}
+  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
 
-  /* labelled epistemic strip — content earns it (taste-notes) */
+  /* labelled epistemic strip — content earns it (taste-notes);
+     cool-ink demotion: the fence runs teal/ink, warmth belongs to the lived voice */
   .label-strip{
     margin:20px 0 4px;display:flex;align-items:flex-start;gap:12px;
-    border:1px dashed var(--amber-dim);border-radius:11px;padding:12px 16px;
-    background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 60%),rgba(8,15,17,.45);
+    border:1px dashed var(--teal-dim);border-radius:11px;padding:12px 16px;
+    background:radial-gradient(120% 140% at 0% 0%, rgba(63,224,200,.05), transparent 60%),rgba(8,15,17,.45);
     max-width:760px;
   }
   .label-strip .tag{
     font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--amber);border:1px solid var(--amber-dim);border-radius:6px;padding:4px 8px;flex:none;margin-top:1px;
+    color:var(--teal);border:1px solid var(--teal-dim);border-radius:6px;padding:4px 8px;flex:none;margin-top:1px;
   }
   .label-strip p{font-size:12.5px;line-height:1.5;color:var(--ink-dim);margin:0}
-  .label-strip p b{color:var(--amber);font-weight:500;font-style:normal}
+  .label-strip p b{color:var(--teal);font-weight:500;font-style:normal}
 
   /* ============ PROCESS DIAGRAMS ============ */
   .diagram{
@@ -183,8 +193,8 @@
     text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
   }
   .beat-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);flex:none;
-    box-shadow:0 0 9px rgba(255,179,71,.55);
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.6);
   }
   .beat-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
   .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
@@ -201,7 +211,7 @@
   .plate .body b{color:var(--spore);font-weight:500}
   .plate .body .grey{color:var(--grey)}
   .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
-  .plate.test .body em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
   .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
 
   /* ============ CORE MOVES ============ */
@@ -252,7 +262,7 @@
   .compound .loop-ico{flex:none}
   .compound .ctext{flex:1}
   .compound .ctext .cyc{
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--amber);
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
   }
   .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
   .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
@@ -260,9 +270,9 @@
 
   .aside{
     margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
-    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+    border-left:2px solid var(--teal-dim);padding:2px 0 2px 15px;max-width:760px;
   }
-  .aside b{color:var(--amber);font-weight:500}
+  .aside b{color:var(--teal);font-weight:500}
   .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
 
   /* ============ WHY ============ */
@@ -286,11 +296,14 @@
     font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
     line-height:1.2;color:var(--spore);letter-spacing:-.005em;
   }
-  .why .principle-line em{font-style:italic;color:var(--amber)}
+  .why .principle-line em{font-style:italic;color:var(--teal)}
+  /* machine emphasis carries NO quotation marks anywhere on this page —
+     under the two-ink pact, quoted words belong to a named source only,
+     and the lived voice always arrives on its warm stratum. */
   .why .quote{
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:clamp(21px,2.9vw,28px);line-height:1.22;color:var(--amber);letter-spacing:.004em;
-    text-shadow:0 0 30px rgba(255,179,71,.24);max-width:880px;
+    font-size:clamp(21px,2.9vw,28px);line-height:1.22;color:var(--spore);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(63,224,200,.2);max-width:880px;
   }
   .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
   .why .gloss b{color:var(--spore);font-weight:500}
@@ -317,7 +330,7 @@
   .practice .beat-label{margin-bottom:12px}
   .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
   .practice p b{color:var(--spore);font-weight:500}
-  .practice p em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:16px}
+  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
   .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
 
   /* ============ CONNECTS TO ============ */
@@ -379,13 +392,86 @@
     display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   }
   footer.floor .door{
-    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
-    text-shadow:0 0 22px rgba(255,179,71,.3);max-width:760px;
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 22px rgba(63,224,200,.25);max-width:760px;
   }
   footer.floor .meta{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--ink-faint);
   }
+
+  /* ============ TWO INKS, ONE PAGE — the human ink ============
+     The lived voice is a MATERIAL, not an annotation: a full-bleed warm
+     stratum rises out of the cool soil wherever Antti's verbatim words run.
+     Three cues travel together so the wall survives squinting, greyscale
+     and mid-scroll phones: (1) the raised warm ground, edge to edge of the
+     viewport, bounded by the warm token of the same hairline register;
+     (2) warm-cream ROMAN serif at reading size — never italic, the machine's
+     serif is identity/emphasis, never a voice; (3) a dateline, which is
+     material (a citation), not a label. The ink never appears without its
+     ground; the ground never appears without the ink. */
+  .ink-h{
+    position:relative;width:100vw;margin:44px 0 44px calc(50% - 50vw);
+    border-top:1px solid var(--hairline-w);border-bottom:1px solid var(--hairline-w);
+    background:
+      radial-gradient(90% 130% at 18% 0%, rgba(255,179,71,.10), transparent 60%),
+      linear-gradient(180deg, var(--stratum-1), var(--stratum-0));
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18), 0 22px 44px -30px rgba(255,179,71,.14);
+  }
+  .ink-h .inner{max-width:1080px;margin:0 auto;padding:30px 30px 26px}
+  .ink-h p{
+    font-family:'Fraunces',serif;font-weight:400;font-style:normal;
+    font-size:19px;line-height:1.72;color:var(--ink-w);letter-spacing:.002em;max-width:700px;
+  }
+  .ink-h p + p{margin-top:12px}
+  .ink-h .dateline{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.6;letter-spacing:.07em;
+    color:var(--ink-w-dim);display:block;margin-top:14px;
+  }
+  .ink-h .dateline b{color:var(--ink-w);font-weight:500}
+  /* the opening stratum — the first words spoken on the page are his */
+  .ink-h.lead{margin-top:30px;margin-bottom:0;border-bottom:none;box-shadow:0 -22px 44px -30px rgba(255,179,71,.18)}
+  .ink-h.lead .inner{padding:36px 30px 28px}
+  .ink-h.lead p{font-size:clamp(20px,2.6vw,24px);line-height:1.6;max-width:780px}
+
+  /* ============ THE PACT — taught once, at the first seam ============
+     A two-segment strip where the inks meet: each half of the sentence is
+     set in the ink it describes. The left cell IS warm stratum, the right
+     cell IS cool soil — the legend demonstrates instead of describing. */
+  .pact{width:100vw;margin:0 0 8px calc(50% - 50vw);border-bottom:1px solid var(--hairline)}
+  .pact .inner{
+    max-width:1080px;margin:0 auto;padding:0 30px;
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .pact .cell{padding:13px 18px 15px;font-size:13px;line-height:1.5}
+  .pact .cell.h{
+    font-family:'Fraunces',serif;color:var(--ink-w);
+    background:linear-gradient(180deg, var(--stratum-0), #150d05);
+    border-bottom:2px solid rgba(255,179,71,.45);
+  }
+  .pact .cell.m{
+    font-family:'Spline Sans',sans-serif;color:var(--ink);
+    border-bottom:2px solid rgba(63,224,200,.4);
+  }
+  .pact .cell .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px;
+  }
+  .pact .cell.h .who{color:var(--ink-w-dim)}
+  .pact .cell.m .who{color:var(--teal-dim)}
+
+  /* the ink colophon — machine accounting; subsumes "Lived, before it was a pattern" */
+  .seam-note{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+  }
+  .seam-note .seam-tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .seam-note em{font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--ink)}
+  .seam-note a{color:var(--amber-dim);text-decoration:none}
+  .seam-note a:hover{color:var(--amber)}
 
   @keyframes breathe{
     0%,100%{opacity:.55}
@@ -406,6 +492,10 @@
     .compound{flex-direction:column;align-items:flex-start;gap:14px}
     .neighbours .nb{font-size:11px;padding:6px 10px}
     .prose p{font-size:14.5px}
+    .pact .inner{grid-template-columns:1fr;padding:0}
+    .pact .cell{padding:13px 30px 15px}
+    .ink-h p{font-size:18px}
+    .ink-h.lead p{font-size:20px}
   }
 </style>
 </head>
@@ -417,10 +507,32 @@
     <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Cross to the company layer</span>
   </nav>
 
-  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <!-- ============ PATTERN NAME — the navigable subject stays first ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe · business lane · Outcome → ⟲ <span class="pat-no">· the far face of the wall — the north star</span></div>
     <h1>Cross to the <em>company</em> layer</h1>
+  </header>
+
+  <!-- ============ THE WARM INK OPENS — verbatim, before any machine teaching.
+       One sentence, fourteen months before this card existed; the pact beneath
+       carries it (ruling 2: shallow strata stand, no padding). ============ -->
+  <div class="ink-h lead">
+    <div class="inner">
+      <p>LLMs miss half of their potential as just personal tools.</p>
+      <span class="dateline"><b>Antti Tevanlinna</b> — “AI as Official Tool” · Apr 2025 · unpublished</span>
+    </div>
+  </div>
+
+  <!-- ============ THE PACT — the page's one legend, set in the inks it describes ============ -->
+  <div class="pact">
+    <div class="inner">
+      <div class="cell h"><span class="who">The warm ink · serif, raised ground</span>The one who lived it — his words exactly, each with its date.</div>
+      <div class="cell m"><span class="who">The cool ink · sans, dark soil</span>The machine press — distilled from material like his, under his judgment.</div>
+    </div>
+  </div>
+
+  <!-- ============ ESSENCE — the press takes over ============ -->
+  <div class="pat-rest" style="max-width:940px;margin-top:26px">
     <p class="principle">The principle: <b>build on standards, not platforms</b> — the company layer isn't a product you buy, it's conditions you create.</p>
     <p class="essence">
       Make personal wins become <b>how the whole company works</b> — by setting shared standards, making governance the buying test,
@@ -428,7 +540,7 @@
       <span class="frontier">there is no off-the-shelf company layer yet — promotion means rebuild, not upgrade.</span>
       The product is a frontier; the conditions are buildable Monday.
     </p>
-  </header>
+  </div>
 
   <!-- ============ HERO: the far face of the wall — three depth-bands receding ============ -->
   <div class="hero-frame">
@@ -541,7 +653,7 @@
   <!-- ============================================================ -->
   <section class="prose">
     <div class="sec-label">Use when · the wall you hit within weeks</div>
-    <h2>The personal wins work. Now the question is <em class="amber">"how does the COMPANY work?"</em></h2>
+    <h2>The personal wins work. Now the question is <em>"how does the COMPANY work?"</em></h2>
 
     <p>
       Here is the moment, and it arrives faster than anyone budgets for. Builders go through a couple of modules,
@@ -663,7 +775,18 @@
     <p class="pull">
       Stop shopping for the company layer. <b>Start building the conditions for it.</b>
     </p>
+  </section>
 
+  <!-- ============ WARM INK — the ore the refusal above was pressed from: he watched
+       the platform-first move fail before the press named it the move that fails ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>People often say that we can't have agents without a platform. So, you end up chasing your tail choosing the best platform for months. But you also realise the landscape moves on weekly basis.</p>
+      <span class="dateline">“Skills-First AI Transformation Strategy” · Apr 2026</span>
+    </div>
+  </div>
+
+  <section class="prose" style="margin-top:0">
     <div class="sec-label">Core moves · scope of governance + who sets the standard</div>
     <h2>Set the standards, seed the network, <em>step back</em>.</h2>
   </section>
@@ -819,6 +942,16 @@
     <div class="dcap"><span class="num">Process diagram · 02</span>Communication aimed top-down moves nothing once you control for peers; <b>a seeded peer network carries it</b>. The creator's job is to make itself unnecessary.</div>
   </div>
 
+  <!-- ============ WARM INK — the diagram's regression coefficient, as physics he has
+       felt in his legs: org gravity is comfortable, and breakaways exhaust ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>There, however, is great gravitational pull in the main pack - the peloton. When bunched up, the peloton saves tens of percent of aerodynamic draft all the time. They, just like a flock of birds, save up energy. I've been there. In the middle of the pack, at best times, it feels like jogging pace.</p>
+      <p>The peloton of course, is the organisation status quo! You need to break away to win. But if you break away, you get soon exhausted.</p>
+      <span class="dateline">“Organisational change and cycle racing” · Nov 2025</span>
+    </div>
+  </div>
+
   <!-- ============ USE WHEN · BUILD · TEST plates ============ -->
   <div class="plates">
     <div class="plate use">
@@ -863,6 +996,15 @@
       a platform.</em>
     </p>
   </section>
+
+  <!-- ============ WARM INK — courage after the negative test: the press names how the
+       cross stalls; he tells you what to do the week your breakaway doesn't win ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>Your breakaway succeeded - most of breakaways never go far. So, the next time you try something new but your breakaway does not win, don't worry. Just learn. There will be more races every week.</p>
+      <span class="dateline">“Organisational change and cycle racing” · Nov 2025</span>
+    </div>
+  </div>
 
   <!-- ============ PROSE BLOCK 4 — the compounding loop intro ============ -->
   <section class="prose">
@@ -967,7 +1109,7 @@
       <p class="principle-line">Build on <em>standards</em>, not platforms. The company layer is the headline promise — and the frontier nobody sells you honestly.</p>
     </div>
 
-    <p class="quote">"There's no escalator from personal to company — the tiers are different products. So stop shopping for the company layer and start building the conditions for it."</p>
+    <p class="quote">There's no escalator from personal to company — the tiers are different products. So stop shopping for the company layer and start building the conditions for it.</p>
     <p class="gloss">
       Every vendor wants you to start on their platform, so every roadmap implies a smooth personal→team→company
       escalator. There is no escalator: the tiers are different products, and promotion means rebuilding. The rational
@@ -990,7 +1132,7 @@
   <section class="prose">
     <div class="sec-label">Monday move · no purchase required</div>
     <p>
-      Open a doc and write one sentence: <em class="amber">"We build agents on MCP and Agent Skills / AGENTS.md, not
+      Open a doc and write one sentence: <em class="teal">"We build agents on MCP and Agent Skills / AGENTS.md, not
       on any single vendor's company tier."</em> Then list the agents you already know are running in the org — you'll
       undercount, which is the point. Send both to whoever could be your conditions-creator with one question:
       <b>"Who are the three people other teams actually listen to?"</b> That names your standard, surfaces your sprawl,
@@ -1041,6 +1183,12 @@
       </div>
     </div>
   </section>
+
+  <!-- ============ THE INK COLOPHON — machine accounting; subsumes "Lived, before it was a pattern" ============ -->
+  <div class="seam-note">
+    <span class="seam-tag">The two inks, counted</span>
+    Four warm strata above carry Antti's words — verbatim, dated, three sources, April 2025 to April 2026: the wall named a year before this card pressed it. Everything on the dark soil, this line included, was machine-pressed from material like them, under his judgment. The pattern was lived before it was named: <a href="essays/index.html#you-transform-organisations">You Transform Organisations · Nov 2025 → the year-one essays, human-written and unedited</a>
+  </div>
 
   <!-- ============ FOOTER ============ -->
   <footer class="floor">

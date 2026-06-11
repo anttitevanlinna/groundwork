@@ -23,6 +23,13 @@
     --hairline:rgba(63,224,200,.10);
     --grey:#5d6a68;
     --grey-dim:#39423f;
+    /* THE SECOND INK — the lived voice's material. Warm cream letterform on a
+       raised warm stratum; never appears without its ground. */
+    --ink-w:#f2e3c4;          /* warm cream — the human letterform */
+    --ink-w-dim:#c7a571;      /* warm dim — datelines inside the stratum */
+    --hairline-w:rgba(255,179,71,.20); /* the hairline register, warm token */
+    --stratum-0:#201507;      /* warm soil the human ink sits on */
+    --stratum-1:#291b09;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -35,12 +42,14 @@
     position:relative;
     overflow-x:hidden;
   }
+  /* atmospheric soil — COOL throughout. Under the two-ink pact, ambient warmth is
+     banned: warm ground appears on this page only where the lived voice speaks,
+     so the strata stay legible as a material, not a mood. */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
-      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
-      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+      radial-gradient(120% 72% at 10% 0%, rgba(63,224,200,.07) 0%, transparent 46%),
+      linear-gradient(180deg, #0a1417 0%, #071013 12%, #05080a 42%, #04060a 100%);
   }
   body::after{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
@@ -104,13 +113,11 @@
     content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
     box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
   }
-  .punch .lede-beat.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
   .punch h2{
     font-family:'Fraunces',serif;font-weight:400;font-size:32px;color:var(--spore);
     letter-spacing:-.012em;line-height:1.06;margin-top:14px;
   }
   .punch h2 em{font-style:italic;color:var(--teal);font-weight:400}
-  .punch h2.amber em{color:var(--amber)}
   .punch p{
     font-size:16px;line-height:1.64;color:var(--ink);margin-top:18px;letter-spacing:.002em;
   }
@@ -119,7 +126,6 @@
   .punch p .mono{
     font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
   }
-  .punch p .mono.amber{color:var(--amber)}
   .punch .turn{
     margin:30px 0 6px;padding:0 0 0 20px;border-left:2px solid var(--teal-dim);
     font-family:'Fraunces',serif;font-style:italic;font-size:21px;line-height:1.38;
@@ -140,7 +146,6 @@
   .kit-cell .fname{
     font-family:'Spline Sans Mono',monospace;font-size:12.5px;letter-spacing:.01em;color:var(--teal);
   }
-  .kit-cell.amber .fname{color:var(--amber)}
   .kit-cell .closes{
     font-family:'Spline Sans Mono',monospace;font-size:8.5px;letter-spacing:.22em;
     text-transform:uppercase;color:var(--ink-faint);margin-top:9px;
@@ -212,13 +217,84 @@
     display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   }
   footer.floor .door{
-    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
-    text-shadow:0 0 22px rgba(255,179,71,.3);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 22px rgba(63,224,200,.25);max-width:78%;
   }
   footer.floor .meta{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--ink-faint);
   }
+
+  /* ============ TWO INKS, ONE PAGE — the human ink ============
+     The lived voice is a MATERIAL, not an annotation: a full-bleed warm
+     stratum rises out of the cool soil wherever Antti's verbatim words run.
+     Three cues travel together so the wall survives squinting, greyscale
+     and mid-scroll phones: (1) the raised warm ground, edge to edge of the
+     viewport, bounded by the warm token of the same hairline register;
+     (2) warm-cream ROMAN serif at reading size — never italic, the machine's
+     serif is identity/emphasis, never a voice; (3) a dateline, which is
+     material (a citation), not a label. The ink never appears without its
+     ground; the ground never appears without the ink. */
+  .ink-h{
+    position:relative;width:100vw;margin:44px 0 44px calc(50% - 50vw);
+    border-top:1px solid var(--hairline-w);border-bottom:1px solid var(--hairline-w);
+    background:
+      radial-gradient(90% 130% at 18% 0%, rgba(255,179,71,.10), transparent 60%),
+      linear-gradient(180deg, var(--stratum-1), var(--stratum-0));
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18), 0 22px 44px -30px rgba(255,179,71,.14);
+  }
+  .ink-h .inner{max-width:1080px;margin:0 auto;padding:30px 30px 26px}
+  .ink-h p{
+    font-family:'Fraunces',serif;font-weight:400;font-style:normal;
+    font-size:19px;line-height:1.72;color:var(--ink-w);letter-spacing:.002em;max-width:700px;
+  }
+  .ink-h p + p{margin-top:12px}
+  .ink-h .dateline{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.6;letter-spacing:.07em;
+    color:var(--ink-w-dim);display:block;margin-top:14px;
+  }
+  .ink-h .dateline b{color:var(--ink-w);font-weight:500}
+  /* the opening stratum — the first words spoken on the page are his */
+  .ink-h.lead{margin-top:30px;margin-bottom:0;border-bottom:none;box-shadow:0 -22px 44px -30px rgba(255,179,71,.18)}
+  .ink-h.lead .inner{padding:36px 30px 28px}
+  .ink-h.lead p{font-size:clamp(20px,2.6vw,24px);line-height:1.6;max-width:780px}
+
+  /* ============ THE PACT — taught once, at the first seam ============
+     A two-segment strip where the inks meet: each half of the sentence is
+     set in the ink it describes. The left cell IS warm stratum, the right
+     cell IS cool soil — the legend demonstrates instead of describing. */
+  .pact{width:100vw;margin:0 0 8px calc(50% - 50vw);border-bottom:1px solid var(--hairline)}
+  .pact .inner{
+    max-width:1080px;margin:0 auto;padding:0 30px;
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .pact .cell{padding:13px 18px 15px;font-size:13px;line-height:1.5}
+  .pact .cell.h{
+    font-family:'Fraunces',serif;color:var(--ink-w);
+    background:linear-gradient(180deg, var(--stratum-0), #150d05);
+    border-bottom:2px solid rgba(255,179,71,.45);
+  }
+  .pact .cell.m{
+    font-family:'Spline Sans',sans-serif;color:var(--ink);
+    border-bottom:2px solid rgba(63,224,200,.4);
+  }
+  .pact .cell .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px;
+  }
+  .pact .cell.h .who{color:var(--ink-w-dim)}
+  .pact .cell.m .who{color:var(--teal-dim)}
+
+  /* the ink colophon — machine accounting; subsumes "Lived, before it was a pattern" */
+  .seam-note{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+  }
+  .seam-note .seam-tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .seam-note em{font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--ink)}
 
   @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
   .breathe{animation:breathe 4.2s ease-in-out infinite}
@@ -227,6 +303,10 @@
     .kit-strip{grid-template-columns:1fr}
     .neighbours .nb{font-size:11px;padding:6px 10px}
     .punch p{font-size:15px}
+    .pact .inner{grid-template-columns:1fr;padding:0}
+    .pact .cell{padding:13px 30px 15px}
+    .ink-h p{font-size:18px}
+    .ink-h.lead p{font-size:20px}
   }
 </style>
 </head>
@@ -238,17 +318,37 @@
     <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Packaging a run</span>
   </nav>
 
-  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <!-- ============ PATTERN NAME — the subject, then the lived voice speaks first ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe · software lane · <span class="pat-no">The Work</span></div>
     <h1>Packaging a <em>run</em></h1>
+  </header>
+
+  <!-- ============ THE WARM INK OPENS — the un-packaged day, confessed in present tense ============ -->
+  <div class="ink-h lead">
+    <div class="inner">
+      <p>Alas, I fumble. My tools are not where I need them. My prompts are not to be found. It takes time to set things up. It takes time to tediously copy-paste stuff.</p>
+      <span class="dateline"><b>Antti Tevanlinna</b> — “In Praise of Continuous Improvement” · Sep 2025 · unpublished</span>
+    </div>
+  </div>
+
+  <!-- ============ THE PACT — the page's one legend, set in the inks it describes ============ -->
+  <div class="pact">
+    <div class="inner">
+      <div class="cell h"><span class="who">The warm ink · serif, raised ground</span>The one who lived it — his words exactly, each with its date.</div>
+      <div class="cell m"><span class="who">The cool ink · sans, dark soil</span>The machine press — distilled from material like his, under his judgment.</div>
+    </div>
+  </div>
+
+  <!-- ============ ESSENCE — the press takes over ============ -->
+  <div class="pat-rest" style="max-width:900px;margin-top:26px">
     <p class="principle">The principle: <b>the prompt was never the thing you write</b> — the packaging is, and the short prompt only invokes it.</p>
     <p class="essence">
       You think the work of sending off a long agent task is wording the prompt. It isn't.
       <b>The wording barely matters; what the agent finds on disk decides everything.</b>
       Move the effort there and you can step away.
     </p>
-  </header>
+  </div>
 
   <!-- ============ HERO: the single image — short prompt, three artefacts doing the work ============ -->
   <div class="hero-frame">
@@ -366,9 +466,20 @@
     </p>
   </section>
 
+  <!-- ============ WARM INK — JOINT: the credited stranger under the machine's thesis.
+       The press above states the doctrine uncited — stop writing the prompt, build the
+       run. He shows the receipt: where the thesis entered his life, a meetup, a borrowed
+       line, credited to the stranger who said it first. ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>One of the first learnings I got with agentic engineering was in a meetup where one very advanced AI product manager stated: “performance is just extensive tool integration.” He meant that honing the tools and the workflow together is the way to exceptional performance.</p>
+      <span class="dateline">“In Praise of Continuous Improvement” · Sep 2025 · unpublished · on where the thesis was learned</span>
+    </div>
+  </div>
+
   <!-- ============ T2 PUNCH — BEAT TWO: the kit, one artefact per failure ============ -->
   <section class="punch">
-    <div class="lede-beat amber">What does the work instead · one file per failure mode</div>
+    <div class="lede-beat">What does the work instead · one file per failure mode</div>
 
     <div class="kit-strip">
       <div class="kit-cell">
@@ -381,10 +492,10 @@
         <div class="closes">closes <b>rot</b></div>
         <p>The <b>state carrier</b>. It reads clean on a cold start, so the agent picks up where it left off across a session restart and you never re-explain where it got to. Mid-run, when it drifts, it re-reads this instead of improvising.</p>
       </div>
-      <div class="kit-cell amber">
+      <div class="kit-cell">
         <div class="fname">verifier · stable path</div>
         <div class="closes">closes <b>plausible-but-wrong</b></div>
-        <p>A check at a fixed path — <span class="mono amber">shell-hook</span>, LLM-judge, or Ralph re-feed. Pick the shape against your <b>dominant</b> failure, not the safest one. It fires pass-or-fail on the output, so self-report stops being the only gate.</p>
+        <p>A check at a fixed path — <span class="mono">shell-hook</span>, LLM-judge, or Ralph re-feed. Pick the shape against your <b>dominant</b> failure, not the safest one. It fires pass-or-fail on the output, so self-report stops being the only gate.</p>
       </div>
     </div>
 
@@ -416,9 +527,29 @@
     </p>
   </section>
 
+  <!-- ============ WARM INK — JOINT: the standing bill after the starter price.
+       The press just priced the entry at fifteen minutes; he prices what the honed
+       ones actually pay, and stakes a number on it. ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>Those who really have their tools and process honed take significant time to try things out. They invest in sharpening the axe. It is not like 5%. It is more like 30%.</p>
+      <span class="dateline">“In Praise of Continuous Improvement” · Sep 2025 · unpublished · on the cost of the kit</span>
+    </div>
+  </div>
+
   <p class="seal">
     You were never paid to write a better prompt. <b>You were paid to build a run that finishes the job while you're somewhere else</b> — and the prompt is just the doorbell.
   </p>
+
+  <!-- ============ THE INK COLOPHON — machine accounting; the page's closing seam ============ -->
+  <div class="seam-note">
+    <span class="seam-tag">The two inks, counted</span>
+    Three warm strata above carry Antti's words — verbatim, dated, a single essay: the fumble, the borrowed line and
+    the 30% all landed in one September 2025 sitting. Everything on the dark soil, this line included, was machine-pressed
+    from material like his, under his judgment. The packaging was lived before it was named:
+    <em>In Praise of Continuous Improvement</em> · Sep 2025, a year-one essay still unpublished — when it ships,
+    this sentence becomes the link.
+  </div>
 
   <!-- ============ CONNECTS TO ============ -->
   <section class="connects">

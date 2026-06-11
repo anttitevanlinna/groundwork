@@ -23,6 +23,13 @@
     --hairline:rgba(63,224,200,.10);
     --grey:#5d6a68;
     --grey-dim:#39423f;
+    /* THE SECOND INK — the lived voice's material. Warm cream letterform on a
+       raised warm stratum; never appears without its ground. */
+    --ink-w:#f2e3c4;          /* warm cream — the human letterform */
+    --ink-w-dim:#c7a571;      /* warm dim — datelines inside the stratum */
+    --hairline-w:rgba(255,179,71,.20); /* the hairline register, warm token */
+    --stratum-0:#201507;      /* warm soil the human ink sits on */
+    --stratum-1:#291b09;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -35,11 +42,12 @@
     position:relative;
     overflow-x:hidden;
   }
-  /* atmospheric soil + light-well — recedes for the long read */
+  /* atmospheric soil — COOL throughout. Under the two-ink pact, ambient warmth is
+     banned: warm ground appears on this page only where the lived voice speaks,
+     so the stratum stays legible as a material, not a mood. */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
       radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
       linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
   }
@@ -111,7 +119,6 @@
     letter-spacing:-.012em;line-height:1.08;margin-top:14px;
   }
   .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
-  .prose h2.amber em{color:var(--amber)}
   .prose .sec-label{
     font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
     text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
@@ -121,7 +128,6 @@
     content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
     box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
   }
-  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
   .prose p{
     font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
     letter-spacing:.002em;
@@ -129,11 +135,9 @@
   .prose p b{color:var(--spore);font-weight:500}
   .prose p em{font-style:italic;color:var(--ink-dim)}
   .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
-  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
   .prose p .mono{
     font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
   }
-  .prose p .mono.amber{color:var(--amber)}
   .prose .pull{
     margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
     font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
@@ -150,14 +154,13 @@
     content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
     box-shadow:0 0 9px rgba(63,224,200,.6);
   }
-  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
   .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
 
   .aside{
     margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
-    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+    border-left:2px solid var(--teal-dim);padding:2px 0 2px 15px;max-width:760px;
   }
-  .aside b{color:var(--amber);font-weight:500}
+  .aside b{color:var(--teal);font-weight:500}
   .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
 
   /* ============ CONNECTS TO ============ */
@@ -210,8 +213,8 @@
     display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   }
   footer.floor .door{
-    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
-    text-shadow:0 0 22px rgba(255,179,71,.3);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 22px rgba(63,224,200,.25);max-width:78%;
   }
   footer.floor .meta{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
@@ -277,7 +280,7 @@
   .limb.reject .desc{color:var(--grey)}
   .limb.reject .desc s{text-decoration-color:var(--grey-dim)}
   .limb.reject .verdict{color:var(--ink-faint)}
-  .limb.reject .verdict .why{color:var(--amber-dim)}
+  .limb.reject .verdict .why{color:var(--ink-dim)}
   /* the live limb — glowing, the one branch that descends */
   .limb.keep{position:relative}
   .limb.keep .desc{color:var(--spore);font-weight:500}
@@ -295,10 +298,81 @@
 
   .tiebreak{
     margin-top:26px;max-width:760px;padding:14px 0 14px 18px;
-    border-left:2px solid var(--amber-dim);
+    border-left:2px solid var(--teal-dim);
     font-family:'Fraunces',serif;font-style:italic;font-size:17px;line-height:1.45;color:var(--ink);
   }
-  .tiebreak b{color:var(--amber);font-weight:500;font-style:normal}
+  .tiebreak b{color:var(--teal);font-weight:500;font-style:normal}
+
+  /* ============ TWO INKS, ONE PAGE — the human ink ============
+     The lived voice is a MATERIAL, not an annotation: a full-bleed warm
+     stratum rises out of the cool soil wherever Antti's verbatim words run.
+     Three cues travel together so the wall survives squinting, greyscale
+     and mid-scroll phones: (1) the raised warm ground, edge to edge of the
+     viewport, bounded by the warm token of the same hairline register;
+     (2) warm-cream ROMAN serif at reading size — never italic, the machine's
+     serif is identity/emphasis, never a voice; (3) a dateline, which is
+     material (a citation), not a label. The ink never appears without its
+     ground; the ground never appears without the ink. */
+  .ink-h{
+    position:relative;width:100vw;margin:44px 0 44px calc(50% - 50vw);
+    border-top:1px solid var(--hairline-w);border-bottom:1px solid var(--hairline-w);
+    background:
+      radial-gradient(90% 130% at 18% 0%, rgba(255,179,71,.10), transparent 60%),
+      linear-gradient(180deg, var(--stratum-1), var(--stratum-0));
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18), 0 22px 44px -30px rgba(255,179,71,.14);
+  }
+  .ink-h .inner{max-width:1080px;margin:0 auto;padding:30px 30px 26px}
+  .ink-h p{
+    font-family:'Fraunces',serif;font-weight:400;font-style:normal;
+    font-size:19px;line-height:1.72;color:var(--ink-w);letter-spacing:.002em;max-width:700px;
+  }
+  .ink-h p + p{margin-top:12px}
+  .ink-h .dateline{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.6;letter-spacing:.07em;
+    color:var(--ink-w-dim);display:block;margin-top:14px;
+  }
+  .ink-h .dateline b{color:var(--ink-w);font-weight:500}
+  /* the opening stratum — the first words spoken on the page are his */
+  .ink-h.lead{margin-top:30px;margin-bottom:0;border-bottom:none;box-shadow:0 -22px 44px -30px rgba(255,179,71,.18)}
+  .ink-h.lead .inner{padding:36px 30px 28px}
+  .ink-h.lead p{font-size:clamp(20px,2.6vw,24px);line-height:1.6;max-width:780px}
+
+  /* ============ THE PACT — taught once, at the first seam ============
+     A two-segment strip where the inks meet: each half of the sentence is
+     set in the ink it describes. The left cell IS warm stratum, the right
+     cell IS cool soil — the legend demonstrates instead of describing. */
+  .pact{width:100vw;margin:0 0 8px calc(50% - 50vw);border-bottom:1px solid var(--hairline)}
+  .pact .inner{
+    max-width:1080px;margin:0 auto;padding:0 30px;
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .pact .cell{padding:13px 18px 15px;font-size:13px;line-height:1.5}
+  .pact .cell.h{
+    font-family:'Fraunces',serif;color:var(--ink-w);
+    background:linear-gradient(180deg, var(--stratum-0), #150d05);
+    border-bottom:2px solid rgba(255,179,71,.45);
+  }
+  .pact .cell.m{
+    font-family:'Spline Sans',sans-serif;color:var(--ink);
+    border-bottom:2px solid rgba(63,224,200,.4);
+  }
+  .pact .cell .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px;
+  }
+  .pact .cell.h .who{color:var(--ink-w-dim)}
+  .pact .cell.m .who{color:var(--teal-dim)}
+
+  /* the ink colophon — machine accounting; subsumes "Lived, before it was a pattern" */
+  .seam-note{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+  }
+  .seam-note .seam-tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .seam-note em{font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--ink)}
 
   @media (max-width:780px){
     .neighbours .nb{font-size:11px;padding:6px 10px}
@@ -306,6 +380,10 @@
     .couplet{grid-template-columns:30px 1fr;gap:0 10px}
     .limb{flex-wrap:wrap}
     .limb .verdict{width:100%;text-align:left;padding-top:0}
+    .pact .inner{grid-template-columns:1fr;padding:0}
+    .pact .cell{padding:13px 30px 15px}
+    .ink-h p{font-size:18px}
+    .ink-h.lead p{font-size:20px}
   }
 </style>
 </head>
@@ -317,10 +395,30 @@
     <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Threat modeling before you build</span>
   </nav>
 
-  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <!-- ============ PATTERN NAME — the subject, then the lived voice speaks first ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe · software lane · <span class="pat-no">Context &amp; Guardrails · personal → team → company</span></div>
     <h1>Threat modeling before you <em>build</em></h1>
+  </header>
+
+  <!-- ============ THE WARM INK OPENS — verbatim, before any machine teaching ============ -->
+  <div class="ink-h lead">
+    <div class="inner">
+      <p>Security... no different. If you just put together stuff and don't both analyse what you are doing and check that you did it right, then you end up with not-secure software. AI or not AI, the security work needs doing.</p>
+      <span class="dateline"><b>Antti Tevanlinna</b> — “AI Engineering IS Software Engineering” · Aug 2025 · unpublished — on the security work</span>
+    </div>
+  </div>
+
+  <!-- ============ THE PACT — the page's one legend, set in the inks it describes ============ -->
+  <div class="pact">
+    <div class="inner">
+      <div class="cell h"><span class="who">The warm ink · serif, raised ground</span>The one who lived it — his words exactly, each with its date.</div>
+      <div class="cell m"><span class="who">The cool ink · sans, dark soil</span>The machine press — distilled from material like his, under his judgment.</div>
+    </div>
+  </div>
+
+  <!-- ============ ESSENCE — the press takes over ============ -->
+  <div class="pat-rest" style="max-width:900px;margin-top:26px">
     <p class="principle">The principle: <b>threat modelling is only useful if it ends in a decision</b> — STRIDE is the surface to reject most things against, not an oracle you beg for the attacks you missed.</p>
     <p class="essence">
       Run STRIDE like a field guide's identification key — not telling you what the threat <b>is</b>, but what it
@@ -329,7 +427,7 @@
       reject most with a one-word reason, name the single worst realistic incident — then write the survivor down as
       an <b>ADR</b> your whole team inherits instead of re-argues.
     </p>
-  </header>
+  </div>
 
   <!-- ============ THE KEY — single governing diagram: dichotomous descent → ADR leaf ============ -->
   <div class="hero-frame">
@@ -660,8 +758,8 @@
       breadth fast; the codebase-specific judgement is yours to add, and it travels with the decision wherever it goes.
     </p>
 
-    <div class="sec-label amber">The compounding loop · the closing turn</div>
-    <h2 class="amber">Each ADR is the precedent the <em>next</em> threat-model starts from.</h2>
+    <div class="sec-label">The compounding loop · the closing turn</div>
+    <h2>Each ADR is the precedent the <em>next</em> threat-model starts from.</h2>
 
     <p>
       Here's why one defensible call outlives its single feature. Every engineer shipping an external surface carries one
@@ -681,8 +779,8 @@
       instead of a backlog of TODOs.
     </p>
 
-    <div class="sec-label amber">How you know the threat was named · the test rides inline</div>
-    <h2 class="amber">A listed threat is not a <em>named</em> one.</h2>
+    <div class="sec-label">How you know the threat was named · the test rides inline</div>
+    <h2>A listed threat is not a <em>named</em> one.</h2>
 
     <p>
       The trap at the finish line is mistaking a long STRIDE list for a decision, so the test is falsifiable and runs on
@@ -692,7 +790,7 @@
       <em class="teal">acceptable risk, already mitigated, out of scope</em> — not left dangling as backlog. Third, the
       sharpest tell: <b>if the ADR could have been written without ever running the surface map, STRIDE was
       performative.</b> The map's codebase-specific surfaces should be visible in the reasoning. A decision that reads
-      like it came from a generic checklist <em class="amber">probably did.</em>
+      like it came from a generic checklist <em class="teal">probably did.</em>
     </p>
 
     <!-- the Monday-move, preserved whole -->
@@ -703,6 +801,15 @@
       The other threats stay alongside as evidence, not homework — and you arrive at review with the call already made.
     </p>
   </section>
+
+  <!-- ============ THE INK COLOPHON — machine accounting; subsumes "Lived, before it was a pattern" ============ -->
+  <div class="seam-note">
+    <span class="seam-tag">The two inks, counted</span>
+    One warm stratum above carries Antti's words — verbatim, dated, a single source. Everything on the dark soil, this
+    line included, was machine-pressed from material like his, under his judgment. The refusal was lived before it was
+    named: <em>AI Engineering IS Software Engineering</em> · Aug 2025, a year-one essay still unpublished — when it
+    ships, this sentence becomes the link.
+  </div>
 
   <!-- ============ CONNECTS TO — neighbour patterns ============ -->
   <section class="connects">

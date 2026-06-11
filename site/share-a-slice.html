@@ -23,6 +23,13 @@
     --hairline:rgba(63,224,200,.10);
     --grey:#5d6a68;
     --grey-dim:#39423f;
+    /* THE SECOND INK — the lived voice's material. Warm cream letterform on a
+       raised warm stratum; never appears without its ground. */
+    --ink-w:#f2e3c4;          /* warm cream — the human letterform */
+    --ink-w-dim:#c7a571;      /* warm dim — datelines inside the stratum */
+    --hairline-w:rgba(255,179,71,.20); /* the hairline register, warm token */
+    --stratum-0:#201507;      /* warm soil the human ink sits on */
+    --stratum-1:#291b09;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -35,12 +42,13 @@
     position:relative;
     overflow-x:hidden;
   }
+  /* atmospheric soil — COOL throughout. Under the two-ink pact, ambient warmth is
+     banned: warm ground appears on this page only where the lived voice speaks. */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
-      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
-      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+      radial-gradient(120% 72% at 10% 0%, rgba(63,224,200,.07) 0%, transparent 46%),
+      linear-gradient(180deg, #0a1417 0%, #071013 12%, #05080a 42%, #04060a 100%);
   }
   body::after{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
@@ -79,15 +87,15 @@
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
     font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
   }
-  .principle b{color:var(--amber);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
   .essence{
     font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:720px;
   }
   .essence b{color:var(--spore);font-weight:500}
 
-  /* ============ HERO PICTURE ============ */
+  /* ============ HERO PICTURE — diagram zone; SVG keeps its amber semantics ============ */
   .hero-frame{
-    margin:30px 0 8px;border:1px solid rgba(255,179,71,.14);border-radius:16px;overflow:hidden;
+    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
     background:linear-gradient(180deg, rgba(13,31,32,.5), rgba(5,8,10,.6));
     position:relative;
     box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(255,179,71,.04) inset;
@@ -102,16 +110,17 @@
   .spine .lead b{color:var(--spore);font-weight:500}
   .spine .lead em{font-style:italic;color:var(--ink-dim)}
 
+  /* prose-zone demotion: the refusal frame moves to the cool register */
   .refuse{
-    margin:34px 0 6px;border:1px solid rgba(255,179,71,.18);border-radius:14px;
+    margin:34px 0 6px;border:1px solid var(--hairline);border-radius:14px;
     padding:22px 26px 24px;position:relative;overflow:hidden;
     background:
-      radial-gradient(130% 150% at 92% 0%, rgba(255,179,71,.07), transparent 55%),
+      radial-gradient(130% 150% at 92% 0%, rgba(63,224,200,.05), transparent 55%),
       rgba(8,15,17,.5);
   }
   .refuse .tag{
     font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
-    text-transform:uppercase;color:var(--amber-dim);margin-bottom:12px;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px;
   }
   .refuse .claim{
     font-family:'Fraunces',serif;font-style:italic;font-size:21px;line-height:1.3;
@@ -122,7 +131,7 @@
     font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;max-width:700px;
   }
   .refuse .turn b{color:var(--spore);font-weight:500}
-  .refuse .turn em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:16px}
+  .refuse .turn em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
 
   .move{margin-top:40px}
   .move h2{
@@ -132,7 +141,7 @@
   .move h2 em{font-style:italic;color:var(--teal);font-weight:400}
   .move h2 .num{
     font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:12px;
-    letter-spacing:.18em;color:var(--amber-dim);margin-right:14px;vertical-align:middle;
+    letter-spacing:.18em;color:var(--ink-faint);margin-right:14px;vertical-align:middle;
   }
   .move p{
     font-size:15.5px;line-height:1.64;color:var(--ink);margin-top:14px;max-width:740px;letter-spacing:.002em;
@@ -140,9 +149,7 @@
   .move p b{color:var(--spore);font-weight:500}
   .move p em{font-style:italic;color:var(--ink-dim)}
   .move p em.teal{color:var(--teal);font-family:'Fraunces',serif;font-size:16px;font-style:italic}
-  .move p em.amber{color:var(--amber);font-family:'Fraunces',serif;font-size:16px;font-style:italic}
   .move p .mono{font-family:'Spline Sans Mono',monospace;font-size:13px;color:var(--teal)}
-  .move p .mono.amber{color:var(--amber)}
 
   .now{
     margin-top:18px;border-left:2px solid var(--teal-dim);padding:4px 0 4px 17px;
@@ -151,13 +158,14 @@
   .now b{color:var(--teal);font-weight:500}
   .now em{font-style:italic;color:var(--ink-dim);font-family:'Fraunces',serif}
 
+  /* the machine's closing emphasis — no quotation marks, cool register */
   .close{
     margin-top:48px;border-top:1px solid var(--hairline);padding-top:30px;max-width:760px;
   }
   .close .crossing{
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:clamp(21px,2.9vw,27px);line-height:1.25;color:var(--amber);
-    text-shadow:0 0 28px rgba(255,179,71,.24);max-width:680px;
+    font-size:clamp(21px,2.9vw,27px);line-height:1.25;color:var(--spore);
+    text-shadow:0 0 28px rgba(63,224,200,.2);max-width:680px;
   }
   .close p{
     font-size:15px;line-height:1.62;color:var(--ink);margin-top:18px;max-width:740px;
@@ -168,7 +176,7 @@
     font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.05em;
     color:var(--ink-faint);margin-top:20px;line-height:1.6;
   }
-  .close .src b{color:var(--amber-dim);font-weight:500}
+  .close .src b{color:var(--teal-dim);font-weight:500}
 
   /* ============ CONNECTS TO ============ */
   .connects{margin-top:54px}
@@ -220,13 +228,80 @@
     display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   }
   footer.floor .door{
-    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
-    text-shadow:0 0 22px rgba(255,179,71,.3);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 22px rgba(63,224,200,.25);max-width:78%;
   }
   footer.floor .meta{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--ink-faint);
   }
+
+  /* ============ TWO INKS, ONE PAGE — the human ink ============
+     The lived voice is a MATERIAL, not an annotation: a full-bleed warm
+     stratum rises out of the cool soil wherever Antti's verbatim words run.
+     Three cues travel together: (1) the raised warm ground, edge to edge,
+     bounded by the warm token of the same hairline register; (2) warm-cream
+     ROMAN serif at reading size — never italic; (3) a dateline, which is
+     material (a citation), not a label. The ink never appears without its
+     ground; the ground never appears without the ink. */
+  .ink-h{
+    position:relative;width:100vw;margin:44px 0 44px calc(50% - 50vw);
+    border-top:1px solid var(--hairline-w);border-bottom:1px solid var(--hairline-w);
+    background:
+      radial-gradient(90% 130% at 18% 0%, rgba(255,179,71,.10), transparent 60%),
+      linear-gradient(180deg, var(--stratum-1), var(--stratum-0));
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18), 0 22px 44px -30px rgba(255,179,71,.14);
+  }
+  .ink-h .inner{max-width:1080px;margin:0 auto;padding:30px 30px 26px}
+  .ink-h p{
+    font-family:'Fraunces',serif;font-weight:400;font-style:normal;
+    font-size:19px;line-height:1.72;color:var(--ink-w);letter-spacing:.002em;max-width:700px;
+  }
+  .ink-h p + p{margin-top:12px}
+  .ink-h .dateline{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.6;letter-spacing:.07em;
+    color:var(--ink-w-dim);display:block;margin-top:14px;
+  }
+  .ink-h .dateline b{color:var(--ink-w);font-weight:500}
+  /* the opening stratum — the first words spoken on the page are his */
+  .ink-h.lead{margin-top:30px;margin-bottom:0;border-bottom:none;box-shadow:0 -22px 44px -30px rgba(255,179,71,.18)}
+  .ink-h.lead .inner{padding:36px 30px 28px}
+  .ink-h.lead p{font-size:clamp(20px,2.6vw,24px);line-height:1.6;max-width:780px}
+
+  /* ============ THE PACT — taught once, at the first seam ============ */
+  .pact{width:100vw;margin:0 0 8px calc(50% - 50vw);border-bottom:1px solid var(--hairline)}
+  .pact .inner{
+    max-width:1080px;margin:0 auto;padding:0 30px;
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .pact .cell{padding:13px 18px 15px;font-size:13px;line-height:1.5}
+  .pact .cell.h{
+    font-family:'Fraunces',serif;color:var(--ink-w);
+    background:linear-gradient(180deg, var(--stratum-0), #150d05);
+    border-bottom:2px solid rgba(255,179,71,.45);
+  }
+  .pact .cell.m{
+    font-family:'Spline Sans',sans-serif;color:var(--ink);
+    border-bottom:2px solid rgba(63,224,200,.4);
+  }
+  .pact .cell .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px;
+  }
+  .pact .cell.h .who{color:var(--ink-w-dim)}
+  .pact .cell.m .who{color:var(--teal-dim)}
+
+  /* the ink colophon — machine accounting; subsumes "Lived, before it was a pattern" */
+  .seam-note{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+  }
+  .seam-note .seam-tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .seam-note a{color:var(--amber-dim);text-decoration:none}
+  .seam-note a:hover{color:var(--amber)}
 
   @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
   .breathe{animation:breathe 4.2s ease-in-out infinite}
@@ -234,6 +309,10 @@
   @media (max-width:780px){
     .neighbours .nb{font-size:11px;padding:6px 10px}
     .spine .lead{font-size:15.5px}
+    .pact .inner{grid-template-columns:1fr;padding:0}
+    .pact .cell{padding:13px 30px 15px}
+    .ink-h p{font-size:18px}
+    .ink-h.lead p{font-size:20px}
   }
 </style>
 </head>
@@ -245,17 +324,37 @@
     <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Sharing an agent</span>
   </nav>
 
-  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <!-- ============ PATTERN NAME — the subject first, then the lived voice speaks ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· Business lane · Absorption phase · the wall-crossing move</span></div>
     <h1>Sharing an <em>agent</em></h1>
+  </header>
+
+  <!-- ============ THE WARM INK OPENS — the pre-sharing wound, verbatim ============ -->
+  <div class="ink-h lead">
+    <div class="inner">
+      <p>I also used to somehow hide my use of LLMs and AI. There was this feeling of hidden personal boost and personal secrets.</p>
+      <span class="dateline"><b>Antti Tevanlinna</b> — “AI as Official Tool” · Apr 2025 · unpublished</span>
+    </div>
+  </div>
+
+  <!-- ============ THE PACT — the page's one legend, set in the inks it describes ============ -->
+  <div class="pact">
+    <div class="inner">
+      <div class="cell h"><span class="who">The warm ink · serif, raised ground</span>The one who lived it — his words exactly, each with its date.</div>
+      <div class="cell m"><span class="who">The cool ink · sans, dark soil</span>The machine press — distilled from material like his, under his judgment.</div>
+    </div>
+  </div>
+
+  <!-- ============ ESSENCE — the press takes over ============ -->
+  <div class="pat-rest" style="max-width:900px;margin-top:26px">
     <p class="principle">The principle: <b>access is not absorption</b> — the gap between rolling it out and having it actually used is the whole problem in one phrase.</p>
     <p class="essence">
       Your agent runs on a thousand calibration calls you never wrote into <span style="font-family:'Spline Sans Mono',monospace;font-size:14px;color:var(--teal)">CLAUDE.md</span> — which source to trust, what "board-ready" means here, which sentence smells like a hallucination.
       <b>You can't hand that over with a folder share.</b>
       So don't try. Hand over a slice small enough that one teammate builds their own.
     </p>
-  </header>
+  </div>
 
   <!-- ============ HERO: the folder vs the one slice ============ -->
   <div class="hero-frame">
@@ -374,18 +473,42 @@
         Access is the cheap half. The deck ships, the licences provision, the kickoff happens — and nothing reaches the people who'd actually use it, because absorption was never anybody's job. <b>The bottleneck is organisational, not computational.</b> So invert it: instead of asking <em>what can I hand over,</em> ask <em>what can one person absorb this week.</em> One teammate. One slice. One plan for who owns it. The unit of adoption is a person, not a team — the big-bang rollout has no unit at all, which is exactly why it dissolves.
       </p>
     </div>
+  </section>
 
-    <div class="move">
+  <!-- ============ WARM INK — joint: the cohort count under the refusal.
+       The machine strikes through the rollout; he has watched two hundred
+       people cross the other way, and counted the weeks. ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>We've trained 200+ people in the last year. The pattern is consistent. Week 2: scepticism, curiosity, first working agent. Week 3: unprompted building. People discover their own high-value processes. Nobody told them to — they could suddenly see it. The curiosity was always there before. The practical "how" was the gap.</p>
+      <span class="dateline">“Rebranding: Agentic Strategy” · Apr 2026 — on the trained cohorts</span>
+    </div>
+  </div>
+
+  <section class="spine" style="margin-top:0">
+    <div class="move" style="margin-top:8px">
       <h2><span class="num">01</span>Name the teammate — and <em>interview for the job</em>.</h2>
       <p>
-        Pick one person, not "the team." Then resist solving for your agent before you understand their work. Every job already has a current hire — for research, it's probably a trusted analyst, a Slack channel, and a morning coffee with the right person. <b>The question isn't "will she use it?" but "what would make her fire the incumbent?"</b> — and that answer is social nine times out of ten. Speed and quality are the obvious axes; you expected those. The vector that earns its keep is the third one the conversation surfaces: a dependency removed, an anxiety reduced, a scope expanded — <em class="amber">never the one she names up front.</em>
+        Pick one person, not "the team." Then resist solving for your agent before you understand their work. Every job already has a current hire — for research, it's probably a trusted analyst, a Slack channel, and a morning coffee with the right person. <b>The question isn't "will she use it?" but "what would make her fire the incumbent?"</b> — and that answer is social nine times out of ten. Speed and quality are the obvious axes; you expected those. The vector that earns its keep is the third one the conversation surfaces: a dependency removed, an anxiety reduced, a scope expanded — <em class="teal">never the one she names up front.</em>
       </p>
       <p class="now">
         <b>This week:</b> write one sentence — <em>"what job are they actually trying to get done?"</em> — not what they'd use your agent for, but the outcome they're chasing. Text it to them and ask if it's right. One reply tells you whether you're designing for their job or your assumption of it.
       </p>
     </div>
+  </section>
 
-    <div class="move">
+  <!-- ============ WARM INK — joint: the price tag beside the cheap-sounding ask.
+       The machine's Monday move costs one text message; he prices the habit
+       honestly — and stakes the payoff anyway. ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>It feels like extra work sometimes to share. But our change only really scales with sharing.</p>
+      <span class="dateline">“Strategizing for the Change” · Jun 2025 · unpublished</span>
+    </div>
+  </div>
+
+  <section class="spine" style="margin-top:0">
+    <div class="move" style="margin-top:8px">
       <h2><span class="num">02</span>Choose the smallest surface that <em>moves that job</em>.</h2>
       <p>
         There is a closed set of four, and they are not interchangeable. <b>Share context</b> — curated sources plus the rules file — and they build their own agent; lowest lift, fastest calibration. <b>Share a skill</b> — one scoped capability, bounded residual risk. <b>Share the output</b> — push them the artefact; low trust cost, but it needs an owner on both ends forever. <b>Share an interface</b> — a pull surface they query on demand; highest engineering lift, keeps every internal tacit. <em class="teal">Picking between them is the design decision</em>, and the smallest surface that does the named job almost always beats the larger one — because a tight feedback loop on a context share gets them to their own calibration faster than a full system that overwhelms them on day one.
@@ -402,7 +525,7 @@
     <div class="move">
       <h2><span class="num">04</span>Watch for calibration — the test is them using it <em>without you in the room</em>.</h2>
       <p>
-        The demo is not the crossing. The first time she pulls it up with you nowhere near — that's the signal. Better: she corrects an output, reads it, finds it wrong, pushes back. <b>Calibration is accumulating.</b> Best: she names a limitation unprompted — <em class="teal">"it's good for X, but I don't use it for Y."</em> That's not scepticism, that's scoped trust, that's the wall crossed. The failure state is the inverse and it hides well: using it for everything (zero calibration) or nothing (the crossing failed) look identical from outside. So run the blunt negative test — if the only use you ever see is <span class="mono amber">during a demo you arranged</span>, the technical plan shipped and the absorption plan didn't. Arrange no more demos; watch what happens Monday without you there.
+        The demo is not the crossing. The first time she pulls it up with you nowhere near — that's the signal. Better: she corrects an output, reads it, finds it wrong, pushes back. <b>Calibration is accumulating.</b> Best: she names a limitation unprompted — <em class="teal">"it's good for X, but I don't use it for Y."</em> That's not scepticism, that's scoped trust, that's the wall crossed. The failure state is the inverse and it hides well: using it for everything (zero calibration) or nothing (the crossing failed) look identical from outside. So run the blunt negative test — if the only use you ever see is <span class="mono">during a demo you arranged</span>, the technical plan shipped and the absorption plan didn't. Arrange no more demos; watch what happens Monday without you there.
       </p>
       <p class="now">
         Then do it again for the next person. Each crossing is a vote on which surface shape your organisation can actually absorb — and that emerging pattern <b>is your company's adoption strategy</b>, whether you named it one or not. Without this move, every other pattern in your personal stack stays privately held.
@@ -421,7 +544,22 @@
     </p>
   </section>
 
-  <!-- ============ CONNECTS TO ============ -->
+  <!-- ============ WARM INK — joint: the practitioner countersigns the philosopher.
+       The machine cites Polanyi; he reached the same wall from sales calls —
+       being right lives in the other person's head. ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>I've often said that we often don't really know how other people think. You being right however is a matter of other people thinking you are right!</p>
+      <span class="dateline">“Checking Assumptions: Knowing more over being right” · Aug 2025</span>
+    </div>
+  </div>
+
+  <!-- ============ THE INK COLOPHON — machine accounting; subsumes "Lived, before it was a pattern" ============ -->
+  <div class="seam-note">
+    <span class="seam-tag">The two inks, counted</span>
+    Four warm strata above carry Antti's words — verbatim, dated, four sources, from the spring he was still hiding his AI use to the spring after two hundred trained builders. Everything on the dark soil, this line included, was machine-pressed from material like them, under his judgment. The pattern was lived before it was named: <a href="essays/index.html#you-transform-organisations">You Transform Organisations · Nov 2025 → the year-one essays, human-written and unedited</a>
+  </div>
+
   <section class="connects">
     <h2>Connects to</h2>
     <div class="sub">Threads leaving this node · the pattern language</div>

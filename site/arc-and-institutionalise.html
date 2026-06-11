@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reading your own arc · Pattern · The Big Picture</title>
+<title>Reading your own arc — Pattern · The Big Picture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -23,6 +23,13 @@
     --hairline:rgba(63,224,200,.10);
     --grey:#5d6a68;
     --grey-dim:#39423f;
+    /* THE SECOND INK — the lived voice's material. Warm cream letterform on a
+       raised warm stratum; never appears without its ground. */
+    --ink-w:#f2e3c4;          /* warm cream — the human letterform */
+    --ink-w-dim:#c7a571;      /* warm dim — datelines inside the stratum */
+    --hairline-w:rgba(255,179,71,.20); /* the hairline register, warm token */
+    --stratum-0:#201507;      /* warm soil the human ink sits on */
+    --stratum-1:#291b09;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -35,11 +42,11 @@
     position:relative;
     overflow-x:hidden;
   }
-  /* atmospheric soil + light-well */
+  /* atmospheric soil — COOL throughout. Under the two-ink pact, ambient warmth is
+     banned: warm ground appears on this page only where the lived voice speaks. */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
       radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
       linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
   }
@@ -60,7 +67,7 @@
   .crumb a:hover{color:var(--teal)}
   .crumb .here{color:var(--ink)}
 
-  /* ============ PATTERN HEADER (subject + principle + essence) ============ */
+  /* ============ PATTERN HEADER (subject first, then the lived voice) ============ */
   header.pat{padding:30px 0 8px;max-width:900px;}
   .kicker{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
@@ -130,7 +137,6 @@
     padding:28px 32px 30px;position:relative;overflow:hidden;
     background:
       radial-gradient(120% 140% at 0% 0%, rgba(63,224,200,.06), transparent 55%),
-      radial-gradient(100% 120% at 100% 100%, rgba(255,179,71,.045), transparent 55%),
       rgba(7,14,15,.55);
   }
   .reading .beat-label{margin-bottom:8px}
@@ -154,6 +160,8 @@
     background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
     box-shadow:0 0 0 3px rgba(5,8,10,1), 0 0 12px 2px rgba(63,224,200,.4);
   }
+  /* the rail's amber terminus — the Outcome-end semantic survives; it's lane
+     chrome, not a voice. Inline prose accents below it have moved to teal. */
   .reading li:nth-child(4)::before,
   .reading li:nth-child(5)::before{
     background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
@@ -161,7 +169,6 @@
   }
   .reading li b{color:var(--spore);font-weight:500}
   .reading li .mono{font-family:'Spline Sans Mono',monospace;font-size:13px;color:var(--teal);letter-spacing:.005em}
-  .reading li .mono.amber{color:var(--amber)}
   .reading li em{font-style:italic;color:var(--ink-dim)}
   .reading li em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
   .reading .footing{
@@ -236,18 +243,97 @@
     display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   }
   footer.floor .door{
-    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
-    text-shadow:0 0 22px rgba(255,179,71,.3);max-width:760px;
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 22px rgba(63,224,200,.25);max-width:760px;
   }
   footer.floor .meta{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--ink-faint);
   }
 
+  /* ============ TWO INKS, ONE PAGE — the human ink ============
+     The lived voice is a MATERIAL, not an annotation: a full-bleed warm
+     stratum rises out of the cool soil wherever Antti's verbatim words run.
+     Three cues travel together so the wall survives squinting, greyscale
+     and mid-scroll phones: (1) the raised warm ground, edge to edge of the
+     viewport, bounded by the warm token of the same hairline register;
+     (2) warm-cream ROMAN serif at reading size — never italic, the machine's
+     serif is identity/emphasis, never a voice; (3) a dateline, which is
+     material (a citation), not a label. The ink never appears without its
+     ground; the ground never appears without the ink. */
+  .ink-h{
+    position:relative;width:100vw;margin:44px 0 44px calc(50% - 50vw);
+    border-top:1px solid var(--hairline-w);border-bottom:1px solid var(--hairline-w);
+    background:
+      radial-gradient(90% 130% at 18% 0%, rgba(255,179,71,.10), transparent 60%),
+      linear-gradient(180deg, var(--stratum-1), var(--stratum-0));
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18), 0 22px 44px -30px rgba(255,179,71,.14);
+  }
+  .ink-h .inner{max-width:1080px;margin:0 auto;padding:30px 30px 26px}
+  .ink-h p{
+    font-family:'Fraunces',serif;font-weight:400;font-style:normal;
+    font-size:19px;line-height:1.72;color:var(--ink-w);letter-spacing:.002em;max-width:700px;
+  }
+  .ink-h p + p{margin-top:12px}
+  .ink-h .dateline{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.6;letter-spacing:.07em;
+    color:var(--ink-w-dim);display:block;margin-top:14px;
+  }
+  .ink-h .dateline b{color:var(--ink-w);font-weight:500}
+  .ink-h .dateline a{color:var(--ink-w-dim);text-decoration:none;border-bottom:1px dotted rgba(199,165,113,.5)}
+  .ink-h .dateline a:hover{color:var(--amber)}
+  /* the opening stratum — the first words spoken on the page are his */
+  .ink-h.lead{margin-top:30px;margin-bottom:0;border-bottom:none;box-shadow:0 -22px 44px -30px rgba(255,179,71,.18)}
+  .ink-h.lead .inner{padding:36px 30px 28px}
+  .ink-h.lead p{font-size:clamp(20px,2.6vw,24px);line-height:1.6;max-width:780px}
+
+  /* ============ THE PACT — taught once, at the first seam ============
+     A two-segment strip where the inks meet: each half of the sentence is
+     set in the ink it describes. The left cell IS warm stratum, the right
+     cell IS cool soil — the legend demonstrates instead of describing. */
+  .pact{width:100vw;margin:0 0 8px calc(50% - 50vw);border-bottom:1px solid var(--hairline)}
+  .pact .inner{
+    max-width:1080px;margin:0 auto;padding:0 30px;
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .pact .cell{padding:13px 18px 15px;font-size:13px;line-height:1.5}
+  .pact .cell.h{
+    font-family:'Fraunces',serif;color:var(--ink-w);
+    background:linear-gradient(180deg, var(--stratum-0), #150d05);
+    border-bottom:2px solid rgba(255,179,71,.45);
+  }
+  .pact .cell.m{
+    font-family:'Spline Sans',sans-serif;color:var(--ink);
+    border-bottom:2px solid rgba(63,224,200,.4);
+  }
+  .pact .cell .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px;
+  }
+  .pact .cell.h .who{color:var(--ink-w-dim)}
+  .pact .cell.m .who{color:var(--teal-dim)}
+
+  /* the ink colophon — machine accounting; subsumes "Lived, before it was a pattern" */
+  .seam-note{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+  }
+  .seam-note .seam-tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .seam-note em{font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--ink)}
+  .seam-note a{color:var(--amber-dim);text-decoration:none}
+  .seam-note a:hover{color:var(--amber)}
+
   @media (max-width:780px){
     .neighbours .nb{font-size:11px;padding:6px 10px}
     .reading{padding:24px 22px 26px}
     .reading li{padding-left:40px}
+    .pact .inner{grid-template-columns:1fr;padding:0}
+    .pact .cell{padding:13px 30px 15px}
+    .ink-h p{font-size:18px}
+    .ink-h.lead p{font-size:20px}
   }
 </style>
 </head>
@@ -259,15 +345,43 @@
     <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Reading your own arc</span>
   </nav>
 
-  <!-- ============ PATTERN SUBJECT + PRINCIPLE + ESSENCE ============ -->
+  <!-- ============ PATTERN SUBJECT — then the lived voice speaks first ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe · software · Outcome → ⟲ · the Outcome-end move</div>
     <h1>Reading your own <em>arc</em></h1>
+  </header>
+
+  <!-- ============ THE WARM INK OPENS — a year read from its own ledger, verbatim ============ -->
+  <div class="ink-h lead">
+    <div class="inner">
+      <p>Most have not gone anywhere. The failures are more common than successes. I think my yearly contribution is around 10 projects. I count only one as true success. And that success is still on probation.</p>
+      <span class="dateline"><b>Antti Tevanlinna</b> — “For innovators” · Feb 2026 — a year of projects, tallied</span>
+    </div>
+  </div>
+
+  <!-- ============ THE PACT — the page's one legend, set in the inks it describes ============ -->
+  <div class="pact">
+    <div class="inner">
+      <div class="cell h"><span class="who">The warm ink · serif, raised ground</span>The one who lived it — his words exactly, each with its date.</div>
+      <div class="cell m"><span class="who">The cool ink · sans, dark soil</span>The machine press — distilled from material like his, under his judgment.</div>
+    </div>
+  </div>
+
+  <!-- ============ PRINCIPLE + ESSENCE — the press takes over ============ -->
+  <div class="pat-rest" style="max-width:900px;margin-top:26px">
     <p class="principle"><b>A word is defined by its citations, not by how you remember using it</b> — and the loop only closes when the lesson ships: narrated from the files, pruned to what still fires.</p>
     <p class="essence">
       A lexicographer never defines a word from how they remember using it — they read the dated slips where it was caught in the wild, written by people with no stake in the meaning. After a stretch of real work, your arc is the word and your artefacts are the slips: the <span class="mono">./CLAUDE.local.md</span> that grew rule by rule, the ADRs, the skills, the <span class="mono">RUN-NOTES.md</span>. So don't write the definition. Hand the slips to <b>a reader who was never in the room</b>, make it read the arc back, then cut the rules the read proves stale.
     </p>
-  </header>
+  </div>
+
+  <!-- ============ WARM INK — the deliverable, exhibited: the arc-read the essence just asked for, his own, one sentence ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>I started not knowing much. I ended knowing more — but mostly knowing better questions.</p>
+      <span class="dateline">the year-one book, introduction · Mar 2026 · unpublished — his arc, read back</span>
+    </div>
+  </div>
 
   <!-- ============================================================ -->
   <!-- BEAT 1 · THE SPECIMEN — the card IS the one-page arc note === -->
@@ -384,7 +498,7 @@
       <li>Open a <b>fresh Claude Code session</b> in the repo where your last real arc of work lives — an agent with no memory of it, so it can't keep your wins and quietly edit the dead ends. Hand it a <b>bounded read-list</b>, <em>named files, not the whole history:</em> the root rules file, <span class="mono">./CLAUDE.local.md</span>, the memory folder, any ADRs, every skill in <span class="mono">~/.claude/skills/</span> you authored there, the last run's <span class="mono">RUN-NOTES.md</span>. Each was written in the moment with no incentive to look good later — which is exactly what makes it the honest record.</li>
       <li>Ask for <b>one page</b>, in the instruction that does the work: <em class="teal">write from my artefacts, quote me where you can, skip the summary of what the training taught.</em> Require it to quote your own files back — if it can't point to the line a claim came from, it narrated from your chair. Re-run with quote-required.</li>
       <li>Reject any line that reads like a <b>trainer monologue</b> — <em>"this journey taught me to embrace…"</em> The slips don't talk like that. If a stranger could mistake the page for marketing copy, the voice slipped; send it back to the files.</li>
-      <li>Read the page against your own memory and <b>mark where the evidence disagrees with your story.</b> Then, while you're in the rules file, find one rule the arc just made stale — superseded, or no longer matching how you work — and <span class="mono amber">delete it in place</span>, the deletion visible in git. A file that only grows is one nobody re-reads; the arc-read is where you earn the right to shrink the kit.</li>
+      <li>Read the page against your own memory and <b>mark where the evidence disagrees with your story.</b> Then, while you're in the rules file, find one rule the arc just made stale — superseded, or no longer matching how you work — and <span class="mono">delete it in place</span>, the deletion visible in git. A file that only grows is one nobody re-reads; the arc-read is where you earn the right to shrink the kit.</li>
       <li>Ship the page where the <b>next session reads first</b> — an ADR, an <span class="mono">observations/</span> memo, or a file you'll point an agent at. Not a diary entry: the cold-start brief for whoever inherits the repo, teammate or future-you. The loop closes when the lesson ships.</li>
     </ol>
 
@@ -401,6 +515,20 @@
       <b>The artefacts are the truth; your memory is the press release</b> — so read the truth, narrated by a reader who was never in the room.
     </p>
   </section>
+
+  <!-- ============ WARM INK — the closer, countersigned: the no-hindsight rule he was already publishing under ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>I have not cleaned these up to sound smarter in hindsight. What you read is what I thought at the time.</p>
+      <span class="dateline">the year-one book, introduction · Mar 2026 — his rule for publishing them</span>
+    </div>
+  </div>
+
+  <!-- ============ THE INK COLOPHON — machine accounting; subsumes "Lived, before it was a pattern" ============ -->
+  <div class="seam-note">
+    <span class="seam-tag">The two inks, counted</span>
+    Three warm strata above carry Antti's words — verbatim, dated, two sources: an article and the year-one book's introduction, February to March 2026. Everything on the dark soil, this line included, was machine-pressed from material like his, under his judgment. The pattern was lived before it was named: <a href="essays/index.html#now">What I Know Now · a year in → the year-one essays, human-written and unedited</a>
+  </div>
 
   <!-- ============ CONNECTS TO — neighbour patterns (kept lean) ============ -->
   <section class="connects">

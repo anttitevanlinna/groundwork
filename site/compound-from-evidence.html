@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grow Rules from Proof — Groundwork</title>
+  <title>Grow Rules from Proof — Groundwork · two inks</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Spline+Sans:wght@400;500&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -23,6 +23,13 @@
       --hairline:rgba(63,224,200,.10);
       --grey:#5d6a68;
       --grey-dim:#39423f;
+      /* THE SECOND INK — the lived voice's material. Warm cream letterform on a
+         raised warm stratum; never appears without its ground. */
+      --ink-w:#f2e3c4;
+      --ink-w-dim:#c7a571;
+      --hairline-w:rgba(255,179,71,.20);
+      --stratum-0:#201507;
+      --stratum-1:#291b09;
     }
     *{margin:0;padding:0;box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -35,10 +42,12 @@
       position:relative;
       overflow-x:hidden;
     }
+    /* atmospheric soil — COOL throughout. Under the two-ink pact, ambient warmth
+       is banned: warm ground appears on this page only where the lived voice
+       speaks, so the strata stay legible as a material, not a mood. */
     body::before{
       content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
       background:
-        radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
         radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
         linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
     }
@@ -65,7 +74,7 @@
 
     /* luthier hero — narrow, bench-dark */
     .tap-hero{
-      margin:36px 0 0;
+      margin:34px 0 0;
       border:1px solid var(--hairline);
       border-radius:14px;
       overflow:hidden;
@@ -81,9 +90,9 @@
     }
     .tap-cap b{color:var(--amber)}
 
-    /* title block */
+    /* title block — the navigable subject stays first */
     .tap-title{
-      margin-top:32px;
+      margin-top:30px;
     }
     .tap-title .kicker{
       font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
@@ -102,13 +111,13 @@
     .tap-title h1 em{color:var(--teal);font-style:italic;font-weight:400}
     .tap-sub{
       font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-      font-size:17px;line-height:1.38;color:var(--ink-dim);margin-top:10px;
+      font-size:17px;line-height:1.38;color:var(--ink-dim);margin-top:26px;
     }
-    .tap-sub b{color:var(--amber);font-weight:500;font-style:normal}
+    .tap-sub b{color:var(--teal);font-weight:500;font-style:normal}
 
     /* the punch — two paragraphs, no sub-headers */
     .tap-punch{
-      margin-top:30px;
+      margin-top:28px;
       max-width:660px;
     }
     .tap-punch p{
@@ -149,25 +158,26 @@
     .tap-pile-item .mono{font-family:'Spline Sans Mono',monospace;font-size:11.5px;color:var(--teal)}
     .tap-pile.b .tap-pile-item .mono{color:var(--grey)}
 
-    /* monday move — the tap-tuner action */
+    /* monday move — the tap-tuner action. Prose-zone accent demoted to teal:
+       on the prose floor, warmth means LIVED — the move is machine-pressed. */
     .tap-move{
       margin-top:32px;
-      border-left:2px solid var(--amber-dim);
+      border-left:2px solid var(--teal-dim);
       padding:0 0 0 18px;
     }
     .tap-move .move-label{
       font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
-      text-transform:uppercase;color:var(--amber-dim);margin-bottom:10px;display:flex;align-items:center;gap:8px;
+      text-transform:uppercase;color:var(--teal-dim);margin-bottom:10px;display:flex;align-items:center;gap:8px;
     }
     .tap-move .move-label .am-dot{
-      width:6px;height:6px;border-radius:50%;background:var(--amber);flex:none;
-      box-shadow:0 0 0 2px rgba(255,179,71,.12),0 0 9px 2px rgba(255,179,71,.5);
+      width:6px;height:6px;border-radius:50%;background:var(--teal);flex:none;
+      box-shadow:0 0 0 2px rgba(63,224,200,.12),0 0 9px 2px rgba(63,224,200,.5);
     }
     .tap-move p{
       font-size:14.5px;line-height:1.6;color:var(--ink);
     }
     .tap-move p b{color:var(--spore);font-weight:500}
-    .tap-move p .mono{font-family:'Spline Sans Mono',monospace;font-size:12.5px;color:var(--amber)}
+    .tap-move p .mono{font-family:'Spline Sans Mono',monospace;font-size:12.5px;color:var(--teal)}
 
     /* closer — the single italic line */
     .tap-closer{
@@ -181,6 +191,72 @@
       max-width:600px;
     }
 
+    /* ============ TWO INKS, ONE PAGE — the human ink ============
+       The lived voice is a MATERIAL, not an annotation: a full-bleed warm
+       stratum rises out of the cool soil wherever Antti's verbatim words run.
+       Three cues travel together: (1) the raised warm ground, edge to edge,
+       bounded by the warm token of the same hairline register; (2) warm-cream
+       ROMAN serif at reading size — never italic; (3) a dateline, which is
+       material (a citation), not a label. */
+    .ink-h{
+      position:relative;width:100vw;margin:40px 0 40px calc(50% - 50vw);
+      border-top:1px solid var(--hairline-w);border-bottom:1px solid var(--hairline-w);
+      background:
+        radial-gradient(90% 130% at 18% 0%, rgba(255,179,71,.10), transparent 60%),
+        linear-gradient(180deg, var(--stratum-1), var(--stratum-0));
+      box-shadow:0 -22px 44px -30px rgba(255,179,71,.18), 0 22px 44px -30px rgba(255,179,71,.14);
+    }
+    .ink-h .inner{max-width:720px;margin:0 auto;padding:28px 30px 24px}
+    .ink-h p{
+      font-family:'Fraunces',serif;font-weight:400;font-style:normal;
+      font-size:19px;line-height:1.72;color:var(--ink-w);letter-spacing:.002em;max-width:660px;
+    }
+    .ink-h p + p{margin-top:12px}
+    .ink-h .dateline{
+      font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.6;letter-spacing:.07em;
+      color:var(--ink-w-dim);display:block;margin-top:14px;
+    }
+    .ink-h .dateline b{color:var(--ink-w);font-weight:500}
+    /* the opening stratum — the first words spoken on the page are his */
+    .ink-h.lead{margin-top:26px;margin-bottom:0;border-bottom:none;box-shadow:0 -22px 44px -30px rgba(255,179,71,.18)}
+    .ink-h.lead .inner{padding:32px 30px 26px}
+    .ink-h.lead p{font-size:clamp(19px,2.6vw,22px);line-height:1.62;max-width:680px}
+
+    /* ============ THE PACT — taught once, at the first seam ============ */
+    .pact{width:100vw;margin:0 0 8px calc(50% - 50vw);border-bottom:1px solid var(--hairline)}
+    .pact .inner{
+      max-width:720px;margin:0 auto;padding:0 30px;
+      display:grid;grid-template-columns:1fr 1fr;
+    }
+    .pact .cell{padding:13px 18px 15px;font-size:13px;line-height:1.5}
+    .pact .cell.h{
+      font-family:'Fraunces',serif;color:var(--ink-w);
+      background:linear-gradient(180deg, var(--stratum-0), #150d05);
+      border-bottom:2px solid rgba(255,179,71,.45);
+    }
+    .pact .cell.m{
+      font-family:'Spline Sans',sans-serif;color:var(--ink);
+      border-bottom:2px solid rgba(63,224,200,.4);
+    }
+    .pact .cell .who{
+      display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+      letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px;
+    }
+    .pact .cell.h .who{color:var(--ink-w-dim)}
+    .pact .cell.m .who{color:var(--teal-dim)}
+
+    /* the ink colophon — machine accounting; subsumes "Lived, before it was a pattern" */
+    .seam-note{
+      margin:46px 0 10px;max-width:660px;
+      font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+    }
+    .seam-note .seam-tag{
+      display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--ink-faint);margin-bottom:8px;
+    }
+    .seam-note a{color:var(--amber-dim);text-decoration:none}
+    .seam-note a:hover{color:var(--amber)}
+
     /* connects-to web */
     .tap-connects{margin-top:52px}
     .tap-connects h2{
@@ -190,7 +266,6 @@
       font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
       color:var(--ink-faint);margin-top:4px;
     }
-    /* living-threads web — compact, violin-native: gradient spines + floating spore chips */
     .tap-web{position:relative;margin-top:14px}
     .tap-web svg{display:block;width:100%;height:auto}
     .tap-neighbours{position:absolute;inset:0;pointer-events:none}
@@ -249,6 +324,10 @@
       .tap-sort{grid-template-columns:1fr}
       .tap-punch p{font-size:15px}
       .tap-title h1{font-size:clamp(30px,9vw,44px)}
+      .pact .inner{grid-template-columns:1fr;padding:0}
+      .pact .cell{padding:13px 30px 15px}
+      .ink-h p{font-size:18px}
+      .ink-h.lead p{font-size:19px}
     }
   </style>
 </head>
@@ -261,6 +340,33 @@
     <span class="sep">/</span>
     <span class="here">compound-from-evidence</span>
   </nav>
+
+  <!-- TITLE BLOCK — the navigable subject stays first -->
+  <div class="tap-title">
+    <div class="kicker"><span class="spore-mark"></span> Pattern · Calibration</div>
+    <h1>Grow <em>rules</em> from proof</h1>
+  </div>
+
+  <!-- ============ THE WARM INK OPENS — verbatim, before any machine teaching.
+       The confession the whole card warns against, in first person. ============ -->
+  <div class="ink-h lead">
+    <div class="inner">
+      <p>I find myself creating these mechanical ducks all the time. We call them "processes," "frameworks," and "best practices."</p>
+      <p>The appeal of the prescribed is seducing to me. When I create prescribed processes, I'm promising predictability in an unpredictable world. I'm offering the comfort of control: if we just follow the steps correctly, we'll get the desired outcome.</p>
+      <span class="dateline"><b>Antti Tevanlinna</b> &mdash; &ldquo;The mechanical duck and processes&rdquo; &middot; Sep 2025</span>
+    </div>
+  </div>
+
+  <!-- ============ THE PACT — the page's one legend, set in the inks it describes ============ -->
+  <div class="pact">
+    <div class="inner">
+      <div class="cell h"><span class="who">The warm ink &middot; serif, raised ground</span>The one who lived it &mdash; his words exactly, each with its date.</div>
+      <div class="cell m"><span class="who">The cool ink &middot; sans, dark soil</span>The machine press &mdash; distilled from material like his, under his judgment.</div>
+    </div>
+  </div>
+
+  <!-- ============ THE PRESS TAKES OVER ============ -->
+  <p class="tap-sub">The rules file is a top plate. You tune it by <b>scraping wood off</b> &mdash; listening for the moment each rule earned its place.</p>
 
   <!-- HERO — luthier bench, plate being scraped -->
   <div class="tap-hero" role="img" aria-label="A violin top plate on a luthier's bench: the left half thick and un-tapped, the right half scraped thin, shavings on the bench beside it. A tap-point glows teal.">
@@ -406,23 +512,26 @@
         <text x="370" y="128">check env before retry</text>
         <text x="370" y="139" font-size="7" fill="#3fe0c8">(debug spiral, 16:47)</text>
         <text x="370" y="157" fill="#5d6a68" text-decoration="line-through">prefer monorepo layout</text>
-        <text x="370" y="168" font-size="7" fill="#5d6a68">(never fired — scraped)</text>
+        <text x="370" y="168" font-size="7" fill="#5d6a68">(never fired &mdash; scraped)</text>
       </g>
     </svg>
-    <div class="tap-cap">The scraped side <b>rings</b> — the thick side guesses</div>
-  </div>
-
-  <!-- TITLE BLOCK -->
-  <div class="tap-title">
-    <div class="kicker"><span class="spore-mark"></span> Pattern · Calibration</div>
-    <h1>Grow <em>rules</em> from proof</h1>
-    <p class="tap-sub">The rules file is a top plate. You tune it by <b>scraping wood off</b> — listening for the moment each rule earned its place.</p>
+    <div class="tap-cap">The scraped side <b>rings</b> &mdash; the thick side guesses</div>
   </div>
 
   <!-- THE PUNCH — two paragraphs, <=200 words body prose -->
   <div class="tap-punch">
-    <p>Compounding always adds. So we pile rules onto <span class="mono">CLAUDE.local.md</span> the way a collector piles mass onto a shelf: each line sounds like progress, none of them gets removed, and the file grows thick without ever growing true. A violin maker works the opposite way. The top plate begins thick; pitch arrives by <em>subtraction</em> — a curl of spruce scraped off, a tap, a listen, repeat. <b>You cannot tap a plate you haven't cut yet.</b> Draft from intent, before the session runs, and every rule is an arch penciled on paper: confident, unrung.</p>
-    <p>The move is to run the session first, then read the transcript back. <b>Add one rule whose moment you can name</b> — <span class="mono">validate webhook sigs (payment-flow incident)</span>, not <span class="mono">validate inputs</span>. Then tap your existing rules: say each one aloud and listen for the incident that put it there. The keeper is the one that rings — a moment you can recite. The one that gives back no tone never earned its wood. Scrape it, because it never rang. <span class="mono del">prefer-monorepo note (never fired)</span> on the floor is the tuning, not the loss.</p>
+    <p>Compounding always adds. So we pile rules onto <span class="mono">CLAUDE.local.md</span> the way a collector piles mass onto a shelf: each line sounds like progress, none of them gets removed, and the file grows thick without ever growing true. A violin maker works the opposite way. The top plate begins thick; pitch arrives by <em>subtraction</em> &mdash; a curl of spruce scraped off, a tap, a listen, repeat. <b>You cannot tap a plate you haven't cut yet.</b> Draft from intent, before the session runs, and every rule is an arch penciled on paper: confident, unrung.</p>
+    <p>The move is to run the session first, then read the transcript back. <b>Add one rule whose moment you can name</b> &mdash; <span class="mono">validate webhook sigs (payment-flow incident)</span>, not <span class="mono">validate inputs</span>. Then tap your existing rules: say each one aloud and listen for the incident that put it there. The keeper is the one that rings &mdash; a moment you can recite. The one that gives back no tone never earned its wood. Scrape it, because it never rang. <span class="mono del">prefer-monorepo note (never fired)</span> on the floor is the tuning, not the loss.</p>
+  </div>
+
+  <!-- ============ WARM INK — JOINT: his-tension-under-the-machine's-certainty.
+       The press just said "scrape it" with poured confidence; the lived voice
+       holds the cost the press smoothed over — and still lands the same verdict. ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>The tension remains: guaranteeing the outcomes the business needs and trusting that iteration produces something novel and something better than could be imagined at start. I've come to conclude limits to prescription come sooner than we usually think.</p>
+      <span class="dateline">&ldquo;The mechanical duck and processes&rdquo; &middot; Sep 2025 &middot; the same essay's verdict</span>
+    </div>
   </div>
 
   <!-- TWO-PILE SORT — compressed visual test -->
@@ -430,7 +539,7 @@
     <div class="tap-pile a">
       <div class="tap-pile-label">
         <svg width="7" height="7" viewBox="0 0 7 7" aria-hidden="true"><circle cx="3.5" cy="3.5" r="3.5" fill="#3fe0c8"/></svg>
-        Pile A — rings
+        Pile A &mdash; rings
       </div>
       <div class="tap-pile-item"><b>Has a moment.</b> <span class="mono">validate webhook sigs (payment-flow incident)</span></div>
       <div class="tap-pile-item"><b>Carries wear.</b> You can recite the session without checking the file.</div>
@@ -439,11 +548,11 @@
     <div class="tap-pile b">
       <div class="tap-pile-label">
         <svg width="7" height="7" viewBox="0 0 7 7" aria-hidden="true"><circle cx="3.5" cy="3.5" r="3.5" fill="#5d6a68"/></svg>
-        Pile B — forecasts
+        Pile B &mdash; forecasts
       </div>
       <div class="tap-pile-item"><b>No moment.</b> <span class="mono" style="color:var(--grey)">validate inputs</span></div>
       <div class="tap-pile-item"><b>Sounds wise.</b> Indistinguishable from a confabulation the agent wrote for free.</div>
-      <div class="tap-pile-item"><b>Tap it:</b> no tone, no incident — the dead wood you scrape away.</div>
+      <div class="tap-pile-item"><b>Tap it:</b> no tone, no incident &mdash; the dead wood you scrape away.</div>
     </div>
   </div>
 
@@ -453,15 +562,30 @@
     <p>After your next real working session, before you close the tab: add <b>one rule whose moment you can name</b> and scrape <b>one rule that gives back no tone when you tap it</b>. Ten minutes at the bench; the only judge is whether the plate rings.</p>
   </div>
 
+  <!-- ============ WARM INK — JOINT: his-prompt-under-the-machine's-assignment.
+       The press assigns Monday homework; the warm ink is the same loop already
+       running — the prompt itself, stealable, not a description of one. ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>Reflect on the current session. What is working and what is not. Ensure the next sessions are better by memorising the learnings. Change your definition to improve for the next round.</p>
+      <span class="dateline">&ldquo;The flywheel&rdquo; &middot; Jan 2026 &middot; the prompt he actually runs</span>
+    </div>
+  </div>
+
   <!-- CLOSER -->
   <div class="tap-closer">
     A rule that only understands itself transfers nothing. A rule that names the moment it survived can be played.
   </div>
 
-  <!-- CONNECTS TO -->
+  <!-- ============ THE INK COLOPHON — machine accounting; subsumes "Lived, before it was a pattern" ============ -->
+  <div class="seam-note">
+    <span class="seam-tag">The two inks, counted</span>
+    Three warm strata above carry Antti's words &mdash; verbatim, dated, two sources, from the essay that named the duck to the prompt that runs the loop. Everything on the dark soil, this line included, was machine-pressed from material like them, under his judgment. The pattern was lived before it was named: <a href="essays/index.html#failing-and-succeeding">Failing and Succeeding at the Same Time &middot; Dec 2025 &rarr; the year-one essays, human-written and unedited</a>
+  </div>
+
   <div class="tap-connects">
     <h2>Connects to</h2>
-    <p class="sub">Threads leaving this plate · the pattern language</p>
+    <p class="sub">Threads leaving this plate &middot; the pattern language</p>
     <div class="tap-web">
       <svg viewBox="0 0 720 210" aria-hidden="true">
         <defs>

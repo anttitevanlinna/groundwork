@@ -23,6 +23,14 @@
     --hairline:rgba(63,224,200,.10);
     --grey:#5d6a68;
     --grey-dim:#39423f;
+    /* THE SECOND INK — the lived voice's material. Warm cream letterform on a
+       raised warm stratum; never appears without its ground. On THIS card the
+       ground is raised and the ink has not yet entered — see the open stratum. */
+    --ink-w:#f2e3c4;          /* warm cream — the human letterform */
+    --ink-w-dim:#c7a571;      /* warm dim — datelines inside the stratum */
+    --hairline-w:rgba(255,179,71,.20); /* the hairline register, warm token */
+    --stratum-0:#201507;      /* warm soil the human ink sits on */
+    --stratum-1:#291b09;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -35,13 +43,14 @@
     position:relative;
     overflow-x:hidden;
   }
-  /* atmospheric soil + light-well — recedes for the long read */
+  /* atmospheric soil — COOL throughout. Under the two-ink pact, ambient warmth is
+     banned: warm ground appears on this page only where the lived voice would speak,
+     so the stratum stays legible as a material, not a mood. */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
-      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
-      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+      radial-gradient(120% 72% at 10% 0%, rgba(63,224,200,.07) 0%, transparent 46%),
+      linear-gradient(180deg, #0a1417 0%, #071013 12%, #05080a 42%, #04060a 100%);
   }
   /* grain / spore dust */
   body::after{
@@ -111,7 +120,6 @@
     letter-spacing:-.012em;line-height:1.08;margin-top:14px;
   }
   .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
-  .prose h2.amber em{color:var(--amber)}
   .prose .sec-label{
     font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
     text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
@@ -121,7 +129,6 @@
     content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
     box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
   }
-  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
   .prose p{
     font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
     letter-spacing:.002em;
@@ -129,11 +136,9 @@
   .prose p b{color:var(--spore);font-weight:500}
   .prose p em{font-style:italic;color:var(--ink-dim)}
   .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
-  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
   .prose p .mono{
     font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
   }
-  .prose p .mono.amber{color:var(--amber)}
   .prose .pull{
     margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
     font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
@@ -143,15 +148,15 @@
 
   /* labelled caveat strip — carries epistemic content, not decoration */
   .caveat{
-    margin-top:22px;border:1px dashed var(--amber-dim);border-radius:12px;
+    margin-top:22px;border:1px dashed var(--teal-dim);border-radius:12px;
     padding:13px 18px 14px;max-width:760px;
-    background:radial-gradient(120% 160% at 0% 0%, rgba(255,179,71,.05), transparent 60%), rgba(8,15,17,.4);
+    background:radial-gradient(120% 160% at 0% 0%, rgba(63,224,200,.04), transparent 60%), rgba(8,15,17,.4);
   }
   .caveat .tag{
     font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;
-    color:var(--amber);display:inline-flex;align-items:center;gap:8px;
+    color:var(--teal);display:inline-flex;align-items:center;gap:8px;
   }
-  .caveat .tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55);flex:none}
+  .caveat .tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.55);flex:none}
   .caveat p{font-size:13px;line-height:1.55;color:var(--ink-dim);margin-top:9px}
   .caveat p b{color:var(--ink);font-weight:500}
 
@@ -186,7 +191,6 @@
     content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
     box-shadow:0 0 9px rgba(63,224,200,.6);
   }
-  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
   .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
 
   /* USE WHEN + BUILD + TEST sit as a quiet trio of plates */
@@ -200,7 +204,7 @@
   .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
   .plate .body b{color:var(--spore);font-weight:500}
   .plate .body .grey{color:var(--grey)}
-  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
+  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(63,224,200,.05), transparent 55%),rgba(8,15,17,.5)}
   .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
   .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
 
@@ -260,9 +264,9 @@
 
   .aside{
     margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
-    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+    border-left:2px solid var(--teal-dim);padding:2px 0 2px 15px;max-width:760px;
   }
-  .aside b{color:var(--amber);font-weight:500}
+  .aside b{color:var(--teal);font-weight:500}
   .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
 
   /* ============ WHY ============ */
@@ -271,7 +275,7 @@
     padding:26px 30px 28px;position:relative;overflow:hidden;
     background:
       radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.08), transparent 55%),
-      radial-gradient(100% 120% at 0% 100%, rgba(255,179,71,.05), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(63,224,200,.04), transparent 55%),
       rgba(7,14,15,.6);
   }
   .why .beat-label{margin-bottom:14px}
@@ -287,10 +291,13 @@
     line-height:1.2;color:var(--spore);letter-spacing:-.005em;
   }
   .why .principle-line em{font-style:italic;color:var(--teal)}
+  /* machine emphasis carries NO quotation marks anywhere on this page —
+     under the two-ink pact, quoted words belong to a named source only,
+     and the lived voice, when it arrives, arrives on its warm stratum. */
   .why .quote{
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:clamp(21px,2.9vw,28px);line-height:1.22;color:var(--teal);letter-spacing:.004em;
-    text-shadow:0 0 30px rgba(63,224,200,.26);max-width:860px;
+    font-size:clamp(21px,2.9vw,28px);line-height:1.22;color:var(--spore);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(63,224,200,.2);max-width:860px;
   }
   .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
   .why .gloss b{color:var(--spore);font-weight:500}
@@ -298,12 +305,12 @@
   .why .gloss + .gloss{margin-top:12px}
   .why .corollary{
     margin-top:18px;display:inline-flex;align-items:center;gap:11px;
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
-    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--teal);
+    border:1px dashed var(--teal-dim);border-radius:30px;padding:8px 16px 9px;
   }
   .why .corollary .sd{
-    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
-    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+    width:7px;height:7px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 11px 2px rgba(63,224,200,.5);
   }
 
   /* ============ TEST-IN-PRACTICE inline panel ============ */
@@ -311,7 +318,7 @@
     margin-top:34px;border:1px solid var(--hairline);border-radius:14px;
     padding:22px 26px 24px;
     background:
-      radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.04), transparent 55%),
+      radial-gradient(120% 140% at 0% 0%, rgba(63,224,200,.04), transparent 55%),
       rgba(8,15,17,.5);
   }
   .practice .beat-label{margin-bottom:12px}
@@ -379,13 +386,95 @@
     display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   }
   footer.floor .door{
-    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
-    text-shadow:0 0 22px rgba(255,179,71,.3);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 22px rgba(63,224,200,.25);max-width:78%;
   }
   footer.floor .meta{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--ink-faint);
   }
+
+  /* ============ TWO INKS, ONE PAGE — the human ink ============
+     The lived voice is a MATERIAL, not an annotation: a full-bleed warm
+     stratum rises out of the cool soil wherever Antti's verbatim words run.
+     Three cues travel together: (1) the raised warm ground, edge to edge,
+     bounded by the warm token of the same hairline register; (2) warm-cream
+     ROMAN serif at reading size; (3) a dateline — a citation is material.
+     ON THIS CARD the count is zero: no lived passage exists yet, so the
+     stratum appears once, raised and empty, holding the page's one honest
+     absence. The italic on it is the PRESS speaking about the human — the
+     single designed exception to the ink-and-voice rule. */
+  .ink-h{
+    position:relative;width:100vw;margin:44px 0 44px calc(50% - 50vw);
+    border-top:1px solid var(--hairline-w);border-bottom:1px solid var(--hairline-w);
+    background:
+      radial-gradient(90% 130% at 18% 0%, rgba(255,179,71,.10), transparent 60%),
+      linear-gradient(180deg, var(--stratum-1), var(--stratum-0));
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18), 0 22px 44px -30px rgba(255,179,71,.14);
+  }
+  .ink-h .inner{max-width:1080px;margin:0 auto;padding:30px 30px 26px}
+  .ink-h p{
+    font-family:'Fraunces',serif;font-weight:400;font-style:normal;
+    font-size:19px;line-height:1.72;color:var(--ink-w);letter-spacing:.002em;max-width:700px;
+  }
+  .ink-h .dateline{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.6;letter-spacing:.07em;
+    color:var(--ink-w-dim);display:block;margin-top:14px;
+  }
+  .ink-h .dateline b{color:var(--ink-w);font-weight:500}
+  /* the open stratum — the bare-card variant. The ground is raised at the head
+     of the page exactly where the first lived passage will sit; until then the
+     press states the absence in ITS register (italic serif, warm-dim), never
+     in his (roman, warm cream). The emptiness is the statement. */
+  .ink-h.bare{margin-top:30px;margin-bottom:0;border-bottom:none;
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18)}
+  .ink-h.bare .inner{padding:34px 30px 28px}
+  .ink-h.bare .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--ink-w-dim);margin-bottom:12px;
+  }
+  .ink-h.bare p.absent{
+    font-style:italic;color:var(--ink-w-dim);
+    font-size:clamp(18px,2.4vw,22px);line-height:1.58;max-width:760px;
+  }
+
+  /* ============ THE PACT — taught once, at the first seam ============
+     Each half of the sentence is set in the ink it describes; the legend
+     demonstrates instead of describing. On this card the warm half also
+     carries the honest count: none yet. */
+  .pact{width:100vw;margin:0 0 8px calc(50% - 50vw);border-bottom:1px solid var(--hairline)}
+  .pact .inner{
+    max-width:1080px;margin:0 auto;padding:0 30px;
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .pact .cell{padding:13px 18px 15px;font-size:13px;line-height:1.5}
+  .pact .cell.h{
+    font-family:'Fraunces',serif;color:var(--ink-w);
+    background:linear-gradient(180deg, var(--stratum-0), #150d05);
+    border-bottom:2px solid rgba(255,179,71,.45);
+  }
+  .pact .cell.h b{color:var(--ink-w);font-weight:500}
+  .pact .cell.m{
+    font-family:'Spline Sans',sans-serif;color:var(--ink);
+    border-bottom:2px solid rgba(63,224,200,.4);
+  }
+  .pact .cell .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px;
+  }
+  .pact .cell.h .who{color:var(--ink-w-dim)}
+  .pact .cell.m .who{color:var(--teal-dim)}
+
+  /* the ink colophon — machine accounting; on this card the count is zero */
+  .seam-note{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+  }
+  .seam-note .seam-tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .seam-note em{font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--ink)}
 
   /* breathing glow on the diagram spore-tips */
   @keyframes breathe{
@@ -407,6 +496,9 @@
     .compound{flex-direction:column;align-items:flex-start;gap:14px}
     .neighbours .nb{font-size:11px;padding:6px 10px}
     .prose p{font-size:14.5px}
+    .pact .inner{grid-template-columns:1fr;padding:0}
+    .pact .cell{padding:13px 30px 15px}
+    .ink-h.bare p.absent{font-size:17.5px}
   }
 </style>
 </head>
@@ -418,17 +510,39 @@
     <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Pick the verifier that matches the failure</span>
   </nav>
 
-  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <!-- ============ PATTERN NAME — the subject first; then the open ground ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· software lane · verification phase · the gate every team eval grows out of</span></div>
     <h1>Pick the verifier that matches the <em>failure</em></h1>
+  </header>
+
+  <!-- ============ THE OPEN STRATUM — the warm ground is raised; the ink has not entered.
+       The press speaking about the human: the page's one designed exception. ============ -->
+  <div class="ink-h bare">
+    <div class="inner">
+      <span class="who">The warm ink · held open</span>
+      <p class="absent">No lived passage exists for this pattern yet — pressed from research alone, under the same judgment. When it's lived, the warm ink enters.</p>
+      <span class="dateline">— the machine press, on the open ground · <b>status 2026-06-11 · zero lived strata</b></span>
+    </div>
+  </div>
+
+  <!-- ============ THE PACT — the page's one legend, set in the inks it describes ============ -->
+  <div class="pact">
+    <div class="inner">
+      <div class="cell h"><span class="who">The warm ink · serif, raised ground</span>The one who lived it — his words exactly, each with its date. <b>None here yet.</b></div>
+      <div class="cell m"><span class="who">The cool ink · sans, dark soil</span>The machine press — distilled from research, under his judgment. Every word on this page is its work.</div>
+    </div>
+  </div>
+
+  <!-- ============ ESSENCE — the press takes over ============ -->
+  <div class="pat-rest" style="max-width:920px;margin-top:26px">
     <p class="principle">The principle: <b>a verifier's authority comes from fit</b> — from firing on candid evidence, not from how much it checks.</p>
     <p class="essence">
       After a long run goes wrong, name the one failure that cost the most — then build the <b>one verifier
       whose shape catches that failure</b>, not the check that's easiest to reach for. The verifier you fit
       by hand is your first eval, and the seed every team-scale eval grows from.
     </p>
-  </header>
+  </div>
 
   <!-- ============ HERO PICTURE: lit failure → matching shape, crossed-out comfortable pairing ============ -->
   <div class="hero-frame">
@@ -861,8 +975,8 @@
 
   <!-- ============ PROSE BLOCK 4 — what Test actually means ============ -->
   <section class="prose">
-    <div class="sec-label amber">What "Test" actually means · in practice</div>
-    <h2 class="amber">The test isn't "does it run." It's <em>"does it catch what I diagnosed."</em></h2>
+    <div class="sec-label">What "Test" actually means · in practice</div>
+    <h2>The test isn't "does it run." It's <em>"does it catch what I diagnosed."</em></h2>
 
     <p>
       Here's the practitioner's tell that a verifier is fitted, not bolted on: point it at the un-packaged run that
@@ -879,7 +993,7 @@
   <!-- ============ USE WHEN · BUILD · TEST (recipe spine) ============ -->
   <div class="plates">
     <div class="plate use">
-      <div class="beat-label amber"><b>Use when</b></div>
+      <div class="beat-label"><b>Use when</b></div>
       <p class="body">
         You've read a failed long-run, named where it went wrong — and you're tempted to bolt on
         <span class="grey">whatever check is easiest</span>, not the one that fits.
@@ -973,7 +1087,7 @@
       <p class="principle-line">A verifier's strength isn't its rigour — it's its <em>fit</em>, and its firing on candid evidence.</p>
     </div>
 
-    <p class="quote">"Your verifier is your first eval — and it only protects you if its shape matches the failure that actually happened."</p>
+    <p class="quote">Your verifier is your first eval — and it only protects you if its shape matches the failure that actually happened.</p>
     <p class="gloss">
       The counterintuitive part: a more rigorous check is not a safer one. A meticulous shell-hook is blind to a
       qualitative drift; a careful judge is noise on a one-line lint's job. <b>The eval that protects you is the one
@@ -991,6 +1105,12 @@
     </p>
     <div class="corollary"><span class="sd"></span>A verifier you didn't shape to a named failure is a green light wired to nothing.</div>
   </section>
+
+  <!-- ============ THE INK COLOPHON — machine accounting; the count is zero and says so ============ -->
+  <div class="seam-note">
+    <span class="seam-tag">The two inks, counted</span>
+    <em>Zero warm strata on this page.</em> Every word above, this line included, is machine-pressed — from the research corpus, under his judgment, with no lived passage yet to press beside it. The raised ground at the head of the page is not a gap in production; it is the count, kept honestly and dated 2026-06-11. When this pattern is lived, the first passage enters there, verbatim and dated — and this line changes.
+  </div>
 
   <!-- ============ CONNECTS TO — neighbour patterns ============ -->
   <section class="connects">

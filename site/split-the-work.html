@@ -21,9 +21,15 @@
     --ink-dim:#6f8a85;
     --ink-faint:#3b524e;
     --hairline:rgba(63,224,200,.10);
-    --hairline-a:rgba(255,179,71,.12);
     --grey:#5d6a68;
     --grey-dim:#39423f;
+    /* THE SECOND INK — the lived voice's material. Warm cream letterform on a
+       raised warm stratum; never appears without its ground. */
+    --ink-w:#f2e3c4;          /* warm cream — the human letterform */
+    --ink-w-dim:#c7a571;      /* warm dim — datelines inside the stratum */
+    --hairline-w:rgba(255,179,71,.20); /* the hairline register, warm token */
+    --stratum-0:#201507;      /* warm soil the human ink sits on */
+    --stratum-1:#291b09;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -36,13 +42,14 @@
     position:relative;
     overflow-x:hidden;
   }
-  /* atmospheric soil + light-well — business lane leans amber, recedes for the long read */
+  /* atmospheric soil — COOL throughout. Under the two-ink pact, ambient warmth is
+     banned: warm ground appears on this page only where the lived voice speaks,
+     so the stratum stays legible as a material, not a mood. */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.10) 0%, transparent 46%),
-      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.06) 0%, transparent 44%),
-      linear-gradient(180deg, #2a1e08 0%, #14100b 10%, #05080a 42%, #04060a 100%);
+      radial-gradient(120% 72% at 10% 0%, rgba(63,224,200,.07) 0%, transparent 46%),
+      linear-gradient(180deg, #0a1417 0%, #071013 12%, #05080a 42%, #04060a 100%);
   }
   /* grain / spore dust */
   body::after{
@@ -57,11 +64,11 @@
     font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;
     color:var(--ink-faint);padding:22px 0 0;text-transform:uppercase;
   }
-  .crumb a{color:var(--amber-dim);text-decoration:none;transition:color .25s}
-  .crumb a:hover{color:var(--amber)}
+  .crumb a{color:var(--teal-dim);text-decoration:none;transition:color .25s}
+  .crumb a:hover{color:var(--teal)}
   .crumb .here{color:var(--ink)}
 
-  /* ============ PATTERN HEADER (name + essence) ============ */
+  /* ============ PATTERN HEADER (name first — findability) ============ */
   header.pat{padding:30px 0 8px;max-width:920px;}
   .kicker{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
@@ -82,7 +89,7 @@
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
     font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
   }
-  .principle b{color:var(--amber);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
   .essence{
     font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:740px;
   }
@@ -95,10 +102,10 @@
 
   /* ============ HERO PICTURE ============ */
   .hero-frame{
-    margin:30px 0 8px;border:1px solid var(--hairline-a);border-radius:16px;overflow:hidden;
-    background:linear-gradient(180deg, rgba(31,24,13,.5), rgba(5,8,10,.6));
+    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(13,24,22,.5), rgba(5,8,10,.6));
     position:relative;
-    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(255,179,71,.04) inset;
+    box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.04) inset;
   }
   .hero-frame svg{display:block;width:100%;height:auto}
   .hero-cap{
@@ -118,39 +125,35 @@
   .round{
     margin-top:34px;max-width:780px;border-left:2px solid var(--hairline);padding-left:22px;
   }
-  .round.amber-edge{border-left-color:var(--amber-dim)}
   .round .round-tag{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.26em;text-transform:uppercase;
     color:var(--ink-faint);display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;
   }
   .round .round-tag .rn{color:var(--teal-dim)}
-  .round.amber-edge .round-tag .rn{color:var(--amber-dim)}
   .round .round-tag .rt{color:var(--ink-dim);letter-spacing:.12em}
   .round h2{
     font-family:'Fraunces',serif;font-weight:400;font-size:27px;color:var(--spore);
     letter-spacing:-.012em;line-height:1.12;margin-top:9px;
   }
   .round h2 em{font-style:italic;color:var(--teal);font-weight:400}
-  .round h2.amber em{color:var(--amber)}
   .round p{font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:14px;letter-spacing:.002em}
   .round p b{color:var(--spore);font-weight:500}
   .round p em{font-style:italic;color:var(--ink-dim)}
   .round p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
   .round p .mono{font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em}
-  .round p .mono.amber{color:var(--amber)}
   .round .verdict{
     margin-top:14px;font-family:'Fraunces',serif;font-style:italic;font-size:17px;line-height:1.4;
-    color:var(--amber);max-width:680px;
+    color:var(--teal);max-width:680px;
   }
   .round .verdict b{color:var(--spore);font-style:normal;font-weight:500}
 
   /* ============ THE EXIT TEST (subverts the checklist) ============ */
   .exit{
-    margin-top:46px;border:1px solid rgba(255,179,71,.18);border-radius:16px;
+    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
     padding:26px 30px 28px;position:relative;overflow:hidden;
     background:
-      radial-gradient(130% 150% at 90% 0%, rgba(255,179,71,.08), transparent 55%),
-      radial-gradient(100% 120% at 0% 100%, rgba(63,224,200,.05), transparent 55%),
+      radial-gradient(130% 150% at 90% 0%, rgba(63,224,200,.07), transparent 55%),
+      radial-gradient(100% 120% at 0% 100%, rgba(63,224,200,.04), transparent 55%),
       rgba(7,14,15,.6);
   }
   .exit .exit-tag{
@@ -158,8 +161,8 @@
     text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;margin-bottom:14px;
   }
   .exit .exit-tag::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);flex:none;
-    box-shadow:0 0 9px rgba(255,179,71,.55);
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.55);
   }
   .exit .exit-tag b{color:var(--ink);font-weight:500;letter-spacing:.1em}
   .exit .pass-line{
@@ -172,12 +175,12 @@
   .exit p em{font-style:italic;color:var(--ink-dim)}
   .exit .close-req{
     margin-top:20px;display:inline-flex;align-items:center;gap:11px;
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
-    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--teal);
+    border:1px dashed var(--teal-dim);border-radius:30px;padding:8px 16px 9px;
   }
   .exit .close-req .sd{
-    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
-    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+    width:7px;height:7px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 11px 2px rgba(63,224,200,.5);
   }
 
   /* ============ CONNECTS TO ============ */
@@ -230,8 +233,8 @@
     display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   }
   footer.floor .door{
-    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
-    text-shadow:0 0 22px rgba(255,179,71,.3);max-width:760px;
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 22px rgba(63,224,200,.25);max-width:760px;
   }
   footer.floor .meta{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
@@ -241,10 +244,88 @@
   @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
   .breathe{animation:breathe 4.2s ease-in-out infinite}
 
+  /* ============ TWO INKS, ONE PAGE — the human ink ============
+     The lived voice is a MATERIAL, not an annotation: a full-bleed warm
+     stratum rises out of the cool soil where Antti's verbatim words run.
+     Three cues travel together: (1) the raised warm ground, edge to edge,
+     bounded by the warm token of the same hairline register; (2) warm-cream
+     ROMAN serif at reading size — never italic, the machine's serif is
+     identity/emphasis, never a voice; (3) a dateline, which is material
+     (a citation), not a label. The ink never appears without its ground;
+     the ground never appears without the ink. */
+  .ink-h{
+    position:relative;width:100vw;margin:44px 0 44px calc(50% - 50vw);
+    border-top:1px solid var(--hairline-w);border-bottom:1px solid var(--hairline-w);
+    background:
+      radial-gradient(90% 130% at 18% 0%, rgba(255,179,71,.10), transparent 60%),
+      linear-gradient(180deg, var(--stratum-1), var(--stratum-0));
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18), 0 22px 44px -30px rgba(255,179,71,.14);
+  }
+  .ink-h .inner{max-width:1080px;margin:0 auto;padding:30px 30px 26px}
+  .ink-h p{
+    font-family:'Fraunces',serif;font-weight:400;font-style:normal;
+    font-size:19px;line-height:1.72;color:var(--ink-w);letter-spacing:.002em;max-width:700px;
+  }
+  .ink-h p + p{margin-top:12px}
+  .ink-h .dateline{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.6;letter-spacing:.07em;
+    color:var(--ink-w-dim);display:block;margin-top:14px;
+  }
+  .ink-h .dateline b{color:var(--ink-w);font-weight:500}
+  .ink-h .dateline a{color:var(--ink-w-dim);text-decoration:none;border-bottom:1px dotted rgba(199,165,113,.5)}
+  .ink-h .dateline a:hover{color:var(--amber)}
+  /* the opening stratum — the first words spoken on the page are his */
+  .ink-h.lead{margin-top:30px;margin-bottom:0;border-bottom:none;box-shadow:0 -22px 44px -30px rgba(255,179,71,.18)}
+  .ink-h.lead .inner{padding:36px 30px 28px}
+  .ink-h.lead p{font-size:clamp(20px,2.6vw,24px);line-height:1.6;max-width:780px}
+
+  /* ============ THE PACT — taught once, at the first seam ============
+     A two-segment strip where the inks meet: each half of the sentence is
+     set in the ink it describes. The left cell IS warm stratum, the right
+     cell IS cool soil — the legend demonstrates instead of describing. */
+  .pact{width:100vw;margin:0 0 8px calc(50% - 50vw);border-bottom:1px solid var(--hairline)}
+  .pact .inner{
+    max-width:1080px;margin:0 auto;padding:0 30px;
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .pact .cell{padding:13px 18px 15px;font-size:13px;line-height:1.5}
+  .pact .cell.h{
+    font-family:'Fraunces',serif;color:var(--ink-w);
+    background:linear-gradient(180deg, var(--stratum-0), #150d05);
+    border-bottom:2px solid rgba(255,179,71,.45);
+  }
+  .pact .cell.m{
+    font-family:'Spline Sans',sans-serif;color:var(--ink);
+    border-bottom:2px solid rgba(63,224,200,.4);
+  }
+  .pact .cell .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px;
+  }
+  .pact .cell.h .who{color:var(--ink-w-dim)}
+  .pact .cell.m .who{color:var(--teal-dim)}
+
+  /* the ink colophon — machine accounting; closes the frame */
+  .seam-note{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+  }
+  .seam-note .seam-tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .seam-note em{font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--ink)}
+  .seam-note a{color:var(--amber-dim);text-decoration:none}
+  .seam-note a:hover{color:var(--amber)}
+
   @media (max-width:780px){
     .neighbours .nb{font-size:11px;padding:6px 10px}
     .round p{font-size:14.5px}
     .lede-prose p{font-size:15px}
+    .pact .inner{grid-template-columns:1fr;padding:0}
+    .pact .cell{padding:13px 30px 15px}
+    .ink-h p{font-size:18px}
+    .ink-h.lead p{font-size:20px}
   }
 </style>
 </head>
@@ -256,10 +337,33 @@
     <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Splitting work across agents</span>
   </nav>
 
-  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <!-- ============ PATTERN NAME — the subject, then the lived voice speaks first ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· business lane · phase: The Work · the more-than-one-mind move</span></div>
     <h1>Splitting work <em>across agents</em></h1>
+  </header>
+
+  <!-- ============ THE WARM INK OPENS — the capacity wound that makes splitting
+       inevitable, before the machine disciplines it. Opener-only by vet: four
+       candidates collapsed to two source-moments; the second stayed in the soil
+       rather than dress one thin spread as a deep one. ============ -->
+  <div class="ink-h lead">
+    <div class="inner">
+      <p>You cannot add many documents into a single session. You cannot build universal agents. Even the agent definitions of some of our more ambitious assistants need splitting into multiple context windows and sessions. When the context window is “full” or over, then the agent goes braindead.</p>
+      <span class="dateline"><b>Antti Tevanlinna</b> — “State of Agents” · Dec 2025</span>
+    </div>
+  </div>
+
+  <!-- ============ THE PACT — the page's one legend, set in the inks it describes ============ -->
+  <div class="pact">
+    <div class="inner">
+      <div class="cell h"><span class="who">The warm ink · serif, raised ground</span>The one who lived it — his words exactly, each with its date.</div>
+      <div class="cell m"><span class="who">The cool ink · sans, dark soil</span>The machine press — distilled from material like his, under his judgment.</div>
+    </div>
+  </div>
+
+  <!-- ============ ESSENCE — the press takes over ============ -->
+  <div class="pat-rest" style="max-width:920px;margin-top:26px">
     <p class="principle">You keep hiring three of the same agent — <b>then act surprised the committee agrees with itself.</b></p>
     <p class="essence">
       Adding a second agent is a hire, and the screening question is the one any honest hiring manager asks: does it reach
@@ -268,7 +372,7 @@
       and force a framework to pick — not let a chat smooth the friction away.
       <span class="cross">SCOPE · <b>personal → team → company</b>: a single builder's split becomes the org's standing way of staffing a question.</span>
     </p>
-  </header>
+  </div>
 
   <!-- ============ HERO PICTURE: the photocopied-résumé stack collapsing to one card, beside three real agents feeding a panel under a rubric ============ -->
   <div class="hero-frame">
@@ -415,9 +519,9 @@
   </section>
 
   <!-- ============ ROUND ONE — THE SCREEN ============ -->
-  <section class="round amber-edge">
+  <section class="round">
     <div class="round-tag"><span class="rn">Round one</span><span class="rt">The screen — name the forcing axis or close the req</span></div>
-    <h2 class="amber">Three agents, or one prompt in <em>three costumes</em>?</h2>
+    <h2>Three agents, or one prompt in <em>three costumes</em>?</h2>
     <p>
       Hold the three candidates side by side and ask the only screening question that matters: does any of them reach a
       source the others <b>can't</b>, read it in a language the others <b>don't</b>, or argue a position the others
@@ -473,20 +577,20 @@
     <p>
       Drop the rubric and the judge does what any model does at a fork — it rounds the corner and makes peace. Hand three
       conflicting files to an un-briefed synthesiser and you get a fluent, reasonable, utterly beige consensus, the very
-      thing you opened three sessions to avoid. The rubric is the judge's spine: <span class="mono amber">"show me where
-      these disagree, before you write a word."</span> Without it you have built an expensive route back to the
+      thing you opened three sessions to avoid. The rubric is the judge's spine: <span class="mono">show me where
+      these disagree, before you write a word.</span> Without it you have built an expensive route back to the
       single-agent answer.
     </p>
     <p class="verdict">A briefed judge <b>picks a direction;</b> an un-briefed one hedges. The rubric is what makes it choose.</p>
   </section>
 
   <!-- ============ ROUND FOUR — THE REFERENCE YOU KEEP (compounding as a clause + Monday-move woven) ============ -->
-  <section class="round amber-edge">
+  <section class="round">
     <div class="round-tag"><span class="rn">Round four</span><span class="rt">The reference you keep — and the one you can run on Monday</span></div>
-    <h2 class="amber">Write down which seat <em>earned its desk</em>, then start there.</h2>
+    <h2>Write down which seat <em>earned its desk</em>, then start there.</h2>
     <p>
       After the answer lands, don't bin the interview notes. In the review, write down which session actually earned its
-      keep and which was the photocopy you should have screened out — into the root <span class="mono amber">./CLAUDE.md</span>
+      keep and which was the photocopy you should have screened out — into the root <span class="mono">./CLAUDE.md</span>
       that governs how the next question gets staffed: this zone was noise, that stance was redundant, the rubric needed a
       sharper "show me the seam." That one sharpening clause is the whole compounding mechanism — the first time you split
       a question you're guessing at the division of work; by the third you're not, because the next split starts from
@@ -516,6 +620,12 @@
     </p>
     <p class="close-req"><span class="sd"></span>Close the req. Keep the single agent. That is a pass too.</p>
   </section>
+
+  <!-- ============ THE INK COLOPHON — machine accounting; closes the frame ============ -->
+  <div class="seam-note">
+    <span class="seam-tag">The two inks, counted</span>
+    One warm stratum above carries Antti's words — verbatim, dated, a single source. Everything on the dark soil, this line included, was machine-pressed from material like his, under his judgment. The pattern was lived before it was named: <a href="essays/index.html#state-of-agents">State of Agents · Dec 2025 → the year-one essays, human-written and unedited</a>
+  </div>
 
   <!-- ============ CONNECTS TO — neighbour patterns ============ -->
   <section class="connects">

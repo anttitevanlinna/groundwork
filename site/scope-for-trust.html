@@ -20,11 +20,18 @@
     --ink:#cfe6e0;
     --ink-dim:#6f8a85;
     --ink-faint:#3b524e;
-    --hairline:rgba(255,179,71,.10);
+    --hairline:rgba(63,224,200,.10);
     --hairline-teal:rgba(63,224,200,.10);
     --grey:#5d6a68;
     --grey-dim:#39423f;
     --danger:#e0775f;
+    /* THE SECOND INK — the lived voice's material. Warm cream letterform on a
+       raised warm stratum; never appears without its ground. */
+    --ink-w:#f2e3c4;          /* warm cream — the human letterform */
+    --ink-w-dim:#c7a571;      /* warm dim — datelines inside the stratum */
+    --hairline-w:rgba(255,179,71,.20); /* the hairline register, warm token */
+    --stratum-0:#201507;      /* warm soil the human ink sits on */
+    --stratum-1:#291b09;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -37,12 +44,13 @@
     position:relative;
     overflow-x:hidden;
   }
+  /* atmospheric soil — COOL throughout. Under the two-ink pact, ambient warmth is
+     banned: warm ground appears on this page only where the lived voice speaks. */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.10) 0%, transparent 46%),
-      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.05) 0%, transparent 44%),
-      linear-gradient(180deg, #2a1c06 0%, #13100a 10%, #05080a 42%, #04060a 100%);
+      radial-gradient(120% 72% at 10% 0%, rgba(63,224,200,.07) 0%, transparent 46%),
+      linear-gradient(180deg, #0a1417 0%, #071013 12%, #05080a 42%, #04060a 100%);
   }
   body::after{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
@@ -81,7 +89,7 @@
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
     font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
   }
-  .principle b{color:var(--amber);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
   .essence{
     font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:740px;
   }
@@ -102,30 +110,27 @@
   }
   .hero-cap b{color:var(--amber)}
 
-  /* ============ THE SPINE — one lean column, no plate-grid, no bead-rail ============ */
+  /* ============ THE SPINE — one lean column ============ */
   .spine{margin-top:40px;max-width:768px}
   .spine h2{
     font-family:'Fraunces',serif;font-weight:400;font-size:30px;color:var(--spore);
     letter-spacing:-.012em;line-height:1.1;margin-top:6px;
   }
-  .spine h2 em{font-style:italic;color:var(--amber);font-weight:400}
-  .spine h2.teal em{color:var(--teal)}
+  .spine h2 em{font-style:italic;color:var(--teal);font-weight:400}
   .spine p{
     font-size:15.5px;line-height:1.64;color:var(--ink);margin-top:16px;letter-spacing:.002em;
   }
   .spine p b{color:var(--spore);font-weight:500}
   .spine p em{font-style:italic;color:var(--ink-dim)}
-  .spine p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
   .spine .mono{
-    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--amber);letter-spacing:.005em;
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
   }
-  .spine .mono.teal{color:var(--teal)}
 
   /* the verdict line — the "I can't tell" pull, set apart */
   .verdict-line{
     margin:28px 0 6px;padding:18px 22px;border-radius:13px;
-    border:1px solid rgba(255,179,71,.2);
-    background:radial-gradient(130% 150% at 100% 0%, rgba(255,179,71,.07), transparent 60%), rgba(18,14,9,.55);
+    border:1px solid rgba(63,224,200,.2);
+    background:radial-gradient(130% 150% at 100% 0%, rgba(63,224,200,.06), transparent 60%), rgba(8,15,17,.55);
     max-width:768px;
   }
   .verdict-line .three{
@@ -136,7 +141,7 @@
   .verdict-line .three .compliant{color:var(--teal);border-color:rgba(63,224,200,.35)}
   .verdict-line .three .violating{color:var(--danger);border-color:rgba(224,119,95,.35)}
   .verdict-line .three .cant{
-    color:#fff4e2;border-color:var(--amber);background:rgba(255,179,71,.08);
+    color:var(--spore);border-color:var(--teal);background:rgba(63,224,200,.08);
     font-family:'Fraunces',serif;font-style:italic;font-size:13.5px;padding:5px 13px;letter-spacing:0;
   }
   .verdict-line p{font-size:14px;line-height:1.56;color:var(--ink-dim);margin-top:13px}
@@ -144,33 +149,33 @@
 
   /* the honest-frontier callout — "I can't tell" is a verdict, framed once */
   .frontier{
-    margin:30px 0 6px;border-left:2px solid var(--amber-dim);padding:4px 0 4px 20px;
+    margin:30px 0 6px;border-left:2px solid var(--teal-dim);padding:4px 0 4px 20px;
     font-family:'Fraunces',serif;font-style:italic;font-size:19px;line-height:1.4;
     color:var(--ink);max-width:700px;
   }
-  .frontier b{color:var(--amber);font-weight:500;font-style:normal}
+  .frontier b{color:var(--teal);font-weight:500;font-style:normal}
 
   /* small-caps source/illustrative tags inline */
   .src-note{
-    margin:18px 0 4px;border:1px dashed var(--amber-dim);border-radius:10px;
-    padding:12px 16px;background:rgba(31,24,13,.4);max-width:768px;
+    margin:18px 0 4px;border:1px dashed var(--teal-dim);border-radius:10px;
+    padding:12px 16px;background:rgba(8,15,17,.4);max-width:768px;
     display:flex;gap:12px;align-items:flex-start;
   }
   .src-note .tag{
     font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
-    color:var(--amber-dim);border:1px solid var(--amber-dim);border-radius:5px;padding:3px 8px;flex:none;margin-top:1px;
+    color:var(--teal-dim);border:1px solid var(--teal-dim);border-radius:5px;padding:3px 8px;flex:none;margin-top:1px;
   }
   .src-note p{font-size:12.5px;line-height:1.52;color:var(--ink-dim);margin:0}
-  .src-note p b{color:var(--amber);font-weight:500}
+  .src-note p b{color:var(--teal);font-weight:500}
 
-  /* the Monday move, woven as a marginless inline directive — NOT a mono aside block */
+  /* the Monday move, woven as a marginless inline directive */
   .monday{
     margin-top:26px;max-width:768px;font-size:15px;line-height:1.62;color:var(--ink);
   }
   .monday b{color:var(--spore);font-weight:500}
   .monday .do{
     display:block;margin-top:10px;font-family:'Spline Sans Mono',monospace;font-size:12.5px;
-    line-height:1.7;color:var(--amber);letter-spacing:.01em;
+    line-height:1.7;color:var(--teal);letter-spacing:.01em;
   }
 
   /* section divider label, sparing */
@@ -180,10 +185,9 @@
     margin-top:48px;
   }
   .sec-mark::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);
-    box-shadow:0 0 9px rgba(255,179,71,.55);flex:none;
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
   }
-  .sec-mark.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
 
   /* ============ CONNECTS TO ============ */
   .connects{margin-top:54px}
@@ -201,7 +205,7 @@
     position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
     display:flex;align-items:center;gap:9px;
     padding:8px 14px 9px;border-radius:13px;
-    background:rgba(18,14,9,.82);backdrop-filter:blur(4px);
+    background:rgba(8,15,17,.82);backdrop-filter:blur(4px);
     border:1px solid var(--hairline);
     color:var(--ink);font-size:13px;letter-spacing:.005em;white-space:nowrap;
     transition:border-color .3s,color .3s,background .3s,transform .3s;
@@ -235,13 +239,82 @@
     display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   }
   footer.floor .door{
-    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
-    text-shadow:0 0 22px rgba(255,179,71,.3);max-width:760px;
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 22px rgba(63,224,200,.25);max-width:760px;
   }
   footer.floor .meta{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--ink-faint);
   }
+
+  /* ============ TWO INKS, ONE PAGE — the human ink ============
+     The lived voice is a MATERIAL, not an annotation: a full-bleed warm
+     stratum rises out of the cool soil wherever Antti's verbatim words run.
+     Three cues travel together so the wall survives squinting, greyscale
+     and mid-scroll phones: (1) the raised warm ground, edge to edge of the
+     viewport, bounded by the warm token of the same hairline register;
+     (2) warm-cream ROMAN serif at reading size — never italic, the machine's
+     serif is identity/emphasis, never a voice; (3) a dateline, which is
+     material (a citation), not a label. The ink never appears without its
+     ground; the ground never appears without the ink. */
+  .ink-h{
+    position:relative;width:100vw;margin:44px 0 44px calc(50% - 50vw);
+    border-top:1px solid var(--hairline-w);border-bottom:1px solid var(--hairline-w);
+    background:
+      radial-gradient(90% 130% at 18% 0%, rgba(255,179,71,.10), transparent 60%),
+      linear-gradient(180deg, var(--stratum-1), var(--stratum-0));
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18), 0 22px 44px -30px rgba(255,179,71,.14);
+  }
+  .ink-h .inner{max-width:1080px;margin:0 auto;padding:30px 30px 26px}
+  .ink-h p{
+    font-family:'Fraunces',serif;font-weight:400;font-style:normal;
+    font-size:19px;line-height:1.72;color:var(--ink-w);letter-spacing:.002em;max-width:700px;
+  }
+  .ink-h p + p{margin-top:12px}
+  .ink-h .dateline{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.6;letter-spacing:.07em;
+    color:var(--ink-w-dim);display:block;margin-top:14px;
+  }
+  .ink-h .dateline b{color:var(--ink-w);font-weight:500}
+  /* the opening stratum — the first words spoken on the page are his */
+  .ink-h.lead{margin-top:30px;margin-bottom:0;border-bottom:none;box-shadow:0 -22px 44px -30px rgba(255,179,71,.18)}
+  .ink-h.lead .inner{padding:36px 30px 28px}
+  .ink-h.lead p{font-size:clamp(20px,2.6vw,24px);line-height:1.6;max-width:780px}
+
+  /* ============ THE PACT — taught once, at the first seam ============ */
+  .pact{width:100vw;margin:0 0 8px calc(50% - 50vw);border-bottom:1px solid var(--hairline)}
+  .pact .inner{
+    max-width:1080px;margin:0 auto;padding:0 30px;
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .pact .cell{padding:13px 18px 15px;font-size:13px;line-height:1.5}
+  .pact .cell.h{
+    font-family:'Fraunces',serif;color:var(--ink-w);
+    background:linear-gradient(180deg, var(--stratum-0), #150d05);
+    border-bottom:2px solid rgba(255,179,71,.45);
+  }
+  .pact .cell.m{
+    font-family:'Spline Sans',sans-serif;color:var(--ink);
+    border-bottom:2px solid rgba(63,224,200,.4);
+  }
+  .pact .cell .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px;
+  }
+  .pact .cell.h .who{color:var(--ink-w-dim)}
+  .pact .cell.m .who{color:var(--teal-dim)}
+
+  /* the ink colophon — machine accounting */
+  .seam-note{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+  }
+  .seam-note .seam-tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .seam-note a{color:var(--amber-dim);text-decoration:none}
+  .seam-note a:hover{color:var(--amber)}
 
   @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
   .breathe{animation:breathe 4.2s ease-in-out infinite}
@@ -250,6 +323,10 @@
     .neighbours .nb{font-size:11px;padding:6px 10px}
     .spine p{font-size:14.5px}
     .src-note{flex-direction:column;gap:9px}
+    .pact .inner{grid-template-columns:1fr;padding:0}
+    .pact .cell{padding:13px 30px 15px}
+    .ink-h p{font-size:18px}
+    .ink-h.lead p{font-size:20px}
   }
 </style>
 </head>
@@ -261,17 +338,37 @@
     <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Scope an agent your org can trust</span>
   </nav>
 
-  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <!-- ============ PATTERN NAME — the subject, then the lived voice speaks first ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· business lane · Context &amp; Guardrails · personal → company</span></div>
     <h1>Scope an agent your org can <em>trust</em></h1>
+  </header>
+
+  <!-- ============ THE WARM INK OPENS — verbatim, before any machine teaching ============ -->
+  <div class="ink-h lead">
+    <div class="inner">
+      <p>An LLM is both a black box and also a box full of mandatory randomness.</p>
+      <span class="dateline"><b>Antti Tevanlinna</b> — “Toward Integration” · Aug 2025 · unpublished</span>
+    </div>
+  </div>
+
+  <!-- ============ THE PACT — the page's one legend, set in the inks it describes ============ -->
+  <div class="pact">
+    <div class="inner">
+      <div class="cell h"><span class="who">The warm ink · serif, raised ground</span>The one who lived it — his words exactly, each with its date.</div>
+      <div class="cell m"><span class="who">The cool ink · sans, dark soil</span>The machine press — distilled from material like his, under his judgment.</div>
+    </div>
+  </div>
+
+  <!-- ============ ESSENCE — the press takes over ============ -->
+  <div class="pat-rest" style="max-width:920px;margin-top:26px">
     <p class="principle">The principle: <b>for a non-deterministic system, the clean bill of health never arrives — so the discipline is running the check, not waiting for it to pass.</b></p>
     <p class="essence">
       You can't tell if an agent is safe by reading its output — the failure modes don't live where you can read them.
       So you walk five named risks across its blast radius, clip what you can, and <b>name the residual you can't</b>.
       Here, <em>"I can't tell yet"</em> is a valid trust verdict — and usually the most useful one.
     </p>
-  </header>
+  </div>
 
   <!-- ============ HERO PICTURE: five risks → five mitigations → a named residual ============ -->
   <div class="hero-frame">
@@ -383,7 +480,9 @@
       re-read the output a hundred times and never meet them. So "wait for the security review to come back clean" never
       fires — for a non-deterministic system, the clean report doesn't exist to wait for.
     </p>
+  </section>
 
+  <section class="spine">
     <p>
       The check carries <b>two lenses, not one</b>. A <b>policy lens</b> asks what your org has already decided is
       off-limits — the data-usage, security, and AI-use rules you point the agent at as source material. An
@@ -418,14 +517,24 @@
       <b>"I can't tell yet" is a trust verdict, not a failure to reach one.</b> A binary answer about an ambiguous input is
       a confident lie — and the third row is where the real work lives.
     </p>
+  </section>
 
-    <h2 class="teal" style="margin-top:40px">Once a risk is named, you <em>clip</em> it.</h2>
+  <!-- ============ WARM INK — the machine just issued the permission; he had wanted it for years ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>I’ve for long wanted to hear admissions of not knowing and making errors in product work. To me, this has always been human. Alas, many of the real-life work settings have still been about knowing and being right - always. We’ve kind of pretended to know more than we really know.</p>
+      <span class="dateline">“Evals is the new black” · undated · archived Aug 2025</span>
+    </div>
+  </div>
+
+  <section class="spine" style="margin-top:0">
+    <h2 style="margin-top:8px">Once a risk is named, you <em>clip</em> it.</h2>
     <p>
-      Pick from a matching closed set of five mitigations: <span class="mono teal">scope</span> (narrow what it can reach),
-      <span class="mono teal">split</span> (separate the agent that reads from the one that acts),
-      <span class="mono teal">filter</span> (strip the poison before it enters context),
-      <span class="mono teal">gate</span> (plan-mode — the agent proposes, you approve, only then it executes), and
-      <span class="mono teal">review</span> (a second pass before the action lands). Each clips one edge of the blast
+      Pick from a matching closed set of five mitigations: <span class="mono">scope</span> (narrow what it can reach),
+      <span class="mono">split</span> (separate the agent that reads from the one that acts),
+      <span class="mono">filter</span> (strip the poison before it enters context),
+      <span class="mono">gate</span> (plan-mode — the agent proposes, you approve, only then it executes), and
+      <span class="mono">review</span> (a second pass before the action lands). Each clips one edge of the blast
       radius. And crucially, <b>these sit on top of your existing controls — network, IAM, logging, supplier review — they
       never replace them.</b> Loop design is additive. A leader who concludes "the agent check replaces security" ships a
       breach.
@@ -460,7 +569,7 @@
     </p>
 
     <!-- the honest tell -->
-    <div class="sec-mark teal">The honest tell</div>
+    <div class="sec-mark">The honest tell</div>
     <p style="margin-top:16px">
       You know the two lenses are doing real work when <b>one catches what the other shrugged at</b>. In one
       pseudonymised B2B SaaS support team's worked example from the cookbook, a procurement-blocker thread read like
@@ -484,6 +593,12 @@
       once it's on record.
     </p>
   </section>
+
+  <!-- ============ THE INK COLOPHON — machine accounting ============ -->
+  <div class="seam-note">
+    <span class="seam-tag">The two inks, counted</span>
+    Two warm strata above carry Antti's words — verbatim, dated where the archive kept a date, two sources, the earliest from the August he first put the randomness into words. Everything on the dark soil, this line included, was machine-pressed from material like them, under his judgment. The pattern was lived before it was named: <a href="essays/index.html">the year-one essays, human-written and unedited</a>
+  </div>
 
   <!-- ============ CONNECTS TO — neighbour patterns ============ -->
   <section class="connects">

@@ -23,6 +23,14 @@
     --hairline:rgba(63,224,200,.10);
     --grey:#5d6a68;
     --grey-dim:#39423f;
+    /* THE SECOND INK — the lived voice's material. Warm cream letterform on a
+       raised warm stratum; never appears without its ground. On THIS card the
+       ground is raised at the head and the ink has not yet entered. */
+    --ink-w:#f2e3c4;          /* warm cream — the human letterform */
+    --ink-w-dim:#c7a571;      /* warm dim — datelines inside the stratum */
+    --hairline-w:rgba(255,179,71,.20); /* the hairline register, warm token */
+    --stratum-0:#201507;      /* warm soil the human ink sits on */
+    --stratum-1:#291b09;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -35,13 +43,14 @@
     position:relative;
     overflow-x:hidden;
   }
-  /* atmospheric soil + light-well */
+  /* atmospheric soil — COOL throughout. Under the two-ink pact, ambient warmth
+     is banned: the only warm ground on this page is the open stratum where the
+     lived voice would speak, so the material stays legible as a material. */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
-      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
-      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+      radial-gradient(120% 72% at 8% 0%, rgba(63,224,200,.07) 0%, transparent 46%),
+      linear-gradient(180deg, #0a1417 0%, #071013 12%, #05080a 42%, #04060a 100%);
   }
   /* grain / spore dust */
   body::after{
@@ -60,7 +69,7 @@
   .crumb a:hover{color:var(--teal)}
   .crumb .here{color:var(--ink)}
 
-  /* ============ PATTERN HEADER (name + essence) ============ */
+  /* ============ PATTERN HEADER (name first; then the open ground) ============ */
   header.pat{padding:30px 0 8px;max-width:900px;}
   .kicker{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.34em;
@@ -86,6 +95,86 @@
     font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:720px;
   }
   .essence b{color:var(--spore);font-weight:500}
+
+  /* ============ TWO INKS, ONE PAGE — the human ink ============
+     The lived voice is a MATERIAL, not an annotation: a full-bleed warm
+     stratum rising out of the cool soil wherever his verbatim words run.
+     Three cues travel together: raised warm ground edge to edge, warm-cream
+     ROMAN serif at reading size, and a dateline. ON THIS CARD the count is
+     zero — the stratum appears once, raised and empty, holding the page's
+     one honest absence. The italic on it is the PRESS speaking about the
+     human: the single designed exception to the ink-and-voice rule. */
+  .ink-h{
+    position:relative;width:100vw;margin:44px 0 44px calc(50% - 50vw);
+    border-top:1px solid var(--hairline-w);border-bottom:1px solid var(--hairline-w);
+    background:
+      radial-gradient(90% 130% at 18% 0%, rgba(255,179,71,.10), transparent 60%),
+      linear-gradient(180deg, var(--stratum-1), var(--stratum-0));
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18), 0 22px 44px -30px rgba(255,179,71,.14);
+  }
+  .ink-h .inner{max-width:1080px;margin:0 auto;padding:30px 30px 26px}
+  .ink-h p{
+    font-family:'Fraunces',serif;font-weight:400;font-style:normal;
+    font-size:19px;line-height:1.72;color:var(--ink-w);letter-spacing:.002em;max-width:700px;
+  }
+  .ink-h .dateline{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.6;letter-spacing:.07em;
+    color:var(--ink-w-dim);display:block;margin-top:14px;
+  }
+  .ink-h .dateline b{color:var(--ink-w);font-weight:500}
+  /* the open stratum — bare-card variant. The ground is raised at the head of
+     the page exactly where the first lived passage will sit; until then the
+     press states the absence in ITS register (italic serif, warm-dim), never
+     in his (roman, warm cream). The emptiness is the statement. */
+  .ink-h.bare{margin-top:30px;margin-bottom:0;border-bottom:none;
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18)}
+  .ink-h.bare .inner{padding:34px 30px 28px}
+  .ink-h.bare .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--ink-w-dim);margin-bottom:12px;
+  }
+  .ink-h.bare p.absent{
+    font-style:italic;color:var(--ink-w-dim);
+    font-size:clamp(18px,2.4vw,22px);line-height:1.58;max-width:760px;
+  }
+
+  /* ============ THE PACT — taught once, at the first seam ============
+     Each half of the sentence is set in the ink it describes; the legend
+     demonstrates instead of describing. On this card the warm half carries
+     only the legend role plus the honest count: none yet. */
+  .pact{width:100vw;margin:0 0 8px calc(50% - 50vw);border-bottom:1px solid var(--hairline)}
+  .pact .inner{
+    max-width:1080px;margin:0 auto;padding:0 30px;
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .pact .cell{padding:13px 18px 15px;font-size:13px;line-height:1.5}
+  .pact .cell.h{
+    font-family:'Fraunces',serif;color:var(--ink-w);
+    background:linear-gradient(180deg, var(--stratum-0), #150d05);
+    border-bottom:2px solid rgba(255,179,71,.45);
+  }
+  .pact .cell.h b{color:var(--ink-w);font-weight:500}
+  .pact .cell.m{
+    font-family:'Spline Sans',sans-serif;color:var(--ink);
+    border-bottom:2px solid rgba(63,224,200,.4);
+  }
+  .pact .cell .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px;
+  }
+  .pact .cell.h .who{color:var(--ink-w-dim)}
+  .pact .cell.m .who{color:var(--teal-dim)}
+
+  /* the ink colophon — machine accounting; on this card the count is zero */
+  .seam-note{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+  }
+  .seam-note .seam-tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .seam-note em{font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--ink)}
 
   /* ============ HERO PICTURE ============ */
   .hero-frame{
@@ -161,23 +250,27 @@
     margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
     display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   }
+  /* the door line goes cool — on the prose floor, warmth means lived */
   footer.floor .door{
-    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
-    text-shadow:0 0 22px rgba(255,179,71,.3);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 22px rgba(63,224,200,.25);max-width:78%;
   }
   footer.floor .meta{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--ink-faint);
   }
 
-  /* ============ T2 RE-FORMED: the stereogram eyes — left-eye / right-eye fuse ============ */
-  /* the two body beats sit as two columns the layout fuses to one centred Monday-line */
+  /* ============ T2 RE-FORMED: the stereogram eyes — left-eye / right-eye fuse ============
+     Under the two-ink pact the prose floor carries one cool accent only: the
+     right-eye column's amber moved to the neutral ink register (the hero SVG
+     keeps its amber — diagram semantics, not a voice). Left/right now differ
+     by luminance, not hue. */
   .eyes{
     margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:0;
     border:1px solid var(--hairline);border-radius:16px 16px 0 0;overflow:hidden;
     background:
       radial-gradient(110% 130% at 0% 0%, rgba(63,224,200,.05), transparent 52%),
-      radial-gradient(110% 130% at 100% 100%, rgba(255,179,71,.045), transparent 52%),
+      radial-gradient(110% 130% at 100% 100%, rgba(63,224,200,.03), transparent 52%),
       rgba(7,14,15,.55);
     box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(63,224,200,.03) inset;
   }
@@ -190,25 +283,25 @@
   .eye .eye-tag::before{content:"";width:7px;height:7px;border-radius:50%;flex:none}
   .eye.left .eye-tag{color:var(--teal-dim)}
   .eye.left .eye-tag::before{background:var(--teal);box-shadow:0 0 10px rgba(63,224,200,.6)}
-  .eye.right .eye-tag{color:var(--amber-dim)}
-  .eye.right .eye-tag::before{background:var(--amber);box-shadow:0 0 10px rgba(255,179,71,.55)}
+  .eye.right .eye-tag{color:var(--ink-dim)}
+  .eye.right .eye-tag::before{background:var(--ink-dim);box-shadow:0 0 10px rgba(207,230,224,.35)}
   .eye h2{
     font-family:'Fraunces',serif;font-weight:400;font-size:25px;line-height:1.06;
     color:var(--spore);letter-spacing:-.01em;margin-top:12px;
   }
   .eye.left h2 em{font-style:italic;color:var(--teal);font-weight:400}
-  .eye.right h2 em{font-style:italic;color:var(--amber);font-weight:400}
+  .eye.right h2 em{font-style:italic;color:var(--ink-dim);font-weight:400}
   .eye p{font-size:14.5px;line-height:1.62;color:var(--ink);margin-top:14px}
   .eye p b{color:var(--spore);font-weight:500}
   .eye p em{font-style:italic;color:var(--ink-dim)}
   .eye p .mono{font-family:'Spline Sans Mono',monospace;font-size:13px;color:var(--teal)}
-  .eye.right p .mono{color:var(--amber)}
+  .eye.right p .mono{color:var(--spore)}
   .eye .move-quote{
     margin-top:16px;font-family:'Fraunces',serif;font-style:italic;font-size:16px;line-height:1.4;
     padding-left:15px;
   }
   .eye.left .move-quote{border-left:2px solid var(--teal-dim);color:#9bffe9}
-  .eye.right .move-quote{border-left:2px solid var(--amber-dim);color:#fff4e2}
+  .eye.right .move-quote{border-left:2px solid var(--ink-dim);color:var(--spore)}
   .eye .move-quote .no{
     color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-style:italic;
   }
@@ -217,7 +310,7 @@
     line-height:1.55;
   }
   .eye.left .guard{color:var(--teal-dim)}
-  .eye.right .guard{color:var(--amber-dim)}
+  .eye.right .guard{color:var(--ink-dim)}
 
   /* the fuse — one centred Monday-line the two eyes resolve into */
   .fuse{
@@ -241,7 +334,7 @@
     margin-top:18px;font-size:14px;line-height:1.6;color:var(--ink-dim);
     max-width:680px;margin-left:auto;margin-right:auto;
   }
-  .fuse .fuse-test b{color:var(--amber);font-weight:500}
+  .fuse .fuse-test b{color:var(--spore);font-weight:500}
   .fuse .systemic{
     margin-top:20px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
     max-width:640px;margin-left:auto;margin-right:auto;
@@ -253,6 +346,9 @@
     .eyes{grid-template-columns:1fr}
     .eye.left{border-right:none;border-bottom:1px solid var(--hairline)}
     .neighbours .nb{font-size:11px;padding:6px 10px}
+    .pact .inner{grid-template-columns:1fr;padding:0}
+    .pact .cell{padding:13px 30px 15px}
+    .ink-h.bare p.absent{font-size:17.5px}
   }
 </style>
 </head>
@@ -264,10 +360,32 @@
     <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Two-pass plan review</span>
   </nav>
 
-  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <!-- ============ PATTERN NAME — the subject first; then the open ground ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe · software · Context &amp; Guardrails · <span class="pat-no">the read that earns the approval</span></div>
     <h1>Two-pass <em>plan review</em></h1>
+  </header>
+
+  <!-- ============ THE OPEN STRATUM — the warm ground is raised; the ink has not entered.
+       The press speaking about the human: the page's one designed exception. ============ -->
+  <div class="ink-h bare">
+    <div class="inner">
+      <span class="who">The warm ink · held open</span>
+      <p class="absent">No lived passage exists for this pattern yet — pressed from research alone, under the same judgment. When it's lived, the warm ink enters.</p>
+      <span class="dateline">— the machine press, on the open ground · <b>status 2026-06-11 · zero lived strata</b></span>
+    </div>
+  </div>
+
+  <!-- ============ THE PACT — the page's one legend, set in the inks it describes ============ -->
+  <div class="pact">
+    <div class="inner">
+      <div class="cell h"><span class="who">The warm ink · serif, raised ground</span>The one who lived it — his words exactly, each with its date. <b>None here yet.</b></div>
+      <div class="cell m"><span class="who">The cool ink · sans, dark soil</span>The machine press — distilled from research, under his judgment. Every word on this page is its work.</div>
+    </div>
+  </div>
+
+  <!-- ============ ESSENCE — the press takes over ============ -->
+  <div class="pat-rest" style="max-width:900px;margin-top:26px">
     <p class="principle">The clever way to hold it: <b>a plan is flat to either eye alone</b> &mdash; the depth you're approving lives in the disparity between two reads, never inside one.</p>
     <p class="essence">
       Before you approve an agent's plan for a multi-file change, read it the way two eyes build depth &mdash; with
@@ -275,7 +393,7 @@
       agent's branch-walk for everything you'd never hold in working memory. Neither read alone is the approval. The depth
       is computed from the gap.
     </p>
-  </header>
+  </div>
 
   <!-- ============ HERO PICTURE: the stereogram — one plan, two offset views, depth at centre ============ -->
   <div class="hero-frame">
@@ -474,6 +592,12 @@
       </p>
     </div>
 
+  </div>
+
+  <!-- ============ THE INK COLOPHON — the accounting, kept honestly ============ -->
+  <div class="seam-note">
+    <span class="seam-tag">The two inks, counted</span>
+    <em>The warm ink's tally here stands at zero.</em> Nothing above was lived; all of it was pressed — research distilled under his judgment, with no two-pass read of his own on record to set beside it. The empty ground under the title isn't a hole the press papered over; it is the tally itself, entered for 2026-06-11. The first plan he actually reads with both eyes leaves words, and those words take that seat as written, date attached — at which point this sentence is wrong and gets replaced.
   </div>
 
   <!-- ============ CONNECTS TO — neighbour patterns (strippable) ============ -->

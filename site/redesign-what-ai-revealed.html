@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amplify the system, not the output — Pattern · The Big Picture</title>
+<title>Amplify the system, not the output — redesign-what-ai-revealed · pilot · two inks, one page</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -24,6 +24,13 @@
     --hairline-a:rgba(255,179,71,.12);
     --grey:#5d6a68;
     --grey-dim:#39423f;
+    /* THE SECOND INK — the lived voice's material. Warm cream letterform on a
+       raised warm stratum; never appears without its ground. */
+    --ink-w:#f2e3c4;
+    --ink-w-dim:#c7a571;
+    --hairline-w:rgba(255,179,71,.20);
+    --stratum-0:#201507;
+    --stratum-1:#291b09;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -36,13 +43,14 @@
     position:relative;
     overflow-x:hidden;
   }
-  /* atmospheric soil + light-well — business lane leans amber, recedes for the long read */
+  /* atmospheric soil — COOL throughout. Under the two-ink pact, ambient warmth is
+     banned: warm ground appears on this page only where the lived voice speaks,
+     so the strata stay legible as a material, not a mood. */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.11) 0%, transparent 46%),
-      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.06) 0%, transparent 44%),
-      linear-gradient(180deg, #2a1c06 0%, #14110a 10%, #05080a 42%, #04060a 100%);
+      radial-gradient(120% 72% at 10% 0%, rgba(63,224,200,.07) 0%, transparent 46%),
+      linear-gradient(180deg, #0a1417 0%, #071013 12%, #05080a 42%, #04060a 100%);
   }
   /* grain / spore dust */
   body::after{
@@ -82,19 +90,19 @@
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
     font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
   }
-  .principle b{color:var(--amber);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
   .essence{
     font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:740px;
   }
   .essence b{color:var(--spore);font-weight:500}
   .essence .scope{
     font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.1em;
-    color:var(--amber);font-weight:500;
+    color:var(--teal);font-weight:500;
   }
 
   /* ============ HERO PICTURE ============ */
   .hero-frame{
-    margin:30px 0 8px;border:1px solid var(--hairline-a);border-radius:16px;overflow:hidden;
+    margin:30px 0 8px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden;
     background:linear-gradient(180deg, rgba(31,24,13,.5), rgba(5,8,10,.6));
     position:relative;
     box-shadow:0 30px 70px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(255,179,71,.04) inset;
@@ -123,8 +131,8 @@
     margin-top:42px;
   }
   .prose .sec-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);
-    box-shadow:0 0 9px rgba(255,179,71,.55);flex:none;
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
   }
   .prose .sec-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
   .prose p{
@@ -134,9 +142,8 @@
   .prose p b{color:var(--spore);font-weight:500}
   .prose p em{font-style:italic;color:var(--ink-dim)}
   .prose p em.teal{color:var(--teal);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
-  .prose p em.amber{color:var(--amber);font-style:italic;font-family:'Fraunces',serif;font-size:16px}
   .prose p .mono{
-    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--amber);letter-spacing:.005em;
+    font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
   }
   .prose p .mono.teal{color:var(--teal)}
   .prose p .src{
@@ -145,48 +152,48 @@
     color:var(--teal-dim);font-style:normal;
   }
   .prose .pull{
-    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--amber-dim);
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
     font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
     color:var(--ink);max-width:680px;
   }
-  .prose .pull b{color:var(--amber);font-weight:500;font-style:normal}
+  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
 
   /* ============ FRONTIER FLAG — the measurement-gap caveat, carried at every recurrence ============ */
   .frontier{
-    margin:24px 0 6px;border:1px dashed var(--amber-dim);border-radius:13px;
+    margin:24px 0 6px;border:1px dashed var(--teal-dim);border-radius:13px;
     padding:16px 20px 17px;max-width:760px;
-    background:radial-gradient(120% 150% at 0% 0%, rgba(255,179,71,.06), transparent 60%), rgba(8,15,17,.5);
+    background:radial-gradient(120% 150% at 0% 0%, rgba(63,224,200,.05), transparent 60%), rgba(8,15,17,.5);
   }
   .frontier .ftag{
     font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.26em;
-    text-transform:uppercase;color:var(--amber);display:flex;align-items:center;gap:9px;margin-bottom:9px;
+    text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:9px;margin-bottom:9px;
   }
   .frontier .ftag::before{
-    content:"";width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
-    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+    content:"";width:7px;height:7px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 11px 2px rgba(63,224,200,.5);
   }
   .frontier p{font-size:13.5px;line-height:1.55;color:var(--ink-dim);margin:0}
   .frontier p b{color:var(--spore);font-weight:500}
-  .frontier p em{font-style:italic;color:var(--amber)}
+  .frontier p em{font-style:italic;color:var(--teal)}
 
   /* ============ NEW PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
   .diagram{
-    margin:26px 0 6px;border:1px solid var(--hairline-a);border-radius:14px;overflow:hidden;
+    margin:26px 0 6px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;
     background:
       radial-gradient(110% 130% at 8% 8%, rgba(255,179,71,.045), transparent 55%),
-      linear-gradient(180deg, rgba(20,17,10,.55), rgba(5,8,10,.65));
+      linear-gradient(180deg, rgba(8,17,18,.55), rgba(5,8,10,.65));
     position:relative;
     box-shadow:0 24px 56px -36px rgba(0,0,0,.9), 0 0 0 1px rgba(255,179,71,.03) inset;
   }
   .diagram svg{display:block;width:100%;height:auto}
   .diagram .dcap{
-    padding:12px 20px 16px;border-top:1px solid var(--hairline-a);
+    padding:12px 20px 16px;border-top:1px solid var(--hairline);
     font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;line-height:1.4;
     color:var(--ink-dim);letter-spacing:.003em;
     background:linear-gradient(180deg, rgba(5,8,10,0), rgba(5,8,10,.5));
   }
   .diagram .dcap b{color:var(--ink);font-weight:500;font-style:normal}
-  .diagram .dcap em{color:var(--amber);font-style:italic}
+  .diagram .dcap em{color:var(--teal);font-style:italic}
   .diagram .dcap .num{
     font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:9.5px;
     letter-spacing:.26em;text-transform:uppercase;color:var(--amber-dim);margin-right:10px;
@@ -198,8 +205,8 @@
     text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
   }
   .beat-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);flex:none;
-    box-shadow:0 0 9px rgba(255,179,71,.55);
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.6);
   }
   .beat-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
   .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
@@ -209,14 +216,14 @@
     display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:46px;
   }
   .plate{
-    border:1px solid var(--hairline-a);border-radius:14px;padding:18px 20px 20px;
-    background:rgba(14,12,8,.5);backdrop-filter:blur(2px);position:relative;
+    border:1px solid var(--hairline);border-radius:14px;padding:18px 20px 20px;
+    background:rgba(8,15,17,.5);backdrop-filter:blur(2px);position:relative;
   }
   .plate .body{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:12px}
   .plate .body b{color:var(--spore);font-weight:500}
   .plate .body .grey{color:var(--grey)}
-  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.06), transparent 55%),rgba(14,12,8,.5)}
-  .plate.test .body em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.05), transparent 55%),rgba(8,15,17,.5)}
+  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
   .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
 
   /* ============ CORE MOVES ============ */
@@ -263,14 +270,15 @@
     padding:18px 22px;position:relative;overflow:hidden;
     background:
       radial-gradient(120% 140% at 100% 0%, rgba(255,179,71,.07), transparent 60%),
-      rgba(14,12,8,.55);
+      rgba(8,17,18,.55);
     display:flex;align-items:center;gap:20px;
   }
   .compound .loop-ico{flex:none}
   .compound .ctext{flex:1}
   .compound .ctext .cyc{
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--amber);
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
   }
+  .compound .ctext .cyc .last{color:var(--amber)}
   .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
   .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
   .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
@@ -284,16 +292,16 @@
 
   /* ============ WHY ============ */
   .why{
-    margin-top:46px;border:1px solid var(--hairline-a);border-radius:16px;
+    margin-top:46px;border:1px solid var(--hairline);border-radius:16px;
     padding:26px 30px 28px;position:relative;overflow:hidden;
     background:
-      radial-gradient(130% 150% at 90% 0%, rgba(255,179,71,.09), transparent 55%),
+      radial-gradient(130% 150% at 90% 0%, rgba(255,179,71,.08), transparent 55%),
       radial-gradient(100% 120% at 0% 100%, rgba(63,224,200,.05), transparent 55%),
-      rgba(13,11,8,.6);
+      rgba(7,14,15,.6);
   }
   .why .beat-label{margin-bottom:14px}
   .why .principle-block{
-    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline-a);
+    margin-bottom:22px;padding-bottom:20px;border-bottom:1px dashed var(--hairline);
   }
   .why .principle-label{
     font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
@@ -303,11 +311,13 @@
     font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
     line-height:1.2;color:var(--spore);letter-spacing:-.005em;
   }
-  .why .principle-line em{font-style:italic;color:var(--amber)}
+  .why .principle-line em{font-style:italic;color:var(--teal)}
+  /* machine emphasis carries NO quotation marks anywhere in its own voice —
+     under the two-ink pact, quoted words belong to a named source only. */
   .why .quote{
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--amber);letter-spacing:.004em;
-    text-shadow:0 0 30px rgba(255,179,71,.24);max-width:840px;
+    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--spore);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(63,224,200,.2);max-width:840px;
   }
   .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
   .why .gloss b{color:var(--spore);font-weight:500}
@@ -316,12 +326,12 @@
   .why .gloss + .gloss{margin-top:12px}
   .why .corollary{
     margin-top:18px;display:inline-flex;align-items:center;gap:11px;
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
-    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--teal);
+    border:1px dashed var(--teal-dim);border-radius:30px;padding:8px 16px 9px;
   }
   .why .corollary .sd{
-    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
-    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+    width:7px;height:7px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 11px 2px rgba(63,224,200,.5);
   }
 
   /* ============ TEST-IN-PRACTICE inline panel ============ */
@@ -330,12 +340,12 @@
     padding:22px 26px 24px;
     background:
       radial-gradient(120% 140% at 0% 0%, rgba(63,224,200,.04), transparent 55%),
-      rgba(14,12,8,.5);
+      rgba(8,15,17,.5);
   }
   .practice .beat-label{margin-bottom:12px}
   .practice p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px;max-width:760px}
   .practice p b{color:var(--spore);font-weight:500}
-  .practice p em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:16px}
+  .practice p em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:16px}
   .practice p em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim);font-family:'Fraunces',serif}
 
   /* ============ CONNECTS TO ============ */
@@ -354,8 +364,8 @@
     position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
     display:flex;align-items:center;gap:9px;
     padding:8px 14px 9px;border-radius:13px;
-    background:rgba(14,12,8,.82);backdrop-filter:blur(4px);
-    border:1px solid var(--hairline-a);
+    background:rgba(8,15,17,.82);backdrop-filter:blur(4px);
+    border:1px solid var(--hairline);
     color:var(--ink);font-size:13px;letter-spacing:.005em;white-space:nowrap;
     transition:border-color .3s,color .3s,background .3s,transform .3s;
     cursor:pointer;text-decoration:none;
@@ -393,12 +403,12 @@
 
   /* ============ FOOTER ============ */
   footer.floor{
-    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline-a);
+    margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
     display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   }
   footer.floor .door{
-    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
-    text-shadow:0 0 22px rgba(255,179,71,.3);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 22px rgba(63,224,200,.25);max-width:78%;
   }
   footer.floor .meta{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
@@ -411,6 +421,74 @@
     50%{opacity:1}
   }
   .breathe{animation:breathe 4.2s ease-in-out infinite}
+
+  /* ============ TWO INKS, ONE PAGE — the human ink ============
+     The lived voice is a MATERIAL, not an annotation: a full-bleed warm
+     stratum rises out of the cool soil wherever Antti's verbatim words run.
+     Three cues travel together: (1) the raised warm ground, edge to edge,
+     bounded by the warm token of the same hairline register; (2) warm-cream
+     ROMAN serif at reading size — never italic; (3) a dateline, which is
+     material (a citation), not a label. The ink never appears without its
+     ground; the ground never appears without the ink. */
+  .ink-h{
+    position:relative;width:100vw;margin:44px 0 44px calc(50% - 50vw);
+    border-top:1px solid var(--hairline-w);border-bottom:1px solid var(--hairline-w);
+    background:
+      radial-gradient(90% 130% at 18% 0%, rgba(255,179,71,.10), transparent 60%),
+      linear-gradient(180deg, var(--stratum-1), var(--stratum-0));
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18), 0 22px 44px -30px rgba(255,179,71,.14);
+  }
+  .ink-h .inner{max-width:1080px;margin:0 auto;padding:30px 30px 26px}
+  .ink-h p{
+    font-family:'Fraunces',serif;font-weight:400;font-style:normal;
+    font-size:19px;line-height:1.72;color:var(--ink-w);letter-spacing:.002em;max-width:700px;
+  }
+  .ink-h p + p{margin-top:12px}
+  .ink-h .dateline{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.6;letter-spacing:.07em;
+    color:var(--ink-w-dim);display:block;margin-top:14px;
+  }
+  .ink-h .dateline b{color:var(--ink-w);font-weight:500}
+  /* the opening stratum — the first words spoken on the page are his */
+  .ink-h.lead{margin-top:30px;margin-bottom:0;border-bottom:none;box-shadow:0 -22px 44px -30px rgba(255,179,71,.18)}
+  .ink-h.lead .inner{padding:36px 30px 28px}
+  .ink-h.lead p{font-size:clamp(20px,2.6vw,24px);line-height:1.6;max-width:780px}
+
+  /* ============ THE PACT — taught once, at the first seam ============
+     Each half of the sentence is set in the ink it describes. */
+  .pact{width:100vw;margin:0 0 8px calc(50% - 50vw);border-bottom:1px solid var(--hairline)}
+  .pact .inner{
+    max-width:1080px;margin:0 auto;padding:0 30px;
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .pact .cell{padding:13px 18px 15px;font-size:13px;line-height:1.5}
+  .pact .cell.h{
+    font-family:'Fraunces',serif;color:var(--ink-w);
+    background:linear-gradient(180deg, var(--stratum-0), #150d05);
+    border-bottom:2px solid rgba(255,179,71,.45);
+  }
+  .pact .cell.m{
+    font-family:'Spline Sans',sans-serif;color:var(--ink);
+    border-bottom:2px solid rgba(63,224,200,.4);
+  }
+  .pact .cell .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px;
+  }
+  .pact .cell.h .who{color:var(--ink-w-dim)}
+  .pact .cell.m .who{color:var(--teal-dim)}
+
+  /* the ink colophon — machine accounting at the foot of the page */
+  .seam-note{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+  }
+  .seam-note .seam-tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .seam-note a{color:var(--amber-dim);text-decoration:none}
+  .seam-note a:hover{color:var(--amber)}
 
   @media (max-width:860px){
     .plates{grid-template-columns:1fr 1fr}
@@ -425,6 +503,10 @@
     .compound{flex-direction:column;align-items:flex-start;gap:14px}
     .neighbours .nb{font-size:11px;padding:6px 10px}
     .prose p{font-size:14.5px}
+    .pact .inner{grid-template-columns:1fr;padding:0}
+    .pact .cell{padding:13px 30px 15px}
+    .ink-h p{font-size:18px}
+    .ink-h.lead p{font-size:20px}
   }
 </style>
 </head>
@@ -440,13 +522,33 @@
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe · business lane · Outcome → ⟲ <span class="pat-no">· the move after the per-task win lands</span></div>
     <h1>Amplify the <em>system</em>, not the output</h1>
+  </header>
+
+  <!-- ============ THE WARM INK OPENS — verbatim, before any machine teaching ============ -->
+  <div class="ink-h lead">
+    <div class="inner">
+      <p>If you're everyone else: people. Copy-paste between tabs. Export CSV, massage it, import to the next system. Have meetings so that the person who knows what's in one system can tell the person who needs it in another. This human work comes with ticketing, processes and similar coordination efforts. The human is the middleware.</p>
+      <span class="dateline"><b>Antti Tevanlinna</b> — “SaaS Is Going Headless — But Not How You Think” · Apr 2026</span>
+    </div>
+  </div>
+
+  <!-- ============ THE PACT — the page's one legend, set in the inks it describes ============ -->
+  <div class="pact">
+    <div class="inner">
+      <div class="cell h"><span class="who">The warm ink · serif, raised ground</span>The one who lived it — his words exactly, each with its date.</div>
+      <div class="cell m"><span class="who">The cool ink · sans, dark soil</span>The machine press — distilled from material like his, under his judgment.</div>
+    </div>
+  </div>
+
+  <!-- ============ ESSENCE — the press takes over ============ -->
+  <div class="pat-rest" style="max-width:920px;margin-top:26px">
     <p class="principle">The principle: <b>the productivity paradox</b> — individual AI gains are real and do not aggregate to institutional value without organizational change.</p>
     <p class="essence">
       Stop chasing the per-task speedup and start reading what it exposed. The agent isn't a worker —
       it's an <b>X-ray of the system you were already running</b>. <span class="scope">Outcome phase · reaches company scope:</span> the discipline that turns
       "people are faster" into "the institution works better."
     </p>
-  </header>
+  </div>
 
   <!-- ============ HERO PICTURE: same thread, two states — node bright / outcome flat → thread re-routed / outcome moves ============ -->
   <div class="hero-frame">
@@ -592,6 +694,15 @@
       a conviction, not a hunch. Below: the amplifier, drawn.
     </p>
   </section>
+
+  <!-- ============ WARM INK — the same diagnosis, written down in August 2025, before the
+       trials above had names in this card: his dateline sits under their citations ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>Looks like the bottleneck is in coding. But it might not be. The whole end-to-end process is really a system. Mind how you change that.</p>
+      <span class="dateline">“Why Cycle Time Measures the Effects of AI” · Aug 2025 · unpublished</span>
+    </div>
+  </div>
 
   <!-- ============ DIAGRAM 1 — THE AMPLIFIER MECHANISM ============ -->
   <div class="diagram">
@@ -796,6 +907,15 @@
     <div class="dcap"><span class="num">Process diagram · 02</span>The effort arrow moves from the node to the thread. <b>Tuning the agent climbs the output; redesigning the workflow moves the outcome</b> — same agent, better system.</div>
   </div>
 
+  <!-- ============ WARM INK — body memory beside the drawn mechanism: he has ridden inside
+       this diagram, and the lone bright node above is the rider eating wind ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>I've been there. In the middle of the pack, at best times, it feels like jogging pace. Then somebody is at the front eating wind and doing an effort that can be sustained only for few minutes. … The peloton of course, is the organisation status quo!</p>
+      <span class="dateline">“Organisational change and cycle racing” · Nov 2025</span>
+    </div>
+  </div>
+
   <!-- ============ PROSE BLOCK 3 — the compounding diagnostic + the open frontier ============ -->
   <section class="prose">
     <div class="sec-label">The compounding loop · the diagnostic sharpens</div>
@@ -935,7 +1055,7 @@
     <h2>The test is <em>"oh — THAT was the bottleneck,"</em> not <em>"the demo looked great."</em></h2>
 
     <p>
-      Recognition is the eval. The redesign worked when someone who owns the work says <em class="amber">"oh — THAT
+      Recognition is the eval. The redesign worked when someone who owns the work says <em class="teal">"oh — THAT
       was the real bottleneck,"</em> not when someone who doesn't says <em>"the demo looked great."</em> The
       sterner test: the redesign survives the agent being removed. If the workflow is better even on a bad-agent day,
       you fixed the system; if it collapses the moment the loudspeaker is unplugged, you optimised the output and left
@@ -1021,8 +1141,16 @@
         </circle>
       </svg>
       <div class="ctext">
-        <div class="cyc">run<span class="arr">→</span>hold output beside outcome<span class="arr">→</span>read the bottleneck<span class="arr">→</span>redesign<span class="arr">→</span>repeat</div>
+        <div class="cyc">run<span class="arr">→</span>hold output beside outcome<span class="arr">→</span>read the bottleneck<span class="arr">→</span>redesign<span class="arr">→</span><span class="last">repeat</span></div>
         <p>Then it's a discipline, not a panic: <b>the diagnosis gets richer every pass.</b> First the obvious clog, then the deeper one the redesign uncovered — the same read you reuse on every deployment from now on.</p>
+      </div>
+    </div>
+
+    <!-- ============ WARM INK — his question; the machine's Monday procedure answers it ============ -->
+    <div class="ink-h">
+      <div class="inner">
+        <p>Now where is your bottleneck currently?</p>
+        <span class="dateline">“Why Cycle Time Measures the Effects of AI” · Aug 2025 · unpublished</span>
       </div>
     </div>
 
@@ -1043,7 +1171,7 @@
       <p class="principle-line">The <em>productivity paradox</em> — individual AI gains are real, and do not aggregate to institutional value without organizational change.</p>
     </div>
 
-    <p class="quote">"The agent's first gift isn't speed — it's an X-ray of the system you were already running."</p>
+    <p class="quote">The agent's first gift isn't speed — it's an X-ray of the system you were already running.</p>
     <p class="gloss">
       The agent's most valuable output isn't the work — it's the diagnosis. AI does not fix a system; it reveals and
       amplifies whatever system it enters. So the per-task speedup everyone celebrates is the <em>least</em> interesting
@@ -1095,6 +1223,12 @@
       </div>
     </div>
   </section>
+
+  <!-- ============ THE INK COLOPHON — machine accounting ============ -->
+  <div class="seam-note">
+    <span class="seam-tag">The two inks, counted</span>
+    Four warm strata above carry Antti's words — verbatim, dated, three sources, from the August the question was first written down to the spring the diagnosis got its four-word name. Everything on the dark soil, this line included, was machine-pressed from material like them, under his judgment. The pattern was lived before it was named: <a href="essays/index.html">the year-one essays, human-written and unedited</a>
+  </div>
 
   <!-- ============ FOOTER ============ -->
   <footer class="floor">

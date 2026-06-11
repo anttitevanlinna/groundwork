@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Take the slide apart backwards — Pattern · The Big Picture</title>
+<title>Read the ROI backwards — Pattern · The Big Picture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -23,6 +23,13 @@
     --hairline:rgba(63,224,200,.10);
     --grey:#5d6a68;
     --grey-dim:#39423f;
+    /* THE SECOND INK — the lived voice's material. Warm cream letterform on a
+       raised warm stratum; never appears without its ground. */
+    --ink-w:#f2e3c4;          /* warm cream — the human letterform */
+    --ink-w-dim:#c7a571;      /* warm dim — datelines inside the stratum */
+    --hairline-w:rgba(255,179,71,.20); /* the hairline register, warm token */
+    --stratum-0:#201507;      /* warm soil the human ink sits on */
+    --stratum-1:#291b09;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -35,13 +42,15 @@
     position:relative;
     overflow-x:hidden;
   }
-  /* business lane → amber leads the light-well; theme recedes for the long read */
+  /* atmospheric soil — COOL throughout. Under the two-ink pact, ambient warmth is
+     banned: warm ground appears on this page only where the lived voice speaks,
+     so the strata stay legible as a material, not a mood. The business-lane amber
+     survives where no voice speaks — kicker chrome, hero/diagram SVG semantics. */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.10) 0%, transparent 46%),
-      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.06) 0%, transparent 44%),
-      linear-gradient(180deg, #2a1d06 0%, #14110a 10%, #05080a 42%, #04060a 100%);
+      radial-gradient(120% 72% at 10% 0%, rgba(63,224,200,.07) 0%, transparent 46%),
+      linear-gradient(180deg, #0a1417 0%, #071013 12%, #05080a 42%, #04060a 100%);
   }
   body::after{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
@@ -80,7 +89,7 @@
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
     font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
   }
-  .principle b{color:var(--amber);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
   .essence{
     font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:730px;
   }
@@ -115,8 +124,8 @@
     margin-top:42px;
   }
   .prose .sec-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);
-    box-shadow:0 0 9px rgba(255,179,71,.55);flex:none;
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
   }
   .prose .sec-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
   .prose p{
@@ -131,11 +140,11 @@
   }
   .prose p .mono.amber{color:var(--amber)}
   .prose .pull{
-    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--amber-dim);
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
     font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
     color:var(--ink);max-width:680px;
   }
-  .prose .pull b{color:var(--amber);font-weight:500;font-style:normal}
+  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
 
   /* ============ PROCESS DIAGRAMS ============ */
   .diagram{
@@ -165,8 +174,8 @@
     text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
   }
   .beat-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);flex:none;
-    box-shadow:0 0 9px rgba(255,179,71,.55);
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.6);
   }
   .beat-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
   .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
@@ -180,7 +189,7 @@
   .plate .body b{color:var(--spore);font-weight:500}
   .plate .body .grey{color:var(--grey)}
   .plate.use{grid-column:1;background:radial-gradient(120% 140% at 0% 0%, rgba(255,179,71,.06), transparent 55%),rgba(15,13,9,.5)}
-  .plate.test .body em{font-style:italic;color:var(--amber);font-family:'Fraunces',serif;font-size:15.5px}
+  .plate.test .body em{font-style:italic;color:var(--teal);font-family:'Fraunces',serif;font-size:15.5px}
   .plate.test .body em.no{color:var(--grey);text-decoration:line-through;text-decoration-color:var(--grey-dim)}
 
   /* ============ CORE MOVES ============ */
@@ -197,8 +206,8 @@
   .move-rail .thread{
     position:absolute;left:0;right:0;top:21px;height:2px;z-index:0;
     background:linear-gradient(90deg,
-      rgba(255,179,71,0) 0%, rgba(168,106,31,.5) 6%,
-      rgba(255,179,71,.7) 50%, rgba(63,224,200,.6) 94%, rgba(63,224,200,0) 100%);
+      rgba(63,224,200,0) 0%, rgba(29,141,128,.5) 6%,
+      rgba(63,224,200,.7) 45%, rgba(255,179,71,.7) 92%, rgba(255,179,71,0) 100%);
   }
   .step{position:relative;z-index:1;padding:0 9px;text-align:left}
   .step:first-child{padding-left:0}
@@ -206,13 +215,14 @@
     width:42px;height:42px;border-radius:50%;
     display:flex;align-items:center;justify-content:center;
     font-family:'Fraunces',serif;font-size:17px;color:var(--soil-0);font-weight:500;
-    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
-    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
-    margin-bottom:13px;
-  }
-  .step:nth-child(6) .bead{
     background:radial-gradient(circle at 35% 30%, #9bffe9, #3fe0c8 55%, #1d8d80);
     box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(63,224,200,.22), 0 0 18px 3px rgba(63,224,200,.5);
+    margin-bottom:13px;
+  }
+  /* last move — name the gap — is the amber terminus */
+  .step:nth-child(6) .bead{
+    background:radial-gradient(circle at 35% 30%, #ffe0a8, #ffb347 55%, #a86a1f);
+    box-shadow:0 0 0 4px rgba(5,8,10,1), 0 0 0 5px rgba(255,179,71,.22), 0 0 18px 3px rgba(255,179,71,.5);
   }
   .step h3{font-size:13.5px;color:var(--spore);font-weight:600;letter-spacing:.005em;line-height:1.22;}
   .step p{font-size:12px;line-height:1.42;color:var(--ink-dim);margin-top:5px}
@@ -229,17 +239,18 @@
   .compound .loop-ico{flex:none}
   .compound .ctext{flex:1}
   .compound .ctext .cyc{
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--amber);
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--teal);
   }
+  .compound .ctext .cyc .last{color:var(--amber)}
   .compound .ctext .cyc .arr{color:var(--ink-faint);padding:0 3px}
   .compound .ctext p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin-top:7px}
   .compound .ctext p b{color:var(--spore);font-weight:500;font-style:italic;font-family:'Fraunces',serif}
 
   .aside{
     margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
-    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+    border-left:2px solid var(--teal-dim);padding:2px 0 2px 15px;max-width:760px;
   }
-  .aside b{color:var(--amber);font-weight:500}
+  .aside b{color:var(--teal);font-weight:500}
   .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
 
   /* ============ WHY ============ */
@@ -261,11 +272,14 @@
     font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
     line-height:1.2;color:var(--spore);letter-spacing:-.005em;
   }
-  .why .principle-line em{font-style:italic;color:var(--amber)}
+  .why .principle-line em{font-style:italic;color:var(--teal)}
+  /* machine emphasis carries NO quotation marks anywhere on this page —
+     under the two-ink pact, quoted words belong to a named source only,
+     and the lived voice always arrives on its warm stratum. */
   .why .quote{
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:clamp(21px,3vw,29px);line-height:1.22;color:var(--amber);letter-spacing:.004em;
-    text-shadow:0 0 30px rgba(255,179,71,.24);max-width:860px;
+    font-size:clamp(21px,3vw,29px);line-height:1.22;color:var(--spore);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(63,224,200,.2);max-width:860px;
   }
   .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
   .why .gloss b{color:var(--spore);font-weight:500}
@@ -273,12 +287,12 @@
   .why .gloss + .gloss{margin-top:12px}
   .why .corollary{
     margin-top:18px;display:inline-flex;align-items:center;gap:11px;
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
-    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--teal);
+    border:1px dashed var(--teal-dim);border-radius:30px;padding:8px 16px 9px;
   }
   .why .corollary .sd{
-    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
-    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+    width:7px;height:7px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 11px 2px rgba(63,224,200,.5);
   }
 
   /* ============ TEST-IN-PRACTICE inline panel ============ */
@@ -354,13 +368,102 @@
     display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   }
   footer.floor .door{
-    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
-    text-shadow:0 0 22px rgba(255,179,71,.3);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 22px rgba(63,224,200,.25);max-width:78%;
   }
   footer.floor .meta{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--ink-faint);
   }
+
+  /* ============ TWO INKS, ONE PAGE — the human ink ============
+     The lived voice is a MATERIAL, not an annotation: a full-bleed warm
+     stratum rises out of the cool soil wherever Antti's verbatim words run.
+     Three cues travel together so the wall survives squinting, greyscale
+     and mid-scroll phones: (1) the raised warm ground, edge to edge of the
+     viewport, bounded by the warm token of the same hairline register;
+     (2) warm-cream ROMAN serif at reading size — never italic, the machine's
+     serif is identity/emphasis, never a voice; (3) a dateline, which is
+     material (a citation), not a label. The ink never appears without its
+     ground; the ground never appears without the ink. */
+  .ink-h{
+    position:relative;width:100vw;margin:44px 0 44px calc(50% - 50vw);
+    border-top:1px solid var(--hairline-w);border-bottom:1px solid var(--hairline-w);
+    background:
+      radial-gradient(90% 130% at 18% 0%, rgba(255,179,71,.10), transparent 60%),
+      linear-gradient(180deg, var(--stratum-1), var(--stratum-0));
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18), 0 22px 44px -30px rgba(255,179,71,.14);
+  }
+  .ink-h .inner{max-width:1080px;margin:0 auto;padding:30px 30px 26px}
+  .ink-h p{
+    font-family:'Fraunces',serif;font-weight:400;font-style:normal;
+    font-size:19px;line-height:1.72;color:var(--ink-w);letter-spacing:.002em;max-width:700px;
+  }
+  .ink-h p + p{margin-top:12px}
+  .ink-h .dateline{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.6;letter-spacing:.07em;
+    color:var(--ink-w-dim);display:block;margin-top:14px;
+  }
+  .ink-h .dateline b{color:var(--ink-w);font-weight:500}
+  /* the opening stratum — the first words spoken on the page are his */
+  .ink-h.lead{margin-top:30px;margin-bottom:0;border-bottom:none;box-shadow:0 -22px 44px -30px rgba(255,179,71,.18)}
+  .ink-h.lead .inner{padding:36px 30px 28px}
+  .ink-h.lead p{font-size:clamp(20px,2.6vw,24px);line-height:1.6;max-width:780px}
+
+  /* ============ THE PACT — taught once, at the first seam ============
+     A two-segment strip where the inks meet: each half of the sentence is
+     set in the ink it describes. The left cell IS warm stratum, the right
+     cell IS cool soil — the legend demonstrates instead of describing. */
+  .pact{width:100vw;margin:0 0 8px calc(50% - 50vw);border-bottom:1px solid var(--hairline)}
+  .pact .inner{
+    max-width:1080px;margin:0 auto;padding:0 30px;
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .pact .cell{padding:13px 18px 15px;font-size:13px;line-height:1.5}
+  .pact .cell.h{
+    font-family:'Fraunces',serif;color:var(--ink-w);
+    background:linear-gradient(180deg, var(--stratum-0), #150d05);
+    border-bottom:2px solid rgba(255,179,71,.45);
+  }
+  .pact .cell.m{
+    font-family:'Spline Sans',sans-serif;color:var(--ink);
+    border-bottom:2px solid rgba(63,224,200,.4);
+  }
+  .pact .cell .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px;
+  }
+  .pact .cell.h .who{color:var(--ink-w-dim)}
+  .pact .cell.m .who{color:var(--teal-dim)}
+
+  /* ============ STAKED — the card's claims, aging in public. Machine-pressed:
+     mono register with the cool hairline — never on warm ground, never in
+     serif. The warm stratum directly above it is the counter-voice. */
+  .staked{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+    border:1px solid var(--hairline);border-radius:8px;padding:14px 18px 15px;
+    background:rgba(8,15,17,.5);
+  }
+  .staked .tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--teal-dim);margin-bottom:8px;
+  }
+  .staked a{color:var(--teal-dim);text-decoration:none;border-bottom:1px dotted rgba(29,141,128,.5)}
+  .staked a:hover{color:var(--teal)}
+
+  /* the ink colophon — machine accounting; subsumes "Lived, before it was a pattern" */
+  .seam-note{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+  }
+  .seam-note .seam-tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .seam-note em{font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--ink)}
+  .seam-note a{color:var(--amber-dim);text-decoration:none}
+  .seam-note a:hover{color:var(--amber)}
 
   @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
   .breathe{animation:breathe 4.2s ease-in-out infinite}
@@ -378,6 +481,10 @@
     .compound{flex-direction:column;align-items:flex-start;gap:14px}
     .neighbours .nb{font-size:11px;padding:6px 10px}
     .prose p{font-size:14.5px}
+    .pact .inner{grid-template-columns:1fr;padding:0}
+    .pact .cell{padding:13px 30px 15px}
+    .ink-h p{font-size:18px}
+    .ink-h.lead p{font-size:20px}
   }
 </style>
 </head>
@@ -386,13 +493,35 @@
 
   <!-- ============ BREADCRUMB ============ -->
   <nav class="crumb">
-    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Take the slide apart backwards</span>
+    <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Read the ROI backwards</span>
   </nav>
 
-  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <!-- ============ PATTERN NAME — the subject, then the lived voice speaks first ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· business lane · Outcome → ⟲ · the autopsy that decides if a "return" was ever earned</span></div>
     <h1>Read the <em>ROI</em> backwards</h1>
+  </header>
+
+  <!-- ============ THE WARM INK OPENS — verbatim, before any machine teaching:
+       he ran the measurement on his own org and refused to claim the number ============ -->
+  <div class="ink-h lead">
+    <div class="inner">
+      <p>There is no way to say that AI has made us quicker on the organisation level. We are slightly faster but the modest percentage change easily falls into seasonal variance. Trend is more important to see.</p>
+      <p>A few places exist where cycle time is going up. Now, try to make the claim of causation between AI and cycle time there. You can't.</p>
+      <span class="dateline"><b>Antti Tevanlinna</b> — “Reflections on Q3” · Sep 2025 · unpublished</span>
+    </div>
+  </div>
+
+  <!-- ============ THE PACT — the page's one legend, set in the inks it describes ============ -->
+  <div class="pact">
+    <div class="inner">
+      <div class="cell h"><span class="who">The warm ink · serif, raised ground</span>The one who lived it — his words exactly, each with its date.</div>
+      <div class="cell m"><span class="who">The cool ink · sans, dark soil</span>The machine press — distilled from material like his, under his judgment.</div>
+    </div>
+  </div>
+
+  <!-- ============ ESSENCE — the press takes over ============ -->
+  <div class="pat-rest" style="max-width:900px;margin-top:26px">
     <p class="principle">The principle: <b>you cannot take apart a number that was never put together</b> — a confident ROI figure almost always rests on a baseline nobody recorded, so the honest move is to run the slide's autopsy before you trust its verdict.</p>
     <p class="essence">
       Someone shows you the slide: <b>"AI is delivering a 340% return."</b> Don't argue with the number — <b>unwind it,
@@ -400,7 +529,7 @@
       hit the missing baseline, and know what the bar chart was built to hide: <b>there is no validated institutional-ROI
       number yet</b>, and the dishonesty was load-bearing.
     </p>
-  </header>
+  </div>
 
   <!-- ============ HERO PICTURE: a fake "340%" slide unwound backwards to the missing baseline ============ -->
   <div class="hero-frame">
@@ -494,7 +623,7 @@
       Clean bar, confident decimal, a logo in the corner. Maybe a vendor presented it. Maybe a peer said it over
       dinner. Maybe it was <b>your own deck</b> and you half-believed it. This is the moment the card is for: you can
       feel the AI working — people are faster, the demos land — and yet a single bright percentage is standing in for
-      a return nobody has actually measured. Arguing the number is a trap; haggle it down to <span class="mono amber">"only" 180%</span>
+      a return nobody has actually measured. Arguing the number is a trap; haggle it down to <span class="mono">"only" 180%</span>
       and you've conceded the frame, that a clean figure exists to be negotiated. It doesn't. So don't argue. <b>Take it
       apart backwards</b> — start at the answer and unwind it one assumption at a time, the way a magician's trick
       collapses the instant you're told where the coin actually went. By the time you reach the bottom you'll know
@@ -506,7 +635,7 @@
     </p>
 
     <p>
-      One honesty up front, because the whole autopsy depends on it: <span class="mono amber">340%</span> is a stand-in,
+      One honesty up front, because the whole autopsy depends on it: <span class="mono">340%</span> is a stand-in,
       an <em>imagined</em> slide standing for the genre. There is no real measured figure here — that is precisely the
       point. The numbers that <em>are</em> real arrive later, and every one of them measures the <b>absence</b> of the
       return, never its size.
@@ -571,11 +700,11 @@
   <!-- ============ THE FOUR PEELS, IN PROSE ============ -->
   <section class="prose">
     <div class="sec-label teal">Unwind it, last step first · the core move</div>
-    <h2 class="amber">The <em>340%</em> is a quotient. Peel the saving off the top.</h2>
+    <h2>The <em>340%</em> is a quotient. Peel the saving off the top.</h2>
 
     <p>
       Where did the saving come from? <em>Hours saved.</em> Push: whose hours, counted how? Almost always the answer is
-      a self-reported survey — <span class="mono amber">"how much time do you reckon the assistant saves you?"</span> — multiplied
+      a self-reported survey — <span class="mono">"how much time do you reckon the assistant saves you?"</span> — multiplied
       across the org. Set that beside the one place someone ran it properly. The UK's GOV.UK <b>controlled trial of
       Microsoft 365 Copilot</b> — roughly a thousand civil servants doing office work, not coding — measured <b>zero
       productivity improvement</b>. A controlled trial, not a survey. The hours on your slide are the hours people
@@ -620,7 +749,7 @@
       job from the other end. It always rises, because people do log in, and rising <em>feels</em> like return. Both
       give you the sensation of a scoreboard with <b>nothing behind the glass.</b> The practitioner Will Manidis named
       the family of these in early 2026 — a <em>"tool-shaped object,"</em> software that produces the experience of
-      productivity without the substance: <span class="mono amber">"the primary product of that spending is the experience of spending it."</span>
+      productivity without the substance: <span class="mono">"the primary product of that spending is the experience of spending it."</span>
       A fabricated ROI percentage is the tool-shaped object one level up.
     </p>
   </section>
@@ -698,6 +827,17 @@
       "instead" in your sentence is the start of an actual baseline.
     </p>
   </section>
+
+  <!-- ============ WARM INK — the joint: his own proxy, beside the research proxies.
+       The press just listed three proxies from the research; he had already picked one
+       from necessity, a year earlier, with the caveat attached and the real number
+       (learning) named as uncountable. ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>I (and we) simply haven't figured out how to count learning. Then we can't really put that to a number. In the absence of that, cycle time it is — but let's be mindful of the context, limitations but also opportunities.</p>
+      <span class="dateline">“Why Cycle Time Measures the Effects of AI” · Aug 2025 · unpublished</span>
+    </div>
+  </div>
 
   <!-- ============ DIAGRAM 3 — REBUILD FROM THE BASELINE UP (the inversion completed) ============ -->
   <div class="diagram">
@@ -872,14 +1012,14 @@
         </circle>
       </svg>
       <div class="ctext">
-        <div class="cyc">peel the saving<span class="arr">→</span>strip the rate<span class="arr">→</span>undo the year<span class="arr">→</span>hit the baseline<span class="arr">→</span>name the gap</div>
+        <div class="cyc">peel the saving<span class="arr">→</span>strip the rate<span class="arr">→</span>undo the year<span class="arr">→</span>hit the baseline<span class="arr">→</span><span class="last">name the gap</span></div>
         <p>Each unwound assumption removes a layer of manufactured precision; the cost stays solid, the saving dissolves, and what's left is <b>an honest empty space the proxies start to fill.</b></p>
       </div>
     </div>
 
     <!-- the Monday-move / no-permission aside -->
     <p class="aside">
-      <b>Tonight's move:</b> take the most confident AI-return claim near you and walk it backwards in front of one trusted colleague, naming each step — <span class="mono amber">felt-hours survey · salary rate · annualisation · the baseline never taken.</span>
+      <b>Tonight's move:</b> take the most confident AI-return claim near you and walk it backwards in front of one trusted colleague, naming each step — <span class="mono">felt-hours survey · salary rate · annualisation · the baseline never taken.</span>
       The deliverable isn't a truer percentage; it's a sentence you can both say without flinching.
     </p>
   </section>
@@ -893,7 +1033,7 @@
       <p class="principle-line">No recorded baseline, no honest return — the individual high is real, but it was never measured against the institution it was meant to move.</p>
     </div>
 
-    <p class="quote">"The decimal point was punctuation pretending to be precision."</p>
+    <p class="quote">The decimal point was punctuation pretending to be precision.</p>
     <p class="gloss">
       Anything that measures the individual high — felt hours, logins, a survey multiplied across the org — will always
       <b>overstate the business return,</b> because the high is real and it just doesn't aggregate. A research synthesis
@@ -912,6 +1052,30 @@
     </p>
     <div class="corollary"><span class="sd"></span>Don't chase a truer number — that just rebuilds the lie with better arithmetic.</div>
   </section>
+
+  <!-- ============ WARM INK — the joint: the grade already paid. The staked box below
+       promises a public grade in 2026-12; his hindsight note is that convention already
+       run once, on his own data — the honest proxy he picked in Aug 2025, graded a year
+       later and found to be half the story. ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>The initial AI improvement showed up in cycle time — but only to a ceiling. After that, improvement flowed into bigger PR line change volume. We did much more changes in the same number of PRs in the same time. Cycle time stayed flat while throughput per PR grew. If we had only measured cycle time, we would have missed half the story.</p>
+      <span class="dateline">“Why Cycle Time Measures the Effects of AI” · hindsight note · 2026 retrospective · unpublished</span>
+    </div>
+  </div>
+
+  <!-- ============ STAKED — the press's claims, in the press's ink ============ -->
+  <div class="staked">
+    <span class="tag">Staked — aging in public · the card's claims, not his words</span>
+    As of 2026-06, no measurement methodology has cracked needle-moving agent ROI at institutional scale — every confident decimal this card autopsies collapsed at the baseline question. Grade due 2026-12: if the field cracks it, this card gets rewritten — and will say so.
+    <a href="essays/index.html#predictions-2026">The convention: predictions get graded, in public → the 2026 scorecard</a>
+  </div>
+
+  <!-- ============ THE INK COLOPHON — machine accounting; counts the strata and the staked box ============ -->
+  <div class="seam-note">
+    <span class="seam-tag">The two inks, counted</span>
+    Three warm strata above carry Antti's words — verbatim, dated, from two essays and a hindsight note, Aug 2025 → 2026. Everything on the dark soil, the staked claims box included, was machine-pressed from material like his, under his judgment. The pattern was lived before it was named: <a href="essays/index.html">the year-one essays, human-written and unedited</a>
+  </div>
 
   <!-- ============ CONNECTS TO ============ -->
   <section class="connects">

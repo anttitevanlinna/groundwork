@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mine the plan for rules — Groundwork</title>
+<title>Mine the plan for rules — Pattern · The Big Picture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Spline+Sans:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -29,6 +29,13 @@
     --wire-faint:#1f3257;
     --nx:#ff6a6a;
     --nx-dim:#8a2f2f;
+    /* THE SECOND INK — the lived voice's material. Warm cream letterform on a
+       raised warm stratum; never appears without its ground. */
+    --ink-w:#f2e3c4;          /* warm cream — the human letterform */
+    --ink-w-dim:#c7a571;      /* warm dim — datelines inside the stratum */
+    --hairline-w:rgba(255,179,71,.20); /* the hairline register, warm token */
+    --stratum-0:#201507;      /* warm soil the human ink sits on */
+    --stratum-1:#291b09;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -41,6 +48,9 @@
     position:relative;
     overflow-x:hidden;
   }
+  /* atmospheric soil — COOL throughout. Under the two-ink pact, ambient warmth is
+     banned: warm ground appears on this page only where the lived voice speaks,
+     so the stratum stays legible as a material, not a mood. */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
@@ -277,6 +287,9 @@
     content:"";width:7px;height:7px;border-radius:50%;background:var(--teal-dim);flex:none;
     box-shadow:0 0 9px rgba(63,224,200,.55);
   }
+  /* machine emphasis carries NO quotation marks anywhere on this page —
+     under the two-ink pact, quoted words belong to a named source or a
+     hypothetical only; the lived voice always arrives on its warm stratum. */
   .why .quote{
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
     font-size:clamp(23px,3.2vw,31px);line-height:1.18;color:var(--teal);letter-spacing:.004em;
@@ -374,11 +387,86 @@
   @keyframes breathe{0%,100%{opacity:.5}50%{opacity:1}}
   .breathe{animation:breathe 4.2s ease-in-out infinite}
 
+  /* ============ TWO INKS, ONE PAGE — the human ink ============
+     The lived voice is a MATERIAL, not an annotation: a full-bleed warm
+     stratum rises out of the cool soil wherever Antti's verbatim words run.
+     Three cues travel together so the wall survives squinting, greyscale
+     and mid-scroll phones: (1) the raised warm ground, edge to edge of the
+     viewport, bounded by the warm token of the same hairline register;
+     (2) warm-cream ROMAN serif at reading size — never italic, the machine's
+     serif is identity/emphasis, never a voice; (3) a dateline, which is
+     material (a citation), not a label. The ink never appears without its
+     ground; the ground never appears without the ink. */
+  .ink-h{
+    position:relative;width:100vw;margin:44px 0 44px calc(50% - 50vw);
+    border-top:1px solid var(--hairline-w);border-bottom:1px solid var(--hairline-w);
+    background:
+      radial-gradient(90% 130% at 18% 0%, rgba(255,179,71,.10), transparent 60%),
+      linear-gradient(180deg, var(--stratum-1), var(--stratum-0));
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18), 0 22px 44px -30px rgba(255,179,71,.14);
+  }
+  .ink-h .inner{max-width:1080px;margin:0 auto;padding:30px 30px 26px}
+  .ink-h p{
+    font-family:'Fraunces',serif;font-weight:400;font-style:normal;
+    font-size:19px;line-height:1.72;color:var(--ink-w);letter-spacing:.002em;max-width:700px;
+  }
+  .ink-h p + p{margin-top:12px}
+  .ink-h .dateline{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.6;letter-spacing:.07em;
+    color:var(--ink-w-dim);display:block;margin-top:14px;
+  }
+  .ink-h .dateline b{color:var(--ink-w);font-weight:500}
+  /* the opening stratum — the first words spoken on the page are his */
+  .ink-h.lead{margin-top:30px;margin-bottom:0;border-bottom:none;box-shadow:0 -22px 44px -30px rgba(255,179,71,.18)}
+  .ink-h.lead .inner{padding:36px 30px 28px}
+  .ink-h.lead p{font-size:clamp(20px,2.6vw,24px);line-height:1.6;max-width:780px}
+
+  /* ============ THE PACT — taught once, at the first seam ============
+     A two-segment strip where the inks meet: each half of the sentence is
+     set in the ink it describes. The left cell IS warm stratum, the right
+     cell IS cool soil — the legend demonstrates instead of describing. */
+  .pact{width:100vw;margin:0 0 8px calc(50% - 50vw);border-bottom:1px solid var(--hairline)}
+  .pact .inner{
+    max-width:1080px;margin:0 auto;padding:0 30px;
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .pact .cell{padding:13px 18px 15px;font-size:13px;line-height:1.5}
+  .pact .cell.h{
+    font-family:'Fraunces',serif;color:var(--ink-w);
+    background:linear-gradient(180deg, var(--stratum-0), #150d05);
+    border-bottom:2px solid rgba(255,179,71,.45);
+  }
+  .pact .cell.m{
+    font-family:'Spline Sans',sans-serif;color:var(--ink);
+    border-bottom:2px solid rgba(63,224,200,.4);
+  }
+  .pact .cell .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px;
+  }
+  .pact .cell.h .who{color:var(--ink-w-dim)}
+  .pact .cell.m .who{color:var(--teal-dim)}
+
+  /* the ink colophon — machine accounting; subsumes "Lived, before it was a pattern" */
+  .seam-note{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+  }
+  .seam-note .seam-tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .seam-note em{font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--ink)}
+
   @media (max-width:780px){
     .radius{grid-template-columns:1fr}
     .recite .v{min-width:0}
     .prose p{font-size:14.5px}
     .prose .mono{white-space:normal}
+    .pact .inner{grid-template-columns:1fr;padding:0}
+    .pact .cell{padding:13px 30px 15px}
+    .ink-h p{font-size:18px}
+    .ink-h.lead p{font-size:20px}
   }
 </style>
 </head>
@@ -391,7 +479,7 @@
     &nbsp;/&nbsp; <span class="here">Mine the plan for rules</span>
   </nav>
 
-  <!-- header -->
+  <!-- header — the subject, then the lived voice speaks first -->
   <header class="zone">
     <span class="query-line">
       <span class="q-dot"></span>
@@ -402,8 +490,28 @@
       <span class="q-no">A&nbsp;record, or NXDOMAIN</span>
     </span>
     <h1>Mine the plan for <em>rules</em></h1>
-    <p class="standfirst">The plan was dictation. The rules it contained are already in the transcript &mdash; the only question is whether you <b>publish</b> them to a zone a session can reach, or leave them in a notebook no resolver ever queries.</p>
   </header>
+
+  <!-- ============ THE WARM INK OPENS — verbatim, before any machine teaching ============ -->
+  <div class="ink-h lead">
+    <div class="inner">
+      <p>I end up with a lot of files in folders. We've recently started curating these text files into version control so they can be shared just as code. Knowledge is becoming like code.</p>
+      <span class="dateline"><b>Antti Tevanlinna</b> &mdash; &ldquo;Time to Rethink Knowledge Management&rdquo; &middot; Sep 2025 &middot; unpublished &mdash; on knowledge becoming code</span>
+    </div>
+  </div>
+
+  <!-- ============ THE PACT — the page's one legend, set in the inks it describes ============ -->
+  <div class="pact">
+    <div class="inner">
+      <div class="cell h"><span class="who">The warm ink &middot; serif, raised ground</span>The one who lived it &mdash; his words exactly, each with its date.</div>
+      <div class="cell m"><span class="who">The cool ink &middot; sans, dark soil</span>The machine press &mdash; distilled from material like his, under his judgment.</div>
+    </div>
+  </div>
+
+  <!-- ============ THE PRESS TAKES OVER — standfirst on the dark soil ============ -->
+  <div style="max-width:920px;margin-top:26px">
+    <p class="standfirst">The plan was dictation. The rules it contained are already in the transcript &mdash; the only question is whether you <b>publish</b> them to a zone a session can reach, or leave them in a notebook no resolver ever queries.</p>
+  </div>
 
   <!-- HERO: split resolver lookup — DISCRETE / BINARY. No water, no flow. -->
   <figure class="hero-frame">
@@ -610,6 +718,12 @@
     <p class="tab-note">The tab is about to close. Publish the record before it does.</p>
   </div>
 
+  <!-- ============ THE INK COLOPHON — machine accounting; subsumes "Lived, before it was a pattern" ============ -->
+  <div class="seam-note">
+    <span class="seam-tag">The two inks, counted</span>
+    One warm stratum above carries Antti's words &mdash; verbatim, dated, a single source. Everything on the dark soil, this line included, was machine-pressed from material like his, under his judgment. The move was lived before it was named: <em>Time to Rethink Knowledge Management</em> &middot; Sep 2025, a year-one essay still unpublished &mdash; when it ships, this sentence becomes the link.
+  </div>
+
   <!-- CONNECTS TO -->
   <section class="connects">
     <h2>Connects to</h2>
@@ -625,12 +739,16 @@
             <stop offset="0" stop-color="#7fb4ff" stop-opacity=".5"/>
             <stop offset="1" stop-color="#7fb4ff" stop-opacity=".12"/>
           </linearGradient>
+          <filter id="plan-rule-extract__webGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="4" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
         </defs>
         <path d="M540 150 C 360 90, 270 80, 175 96" fill="none" stroke="url(#plan-rule-extract__webA)" stroke-width="1.6" stroke-dasharray="2 7"/>
         <path d="M540 150 C 360 210, 270 224, 175 210" fill="none" stroke="url(#plan-rule-extract__webA)" stroke-width="1.6" stroke-dasharray="2 7"/>
         <path d="M540 150 C 720 90, 820 80, 905 100" fill="none" stroke="url(#plan-rule-extract__webB)" stroke-width="1.6" stroke-dasharray="2 7"/>
         <path d="M540 150 C 720 210, 820 222, 905 206" fill="none" stroke="url(#plan-rule-extract__webB)" stroke-width="1.6" stroke-dasharray="2 7"/>
-        <circle cx="540" cy="150" r="6" fill="#7fb4ff" filter="url(#plan-rule-extract__glow)"/>
+        <circle cx="540" cy="150" r="6" fill="#7fb4ff" filter="url(#plan-rule-extract__webGlow)"/>
       </svg>
       <div class="neighbours">
         <div class="origin-chip" style="left:50%;top:50%;">Mine the plan for rules<small>YOU ARE HERE</small></div>

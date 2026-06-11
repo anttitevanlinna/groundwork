@@ -23,6 +23,13 @@
     --hairline:rgba(63,224,200,.10);
     --grey:#5d6a68;
     --grey-dim:#39423f;
+    /* THE SECOND INK — the lived voice's material. Warm cream letterform on a
+       raised warm stratum; never appears without its ground. */
+    --ink-w:#f2e3c4;          /* warm cream — the human letterform */
+    --ink-w-dim:#c7a571;      /* warm dim — datelines inside the stratum */
+    --hairline-w:rgba(255,179,71,.20); /* the hairline register, warm token */
+    --stratum-0:#201507;      /* warm soil the human ink sits on */
+    --stratum-1:#291b09;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -35,12 +42,14 @@
     position:relative;
     overflow-x:hidden;
   }
+  /* atmospheric soil — COOL throughout. Under the two-ink pact, ambient warmth is
+     banned: warm ground appears on this page only where the lived voice speaks,
+     so the strata stay legible as a material, not a mood. */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
-      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
-      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+      radial-gradient(120% 72% at 10% 0%, rgba(63,224,200,.07) 0%, transparent 46%),
+      linear-gradient(180deg, #0a1417 0%, #071013 12%, #05080a 42%, #04060a 100%);
   }
   body::after{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
@@ -79,23 +88,23 @@
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
     font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
   }
-  .principle b{color:var(--amber);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
   .essence{
     font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:720px;
   }
   .essence b{color:var(--spore);font-weight:500}
 
-  /* ============ SYSTEMIC LINE CHIP ============ */
+  /* ============ SYSTEMIC LINE CHIP — cool-ink demotion: the prose accent goes teal ============ */
   .systemic{
     margin-top:18px;display:inline-flex;align-items:flex-start;gap:12px;
-    border:1px solid rgba(255,179,71,.22);border-radius:12px;
+    border:1px solid var(--hairline);border-radius:12px;
     padding:12px 18px 13px;max-width:760px;
-    background:rgba(255,179,71,.04);
+    background:rgba(63,224,200,.03);
   }
-  .systemic .sd{width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;margin-top:4px;
-    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 10px 2px rgba(255,179,71,.45);}
+  .systemic .sd{width:7px;height:7px;border-radius:50%;background:var(--teal);flex:none;margin-top:4px;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 10px 2px rgba(63,224,200,.45);}
   .systemic p{font-size:14px;line-height:1.55;color:var(--ink-dim);}
-  .systemic p b{color:var(--amber);font-weight:500;}
+  .systemic p b{color:var(--spore);font-weight:500;}
 
   /* ============ HERO FRAME ============ */
   .hero-frame{
@@ -149,33 +158,35 @@
   .node p .mono{font-family:'Spline Sans Mono',monospace;font-size:13px;color:var(--teal)}
   .node p .mono.amber{color:var(--amber)}
 
+  /* honest frontier — cool-ink demotion: hairline border, the conviction line
+     speaks in spore with the cool glow; warmth on this page means lived. */
   .frontier{
-    margin:44px 0 6px;border:1px solid rgba(255,179,71,.2);border-radius:16px;
+    margin:44px 0 6px;border:1px solid var(--hairline);border-radius:16px;
     padding:24px 28px 26px;position:relative;overflow:hidden;
     background:
-      radial-gradient(130% 150% at 92% 0%, rgba(255,179,71,.08), transparent 56%),
-      radial-gradient(100% 120% at 0% 100%, rgba(63,224,200,.045), transparent 56%),
+      radial-gradient(130% 150% at 92% 0%, rgba(63,224,200,.06), transparent 56%),
+      radial-gradient(100% 120% at 0% 100%, rgba(63,224,200,.035), transparent 56%),
       rgba(7,14,15,.6);
   }
   .frontier .flabel{
     font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;
-    text-transform:uppercase;color:var(--amber-dim);display:flex;align-items:center;gap:9px;margin-bottom:14px;
+    text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;margin-bottom:14px;
   }
   .frontier .flabel::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);
-    box-shadow:0 0 9px rgba(255,179,71,.55);flex:none;
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.55);flex:none;
   }
   .frontier h2{
     font-family:'Fraunces',serif;font-weight:400;font-size:clamp(24px,3.3vw,30px);line-height:1.14;
     color:var(--spore);letter-spacing:-.01em;
   }
-  .frontier h2 em{font-style:italic;color:var(--amber)}
+  .frontier h2 em{font-style:italic;color:var(--teal)}
   .frontier p{font-size:15px;line-height:1.62;color:var(--ink);margin-top:15px;max-width:720px}
   .frontier p b{color:var(--spore);font-weight:500}
   .frontier p em{font-style:italic;color:var(--ink-dim)}
   .frontier .cant{
     margin-top:18px;font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.4;
-    color:var(--amber);text-shadow:0 0 24px rgba(255,179,71,.22);max-width:700px;
+    color:var(--spore);text-shadow:0 0 24px rgba(63,224,200,.22);max-width:700px;
   }
   .frontier .caveat{
     margin-top:14px;font-size:12px;line-height:1.55;color:var(--ink-faint);
@@ -204,8 +215,8 @@
   .monday p .mono{font-family:'Spline Sans Mono',monospace;font-size:13px;color:var(--teal)}
   .monday .clock{
     margin-top:12px;display:inline-block;font-family:'Spline Sans Mono',monospace;
-    font-size:11px;letter-spacing:.06em;color:var(--amber);
-    border:1px dashed var(--amber-dim);border-radius:24px;padding:7px 15px;
+    font-size:11px;letter-spacing:.06em;color:var(--teal);
+    border:1px dashed var(--teal-dim);border-radius:24px;padding:7px 15px;
   }
 
   /* ============ CONNECTS TO ============ */
@@ -249,23 +260,94 @@
   }
   @keyframes throb{50%{transform:scale(1.5)}}
 
-  /* ============ FOOTER ============ */
+  /* ============ FOOTER — door line demoted to the cool register ============ */
   footer.floor{
     margin-top:46px;padding-top:18px;border-top:1px solid var(--hairline);
     display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   }
   footer.floor .door{
-    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
-    text-shadow:0 0 22px rgba(255,179,71,.3);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 22px rgba(63,224,200,.25);max-width:78%;
   }
   footer.floor .meta{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--ink-faint);
   }
 
+  /* ============ TWO INKS, ONE PAGE — the human ink ============
+     The lived voice is a MATERIAL, not an annotation: a full-bleed warm
+     stratum rises out of the cool soil wherever Antti's verbatim words run.
+     Three cues travel together: (1) the raised warm ground, edge to edge,
+     bounded by the warm token of the same hairline register; (2) warm-cream
+     ROMAN serif at reading size — never italic; (3) a dateline, which is
+     material (a citation), not a label. The ink never appears without its
+     ground; the ground never appears without the ink. */
+  .ink-h{
+    position:relative;width:100vw;margin:44px 0 44px calc(50% - 50vw);
+    border-top:1px solid var(--hairline-w);border-bottom:1px solid var(--hairline-w);
+    background:
+      radial-gradient(90% 130% at 18% 0%, rgba(255,179,71,.10), transparent 60%),
+      linear-gradient(180deg, var(--stratum-1), var(--stratum-0));
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18), 0 22px 44px -30px rgba(255,179,71,.14);
+  }
+  .ink-h .inner{max-width:1080px;margin:0 auto;padding:30px 30px 26px}
+  .ink-h p{
+    font-family:'Fraunces',serif;font-weight:400;font-style:normal;
+    font-size:19px;line-height:1.72;color:var(--ink-w);letter-spacing:.002em;max-width:700px;
+  }
+  .ink-h p + p{margin-top:12px}
+  .ink-h .dateline{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.6;letter-spacing:.07em;
+    color:var(--ink-w-dim);display:block;margin-top:14px;
+  }
+  .ink-h .dateline b{color:var(--ink-w);font-weight:500}
+  /* the opening stratum — the first words spoken on the page are his */
+  .ink-h.lead{margin-top:30px;margin-bottom:0;border-bottom:none;box-shadow:0 -22px 44px -30px rgba(255,179,71,.18)}
+  .ink-h.lead .inner{padding:36px 30px 28px}
+  .ink-h.lead p{font-size:clamp(20px,2.6vw,24px);line-height:1.6;max-width:780px}
+
+  /* ============ THE PACT — taught once, at the first seam ============ */
+  .pact{width:100vw;margin:0 0 8px calc(50% - 50vw);border-bottom:1px solid var(--hairline)}
+  .pact .inner{
+    max-width:1080px;margin:0 auto;padding:0 30px;
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .pact .cell{padding:13px 18px 15px;font-size:13px;line-height:1.5}
+  .pact .cell.h{
+    font-family:'Fraunces',serif;color:var(--ink-w);
+    background:linear-gradient(180deg, var(--stratum-0), #150d05);
+    border-bottom:2px solid rgba(255,179,71,.45);
+  }
+  .pact .cell.m{
+    font-family:'Spline Sans',sans-serif;color:var(--ink);
+    border-bottom:2px solid rgba(63,224,200,.4);
+  }
+  .pact .cell .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px;
+  }
+  .pact .cell.h .who{color:var(--ink-w-dim)}
+  .pact .cell.m .who{color:var(--teal-dim)}
+
+  /* the ink colophon — machine accounting; subsumes "Lived, before it was a pattern" */
+  .seam-note{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+  }
+  .seam-note .seam-tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .seam-note a{color:var(--amber-dim);text-decoration:none}
+  .seam-note a:hover{color:var(--amber)}
+
   @media (max-width:780px){
     .neighbours .nb{font-size:11px;padding:6px 10px}
     .node p,.spine .lede,.frontier p,.monday p{font-size:14.5px}
+    .pact .inner{grid-template-columns:1fr;padding:0}
+    .pact .cell{padding:13px 30px 15px}
+    .ink-h p{font-size:18px}
+    .ink-h.lead p{font-size:20px}
   }
 </style>
 </head>
@@ -277,10 +359,31 @@
     <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">The validation gate</span>
   </nav>
 
-  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <!-- ============ PATTERN NAME — the subject, then the lived voice speaks first ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· business lane · The Work</span></div>
     <h1>The validation <em>gate</em></h1>
+  </header>
+
+  <!-- ============ THE WARM INK OPENS — the reader's own naive model, confessed:
+       the autonomy orthodoxy refused from experience, not analysis ============ -->
+  <div class="ink-h lead">
+    <div class="inner">
+      <p>My initial mental model for AI agents was that they "just do the processing". In a way, the naive idea is that you just give the agent the task, and then it gets the task done. Well well. I haven't seen many of those agents. Simply because that technology is not ready yet — nor will be ready anytime soon.</p>
+      <span class="dateline"><b>Antti Tevanlinna</b> — “Predictions 2026” · Dec 2025</span>
+    </div>
+  </div>
+
+  <!-- ============ THE PACT — the page's one legend, set in the inks it describes ============ -->
+  <div class="pact">
+    <div class="inner">
+      <div class="cell h"><span class="who">The warm ink · serif, raised ground</span>The one who lived it — his words exactly, each with its date.</div>
+      <div class="cell m"><span class="who">The cool ink · sans, dark soil</span>The machine press — distilled from material like his, under his judgment.</div>
+    </div>
+  </div>
+
+  <!-- ============ ESSENCE — the press takes over ============ -->
+  <div class="pat-rest" style="max-width:900px;margin-top:26px">
     <p class="principle">The principle: <b>Hybrid beats autonomous</b> — the move that scales is not "remove the human," it's "put the human in the one place that matters."</p>
     <p class="essence">
       Think of the run like a canal lock: water rises and falls freely on either side, but there is one chamber where the level changes for good, and that is where the gate sits. <b>Find the step in the agent run that can't be undone, gate exactly there</b> — and let the run flow everywhere else.
@@ -290,7 +393,7 @@
       <span class="sd"></span>
       <p>Personally it's the discipline that lets you ship an agent without betting what you can't take back; at <b>company scope</b> it's the architecture that decides where autonomy is allowed to touch the irreversible — the org-level guardrail every customer-facing, money-moving, data-touching deployment composes against, and the move that turns "should we automate this?" from a vibe into a placed gate.</p>
     </div>
-  </header>
+  </div>
 
   <!-- ============ HERO — the run as a lock, gate on the irreversible chamber ============ -->
   <div class="hero-frame">
@@ -425,6 +528,15 @@
     </div>
   </section>
 
+  <!-- ============ WARM INK — the anti-pattern named twice: the machine's term above is
+       "slow autonomy"; his name for living it is the baby-sitting and the prodding ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>The trick is finding ways to do more of the input-giving that adds the most value. Then diminish the baby-sitting and mindless prodding the agent along.</p>
+      <span class="dateline">“Predictions 2026” · Dec 2025 · same essay as the opener</span>
+    </div>
+  </div>
+
   <!-- ============ HONEST FRONTIER — where you genuinely can't tell yet ============ -->
   <section class="frontier">
     <div class="flabel">The honest part · where the line is still moving</div>
@@ -436,10 +548,20 @@
       So here's what I can't yet tell you: where exactly your irreversibility line sits — and it won't sit still. The December 2025 coding shift moved it; the next model release will move it again.
     </p>
     <p>
-      That's not a hole in the move — it <b>is</b> the move. "Hybrid beats autonomous" holds at the high-stakes, high-volume, irreversible end; it is not a law of nature that gates always outperform. Refusing to fake the number is what keeps the gate placement honest, because the only way to find your line is to mark your own run and watch what the monitor surfaces. The deliverable isn't a fixed answer. It's a placed gate you keep re-checking.
+      That's not a hole in the move — it <b>is</b> the move. <em>Hybrid beats autonomous</em> holds at the high-stakes, high-volume, irreversible end; it is not a law of nature that gates always outperform. Refusing to fake the number is what keeps the gate placement honest, because the only way to find your line is to mark your own run and watch what the monitor surfaces. The deliverable isn't a fixed answer. It's a placed gate you keep re-checking.
     </p>
     <p class="caveat">Convergent evidence as of the March 2026 finding — not a controlled result. The 85%-per-step / ~20%-over-10-steps figure used elsewhere is an illustrative calculation of how errors compound down a chain, not a measured benchmark.</p>
   </section>
+
+  <!-- ============ WARM INK — the fixed point after the moving line: the frontier above
+       stakes what won't sit still; he stakes the one thing that doesn't move, conceded
+       against his own disruption forecast ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>Some human-in-the-loop is real. It will not go away. Even when I’m foreseeing the disruption of careers as they are, I’m thinking that the human activity will stay in businesses. Humans connect the digital stuff into reality. The human binds the imaginary stuff that Ai generates into reality. Humans curate, in a way, what is real and what is fabulation.</p>
+      <span class="dateline">“Selling agents?” · Jan 2026</span>
+    </div>
+  </div>
 
   <!-- ============ MONDAY (woven into prose, not a uniform aside) ============ -->
   <section class="monday">
@@ -450,7 +572,12 @@
     <span class="clock">one list · one circle · ten minutes</span>
   </section>
 
-  <!-- ============ CONNECTS TO ============ -->
+  <!-- ============ THE INK COLOPHON — machine accounting; subsumes "Lived, before it was a pattern" ============ -->
+  <div class="seam-note">
+    <span class="seam-tag">The two inks, counted</span>
+    Three warm strata above carry Antti's words — verbatim, dated, two sources, a month apart. Everything on the dark soil, this line included, was machine-pressed from material like them, under his judgment. The pattern was lived before it was named: <a href="essays/index.html#state-of-agents">State of Agents · Dec 2025 → the year-one essays, human-written and unedited</a>
+  </div>
+
   <section class="connects">
     <h2>Connects to</h2>
     <div class="sub">Threads leaving this node · the pattern language</div>

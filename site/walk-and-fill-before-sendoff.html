@@ -23,6 +23,13 @@
     --hairline:rgba(63,224,200,.10);
     --grey:#5d6a68;
     --grey-dim:#39423f;
+    /* THE SECOND INK — the lived voice's material. Warm cream letterform on a
+       raised warm stratum; never appears without its ground. */
+    --ink-w:#f2e3c4;          /* warm cream — the human letterform */
+    --ink-w-dim:#c7a571;      /* warm dim — datelines inside the stratum */
+    --hairline-w:rgba(255,179,71,.20); /* the hairline register, warm token */
+    --stratum-0:#201507;      /* warm soil the human ink sits on */
+    --stratum-1:#291b09;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -35,13 +42,14 @@
     position:relative;
     overflow-x:hidden;
   }
-  /* atmospheric soil + light-well — recedes for the long read */
+  /* atmospheric soil — COOL throughout. Under the two-ink pact, ambient warmth is
+     banned: warm ground appears on this page only where the lived voice speaks,
+     so the strata stay legible as a material, not a mood. */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.09) 0%, transparent 46%),
-      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.07) 0%, transparent 44%),
-      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+      radial-gradient(120% 72% at 10% 0%, rgba(63,224,200,.07) 0%, transparent 46%),
+      linear-gradient(180deg, #0a1417 0%, #071013 12%, #05080a 42%, #04060a 100%);
   }
   /* grain / spore dust */
   body::after{
@@ -115,7 +123,6 @@
     content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
     box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
   }
-  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
   .prose p{
     font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
     letter-spacing:.002em;
@@ -126,7 +133,6 @@
   .prose p .mono{
     font-family:'Spline Sans Mono',monospace;font-size:13.5px;color:var(--teal);letter-spacing:.005em;
   }
-  .prose p .mono.amber{color:var(--amber)}
   .prose .pull{
     margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
     font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
@@ -156,20 +162,21 @@
     letter-spacing:.26em;text-transform:uppercase;color:var(--teal-dim);margin-right:10px;
   }
 
-  /* ============ CAVEAT STRIP — labelled, carries real epistemic content ============ */
+  /* ============ CAVEAT STRIP — labelled, carries real epistemic content.
+     Cool-ink demotion: the prose floor carries one accent only — teal. ============ */
   .caveats{
-    margin-top:30px;border:1px dashed var(--amber-dim);border-radius:13px;
-    padding:16px 20px 18px;background:radial-gradient(120% 150% at 0% 0%, rgba(255,179,71,.05), transparent 60%),rgba(10,9,6,.4);
+    margin-top:30px;border:1px dashed var(--teal-dim);border-radius:13px;
+    padding:16px 20px 18px;background:radial-gradient(120% 150% at 0% 0%, rgba(63,224,200,.05), transparent 60%),rgba(6,10,9,.4);
     max-width:760px;
   }
   .caveats .ctag{
     font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;
-    color:var(--amber);display:inline-flex;align-items:center;gap:8px;margin-bottom:11px;
+    color:var(--teal);display:inline-flex;align-items:center;gap:8px;margin-bottom:11px;
   }
-  .caveats .ctag .sd{width:6px;height:6px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px 1px rgba(255,179,71,.5)}
+  .caveats .ctag .sd{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px 1px rgba(63,224,200,.5)}
   .caveats p{font-size:12.5px;line-height:1.55;color:var(--ink-dim);margin-top:9px}
   .caveats p:first-of-type{margin-top:0}
-  .caveats p b{color:var(--amber);font-weight:500}
+  .caveats p b{color:var(--spore);font-weight:500}
   .caveats p em{font-style:italic;color:var(--ink)}
 
   /* ============ SYSTEMIC line ============ */
@@ -230,13 +237,84 @@
     display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   }
   footer.floor .door{
-    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
-    text-shadow:0 0 22px rgba(255,179,71,.3);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 22px rgba(63,224,200,.25);max-width:78%;
   }
   footer.floor .meta{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--ink-faint);
   }
+
+  /* ============ TWO INKS, ONE PAGE — the human ink ============
+     The lived voice is a MATERIAL, not an annotation: a full-bleed warm
+     stratum rises out of the cool soil wherever Antti's verbatim words run.
+     Three cues travel together so the wall survives squinting, greyscale
+     and mid-scroll phones: (1) the raised warm ground, edge to edge of the
+     viewport, bounded by the warm token of the same hairline register;
+     (2) warm-cream ROMAN serif at reading size — never italic, the machine's
+     serif is identity/emphasis, never a voice; (3) a dateline, which is
+     material (a citation), not a label. The ink never appears without its
+     ground; the ground never appears without the ink. */
+  .ink-h{
+    position:relative;width:100vw;margin:44px 0 44px calc(50% - 50vw);
+    border-top:1px solid var(--hairline-w);border-bottom:1px solid var(--hairline-w);
+    background:
+      radial-gradient(90% 130% at 18% 0%, rgba(255,179,71,.10), transparent 60%),
+      linear-gradient(180deg, var(--stratum-1), var(--stratum-0));
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18), 0 22px 44px -30px rgba(255,179,71,.14);
+  }
+  .ink-h .inner{max-width:1080px;margin:0 auto;padding:30px 30px 26px}
+  .ink-h p{
+    font-family:'Fraunces',serif;font-weight:400;font-style:normal;
+    font-size:19px;line-height:1.72;color:var(--ink-w);letter-spacing:.002em;max-width:700px;
+  }
+  .ink-h p + p{margin-top:12px}
+  .ink-h .dateline{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.6;letter-spacing:.07em;
+    color:var(--ink-w-dim);display:block;margin-top:14px;
+  }
+  .ink-h .dateline b{color:var(--ink-w);font-weight:500}
+  /* the opening stratum — the first words spoken on the page are his */
+  .ink-h.lead{margin-top:30px;margin-bottom:0;border-bottom:none;box-shadow:0 -22px 44px -30px rgba(255,179,71,.18)}
+  .ink-h.lead .inner{padding:36px 30px 28px}
+  .ink-h.lead p{font-size:clamp(20px,2.6vw,24px);line-height:1.6;max-width:780px}
+
+  /* ============ THE PACT — taught once, at the first seam ============
+     A two-segment strip where the inks meet: each half of the sentence is
+     set in the ink it describes. The left cell IS warm stratum, the right
+     cell IS cool soil — the legend demonstrates instead of describing. */
+  .pact{width:100vw;margin:0 0 8px calc(50% - 50vw);border-bottom:1px solid var(--hairline)}
+  .pact .inner{
+    max-width:1080px;margin:0 auto;padding:0 30px;
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .pact .cell{padding:13px 18px 15px;font-size:13px;line-height:1.5}
+  .pact .cell.h{
+    font-family:'Fraunces',serif;color:var(--ink-w);
+    background:linear-gradient(180deg, var(--stratum-0), #150d05);
+    border-bottom:2px solid rgba(255,179,71,.45);
+  }
+  .pact .cell.m{
+    font-family:'Spline Sans',sans-serif;color:var(--ink);
+    border-bottom:2px solid rgba(63,224,200,.4);
+  }
+  .pact .cell .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px;
+  }
+  .pact .cell.h .who{color:var(--ink-w-dim)}
+  .pact .cell.m .who{color:var(--teal-dim)}
+
+  /* the ink colophon — machine accounting; subsumes "Lived, before it was a pattern" */
+  .seam-note{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+  }
+  .seam-note .seam-tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .seam-note em{font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--ink)}
 
   /* breathing glow on the diagram spore-tips */
   @keyframes breathe{
@@ -248,6 +326,10 @@
   @media (max-width:780px){
     .neighbours .nb{font-size:11px;padding:6px 10px}
     .prose p{font-size:14.5px}
+    .pact .inner{grid-template-columns:1fr;padding:0}
+    .pact .cell{padding:13px 30px 15px}
+    .ink-h p{font-size:18px}
+    .ink-h.lead p{font-size:20px}
   }
 </style>
 </head>
@@ -259,10 +341,30 @@
     <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Pre-sendoff gap-audit</span>
   </nav>
 
-  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <!-- ============ PATTERN NAME — the subject, then the lived voice speaks first ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· software · Context &amp; Guardrails · the first long send-off</span></div>
     <h1>Pre-sendoff <em>gap-audit</em></h1>
+  </header>
+
+  <!-- ============ THE WARM INK OPENS — the same audit, run on humans years before agents ============ -->
+  <div class="ink-h lead">
+    <div class="inner">
+      <p>Don't tell what you are testing. Just set up the scene where the assumption applies. … This simulation get the counterpart to think though what they assume happens. Then they tell you what they think will happen. You get often a splendid view on what your counterpart knows and assumes.</p>
+      <span class="dateline"><b>Antti Tevanlinna</b> — “Checking Assumptions: Knowing more over being right” · Aug 2025 · on surfacing a counterpart's assumptions</span>
+    </div>
+  </div>
+
+  <!-- ============ THE PACT — the page's one legend, set in the inks it describes ============ -->
+  <div class="pact">
+    <div class="inner">
+      <div class="cell h"><span class="who">The warm ink · serif, raised ground</span>The one who lived it — his words exactly, each with its date.</div>
+      <div class="cell m"><span class="who">The cool ink · sans, dark soil</span>The machine press — distilled from material like his, under his judgment.</div>
+    </div>
+  </div>
+
+  <!-- ============ ESSENCE — the press takes over ============ -->
+  <div class="pat-rest" style="max-width:900px;margin-top:26px">
     <p class="principle">The principle: <b>the system you have is what gets tested</b> — not the one you meant to build.</p>
     <p class="essence">
       A field scientist leaves rows of the plot untreated on purpose — those bare strips are the only thing that can
@@ -271,7 +373,7 @@
       three gaps, and <b>leave the rest open on purpose</b> — so the run reads them for you instead of your
       imagination.
     </p>
-  </header>
+  </div>
 
   <!-- ============ HERO PICTURE: the field — context rows under one send-off task ============ -->
   <div class="hero-frame">
@@ -464,11 +566,11 @@
   <!-- ============ BEAT II — the move, on Monday (pure mechanics) === -->
   <!-- ============================================================ -->
   <section class="prose">
-    <div class="sec-label amber">Scope one task, stake two gaps, send it off</div>
+    <div class="sec-label">Scope one task, stake two gaps, send it off</div>
 
     <p>
       Run it Monday. Pick one task off your backlog you've meant to hand an agent — multi-hour, real, a
-      <b>'done' you can say in a sentence.</b> Not an epic, not a typo-fix. It has to be specific enough that a single
+      <b>done you can say in a sentence.</b> Not an epic, not a typo-fix. It has to be specific enough that a single
       run will exercise the whole context window at once. Then point a <b>subagent</b> at your
       <span class="mono">CLAUDE.md · CLAUDE.local.md · observations · ADRs · skills</span> and have it rank where the
       context runs thin against <em>that</em> task. It returns a ranked gap list — and the trap is reverence.
@@ -499,11 +601,11 @@
   <div class="caveats">
     <div class="ctag"><span class="sd"></span>The two staked gaps · read these as labelled, not literal</div>
     <p>
-      <b>“Three” is a deliberate teaching budget</b> for a first un-packaged run, not a measured optimum. Under-fill on
+      <b>Three is a deliberate teaching budget</b> for a first un-packaged run, not a measured optimum. Under-fill on
       purpose so the run can teach you; <em>there's no law that filling three gaps maximises learning.</em>
     </p>
     <p>
-      <b>“Un-packaged” is a sequencing choice</b>, not a claim that un-packaged runs are better. <em>It's a first step
+      <b>Un-packaged is a sequencing choice</b>, not a claim that un-packaged runs are better. <em>It's a first step
       to expose failure modes — packaging is the right move once you've seen what un-packaged gets wrong.</em>
     </p>
     <p>
@@ -519,6 +621,15 @@
     test against a real run and fill from what it exposed, is what keeps a <b>team's shared kit and a company's memory
     layer</b> growing from real failures rather than from policy no one's work ever validated.
   </p>
+
+  <!-- ============ THE INK COLOPHON — machine accounting; the page's closing seam ============ -->
+  <div class="seam-note">
+    <span class="seam-tag">The two inks, counted</span>
+    One warm stratum above carries Antti's words — verbatim, dated, a single source. Everything on the dark soil, this
+    line included, was machine-pressed from material like his, under his judgment. The audit was lived on people before
+    it was named for agents: <em>Checking Assumptions: Knowing more over being right</em> · Aug 2025 — the same walk,
+    staged for a human counterpart instead of a context window.
+  </div>
 
   <!-- ============ CONNECTS TO — neighbour patterns ============ -->
   <section class="connects">

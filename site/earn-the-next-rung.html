@@ -23,6 +23,13 @@
     --hairline:rgba(63,224,200,.10);
     --grey:#5d6a68;
     --grey-dim:#39423f;
+    /* THE SECOND INK — the lived voice's material. Warm cream letterform on a
+       raised warm stratum; never appears without its ground. */
+    --ink-w:#f2e3c4;          /* warm cream — the human letterform */
+    --ink-w-dim:#c7a571;      /* warm dim — datelines inside the stratum */
+    --hairline-w:rgba(255,179,71,.20); /* the hairline register, warm token */
+    --stratum-0:#201507;      /* warm soil the human ink sits on */
+    --stratum-1:#291b09;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -35,12 +42,14 @@
     position:relative;
     overflow-x:hidden;
   }
+  /* atmospheric soil — COOL throughout. Under the two-ink pact, ambient warmth is
+     banned: warm ground appears on this page only where the lived voice speaks,
+     so the strata stay legible as a material, not a mood. */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.08) 0%, transparent 46%),
-      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.06) 0%, transparent 44%),
-      linear-gradient(180deg, #06292b 0%, #071317 10%, #05080a 42%, #04060a 100%);
+      radial-gradient(120% 72% at 10% 0%, rgba(63,224,200,.07) 0%, transparent 46%),
+      linear-gradient(180deg, #0a1417 0%, #071013 12%, #05080a 42%, #04060a 100%);
   }
   body::after{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:overlay;opacity:.35;
@@ -109,7 +118,6 @@
     letter-spacing:-.012em;line-height:1.08;margin-top:14px;
   }
   .prose h2 em{font-style:italic;color:var(--teal);font-weight:400}
-  .prose h2.amber em{color:var(--amber)}
   .prose .sec-label{
     font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.32em;
     text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
@@ -119,7 +127,6 @@
     content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
     box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
   }
-  .prose .sec-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
   .prose p{
     font-size:15.5px;line-height:1.62;color:var(--ink);margin-top:16px;
     letter-spacing:.002em;
@@ -186,7 +193,6 @@
     content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
     box-shadow:0 0 9px rgba(63,224,200,.6);
   }
-  .beat-label.amber::before{background:var(--amber-dim);box-shadow:0 0 9px rgba(255,179,71,.55)}
   .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
 
   /* ============ PLATES (Use When / Build / Test) ============ */
@@ -263,9 +269,9 @@
 
   .aside{
     margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
-    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+    border-left:2px solid var(--teal-dim);padding:2px 0 2px 15px;max-width:760px;
   }
-  .aside b{color:var(--amber);font-weight:500}
+  .aside b{color:var(--teal);font-weight:500}
   .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
 
   /* ============ WHY ============ */
@@ -290,10 +296,13 @@
     line-height:1.2;color:var(--spore);letter-spacing:-.005em;
   }
   .why .principle-line em{font-style:italic;color:var(--teal)}
+  /* machine emphasis carries NO quotation marks anywhere on this page —
+     under the two-ink pact, quoted words belong to a named source only,
+     and the lived voice always arrives on its warm stratum. */
   .why .quote{
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--teal);letter-spacing:.004em;
-    text-shadow:0 0 30px rgba(63,224,200,.26);max-width:840px;
+    font-size:clamp(22px,3.1vw,30px);line-height:1.2;color:var(--spore);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(63,224,200,.2);max-width:840px;
   }
   .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
   .why .gloss b{color:var(--spore);font-weight:500}
@@ -313,16 +322,16 @@
     color:var(--ink);font-size:13px;line-height:1.38;
   }
   .why .gap-table td.domain{color:var(--spore);font-weight:500}
-  .why .gap-table td.gap{color:var(--amber);font-family:'Spline Sans Mono',monospace;font-size:12px}
+  .why .gap-table td.gap{color:var(--teal);font-family:'Spline Sans Mono',monospace;font-size:12px}
   .why .gap-table td.src{color:var(--ink-faint);font-family:'Spline Sans Mono',monospace;font-size:10.5px}
   .why .corollary{
     margin-top:18px;display:inline-flex;align-items:center;gap:11px;
-    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--amber);
-    border:1px dashed var(--amber-dim);border-radius:30px;padding:8px 16px 9px;
+    font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.05em;color:var(--teal);
+    border:1px dashed var(--teal-dim);border-radius:30px;padding:8px 16px 9px;
   }
   .why .corollary .sd{
-    width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none;
-    box-shadow:0 0 0 3px rgba(255,179,71,.12),0 0 11px 2px rgba(255,179,71,.5);
+    width:7px;height:7px;border-radius:50%;background:var(--teal);flex:none;
+    box-shadow:0 0 0 3px rgba(63,224,200,.12),0 0 11px 2px rgba(63,224,200,.5);
   }
 
   /* ============ PRACTICE PANEL ============ */
@@ -397,13 +406,106 @@
     display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   }
   footer.floor .door{
-    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
-    text-shadow:0 0 22px rgba(255,179,71,.3);
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 22px rgba(63,224,200,.25);max-width:78%;
   }
   footer.floor .meta{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--ink-faint);
   }
+
+  /* ============ TWO INKS, ONE PAGE — the human ink ============
+     The lived voice is a MATERIAL, not an annotation: a full-bleed warm
+     stratum rises out of the cool soil wherever Antti's verbatim words run.
+     Three cues travel together so the wall survives squinting, greyscale
+     and mid-scroll phones: (1) the raised warm ground, edge to edge of the
+     viewport, bounded by the warm token of the same hairline register;
+     (2) warm-cream ROMAN serif at reading size — never italic, the machine's
+     serif is identity/emphasis, never a voice; (3) a dateline, which is
+     material (a citation), not a label. The ink never appears without its
+     ground; the ground never appears without the ink. */
+  .ink-h{
+    position:relative;width:100vw;margin:44px 0 44px calc(50% - 50vw);
+    border-top:1px solid var(--hairline-w);border-bottom:1px solid var(--hairline-w);
+    background:
+      radial-gradient(90% 130% at 18% 0%, rgba(255,179,71,.10), transparent 60%),
+      linear-gradient(180deg, var(--stratum-1), var(--stratum-0));
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18), 0 22px 44px -30px rgba(255,179,71,.14);
+  }
+  .ink-h .inner{max-width:1080px;margin:0 auto;padding:30px 30px 26px}
+  .ink-h p{
+    font-family:'Fraunces',serif;font-weight:400;font-style:normal;
+    font-size:19px;line-height:1.72;color:var(--ink-w);letter-spacing:.002em;max-width:700px;
+  }
+  .ink-h p + p{margin-top:12px}
+  .ink-h .dateline{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.6;letter-spacing:.07em;
+    color:var(--ink-w-dim);display:block;margin-top:14px;
+  }
+  .ink-h .dateline b{color:var(--ink-w);font-weight:500}
+  .ink-h .dateline a{color:var(--ink-w-dim);text-decoration:none;border-bottom:1px dotted rgba(199,165,113,.5)}
+  .ink-h .dateline a:hover{color:var(--amber)}
+  /* the opening stratum — the first words spoken on the page are his */
+  .ink-h.lead{margin-top:30px;margin-bottom:0;border-bottom:none;box-shadow:0 -22px 44px -30px rgba(255,179,71,.18)}
+  .ink-h.lead .inner{padding:36px 30px 28px}
+  .ink-h.lead p{font-size:clamp(20px,2.6vw,24px);line-height:1.6;max-width:780px}
+
+  /* ============ THE PACT — taught once, at the first seam ============
+     A two-segment strip where the inks meet: each half of the sentence is
+     set in the ink it describes. The left cell IS warm stratum, the right
+     cell IS cool soil — the legend demonstrates instead of describing. */
+  .pact{width:100vw;margin:0 0 8px calc(50% - 50vw);border-bottom:1px solid var(--hairline)}
+  .pact .inner{
+    max-width:1080px;margin:0 auto;padding:0 30px;
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .pact .cell{padding:13px 18px 15px;font-size:13px;line-height:1.5}
+  .pact .cell.h{
+    font-family:'Fraunces',serif;color:var(--ink-w);
+    background:linear-gradient(180deg, var(--stratum-0), #150d05);
+    border-bottom:2px solid rgba(255,179,71,.45);
+  }
+  .pact .cell.m{
+    font-family:'Spline Sans',sans-serif;color:var(--ink);
+    border-bottom:2px solid rgba(63,224,200,.4);
+  }
+  .pact .cell .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px;
+  }
+  .pact .cell.h .who{color:var(--ink-w-dim)}
+  .pact .cell.m .who{color:var(--teal-dim)}
+
+  /* the ink colophon — machine accounting; subsumes "Lived, before it was a pattern" */
+  .seam-note{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+  }
+  .seam-note .seam-tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .seam-note em{font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--ink)}
+  .seam-note a{color:var(--amber-dim);text-decoration:none}
+  .seam-note a:hover{color:var(--amber)}
+
+  /* ============ STAKED — aging in public ============
+     A TRUST device in the machine's cool ink: the stakes are card claims,
+     not his verbatim words, so the box lives on dark soil in the press's
+     mono register with the cool hairline — never on warm ground, never in
+     serif. The warm stratum directly above it is the counter-voice. */
+  .staked{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+    border:1px solid var(--hairline);border-radius:8px;padding:14px 18px 15px;
+    background:rgba(8,15,17,.5);
+  }
+  .staked .tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--teal-dim);margin-bottom:8px;
+  }
+  .staked a{color:var(--teal-dim);text-decoration:none;border-bottom:1px dotted rgba(29,141,128,.5)}
+  .staked a:hover{color:var(--teal)}
 
   @keyframes breathe{
     0%,100%{opacity:.55}
@@ -424,6 +526,10 @@
     .compound{flex-direction:column;align-items:flex-start;gap:14px}
     .neighbours .nb{font-size:11px;padding:6px 10px}
     .prose p{font-size:14.5px}
+    .pact .inner{grid-template-columns:1fr;padding:0}
+    .pact .cell{padding:13px 30px 15px}
+    .ink-h p{font-size:18px}
+    .ink-h.lead p{font-size:20px}
   }
 </style>
 </head>
@@ -435,15 +541,36 @@
     <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Earn the next rung</span>
   </nav>
 
-  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <!-- ============ PATTERN NAME — the subject, then the lived voice speaks first ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Recipe <span class="pat-no">· shared lane · Verification → Absorption</span></div>
     <h1>Earn the <em>next rung</em></h1>
+  </header>
+
+  <!-- ============ THE WARM INK OPENS — verbatim, before any machine teaching:
+       no agreed benchmark exists, so he stakes his own observed, costly assessment ============ -->
+  <div class="ink-h lead">
+    <div class="inner">
+      <p>Now there are no agreed ways to measure coding performance and opinion will vary. I’ll add my subjective feeling. Current best-in-class agentic coding tools easily surpass my peak performance in my career. I used to be quite programmer way back then.</p>
+      <span class="dateline"><b>Antti Tevanlinna</b> — “The remarkable year of Ai in Software” · Dec 2025</span>
+    </div>
+  </div>
+
+  <!-- ============ THE PACT — the page's one legend, set in the inks it describes ============ -->
+  <div class="pact">
+    <div class="inner">
+      <div class="cell h"><span class="who">The warm ink · serif, raised ground</span>The one who lived it — his words exactly, each with its date.</div>
+      <div class="cell m"><span class="who">The cool ink · sans, dark soil</span>The machine press — distilled from material like his, under his judgment.</div>
+    </div>
+  </div>
+
+  <!-- ============ ESSENCE — the press takes over ============ -->
+  <div class="pat-rest" style="max-width:900px;margin-top:26px">
     <p class="principle">The principle: <b>Trust is earned, not granted</b> — no benchmark proves an agent is reliable for YOUR process; only observed performance on your data does.</p>
     <p class="essence">
       Turn every permission decision — <b>let it act, or only propose?</b> — into a ladder you climb one rung at a time, by building the check that would have caught the failure before you climb.
     </p>
-  </header>
+  </div>
 
   <!-- ============ HERO PICTURE: the trust/permission map ============ -->
   <div class="hero-frame">
@@ -698,6 +825,15 @@
     <div class="dcap"><span class="num">Process diagram · 01</span>The ladder is directional: each rung earned gives you the <b>observed evidence</b> to authorise the next one. Rungs 5 and 6 are receded — you don't grant them, you build toward them.</div>
   </div>
 
+  <!-- ============ WARM INK — a rung named honestly, set directly against the machine's
+       ladder above: 60–80% with gaps earns "prototype", not "production" ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>The results today are not 100% right code. We get something like 60-80% and plenty of gaps. But this is very much enough to make prototypes which are not meant for production use.</p>
+      <span class="dateline">“Time to Rethink Knowledge Management” · Sep 2025 · unpublished — from the year-one notebooks</span>
+    </div>
+  </div>
+
   <!-- ============ PROSE 2 — the rung-climb protocol ============ -->
   <section class="prose">
     <div class="sec-label">The rung-climb protocol · what "earned" means exactly</div>
@@ -946,8 +1082,8 @@
 
   <!-- ============ PROSE 4 — the boring condition ============ -->
   <section class="prose">
-    <div class="sec-label amber">What "boring" means in practice</div>
-    <h2 class="amber">The goal is a <em>boring check</em>.</h2>
+    <div class="sec-label">What "boring" means in practice</div>
+    <h2>The goal is a <em>boring check</em>.</h2>
 
     <p>
       "Boring" is the operational test for rung advancement. Not "the agent did well this week." Not "we're comfortable."
@@ -975,7 +1111,7 @@
   <!-- ============ USE WHEN · BUILD · TEST ============ -->
   <div class="plates">
     <div class="plate use">
-      <div class="beat-label amber"><b>Use when</b></div>
+      <div class="beat-label"><b>Use when</b></div>
       <p class="body">
         You have a working agent and a permission decision: <b>let it act, or only propose?</b>
         This question recurs at every new scope — new connector, new action type, new team, new blast radius.
@@ -1079,7 +1215,7 @@
       <p class="principle-line">The bottleneck is not access. It is the <em>absence of observed competence</em> between pilot and deploy.</p>
     </div>
 
-    <p class="quote">"The move is not to jump from rung 1 to rung 6. The move is to earn the next rung."</p>
+    <p class="quote">The move is not to jump from rung 1 to rung 6. The move is to earn the next rung.</p>
 
     <p class="gloss">
       Across domains — legal, cross-industry, security, finance, task-specific software —
@@ -1123,7 +1259,7 @@
 
   <!-- ============ PRACTICE / MONDAY MOVE ============ -->
   <div class="practice">
-    <div class="beat-label amber"><b>Monday move · no-permission framing</b></div>
+    <div class="beat-label"><b>Monday move · no-permission framing</b></div>
     <p>
       <b>Pick one agent you already use.</b> Doesn't matter which. Open a blank document.
       Write: <em>current rung: ___</em>. Write: <em>one failure mode I've seen or can clearly imagine: ___</em>.
@@ -1136,7 +1272,31 @@
     </p>
   </div>
 
+  <!-- ============ WARM INK — set against the staked box below. The seam is the point:
+       the machine stakes its numbers for public grading (cool ink, the press's act);
+       his words, on their own raised ground, refuse to convince you at all. ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>Make your own prediction - However much I talk, I will not convince you. Eventually you have to make your own evaluation.</p>
+      <span class="dateline">“The remarkable year of Ai in Software” · Dec 2025</span>
+    </div>
+  </div>
+
+  <!-- ============ STAKED — the press's claims, in the press's ink ============ -->
+  <div class="staked">
+    <span class="tag">Staked — aging in public · the card's claims, not his words</span>
+    The deployment-gap table above is a set of dated claims, not eternal truths — staked as of their 2025 sources (Factor/Artificial Lawyer · HBR n=603 · Gravitee n=900+). Grade due 2026-12: re-verified against the live sources; rows that aged badly get marked, not deleted.
+    <a href="essays/index.html#predictions-2026">The convention: predictions get graded, in public → the 2026 scorecard</a>
+  </div>
+
+  <!-- ============ THE INK COLOPHON — machine accounting; subsumes "Lived, before it was a pattern" ============ -->
+  <div class="seam-note">
+    <span class="seam-tag">The two inks, counted</span>
+    Three warm strata above carry Antti's words — verbatim, dated, two sources, three months apart. Everything on the dark soil, the staked claims box included, was machine-pressed from material like his, under his judgment. The pattern was lived before it was named: <a href="essays/index.html#the-red-queen">The Red Queen · Mar 2026 → the year-one essays, human-written and unedited</a>
+  </div>
+
   <!-- ============ CONNECTS TO ============ -->
+
   <section class="connects">
     <h2>Connects to</h2>
     <div class="sub">Threads leaving this node · the pattern language</div>

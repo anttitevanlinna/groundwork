@@ -23,6 +23,13 @@
     --hairline:rgba(63,224,200,.10);
     --grey:#5d6a68;
     --grey-dim:#39423f;
+    /* THE SECOND INK — the lived voice's material. Warm cream letterform on a
+       raised warm stratum; never appears without its ground. */
+    --ink-w:#f2e3c4;          /* warm cream — the human letterform */
+    --ink-w-dim:#c7a571;      /* warm dim — datelines inside the stratum */
+    --hairline-w:rgba(255,179,71,.20); /* the hairline register, warm token */
+    --stratum-0:#201507;      /* warm soil the human ink sits on */
+    --stratum-1:#291b09;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -35,13 +42,14 @@
     position:relative;
     overflow-x:hidden;
   }
-  /* atmospheric soil + light-well — recedes for the long read. Business lane: amber leads. */
+  /* atmospheric soil — COOL throughout. Under the two-ink pact, ambient warmth is
+     banned: warm ground appears on this page only where the lived voice speaks,
+     so the strata stay legible as a material, not a mood. */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(120% 70% at 88% 2%, rgba(255,179,71,.10) 0%, transparent 46%),
-      radial-gradient(120% 72% at 4% 4%, rgba(63,224,200,.06) 0%, transparent 44%),
-      linear-gradient(180deg, #2a1a05 0%, #14100a 10%, #05080a 42%, #04060a 100%);
+      radial-gradient(120% 72% at 10% 0%, rgba(63,224,200,.07) 0%, transparent 46%),
+      linear-gradient(180deg, #0a1417 0%, #071013 12%, #05080a 42%, #04060a 100%);
   }
   /* grain / spore dust */
   body::after{
@@ -81,7 +89,7 @@
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
     font-size:18px;line-height:1.35;color:var(--ink-dim);margin-top:12px;letter-spacing:.003em;
   }
-  .principle b{color:var(--amber);font-weight:500;font-style:normal;letter-spacing:.005em}
+  .principle b{color:var(--teal);font-weight:500;font-style:normal;letter-spacing:.005em}
   .essence{
     font-size:16.5px;line-height:1.5;color:var(--ink);margin-top:16px;max-width:740px;
   }
@@ -122,8 +130,8 @@
     margin-top:42px;
   }
   .prose .sec-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);
-    box-shadow:0 0 9px rgba(255,179,71,.55);flex:none;
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);
+    box-shadow:0 0 9px rgba(63,224,200,.6);flex:none;
   }
   .prose .sec-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
   .prose p{
@@ -139,11 +147,11 @@
   }
   .prose p .mono.amber{color:var(--amber)}
   .prose .pull{
-    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--amber-dim);
+    margin:22px 0 6px;padding:0 0 0 18px;border-left:2px solid var(--teal-dim);
     font-family:'Fraunces',serif;font-style:italic;font-size:18px;line-height:1.42;
     color:var(--ink);max-width:680px;
   }
-  .prose .pull b{color:var(--amber);font-weight:500;font-style:normal}
+  .prose .pull b{color:var(--teal);font-weight:500;font-style:normal}
 
   /* ============ CITED-EVIDENCE rows — number + travelling caveat ============ */
   .evidence{
@@ -179,7 +187,7 @@
   }
   .erow .cav .src{
     font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:10px;letter-spacing:.06em;
-    color:var(--amber-dim);
+    color:var(--ink-dim);
   }
 
   /* ============ PROCESS DIAGRAMS — mycelium-on-brand frames ============ */
@@ -210,8 +218,8 @@
     text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:9px;
   }
   .beat-label::before{
-    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber-dim);flex:none;
-    box-shadow:0 0 9px rgba(255,179,71,.55);
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--teal-dim);flex:none;
+    box-shadow:0 0 9px rgba(63,224,200,.6);
   }
   .beat-label.teal::before{background:var(--teal-dim);box-shadow:0 0 9px rgba(63,224,200,.6)}
   .beat-label b{color:var(--ink);font-weight:500;letter-spacing:.1em}
@@ -289,9 +297,9 @@
 
   .aside{
     margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-faint);
-    border-left:2px solid var(--amber-dim);padding:2px 0 2px 15px;max-width:760px;
+    border-left:2px solid var(--teal-dim);padding:2px 0 2px 15px;max-width:760px;
   }
-  .aside b{color:var(--amber);font-weight:500}
+  .aside b{color:var(--teal);font-weight:500}
   .aside .mono{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);font-size:11.5px}
 
   /* ============ WHY ============ */
@@ -315,11 +323,14 @@
     font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.8vw,28px);
     line-height:1.2;color:var(--spore);letter-spacing:-.005em;
   }
-  .why .principle-line em{font-style:italic;color:var(--amber)}
+  .why .principle-line em{font-style:italic;color:var(--teal)}
+  /* machine emphasis carries NO quotation marks anywhere on this page —
+     under the two-ink pact, quoted words belong to a named source only,
+     and the lived voice always arrives on its warm stratum. */
   .why .quote{
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:clamp(21px,3vw,29px);line-height:1.22;color:var(--amber);letter-spacing:.004em;
-    text-shadow:0 0 30px rgba(255,179,71,.24);max-width:860px;
+    font-size:clamp(21px,3vw,29px);line-height:1.22;color:var(--spore);letter-spacing:.004em;
+    text-shadow:0 0 30px rgba(63,224,200,.2);max-width:860px;
   }
   .why .gloss{font-size:14.5px;line-height:1.6;color:var(--ink);margin-top:16px;max-width:760px}
   .why .gloss b{color:var(--spore);font-weight:500}
@@ -408,13 +419,88 @@
     display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
   }
   footer.floor .door{
-    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--amber);
-    text-shadow:0 0 22px rgba(255,179,71,.3);max-width:78%;
+    font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);
+    text-shadow:0 0 22px rgba(63,224,200,.25);max-width:78%;
   }
   footer.floor .meta{
     font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--ink-faint);
   }
+
+  /* ============ TWO INKS, ONE PAGE — the human ink ============
+     The lived voice is a MATERIAL, not an annotation: a full-bleed warm
+     stratum rises out of the cool soil wherever Antti's verbatim words run.
+     Three cues travel together so the wall survives squinting, greyscale
+     and mid-scroll phones: (1) the raised warm ground, edge to edge of the
+     viewport, bounded by the warm token of the same hairline register;
+     (2) warm-cream ROMAN serif at reading size — never italic, the machine's
+     serif is identity/emphasis, never a voice; (3) a dateline, which is
+     material (a citation), not a label. The ink never appears without its
+     ground; the ground never appears without the ink. */
+  .ink-h{
+    position:relative;width:100vw;margin:44px 0 44px calc(50% - 50vw);
+    border-top:1px solid var(--hairline-w);border-bottom:1px solid var(--hairline-w);
+    background:
+      radial-gradient(90% 130% at 18% 0%, rgba(255,179,71,.10), transparent 60%),
+      linear-gradient(180deg, var(--stratum-1), var(--stratum-0));
+    box-shadow:0 -22px 44px -30px rgba(255,179,71,.18), 0 22px 44px -30px rgba(255,179,71,.14);
+  }
+  .ink-h .inner{max-width:1080px;margin:0 auto;padding:30px 30px 26px}
+  .ink-h p{
+    font-family:'Fraunces',serif;font-weight:400;font-style:normal;
+    font-size:19px;line-height:1.72;color:var(--ink-w);letter-spacing:.002em;max-width:700px;
+  }
+  .ink-h p + p{margin-top:12px}
+  .ink-h .dateline{
+    font-family:'Spline Sans Mono',monospace;font-size:10.5px;line-height:1.6;letter-spacing:.07em;
+    color:var(--ink-w-dim);display:block;margin-top:14px;
+  }
+  .ink-h .dateline b{color:var(--ink-w);font-weight:500}
+  .ink-h .dateline a{color:var(--ink-w-dim);text-decoration:none;border-bottom:1px dotted rgba(199,165,113,.5)}
+  .ink-h .dateline a:hover{color:var(--amber)}
+  /* the opening stratum — the first words spoken on the page are his */
+  .ink-h.lead{margin-top:30px;margin-bottom:0;border-bottom:none;box-shadow:0 -22px 44px -30px rgba(255,179,71,.18)}
+  .ink-h.lead .inner{padding:36px 30px 28px}
+  .ink-h.lead p{font-size:clamp(20px,2.6vw,24px);line-height:1.6;max-width:780px}
+
+  /* ============ THE PACT — taught once, at the first seam ============
+     A two-segment strip where the inks meet: each half of the sentence is
+     set in the ink it describes. The left cell IS warm stratum, the right
+     cell IS cool soil — the legend demonstrates instead of describing. */
+  .pact{width:100vw;margin:0 0 8px calc(50% - 50vw);border-bottom:1px solid var(--hairline)}
+  .pact .inner{
+    max-width:1080px;margin:0 auto;padding:0 30px;
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .pact .cell{padding:13px 18px 15px;font-size:13px;line-height:1.5}
+  .pact .cell.h{
+    font-family:'Fraunces',serif;color:var(--ink-w);
+    background:linear-gradient(180deg, var(--stratum-0), #150d05);
+    border-bottom:2px solid rgba(255,179,71,.45);
+  }
+  .pact .cell.m{
+    font-family:'Spline Sans',sans-serif;color:var(--ink);
+    border-bottom:2px solid rgba(63,224,200,.4);
+  }
+  .pact .cell .who{
+    display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;
+    letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px;
+  }
+  .pact .cell.h .who{color:var(--ink-w-dim)}
+  .pact .cell.m .who{color:var(--teal-dim)}
+
+  /* the ink colophon — machine accounting; subsumes "Lived, before it was a pattern" */
+  .seam-note{
+    margin:46px 0 10px;max-width:760px;
+    font-family:'Spline Sans Mono',monospace;font-size:12px;line-height:1.7;color:var(--ink-dim);
+  }
+  .seam-note .seam-tag{
+    display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .seam-note em{font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--ink)}
+  .seam-note a{color:var(--amber-dim);text-decoration:none}
+  .seam-note a:hover{color:var(--amber)}
 
   /* breathing glow on the diagram spore-tips */
   @keyframes breathe{
@@ -438,6 +524,10 @@
     .prose p{font-size:14.5px}
     .erow{grid-template-columns:1fr}
     .erow .stat{margin-bottom:4px}
+    .pact .inner{grid-template-columns:1fr;padding:0}
+    .pact .cell{padding:13px 30px 15px}
+    .ink-h p{font-size:18px}
+    .ink-h.lead p{font-size:20px}
   }
 </style>
 </head>
@@ -449,16 +539,36 @@
     <a href="index.html">← The Big Picture</a> / <a href="index.html">Patterns</a> / <span class="here">Train before you buy</span>
   </nav>
 
-  <!-- ============ PATTERN NAME + ESSENCE ============ -->
+  <!-- ============ PATTERN NAME — the subject, then the lived voice speaks first ============ -->
   <header class="pat">
     <div class="kicker"><span class="spore-mark"></span>Pattern · business lane · phase: Intent <span class="pat-no">· the foundation node of the business mat</span></div>
     <h1>Train <em>before</em> you buy</h1>
+  </header>
+
+  <!-- ============ THE WARM INK OPENS — verbatim, before any machine teaching ============ -->
+  <div class="ink-h lead">
+    <div class="inner">
+      <p>I remember that feeling as that was my feeling 18 months ago. You just know that something is coming. But you cannot just take a part of the thing and pull. That pull feels like an unending path that might not lead you anywhere. So: where do you even start?</p>
+      <span class="dateline"><b>Antti Tevanlinna</b> — “Rebranding: Agentic Strategy” · Apr 2026</span>
+    </div>
+  </div>
+
+  <!-- ============ THE PACT — the page's one legend, set in the inks it describes ============ -->
+  <div class="pact">
+    <div class="inner">
+      <div class="cell h"><span class="who">The warm ink · serif, raised ground</span>The one who lived it — his words exactly, each with its date.</div>
+      <div class="cell m"><span class="who">The cool ink · sans, dark soil</span>The machine press — distilled from material like his, under his judgment.</div>
+    </div>
+  </div>
+
+  <!-- ============ ESSENCE — the press takes over ============ -->
+  <div class="pat-rest" style="max-width:920px;margin-top:26px">
     <p class="principle">The principle: <b>clarity is the ceiling, not capability</b> — you cannot design an organisation for a capability nobody in it understands.</p>
     <p class="essence">
-      Put the platform decision <b>last</b>, not first. Build a little competence inside the building before any vendor is in your calendar, and the unanswerable board question — <em>"which platform?"</em> — decomposes into three small, reversible ones. The repo's strategic frame, in order:
+      Put the platform decision <b>last</b>, not first. Build a little competence inside the building before any vendor is in your calendar, and the unanswerable board question — <em>which platform?</em> — decomposes into three small, reversible ones. The repo's strategic frame, in order:
       <span class="seq">competence → discovery → context → <span class="last">platform</span></span>.
     </p>
-  </header>
+  </div>
 
   <!-- ============ HERO PICTURE: the fork — dead procurement path vs living competence path ============ -->
   <div class="hero-frame">
@@ -583,6 +693,14 @@
       The hardest problem isn't choosing a platform — it's <b>knowing what questions to ask.</b> Skip to platform selection and you're choosing between vendor narratives.
     </p>
   </section>
+
+  <!-- ============ WARM INK — the ore the section above was pressed from ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>You cannot envision what agents do for your business if you haven't built an agent before. If you do not viscerally feel what an LLM can and cannot process now and in 3 months, then you cannot imagine. This is different from every previous transformation. Digital, agile, cloud — a leader could govern from above. We just knew better a priori. (Note: of course we did not. We just felt like we did). Not with this one. Agentic competence is the prerequisite for vision.</p>
+      <span class="dateline">“Rebranding: Agentic Strategy” · Apr 2026</span>
+    </div>
+  </div>
 
   <!-- ============ DIAGRAM 1 — THE MECHANISM: unanswerable question → three two-way doors ============ -->
   <div class="diagram">
@@ -855,7 +973,7 @@
 
   <section class="prose">
     <p>
-      One more search worth naming, because it's the honest counter-test: a systematic sweep across five "design-first" communities turned up <b>no Level-2-or-better evidence</b> of a company that redesigned its org for AI <em>first</em> and then saw AI work better. That doesn't mean "never redesign." It refines the thesis: the redesign should be <em>informed</em> by competence, not run ahead of it. <span class="src" style="font-family:'Spline Sans Mono',monospace;font-size:11px;color:var(--amber-dim);letter-spacing:.05em;">(repo counter-evidence search — a null result, reported as one.)</span>
+      One more search worth naming, because it's the honest counter-test: a systematic sweep across five "design-first" communities turned up <b>no Level-2-or-better evidence</b> of a company that redesigned its org for AI <em>first</em> and then saw AI work better. That doesn't mean "never redesign." It refines the thesis: the redesign should be <em>informed</em> by competence, not run ahead of it. <span class="src" style="font-family:'Spline Sans Mono',monospace;font-size:11px;color:var(--ink-dim);letter-spacing:.05em;">(repo counter-evidence search — a null result, reported as one.)</span>
     </p>
   </section>
 
@@ -945,7 +1063,16 @@
       <span class="mono">Claude Code or Codex · ~$20/mo · roughly an hour.</span>
       The moment the abstraction turns concrete is the whole thesis in miniature — and the next platform demo sounds different.
     </p>
+
   </section>
+
+  <!-- ============ WARM INK — the moment the aside above estimates, as he watched it land ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>The code-generating agents (Claude Code and Codex) are the tool of today that create the WoW-moment. "Shit. I can really do that." These moments virtually all the time are with slicing and dicing enough internal data (PowerPoints, excels, database content, ...) and making something that was weeks of work before.</p>
+      <span class="dateline">“Skills-First AI Transformation Strategy” · Apr 2026</span>
+    </div>
+  </div>
 
   <!-- ============ WHY — the conviction ============ -->
   <section class="why">
@@ -956,7 +1083,7 @@
       <p class="principle-line">Clarity is the <em>ceiling</em>, not capability. The bottleneck is organisational, not technical.</p>
     </div>
 
-    <p class="quote">"You cannot design an organisation for a capability nobody in it understands."</p>
+    <p class="quote">You cannot design an organisation for a capability nobody in it understands.</p>
     <p class="gloss">
       Without competence there is no vision — only governance of an abstraction. The chain is plain:
       <b>competence → mental models → shared vision → connected experiments → organisational learning.</b>
@@ -972,14 +1099,27 @@
   <section class="practice">
     <div class="beat-label teal"><b>How you know it's real</b></div>
     <p>
-      The tell isn't a signed contract — it's behaviour. <b>People build unprompted:</b> nobody was assigned "build an agent for X," the competence itself created the pull. <span class="src" style="font-family:'Spline Sans Mono',monospace;font-size:11px;color:var(--amber-dim);letter-spacing:.05em;">(a Nordic security-software org field observation, March 2026 — practitioner-direct, Level 2: after two modules of training, pretty much everyone started building dashboards, agents, applications.)</span>
+      The tell isn't a signed contract — it's behaviour. <b>People build unprompted:</b> nobody was assigned "build an agent for X," the competence itself created the pull. <span class="src" style="font-family:'Spline Sans Mono',monospace;font-size:11px;color:var(--ink-dim);letter-spacing:.05em;">(a Nordic security-software org field observation, March 2026 — practitioner-direct, Level 2: after two modules of training, pretty much everyone started building dashboards, agents, applications.)</span>
     </p>
     <p>
       The questions get <b>smaller and more specific</b> — from <em class="no">"which platform should we standardise on?"</em> to <em>"where does this app live, and how does my colleague find it?"</em> Vague-and-vendor-shaped giving way to scoped-and-reversible is the signal. And the candidates get named by domain experts, not consultants — who are right more often, because they know the work. The negative test: if the only "competence" in the building is a signed contract and a training plan <em>to follow it</em>, the sequence ran backwards.
     </p>
   </section>
 
-  <!-- ============ CONNECTS TO — neighbour patterns ============ -->
+  <!-- ============ WARM INK — the last word is lived time, against the hour estimated above ============ -->
+  <div class="ink-h">
+    <div class="inner">
+      <p>My experience is that AI is different but the same. It is learnable. And learning again takes time. I don't really have a shortcut myself. I hope you find your own time and way — if you haven't already.</p>
+      <span class="dateline">“How I Learn AI and Keep Up to Date” · Aug 2025 · unpublished — four months into working full-time on AI</span>
+    </div>
+  </div>
+
+  <!-- ============ THE INK COLOPHON — machine accounting; subsumes "Lived, before it was a pattern" ============ -->
+  <div class="seam-note">
+    <span class="seam-tag">The two inks, counted</span>
+    Four warm strata above carry Antti's words — verbatim, dated, two sources, eight months apart. Everything on the dark soil, this line included, was machine-pressed from material like them, under his judgment. The pattern was lived before it was named: <a href="essays/index.html#whats-after-try-ai">What's After "Try AI"? · Jun 2025 → the year-one essays, human-written and unedited</a>
+  </div>
+
   <section class="connects">
     <h2>Connects to</h2>
     <div class="sub">Threads leaving this node · the business-mat Intent cluster</div>
