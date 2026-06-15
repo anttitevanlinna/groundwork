@@ -24,35 +24,44 @@
   }
   a{color:inherit}
 
-  /* ===== MASTHEAD — canvas register ===== */
+  /* ===== MASTHEAD — one slim row; identity only, orientation moved below the year ===== */
   header.top{
-    display:grid;grid-template-columns:auto minmax(0,520px);align-items:end;justify-content:space-between;
-    gap:36px;padding:18px 30px 12px;border-bottom:1px solid var(--hairline);
+    display:flex;align-items:center;justify-content:space-between;gap:28px;
+    height:58px;padding:0 30px;border-bottom:1px solid var(--hairline);
   }
-  .brand{display:flex;flex-direction:column;gap:4px}
-  .brand .eyebrow{font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.42em;text-transform:uppercase;color:var(--teal-dim)}
-  .brand h1{font-family:'Fraunces',serif;font-weight:400;font-size:27px;line-height:1.1;color:var(--spore);letter-spacing:-.01em}
+  .brand{display:flex;align-items:baseline;gap:16px;min-width:0}
+  .brand .eyebrow{font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--teal-dim);white-space:nowrap}
+  .brand h1{font-family:'Fraunces',serif;font-weight:400;font-size:21px;line-height:1.1;color:var(--spore);letter-spacing:-.01em;white-space:nowrap}
   .brand h1 em{font-style:italic;color:var(--teal);font-weight:400}
-  .brand .spineline{font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--teal);margin-top:2px}
-  .orient{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
-  .orient .headline{font-size:12px;color:var(--ink-dim);line-height:1.55;text-wrap:balance;max-width:60ch}
-  .orient .headline a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hairline)}
-  .orient .headline a:hover{color:var(--teal)}
-  .orient .crumb{font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase}
-  .orient .crumb a{color:var(--teal);text-decoration:none;border-bottom:1px solid var(--teal-dim);padding-bottom:2px;margin-left:18px;opacity:.85}
-  .orient .crumb a:hover{opacity:1;color:var(--spore)}
+  .brand .spineline{font-family:'Fraunces',serif;font-style:italic;font-size:13px;color:var(--teal);opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    padding-left:16px;border-left:1px solid var(--hairline)}
+  .crumb{font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}
+  .crumb a{color:var(--teal);text-decoration:none;border-bottom:1px solid var(--teal-dim);padding-bottom:2px;margin-left:18px;opacity:.85}
+  .crumb a:hover{opacity:1;color:var(--spore)}
 
-  /* ===== SPORE REGISTER — five situations resting under the masthead ===== */
-  .spores{
-    display:flex;align-items:flex-start;gap:34px;justify-content:space-between;
-    padding:13px 30px 14px;border-bottom:1px solid var(--hairline);
-  }
-  .spores .ask{flex-shrink:0;max-width:200px}
-  .spores .ask .q{font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--spore);line-height:1.25;text-shadow:0 0 14px rgba(174,240,221,.25)}
-  .spores .ask .qnote{font-size:10px;color:var(--ink-dim);line-height:1.45;margin-top:4px}
-  .spore{display:flex;gap:9px;align-items:flex-start;max-width:168px;text-decoration:none;padding-top:3px}
+  /* ===== ROOT BAND — the routing station; the year drains into it ===== */
+  .rootband{position:relative;padding:16px 30px 15px;
+    background:linear-gradient(180deg,#081113 0%,var(--soil-0) 80%);}
+  /* rootlets — the scene's hyphae reaching down into the band */
+  .rootband::before{content:"";position:absolute;left:50%;top:-48px;width:1px;height:66px;
+    background:linear-gradient(180deg,rgba(63,224,200,0),rgba(63,224,200,.38));transform:rotate(4deg)}
+  .rootband::after{content:"";position:absolute;left:31.5%;top:-40px;width:1px;height:56px;
+    background:linear-gradient(180deg,rgba(63,224,200,0),rgba(63,224,200,.26));transform:rotate(-5deg)}
+  .rootband .confline{font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--teal);margin-bottom:7px}
+  .rootband .orientp{font-size:13px;color:var(--ink);line-height:1.55;max-width:118ch;text-wrap:balance;margin-bottom:12px}
+  .rootband .orientp a{color:var(--spore);text-decoration:none;border-bottom:1px solid var(--hairline)}
+  .rootband .orientp a:hover{color:var(--teal)}
+  .spores{display:flex;align-items:stretch;gap:14px}
+  .spores .ask{flex-shrink:0;width:205px;align-self:center}
+  .spores .ask .q{font-family:'Fraunces',serif;font-style:italic;font-size:17px;color:var(--spore);line-height:1.25;text-shadow:0 0 14px rgba(174,240,221,.25)}
+  .spores .ask .qnote{font-size:12.5px;color:var(--ink);line-height:1.5;margin-top:0}
+  /* the spores are doors, not list items — same pill species as the card nodes */
+  .spore{flex:1;display:flex;gap:9px;align-items:flex-start;text-decoration:none;
+    padding:8px 13px 9px 12px;border:1px solid var(--hairline);border-radius:12px;
+    background:rgba(8,15,17,.45);transition:border-color .25s,background .25s}
+  .spore:hover{border-color:rgba(63,224,200,.4);background:rgba(10,28,27,.6)}
   .spore .sdot{flex-shrink:0;width:5px;height:5px;border-radius:50%;background:var(--ink-dim);box-shadow:0 0 9px rgba(207,230,224,.4);margin-top:5px}
-  .spore .stxt{font-size:11px;line-height:1.45;color:var(--ink-dim)}
+  .spore .stxt{font-size:11.5px;line-height:1.45;color:var(--ink-dim)}
   .spore:hover .stxt{color:var(--ink)}
   .spore:hover .sdot{background:var(--ink)}
   /* the awake spore — default is 01; clicking another retargets the year (no JS, pure :target) */
@@ -63,6 +72,14 @@
   body:has(#path-shipped-wrong:target) .spore[href="#path-shipped-wrong"] .sdot,
   body:has(#path-starting-zero:target) .spore[href="#path-starting-zero"] .sdot{
     width:7px;height:7px;margin-top:4px;background:var(--lit);box-shadow:0 0 0 4px rgba(214,255,240,.14),0 0 16px 3px rgba(214,255,240,.65)}
+  /* the awake spore's pill wakes with it */
+  body:not(:has(.witness:target)) .spore[href="#path-stalled-pilot"],
+  body:has(#path-stalled-pilot:target) .spore[href="#path-stalled-pilot"],
+  body:has(#path-one-agent-works:target) .spore[href="#path-one-agent-works"],
+  body:has(#path-ceo-asked:target) .spore[href="#path-ceo-asked"],
+  body:has(#path-shipped-wrong:target) .spore[href="#path-shipped-wrong"],
+  body:has(#path-starting-zero:target) .spore[href="#path-starting-zero"]{
+    border-color:rgba(214,255,240,.45);background:rgba(10,22,24,.7)}
   body:not(:has(.witness:target)) .spore[href="#path-stalled-pilot"] .stxt,
   body:has(#path-stalled-pilot:target) .spore[href="#path-stalled-pilot"] .stxt,
   body:has(#path-one-agent-works:target) .spore[href="#path-one-agent-works"] .stxt,
@@ -81,19 +98,19 @@
 
   /* season sky headers */
   .sky{position:absolute;z-index:6;transform:translateX(-50%);text-align:center;pointer-events:none;width:max-content;max-width:260px}
-  .sky .ph{font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-faint)}
+  .sky .ph{font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-faint)}
   .sky .ph b{font-weight:500;color:var(--ink-dim)}
   .sky h2{font-family:'Fraunces',serif;font-size:21px;font-weight:500;color:var(--spore);margin-top:3px;line-height:1.05}
   .sky .symptom{font-family:'Fraunces',serif;font-style:italic;font-size:13px;color:var(--ink-dim);margin-top:5px;line-height:1.35}
   .sky.s4 h2{color:#fff4e2}
 
   /* soil notes — the strata under each season */
-  .stratum{position:absolute;z-index:6;font-size:11.5px;line-height:1.55;color:var(--ink-dim)}
-  .stratum .lived{font-family:'Spline Sans Mono',monospace;font-size:10px;margin-top:8px;letter-spacing:.02em}
-  .stratum .lived .lt{letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);font-size:8.5px;margin-right:7px}
+  .stratum{position:absolute;z-index:6;font-size:12px;line-height:1.55;color:var(--ink)}
+  .stratum .lived{font-family:'Spline Sans Mono',monospace;font-size:10.5px;margin-top:8px;letter-spacing:.02em}
+  .stratum .lived .lt{letter-spacing:.2em;text-transform:uppercase;color:var(--ink-dim);font-size:9.5px;margin-right:7px}
   .stratum .lived a{color:var(--amber-dim);text-decoration:none}
   .stratum .lived a:hover{color:var(--amber)}
-  .yr-edge{position:absolute;z-index:6;font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.26em;color:var(--ink-faint);writing-mode:vertical-rl}
+  .yr-edge{position:absolute;z-index:6;font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.26em;color:var(--ink-faint);writing-mode:vertical-rl}
 
   /* card nodes = fruiting bodies */
   .node{position:absolute;z-index:7;transform:translate(-50%,-50%);width:max-content;max-width:122px;text-decoration:none;cursor:pointer;
@@ -101,9 +118,14 @@
   .node .dot{position:absolute;left:50%;top:-8px;transform:translateX(-50%);width:6px;height:6px;border-radius:50%}
   .node .dot::after{content:"";position:absolute;left:50%;top:7px;width:1px;height:24px;transform:translateX(-50%);
     background:linear-gradient(180deg,currentColor,transparent);opacity:.4}
-  .node .lbl{display:block;font-size:9.6px;line-height:1.18;padding:4px 8px 4.5px;border-radius:10px;
+  .node .lbl{display:block;font-size:10.2px;line-height:1.18;padding:4px 8px 4.5px;border-radius:10px;
     background:rgba(8,15,17,.62);backdrop-filter:blur(3px);border:1px solid var(--hairline);color:var(--ink);
     transition:border-color .3s,color .3s,background .3s}
+  /* the "open" affordance lives IN the pill, visible at rest — link grammar, not a stamped verb */
+  .node .lbl::after{content:"\00a0↗";font-size:.95em;opacity:.75;transition:opacity .25s}
+  .node.sw .lbl::after{color:var(--teal)}
+  .node.bz .lbl::after{color:var(--amber)}
+  .node:hover .lbl::after{opacity:1}
   .node.sw .dot{color:var(--teal);background:var(--teal);box-shadow:0 0 0 3px rgba(63,224,200,.13),0 0 12px 2px rgba(63,224,200,.5)}
   .node.bz .dot{color:var(--amber);background:var(--amber);box-shadow:0 0 0 3px rgba(255,179,71,.13),0 0 12px 2px rgba(255,179,71,.45)}
   .node.sw .lbl{border-color:rgba(63,224,200,.2)}
@@ -118,15 +140,15 @@
 
   /* the wall caption */
   .wall-note{position:absolute;z-index:8;transform:translateX(-50%);width:150px;text-align:center;
-    font-size:10px;font-style:italic;color:var(--ink-dim);line-height:1.5;pointer-events:none}
+    font-size:10.5px;font-style:italic;color:var(--ink-dim);line-height:1.5;pointer-events:none}
   .wall-title{position:absolute;z-index:8;transform:translate(-50%,0);pointer-events:none;
-    font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.46em;text-transform:uppercase;
+    font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.46em;text-transform:uppercase;
     color:rgba(255,200,120,.95);text-shadow:0 0 12px rgba(255,179,71,.45);display:flex;align-items:center;gap:9px}
   .wall-title::before,.wall-title::after{content:"";height:1px;width:14px;background:rgba(255,179,71,.55)}
 
   /* legend */
-  .legend{position:absolute;left:30px;bottom:10px;z-index:6;font-family:'Spline Sans Mono',monospace;font-size:9px;
-    letter-spacing:.14em;color:var(--ink-faint);display:flex;gap:18px;text-transform:uppercase}
+  .legend{position:absolute;left:30px;bottom:10px;z-index:6;font-family:'Spline Sans Mono',monospace;font-size:10px;
+    letter-spacing:.14em;color:var(--ink-dim);display:flex;gap:18px;text-transform:uppercase}
   .legend .ld{display:inline-block;width:5px;height:5px;border-radius:50%;margin-right:6px;position:relative;top:-1px}
 
   /* ===== THE LIT THREAD — situation 01 grown through its actual fruiting bodies ===== */
@@ -141,8 +163,8 @@
     text-shadow:0 1px 7px rgba(5,8,10,.95),0 0 16px rgba(5,8,10,.85),0 0 4px rgba(5,8,10,.9);pointer-events:none}
   /* the essay witness glowing at the thread's root */
   .witness{position:absolute;z-index:8;transform:translateX(-50%);text-align:center;max-width:30ch;
-    font-family:'Spline Sans Mono',monospace;font-size:9.5px;line-height:1.6;letter-spacing:.04em}
-  .witness .wtag{display:block;font-size:8px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:2px}
+    font-family:'Spline Sans Mono',monospace;font-size:10px;line-height:1.6;letter-spacing:.04em}
+  .witness .wtag{display:block;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:2px}
   .witness a{color:var(--lit);text-decoration:none;text-shadow:0 0 12px rgba(214,255,240,.55)}
   .witness a:hover{color:#fff}
 
@@ -181,18 +203,95 @@
   body:has(#path-shipped-wrong:target) #thread-p4,
   body:has(#path-starting-zero:target) #thread-p5{opacity:0}
   .scene.lit .sky{opacity:.55}
-  .scene.lit .stratum{opacity:.5}
-  .scene.lit .legend{opacity:.55}
+  .scene.lit .stratum{opacity:.88}
+  .scene.lit .legend{opacity:.8}
   .scene.lit .yr-edge{opacity:.55}
   .scene.lit .wall-title{opacity:.8}
   .scene.lit .wall-note{opacity:.6}
 
-  /* footer — lane-neutral soil */
-  footer{max-width:1320px;margin:0 auto;padding:22px 30px 60px;border-top:1px solid var(--hairline);
-    font-size:12.5px;color:var(--ink-dim);line-height:1.7}
-  footer p{margin-bottom:.7em;max-width:84ch}
+  /* footer — lane-neutral soil, one compact register */
+  footer{padding:12px 30px 22px;border-top:1px solid var(--hairline);
+    font-size:11.5px;color:var(--ink-dim);line-height:1.65}
+  footer p{margin-bottom:.4em}
   footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hairline)}
   footer a:hover{color:var(--teal)}
+
+  /* ===== SEASON FLOWS — each soil passage finds & lights its curated route ===== */
+  .sf{visibility:hidden}
+  /* grab any passage → the map recedes, the situation thread yields */
+  .scene.lit:has(.stratum:hover) .node{opacity:.16;transition:opacity .35s}
+  .scene.lit:has(.stratum:hover) .sky{opacity:.28}
+  .scene.lit:has(.stratum:hover) .pf{visibility:hidden!important}
+  /* the grabbed season's flow appears + its nodes re-light */
+  .scene.lit:has(.stratum.s-spring:hover) .sf.spring,
+  .scene.lit:has(.stratum.s-summer:hover) .sf.summer,
+  .scene.lit:has(.stratum.s-autumn:hover) .sf.autumn,
+  .scene.lit:has(.stratum.s-winter:hover) .sf.winter{visibility:visible}
+  .scene.lit:has(.stratum.s-spring:hover) .node.j-spring,
+  .scene.lit:has(.stratum.s-summer:hover) .node.j-summer,
+  .scene.lit:has(.stratum.s-autumn:hover) .node.j-autumn,
+  .scene.lit:has(.stratum.s-winter:hover) .node.j-winter{opacity:1}
+  .scene.lit:has(.stratum.s-spring:hover) .node.j-spring .lbl,
+  .scene.lit:has(.stratum.s-summer:hover) .node.j-summer .lbl,
+  .scene.lit:has(.stratum.s-autumn:hover) .node.j-autumn .lbl,
+  .scene.lit:has(.stratum.s-winter:hover) .node.j-winter .lbl{border-color:rgba(214,255,240,.55);color:var(--spore);background:rgba(10,22,24,.92);box-shadow:0 0 18px rgba(174,240,221,.22)}
+  /* "selects" — the touched passage forward, the others recede */
+  .scene.lit:has(.stratum:hover) .stratum{opacity:.3}
+  .scene.lit:has(.stratum:hover) .stratum:hover{opacity:1}
+
+  /* ===== SAME ON HOVER FOR THE BUTTONS — grab a situation, the map lights its thread ===== */
+  body:has(.spore:hover) .scene.lit .node{opacity:.16;transition:opacity .35s}
+  body:has(.spore:hover) .scene.lit .sky{opacity:.28}
+  body:has(.spore:hover) .pf{visibility:hidden!important}
+  body:has(.spore[href="#path-stalled-pilot"]:hover) .pf.p1,
+  body:has(.spore[href="#path-one-agent-works"]:hover) .pf.p2,
+  body:has(.spore[href="#path-ceo-asked"]:hover) .pf.p3,
+  body:has(.spore[href="#path-shipped-wrong"]:hover) .pf.p4,
+  body:has(.spore[href="#path-starting-zero"]:hover) .pf.p5{visibility:visible!important}
+  body:has(.spore[href="#path-stalled-pilot"]:hover) .scene.lit .node.p1,
+  body:has(.spore[href="#path-one-agent-works"]:hover) .scene.lit .node.p2,
+  body:has(.spore[href="#path-ceo-asked"]:hover) .scene.lit .node.p3,
+  body:has(.spore[href="#path-shipped-wrong"]:hover) .scene.lit .node.p4,
+  body:has(.spore[href="#path-starting-zero"]:hover) .scene.lit .node.p5{opacity:1}
+  body:has(.spore[href="#path-stalled-pilot"]:hover) .scene.lit .node.p1 .lbl,
+  body:has(.spore[href="#path-one-agent-works"]:hover) .scene.lit .node.p2 .lbl,
+  body:has(.spore[href="#path-ceo-asked"]:hover) .scene.lit .node.p3 .lbl,
+  body:has(.spore[href="#path-shipped-wrong"]:hover) .scene.lit .node.p4 .lbl,
+  body:has(.spore[href="#path-starting-zero"]:hover) .scene.lit .node.p5 .lbl{border-color:rgba(214,255,240,.55);color:var(--spore);background:rgba(10,22,24,.92);box-shadow:0 0 18px rgba(174,240,221,.22)}
+  /* "selects" — the grabbed button forward, its siblings recede */
+  .spores:has(.spore:hover) .spore{opacity:.4}
+  .spores .spore:hover{opacity:1}
+
+  /* ===== L1 — combo: K1's aligned season grab-handles + K3's centered Tuesday chooser ===== */
+  .stratum .grab{font-family:'Fraunces',serif;font-size:14.5px;line-height:1.3;color:var(--ink);display:block}
+  .stratum .lived{margin-top:6px}
+  .scene.lit:has(.stratum:hover) .stratum:hover .grab{color:var(--spore)}
+  /* the season tag above each grab-line — so the four read as a labelled register, not loose lines */
+  .stratum .stag{display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px}
+  /* the chooser — K3 form: italic lead + one centered row of Tuesdays */
+  .enterband{position:absolute;left:50%;top:83%;transform:translateX(-50%);z-index:7;width:94%;max-width:1180px;text-align:center}
+  .enterband .eb-lead{font-family:'Fraunces',serif;font-style:italic;font-size:14px;line-height:1.4;
+    color:var(--ink-dim);max-width:60ch;margin:0 auto 12px;text-wrap:balance}
+  .enterband .spores{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
+  .enterband .spore{flex:0 0 auto;padding:8px 15px 9px;align-items:center;border-radius:13px}
+  .enterband .spore .sdot{margin-top:0}
+  .enterband .spore .stxt{font-size:12px}
+  .enterband:has(.spore:hover) .spore{opacity:.4}
+  .enterband .spore:hover{opacity:1}
+  /* at rest nothing is pre-selected: the soil chooser IS the affordance, so the default thread's
+     text furniture must not squat in the soil. Hide caption+witness until a Tuesday is hovered/targeted. */
+  .thread-cap,.witness{visibility:hidden!important}
+  body:has(#path-stalled-pilot:target) .thread-cap.p1,body:has(#path-stalled-pilot:target) .witness.p1,
+  body:has(#path-one-agent-works:target) .thread-cap.p2,body:has(#path-one-agent-works:target) .witness.p2,
+  body:has(#path-ceo-asked:target) .thread-cap.p3,body:has(#path-ceo-asked:target) .witness.p3,
+  body:has(#path-shipped-wrong:target) .thread-cap.p4,body:has(#path-shipped-wrong:target) .witness.p4,
+  body:has(#path-starting-zero:target) .thread-cap.p5,body:has(#path-starting-zero:target) .witness.p5,
+  body:has(.spore[href="#path-stalled-pilot"]:hover) .thread-cap.p1,body:has(.spore[href="#path-stalled-pilot"]:hover) .witness.p1,
+  body:has(.spore[href="#path-one-agent-works"]:hover) .thread-cap.p2,body:has(.spore[href="#path-one-agent-works"]:hover) .witness.p2,
+  body:has(.spore[href="#path-ceo-asked"]:hover) .thread-cap.p3,body:has(.spore[href="#path-ceo-asked"]:hover) .witness.p3,
+  body:has(.spore[href="#path-shipped-wrong"]:hover) .thread-cap.p4,body:has(.spore[href="#path-shipped-wrong"]:hover) .witness.p4,
+  body:has(.spore[href="#path-starting-zero"]:hover) .thread-cap.p5,body:has(.spore[href="#path-starting-zero"]:hover) .witness.p5{visibility:visible!important}
 </style>
 </head>
 <body>
@@ -201,26 +300,10 @@
   <div class="brand">
     <span class="eyebrow">The Field Guide</span>
     <h1>A year inside an <em>agentic transformation</em></h1>
-    <span class="spineline">You never get out of the confusion. You get faster than it.</span>
+    <span class="spineline">Follow the pathways of those who made it happen.</span>
   </div>
-  <div class="orient">
-    <p class="headline">36 moves for the builder-leader taking agents from personal practice to team and company — each hung on the phase of the year where it was lived, with <a href="essays/index.html">six unedited essays</a> from inside as witnesses. Start at the gate that feels like your month, or the <a href="#where-are-you">situation that feels like your Tuesday</a>. Or see <a href="map.html">the whole territory as one living map</a>.</p>
-    <p class="crumb"><a href="map.html">The map</a><a href="whitepaper.html">Read end to end</a><a href="essays/index.html">The essays</a></p>
-  </div>
+  <p class="crumb"><a href="map.html">The map</a><a href="whitepaper.html">Read end to end</a><a href="essays/index.html">The essays</a></p>
 </header>
-
-<!-- ===== FIVE SPORES — enter by situation; one is awake ===== -->
-<nav class="spores" id="where-are-you" aria-label="Where are you right now?">
-  <div class="ask">
-    <div class="q">Where are you right now?</div>
-    <div class="qnote">Five Tuesdays we know from the inside. Each opens a short path — read in order, one move at a time.</div>
-  </div>
-  <a class="spore" href="#path-stalled-pilot"><span class="sdot"></span><span class="stxt">My pilot stalled — it worked for weeks, then broke trust</span></a>
-  <a class="spore" href="#path-one-agent-works"><span class="sdot"></span><span class="stxt">One agent works on my machine — what's next is bigger than me</span></a>
-  <a class="spore" href="#path-ceo-asked"><span class="sdot"></span><span class="stxt">The CEO asked for our AI strategy</span></a>
-  <a class="spore" href="#path-shipped-wrong"><span class="sdot"></span><span class="stxt">Something agent-built shipped wrong</span></a>
-  <a class="spore" href="#path-starting-zero"><span class="sdot"></span><span class="stxt">I'm starting from zero</span></a>
-</nav>
 
 <div class="scene lit" id="scene">
 <svg id="year-weave" viewBox="0 0 1440 880" preserveAspectRatio="none" aria-hidden="true">
@@ -469,6 +552,50 @@
     <circle r="2.6" fill="#eafff9"><animateMotion dur="10s" repeatCount="indefinite"><mpath href="#hypha-p5"/></animateMotion><animate attributeName="opacity" values="0;.95;.95;0" dur="10s" repeatCount="indefinite"/></circle>
     <circle r="2" fill="#eafff9"><animateMotion dur="10s" begin="5s" repeatCount="indefinite"><mpath href="#hypha-p5"/></animateMotion><animate attributeName="opacity" values="0;.8;.8;0" dur="10s" begin="5s" repeatCount="indefinite"/></circle>
   </g>
+  <!-- season flow: spring -->
+  <g class="sf spring">
+    <path d="M140,330 L115,515 L190,462 L230,392 L251,519" stroke="#aef0dd" stroke-width="6" fill="none" opacity=".16" stroke-linecap="round" stroke-linejoin="round" filter="url(#hyphaGlow)"/>
+    <path d="M140,330 L115,515 L190,462 L230,392 L251,519" stroke="#d6fff0" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="140" cy="330" r="13" fill="#d6fff0" opacity=".07"/>
+    <circle cx="140" cy="330" r="3" fill="#d6fff0" opacity=".95"/>
+    <circle cx="115" cy="515" r="3" fill="#d6fff0" opacity=".95"/>
+    <circle cx="190" cy="462" r="3" fill="#d6fff0" opacity=".95"/>
+    <circle cx="230" cy="392" r="3" fill="#d6fff0" opacity=".95"/>
+    <circle cx="251" cy="519" r="3" fill="#d6fff0" opacity=".95"/>
+  </g>
+  <!-- season flow: summer -->
+  <g class="sf summer">
+    <path d="M400,242 L520,405 L560,308 L639,356 L670,440" stroke="#aef0dd" stroke-width="6" fill="none" opacity=".16" stroke-linecap="round" stroke-linejoin="round" filter="url(#hyphaGlow)"/>
+    <path d="M400,242 L520,405 L560,308 L639,356 L670,440" stroke="#d6fff0" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="400" cy="242" r="13" fill="#d6fff0" opacity=".07"/>
+    <circle cx="400" cy="242" r="3" fill="#d6fff0" opacity=".95"/>
+    <circle cx="520" cy="405" r="3" fill="#d6fff0" opacity=".95"/>
+    <circle cx="560" cy="308" r="3" fill="#d6fff0" opacity=".95"/>
+    <circle cx="639" cy="356" r="3" fill="#d6fff0" opacity=".95"/>
+    <circle cx="670" cy="440" r="3" fill="#d6fff0" opacity=".95"/>
+  </g>
+  <!-- season flow: autumn -->
+  <g class="sf autumn">
+    <path d="M760,262 L852,232 L937,442 L949,262 L1380,290" stroke="#aef0dd" stroke-width="6" fill="none" opacity=".16" stroke-linecap="round" stroke-linejoin="round" filter="url(#hyphaGlow)"/>
+    <path d="M760,262 L852,232 L937,442 L949,262 L1380,290" stroke="#d6fff0" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="760" cy="262" r="13" fill="#d6fff0" opacity=".07"/>
+    <circle cx="760" cy="262" r="3" fill="#d6fff0" opacity=".95"/>
+    <circle cx="852" cy="232" r="3" fill="#d6fff0" opacity=".95"/>
+    <circle cx="937" cy="442" r="3" fill="#d6fff0" opacity=".95"/>
+    <circle cx="949" cy="262" r="3" fill="#d6fff0" opacity=".95"/>
+    <circle cx="1380" cy="290" r="3" fill="#d6fff0" opacity=".95"/>
+  </g>
+  <!-- season flow: winter -->
+  <g class="sf winter">
+    <path d="M1090,232 L1110,322 L1250,322 L1280,430 L1359,380" stroke="#aef0dd" stroke-width="6" fill="none" opacity=".16" stroke-linecap="round" stroke-linejoin="round" filter="url(#hyphaGlow)"/>
+    <path d="M1090,232 L1110,322 L1250,322 L1280,430 L1359,380" stroke="#d6fff0" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="1090" cy="232" r="13" fill="#d6fff0" opacity=".07"/>
+    <circle cx="1090" cy="232" r="3" fill="#d6fff0" opacity=".95"/>
+    <circle cx="1110" cy="322" r="3" fill="#d6fff0" opacity=".95"/>
+    <circle cx="1250" cy="322" r="3" fill="#d6fff0" opacity=".95"/>
+    <circle cx="1280" cy="430" r="3" fill="#d6fff0" opacity=".95"/>
+    <circle cx="1359" cy="380" r="3" fill="#d6fff0" opacity=".95"/>
+  </g>
 </svg>
 
   <!-- ===== SKY: four season headers ===== -->
@@ -501,48 +628,48 @@
   <div class="wall-note" style="left:71.3%;top:6.2%">Everything before this, you can run alone. Past this line, it has to cross — to the team, then the company.</div>
 
   <!-- ===== SPRING — six sparse fruiting bodies ===== -->
-  <a class="node sw p5" href="orient-and-introspect.html" style="left:9.7%;top:37.5%"><span class="dot"></span><span class="lbl">Orientation</span></a>
+  <a class="node sw p5 j-spring" href="orient-and-introspect.html" style="left:9.7%;top:37.5%"><span class="dot"></span><span class="lbl">Orientation</span></a>
   <a class="node sw" href="name-the-done.html" style="left:6.2%;top:48%"><span class="dot"></span><span class="lbl">Name the done before you dispatch</span></a>
-  <a class="node bz p5" href="make-output-yours.html" style="left:16%;top:44.5%"><span class="dot"></span><span class="lbl">Making output yours</span></a>
-  <a class="node bz p3" href="experience-first.html" style="left:13.2%;top:52.5%"><span class="dot"></span><span class="lbl">Experience before strategy</span></a>
-  <a class="node bz p3" href="competence-first.html" style="left:8%;top:58.5%"><span class="dot"></span><span class="lbl">Train before you buy</span></a>
-  <a class="node bz p5" href="choose-the-challenge.html" style="left:17.4%;top:59%"><span class="dot"></span><span class="lbl">Choose the one live challenge</span></a>
+  <a class="node bz p5 j-spring" href="make-output-yours.html" style="left:16%;top:44.5%"><span class="dot"></span><span class="lbl">Making output yours</span></a>
+  <a class="node bz p3 j-spring" href="experience-first.html" style="left:13.2%;top:52.5%"><span class="dot"></span><span class="lbl">Experience before strategy</span></a>
+  <a class="node bz p3 j-spring" href="competence-first.html" style="left:8%;top:58.5%"><span class="dot"></span><span class="lbl">Train before you buy</span></a>
+  <a class="node bz p5 j-spring" href="choose-the-challenge.html" style="left:17.4%;top:59%"><span class="dot"></span><span class="lbl">Choose the one live challenge</span></a>
 
   <!-- ===== SUMMER — twelve, the system around the work ===== -->
   <a class="node sw" href="three-block-memory.html" style="left:22.9%;top:35%"><span class="dot"></span><span class="lbl">Name the three blocks</span></a>
   <a class="node bz p5" href="compounding-system.html" style="left:22.1%;top:54%"><span class="dot"></span><span class="lbl">Agent memory</span></a>
-  <a class="node sw p4" href="tests-first-ground-truth.html" style="left:27.8%;top:27.5%"><span class="dot"></span><span class="lbl">Write the failing test first</span></a>
+  <a class="node sw p4 j-summer" href="tests-first-ground-truth.html" style="left:27.8%;top:27.5%"><span class="dot"></span><span class="lbl">Write the failing test first</span></a>
   <a class="node sw" href="plan-read-two-passes.html" style="left:31.6%;top:38.5%"><span class="dot"></span><span class="lbl">Two-pass plan review</span></a>
   <a class="node sw" href="access-surface-map.html" style="left:34.7%;top:28.5%"><span class="dot"></span><span class="lbl">The access surface</span></a>
-  <a class="node sw" href="stride-threat-model.html" style="left:38.9%;top:35%"><span class="dot"></span><span class="lbl">Threat modeling before you build</span></a>
-  <a class="node sw" href="adr-under-pressure.html" style="left:36.1%;top:46%"><span class="dot"></span><span class="lbl">The decision record</span></a>
+  <a class="node sw j-summer" href="stride-threat-model.html" style="left:38.9%;top:35%"><span class="dot"></span><span class="lbl">Threat modeling before you build</span></a>
+  <a class="node sw j-summer" href="adr-under-pressure.html" style="left:36.1%;top:46%"><span class="dot"></span><span class="lbl">The decision record</span></a>
   <a class="node sw" href="walk-and-fill-before-sendoff.html" style="left:42.7%;top:28.5%"><span class="dot"></span><span class="lbl">Pre-sendoff gap-audit</span></a>
   <a class="node bz" href="scope-for-trust.html" style="left:29.2%;top:57.5%"><span class="dot"></span><span class="lbl">Scope an agent your org can trust</span></a>
-  <a class="node sw" href="packaging-the-run.html" style="left:44.4%;top:40.5%"><span class="dot"></span><span class="lbl">Packaging a run</span></a>
-  <a class="node sw" href="parallel-worktrees.html" style="left:46.5%;top:50%"><span class="dot"></span><span class="lbl">Run N tasks in parallel</span></a>
+  <a class="node sw j-summer" href="packaging-the-run.html" style="left:44.4%;top:40.5%"><span class="dot"></span><span class="lbl">Packaging a run</span></a>
+  <a class="node sw j-summer" href="parallel-worktrees.html" style="left:46.5%;top:50%"><span class="dot"></span><span class="lbl">Run N tasks in parallel</span></a>
   <a class="node bz" href="split-the-work.html" style="left:38.9%;top:56.5%"><span class="dot"></span><span class="lbl">Splitting work across agents</span></a>
 
   <!-- ===== AUTUMN — six, the trust gates ===== -->
-  <a class="node sw p1" href="failure-mode-diagnosis.html" style="left:52.8%;top:29.8%"><span class="dot"></span><span class="lbl">Failure-mode diagnosis</span></a>
-  <a class="node sw p4" href="verifier-shaped-to-failure.html" style="left:59.2%;top:26.4%"><span class="dot"></span><span class="lbl">Pick the verifier that matches the failure</span></a>
+  <a class="node sw p1 j-autumn" href="failure-mode-diagnosis.html" style="left:52.8%;top:29.8%"><span class="dot"></span><span class="lbl">Failure-mode diagnosis</span></a>
+  <a class="node sw p4 j-autumn" href="verifier-shaped-to-failure.html" style="left:59.2%;top:26.4%"><span class="dot"></span><span class="lbl">Pick the verifier that matches the failure</span></a>
   <a class="node bz p1 p4" href="hybrid-beats-autonomous.html" style="left:55.6%;top:46.8%"><span class="dot"></span><span class="lbl">The validation gate</span></a>
   <a class="node bz" href="benchmark-the-judge.html" style="left:61.8%;top:40%"><span class="dot"></span><span class="lbl">Earn a judge by benchmarking</span></a>
-  <a class="node bz p4" href="fixed-judge-loop.html" style="left:65.1%;top:50.2%"><span class="dot"></span><span class="lbl">The fixed-judge loop</span></a>
-  <a class="node bz p1" href="earn-the-next-rung.html" style="left:65.9%;top:29.8%"><span class="dot"></span><span class="lbl">Earn the next rung</span></a>
+  <a class="node bz p4 j-autumn" href="fixed-judge-loop.html" style="left:65.1%;top:50.2%"><span class="dot"></span><span class="lbl">The fixed-judge loop</span></a>
+  <a class="node bz p1 j-autumn" href="earn-the-next-rung.html" style="left:65.9%;top:29.8%"><span class="dot"></span><span class="lbl">Earn the next rung</span></a>
 
   <!-- ===== WINTER — twelve, dense, the system learns ===== -->
-  <a class="node sw w4 p2" href="compound-from-evidence.html" style="left:75.7%;top:26.4%"><span class="dot"></span><span class="lbl">Grow rules from proof</span></a>
+  <a class="node sw w4 p2 j-winter" href="compound-from-evidence.html" style="left:75.7%;top:26.4%"><span class="dot"></span><span class="lbl">Grow rules from proof</span></a>
   <a class="node sw w4" href="plan-rule-extract.html" style="left:80.6%;top:21%"><span class="dot"></span><span class="lbl">Mine the plan for rules</span></a>
   <a class="node sw w4" href="gap-route-and-encode.html" style="left:85.4%;top:28.4%"><span class="dot"></span><span class="lbl">Sort each lesson to the clock where it fires</span></a>
-  <a class="node sw w4 p2" href="skill-authored-personal-first.html" style="left:77.1%;top:36.6%"><span class="dot"></span><span class="lbl">Author the skill on yourself first</span></a>
-  <a class="node sw w4 p2" href="team-kit-promotion.html" style="left:86.8%;top:36.6%"><span class="dot"></span><span class="lbl">Promoting a skill to the team</span></a>
+  <a class="node sw w4 p2 j-winter" href="skill-authored-personal-first.html" style="left:77.1%;top:36.6%"><span class="dot"></span><span class="lbl">Author the skill on yourself first</span></a>
+  <a class="node sw w4 p2 j-winter" href="team-kit-promotion.html" style="left:86.8%;top:36.6%"><span class="dot"></span><span class="lbl">Promoting a skill to the team</span></a>
   <a class="node sw w4" href="arc-and-institutionalise.html" style="left:92.4%;top:22.7%"><span class="dot"></span><span class="lbl">Reading your own arc</span></a>
   <a class="node bz w4 p1 p2" href="share-a-slice.html" style="left:81.1%;top:46.8%"><span class="dot"></span><span class="lbl">Sharing an agent</span></a>
   <a class="node bz w4" href="design-the-filter.html" style="left:76.4%;top:54.5%"><span class="dot"></span><span class="lbl">Design the filter, not the review</span></a>
-  <a class="node bz w4" href="agent-builds-agent.html" style="left:88.9%;top:48.9%"><span class="dot"></span><span class="lbl">Let the system build the next</span></a>
-  <a class="node bz w4" href="redesign-what-ai-revealed.html" style="left:94.4%;top:43.2%"><span class="dot"></span><span class="lbl">Amplify the system, not the output</span></a>
+  <a class="node bz w4 j-winter" href="agent-builds-agent.html" style="left:88.9%;top:48.9%"><span class="dot"></span><span class="lbl">Let the system build the next</span></a>
+  <a class="node bz w4 j-winter" href="redesign-what-ai-revealed.html" style="left:94.4%;top:43.2%"><span class="dot"></span><span class="lbl">Amplify the system, not the output</span></a>
   <a class="node bz w4 p3" href="roi-measurement.html" style="left:86.1%;top:58%"><span class="dot"></span><span class="lbl">Read the ROI backwards</span></a>
-  <a class="node bz w4 p3" href="cross-to-company.html" style="left:95.8%;top:33%"><span class="dot"></span><span class="lbl">Cross to the company layer</span></a>
+  <a class="node bz w4 p3 j-autumn" href="cross-to-company.html" style="left:95.8%;top:33%"><span class="dot"></span><span class="lbl">Cross to the company layer</span></a>
 
   <!-- ===== THREAD FURNITURE — knots, captions, witness; one set per situation, one visible at a time ===== -->
   <!-- 01 · my pilot stalled -->
@@ -615,28 +742,34 @@
     <a href="essays/index.html#whats-after-try-ai">What's After "Try AI"? — Jun 2025</a>
   </div>
 
-  <!-- ===== SOIL: the strata — what each season taught ===== -->
-  <div class="stratum" style="left:3%;top:75%;width:16.5%">
-    Not knowing much, and acting anyway. The discovery that carried the rest of the year: competence creates vision — nobody imagines the future with a tool they haven’t used on real work. Experience first, strategy second.
-    <div class="lived"><span class="lt">Lived</span><a href="essays/index.html#whats-after-try-ai">What’s After “Try AI”? — 2025-06-27</a></div>
+  <!-- ===== SOIL REGISTER: one grid — 4 season grab-handles aligned to their seasons, then the 5 Tuesdays as one rail ===== -->
+  <div class="stratum s-spring" style="left:11.5%;top:66%;width:16%;transform:translateX(-50%);text-align:center">
+    <span class="grab">Not knowing much — acting anyway.</span>
+    <div class="lived"><a href="essays/index.html#whats-after-try-ai">What’s After “Try AI”? — Jun 2025</a></div>
   </div>
-  <div class="stratum" style="left:22%;top:75%;width:23%">
-    The months of finding out that AI engineering is software engineering — quality, scope, security, and memory discipline, amplified. The moves here build the system around the work: context that compounds, guardrails named before the build, work packaged so an agent can carry it.
-    <div class="lived"><span class="lt">Lived</span><a href="essays/index.html#you-transform-organisations">You Transform Organisations — 2025-11-14</a></div>
+  <div class="stratum s-summer" style="left:34.4%;top:66%;width:16%;transform:translateX(-50%);text-align:center">
+    <span class="grab">AI engineering is software engineering — amplified.</span>
+    <div class="lived"><a href="essays/index.html#you-transform-organisations">You Transform Organisations — Nov 2025</a></div>
   </div>
-  <div class="stratum" style="left:50%;top:75%;width:18.5%">
-    Hitting the walls: reliability that degrades with every added step, context windows that go braindead, and the verification gap — “we don’t have pretty much any evals.” The moves here are how you keep trusting your own system: gates, judges, and the rung of autonomy you’ve actually earned.
-    <div class="lived"><span class="lt">Lived</span><a href="essays/index.html#failing-and-succeeding">Failing and Succeeding at the Same Time — 2025-12-05</a> · <a href="essays/index.html#state-of-agents">State of Agents — 2025-12-12</a></div>
+  <div class="stratum s-autumn" style="left:58%;top:66%;width:16%;transform:translateX(-50%);text-align:center">
+    <span class="grab">Hitting the walls — trusting your system anyway.</span>
+    <div class="lived"><a href="essays/index.html#failing-and-succeeding">Failing and Succeeding — Dec 2025</a></div>
   </div>
-  <div class="stratum" style="left:74%;top:75%;width:22.5%">
-    The system starts learning, not just the person: rules grown from proof, skills authored and promoted, the filter designed instead of the review performed. And the Red Queen’s terms accepted — every month you don’t compound, someone else does. Learning speed is the only durable advantage.
-    <div class="lived"><span class="lt">Lived</span><a href="essays/index.html#predictions-2026">Predictions 2026 — with the scorecard</a> · <a href="essays/index.html#the-red-queen">The Red Queen — 2026-03-20</a></div>
+  <div class="stratum s-winter" style="left:87%;top:66%;width:16%;transform:translateX(-50%);text-align:center">
+    <span class="grab">The system starts learning — not just you.</span>
+    <div class="lived"><a href="essays/index.html#predictions-2026">Predictions 2026 — the scorecard</a></div>
   </div>
 
-  <div class="legend">
-    <span><span class="ld" style="background:var(--teal-dim);box-shadow:0 0 6px rgba(63,224,200,.5)"></span>software moves</span>
-    <span><span class="ld" style="background:var(--amber-dim);box-shadow:0 0 6px rgba(255,179,71,.5)"></span>business moves</span>
-    <span><span class="ld" style="background:var(--spore);opacity:.6"></span>situation threads 01–05</span>
+  <!-- the 5 Tuesdays — the chooser (K3 form), centered in the soil under the season handles -->
+  <div class="enterband" id="where-are-you">
+    <div class="eb-lead">Or by the Tuesday you’re having — pick yours, it lights a short path through the year.</div>
+    <nav class="spores" aria-label="Five pathways">
+      <a class="spore" href="#path-stalled-pilot"><span class="sdot"></span><span class="stxt">My pilot stalled</span></a>
+      <a class="spore" href="#path-one-agent-works"><span class="sdot"></span><span class="stxt">One agent works on my machine</span></a>
+      <a class="spore" href="#path-ceo-asked"><span class="sdot"></span><span class="stxt">The CEO asked for our AI strategy</span></a>
+      <a class="spore" href="#path-shipped-wrong"><span class="sdot"></span><span class="stxt">Something shipped wrong</span></a>
+      <a class="spore" href="#path-starting-zero"><span class="sdot"></span><span class="stxt">I’m starting from zero</span></a>
+    </nav>
   </div>
 </div>
 
