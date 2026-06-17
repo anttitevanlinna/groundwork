@@ -75,7 +75,7 @@
   body:has(#path-ceo-asked:target) .spore[href="#path-ceo-asked"],
   body:has(#path-shipped-wrong:target) .spore[href="#path-shipped-wrong"],
   body:has(#path-starting-zero:target) .spore[href="#path-starting-zero"]{
-    border-color:rgba(214,255,240,.45);background:rgba(10,22,24,.7)}
+    text-shadow:0 0 13px rgba(214,255,240,.35)}
   body:not(:has(.witness:target)) .spore[href="#path-stalled-pilot"] .stxt,
   body:has(#path-stalled-pilot:target) .spore[href="#path-stalled-pilot"] .stxt,
   body:has(#path-one-agent-works:target) .spore[href="#path-one-agent-works"] .stxt,
@@ -277,12 +277,18 @@
   .enterband{position:absolute;left:50%;top:83%;transform:translateX(-50%);z-index:7;width:94%;max-width:1180px;text-align:center}
   .enterband .eb-lead{font-family:'Fraunces',serif;font-style:italic;font-size:14px;line-height:1.4;
     color:var(--ink-dim);max-width:60ch;margin:0 auto 12px;text-wrap:balance}
-  .enterband .spores{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
-  .enterband .spore{flex:0 0 auto;padding:8px 15px 9px;align-items:center;border-radius:13px}
-  .enterband .spore .sdot{margin-top:0}
-  .enterband .spore .stxt{font-size:12px}
-  .enterband:has(.spore:hover) .spore{opacity:.4}
-  .enterband .spore:hover{opacity:1}
+  .enterband .spores{display:flex;justify-content:center;align-items:flex-start;flex-wrap:wrap;gap:14px 30px}
+  /* B couplet: a felt serif statement over its lived essay — the season row's human grammar, brought to the Tuesdays */
+  .enterband .ten{flex:0 0 auto;max-width:19ch;text-align:center}
+  .enterband .spore{display:block;flex:initial;padding:0;border:0;background:none;border-radius:0}
+  .enterband .spore:hover{border-color:transparent;background:none}
+  .enterband .spore .stxt{font-family:'Fraunces',serif;font-size:14px;line-height:1.35;color:var(--ink)}
+  .enterband .spore:hover .stxt{color:var(--spore)}
+  .enterband .lv{display:block;font-family:'Spline Sans Mono',monospace;font-size:9px;line-height:1.4;margin-top:7px;color:var(--amber-dim);text-decoration:none}
+  .enterband .lv:hover{color:var(--amber)}
+  .enterband .lv .wtag{letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);font-size:8px;margin-right:6px}
+  .enterband:has(.spore:hover) .ten{opacity:.42}
+  .enterband .ten:has(.spore:hover){opacity:1}
   /* at rest nothing is pre-selected: the soil chooser IS the affordance, so the default thread's
      text furniture must not squat in the soil. Hide caption+witness until a Tuesday is hovered/targeted. */
   .thread-cap,.witness{visibility:hidden!important}
@@ -762,11 +768,26 @@
   <div class="enterband" id="where-are-you">
     <div class="eb-lead">Or by the Tuesday you’re having — pick yours, it lights a short path through the year.</div>
     <nav class="spores" aria-label="Five pathways">
-      <a class="spore" href="#path-stalled-pilot"><span class="sdot"></span><span class="stxt">My pilot stalled</span></a>
-      <a class="spore" href="#path-one-agent-works"><span class="sdot"></span><span class="stxt">One agent works on my machine</span></a>
-      <a class="spore" href="#path-ceo-asked"><span class="sdot"></span><span class="stxt">The CEO asked for our AI strategy</span></a>
-      <a class="spore" href="#path-shipped-wrong"><span class="sdot"></span><span class="stxt">Something shipped wrong</span></a>
-      <a class="spore" href="#path-starting-zero"><span class="sdot"></span><span class="stxt">I’m starting from zero</span></a>
+      <span class="ten">
+        <a class="spore" href="#path-stalled-pilot"><span class="stxt">My pilot stalled</span></a>
+        <a class="lv" href="essays/index.html#the-red-queen"><span class="wtag">Lived</span>The Red Queen — Mar 2026</a>
+      </span>
+      <span class="ten">
+        <a class="spore" href="#path-one-agent-works"><span class="stxt">One agent works on my machine</span></a>
+        <a class="lv" href="essays/index.html#predictions-2026"><span class="wtag">Lived</span>Predictions 2026 — Dec 2025</a>
+      </span>
+      <span class="ten">
+        <a class="spore" href="#path-ceo-asked"><span class="stxt">The CEO asked for our AI strategy</span></a>
+        <a class="lv" href="essays/index.html#now"><span class="wtag">Lived</span>What I Know Now — a year in</a>
+      </span>
+      <span class="ten">
+        <a class="spore" href="#path-shipped-wrong"><span class="stxt">Something shipped wrong</span></a>
+        <a class="lv" href="essays/index.html#state-of-agents"><span class="wtag">Lived</span>State of Agents — Dec 2025</a>
+      </span>
+      <span class="ten">
+        <a class="spore" href="#path-starting-zero"><span class="stxt">I’m starting from zero</span></a>
+        <a class="lv" href="essays/index.html#monday"><span class="wtag">Lived</span>What To Do Monday Morning</a>
+      </span>
     </nav>
   </div>
 </div>
