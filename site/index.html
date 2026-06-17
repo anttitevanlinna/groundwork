@@ -30,14 +30,10 @@
     height:58px;padding:0 30px;border-bottom:1px solid var(--hairline);
   }
   .brand{display:flex;align-items:baseline;gap:16px;min-width:0}
-  .brand .eyebrow{font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--teal-dim);white-space:nowrap}
   .brand h1{font-family:'Fraunces',serif;font-weight:400;font-size:21px;line-height:1.1;color:var(--spore);letter-spacing:-.01em;white-space:nowrap}
   .brand h1 em{font-style:italic;color:var(--teal);font-weight:400}
   .brand .spineline{font-family:'Fraunces',serif;font-style:italic;font-size:13px;color:var(--teal);opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     padding-left:16px;border-left:1px solid var(--hairline)}
-  .crumb{font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}
-  .crumb a{color:var(--teal);text-decoration:none;border-bottom:1px solid var(--teal-dim);padding-bottom:2px;margin-left:18px;opacity:.85}
-  .crumb a:hover{opacity:1;color:var(--spore)}
 
   /* ===== ROOT BAND — the routing station; the year drains into it ===== */
   .rootband{position:relative;padding:16px 30px 15px;
@@ -98,8 +94,6 @@
 
   /* season sky headers */
   .sky{position:absolute;z-index:6;transform:translateX(-50%);text-align:center;pointer-events:none;width:max-content;max-width:260px}
-  .sky .ph{font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-faint)}
-  .sky .ph b{font-weight:500;color:var(--ink-dim)}
   .sky h2{font-family:'Fraunces',serif;font-size:21px;font-weight:500;color:var(--spore);margin-top:3px;line-height:1.05}
   .sky .symptom{font-family:'Fraunces',serif;font-style:italic;font-size:13px;color:var(--ink-dim);margin-top:5px;line-height:1.35}
   .sky.s4 h2{color:#fff4e2}
@@ -210,11 +204,21 @@
   .scene.lit .wall-note{opacity:.6}
 
   /* footer — lane-neutral soil, one compact register */
-  footer{padding:12px 30px 22px;border-top:1px solid var(--hairline);
+  footer{padding:20px 30px 26px;border-top:1px solid var(--hairline);
+    display:flex;justify-content:space-between;align-items:flex-start;gap:48px;
     font-size:11.5px;color:var(--ink-dim);line-height:1.65}
-  footer p{margin-bottom:.4em}
-  footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hairline)}
-  footer a:hover{color:var(--teal)}
+  footer .nav{flex-shrink:0}
+  footer .nav .navlab{font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:9px}
+  footer .nav a{display:inline-block;font-family:'Fraunces',serif;font-size:15px;color:var(--ink);
+    text-decoration:none;line-height:1.4;transition:color .2s}
+  footer .nav a .arr{color:var(--teal);opacity:.7}
+  footer .nav a:hover{color:var(--spore)}
+  footer .nav a:hover .arr{opacity:1}
+  footer .nav .hint{display:block;color:var(--ink-faint);font-size:10.5px;margin-top:3px}
+  footer .prov{text-align:right;max-width:60ch;color:var(--ink-faint);font-size:10.5px;line-height:1.6}
+  footer .prov b{color:var(--ink-dim);font-weight:400}
+  footer .prov .stamp{display:block;margin-top:7px;color:var(--ink-faint);font-size:10px;letter-spacing:.04em}
 
   /* ===== SEASON FLOWS — each soil passage finds & lights its curated route ===== */
   .sf{visibility:hidden}
@@ -298,11 +302,9 @@
 
 <header class="top">
   <div class="brand">
-    <span class="eyebrow">The Field Guide</span>
     <h1>A year inside an <em>agentic transformation</em></h1>
     <span class="spineline">Follow the pathways of those who made it happen.</span>
   </div>
-  <p class="crumb"><a href="map.html">The map</a><a href="whitepaper.html">Read end to end</a><a href="essays/index.html">The essays</a></p>
 </header>
 
 <div class="scene lit" id="scene">
@@ -600,22 +602,18 @@
 
   <!-- ===== SKY: four season headers ===== -->
   <div class="sky s1" style="left:11.5%;top:3.5%">
-    <div class="ph"><b>Phase 1</b> · Apr – May 2025 · spring</div>
     <h2>Orientation</h2>
     <div class="symptom">“Nobody knows what ‘try AI’ is for.”</div>
   </div>
   <div class="sky s2" style="left:34.4%;top:3.5%">
-    <div class="ph"><b>Phase 2</b> · Jun – Sep 2025 · summer</div>
     <h2>Process discovery</h2>
     <div class="symptom">“It works for one person, then dies in the team.”</div>
   </div>
   <div class="sky s3" style="left:58%;top:3.5%">
-    <div class="ph"><b>Phase 3</b> · Oct – Dec 2025 · autumn</div>
     <h2>Scaling reality</h2>
     <div class="symptom">“Half of what we built failed.”</div>
   </div>
   <div class="sky s4" style="left:87%;top:3.5%">
-    <div class="ph"><b>Phase 4</b> · Jan – Mar 2026 · winter</div>
     <h2>Compounding</h2>
     <div class="symptom">“The race already started.”</div>
   </div>
@@ -774,8 +772,13 @@
 </div>
 
 <footer>
-  <p>Two other doors: <a href="map.html">the map</a> — all 36 moves as one living mycelium, two lanes in one soil — and <a href="whitepaper.html">the Field Guide</a>, the whole thing as one linear read.</p>
-  <p>The essays are human-written and unedited; the cards were machine-pressed from lived material under human judgment; the seams are labeled where they appear. fieldguide.bosser.consulting · © 2026 Bosser Oy</p>
+  <nav class="nav">
+    <span class="navlab">Also here</span>
+    <a href="whitepaper.html">Read end to end <span class="arr">↗</span></a>
+    <span class="hint">the whole field guide as one page</span>
+  </nav>
+  <p class="prov">The essays are <b>human-written and unedited</b>; the cards were <b>machine-pressed</b> from lived material under human judgment, the seams labeled where they appear.
+    <span class="stamp">fieldguide.bosser.consulting · © 2026 Bosser Oy</span></p>
 </footer>
 
 </body>
