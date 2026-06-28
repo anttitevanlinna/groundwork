@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- HEAD:managed — scripts/head-meta.mjs · do not hand-edit -->
+<meta name="description" content="A field guide for the builder-leader crossing from personal agents to team and company agents — 36 patterns from a year inside an agentic transformation. Public, forwardable.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Field Guide">
+<meta property="og:url" content="https://fieldguide.bosser.consulting/bz-engine.html">
+<meta property="og:title" content="Business agents — figure out what to build">
+<meta property="og:description" content="A field guide for the builder-leader crossing from personal agents to team and company agents — 36 patterns from a year inside an agentic transformation. Public, forwardable.">
+<meta property="og:image" content="https://fieldguide.bosser.consulting/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Business agents — figure out what to build">
+<meta name="twitter:description" content="A field guide for the builder-leader crossing from personal agents to team and company agents — 36 patterns from a year inside an agentic transformation. Public, forwardable.">
+<meta name="twitter:image" content="https://fieldguide.bosser.consulting/og.png">
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "185f68a024554055b20a945d05e19cc9"}'></script>
+<!-- /HEAD:managed -->
+<title>Business agents — figure out what to build</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Spline+Sans+Mono:wght@400;500&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-0:#05080a; --soil-1:#080d10; --soil-2:#0c1418;
+    --teal:#3fe0c8; --teal-dim:#1d8d80; --amber:#ffb347; --amber-dim:#a86a1f;
+    --spore:#eafff9; --ink:#cfe6e0; --ink-dim:#6f8a85; --ink-faint:#3b524e;
+    --hairline:rgba(63,224,200,.10);
+    --col-bg:rgba(63,224,200,.03);
+    --col-border:rgba(63,224,200,.11);
+    --col-head-name:#9ecec6;
+    --col-head-num:#3fe0c8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;width:100%;overflow:hidden;background:var(--soil-0);}
+  body{font-family:'Spline Sans',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;position:relative;}
+
+  .stage{
+    position:fixed;inset:0;display:grid;grid-template-rows:auto 1fr auto;
+    background:
+      radial-gradient(140% 90% at 92% 30%, rgba(255,179,71,.07) 0%, transparent 44%),
+      radial-gradient(120% 80% at 6% 8%, rgba(63,224,200,.07) 0%, transparent 42%),
+      linear-gradient(180deg, #06292b 0%, #071317 16%, #05080a 60%, #04060700 100%),
+      var(--soil-0);
+  }
+  .stage::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:60;mix-blend-mode:overlay;opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  header.top{
+    display:grid;grid-template-columns:auto minmax(0,460px);align-items:end;justify-content:space-between;
+    gap:36px;padding:14px 30px 10px;z-index:20;position:relative;
+    border-bottom:1px solid var(--hairline);
+  }
+  .brand{display:flex;flex-direction:column;gap:3px}
+  .brand .eyebrow{font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.42em;text-transform:uppercase;color:var(--amber-dim);}
+  .brand h1{font-family:'Fraunces',serif;font-weight:400;font-size:26px;line-height:1;color:var(--spore);letter-spacing:-.01em;}
+  .brand h1 em{font-style:italic;color:var(--amber);font-weight:400}
+  .orient{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:9px;}
+  .orient .headline{font-size:13px;color:var(--ink);line-height:1.5;font-family:'Spline Sans',sans-serif;text-wrap:balance;max-width:46ch;}
+  .orient .headline strong{color:var(--spore);font-weight:500;}
+  .orient .read-all{font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);text-decoration:none;border-bottom:1px solid var(--amber-dim);padding-bottom:3px;transition:border-color .2s,color .2s;opacity:.9;}
+  .orient .read-all:hover{opacity:1;color:var(--spore);border-color:var(--amber);}
+
+  .canvas{position:relative;min-height:0;}
+  #weave{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+
+  .columns{position:absolute;inset:0;z-index:3;pointer-events:none;display:grid;grid-template-columns:repeat(6,1fr);}
+  .col-band{border-right:1px solid var(--col-border);background:var(--col-bg);display:flex;flex-direction:column;align-items:center;padding-top:4px;}
+  .col-band:first-child{border-left:1px solid var(--col-border);}
+  .col-band .col-num{font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.32em;color:var(--col-head-num);text-transform:uppercase;opacity:.7;}
+  .col-band .col-name{font-family:'Fraunces',serif;font-size:13px;color:var(--col-head-name);letter-spacing:.01em;margin-top:1px;text-align:center;line-height:1.1;}
+  .col-band:last-child .col-name{color:var(--amber);}
+
+  /* loop tags — the bright strands name themselves; the hero layer of this surface */
+  .loop-tag{position:absolute;z-index:7;transform:translate(-50%,-50%);text-align:center;pointer-events:none;width:max-content;max-width:240px;}
+  .loop-tag .ln{font-family:'Spline Sans Mono',monospace;font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--amber);text-shadow:0 0 12px rgba(255,179,71,.5);}
+  .loop-tag .sub{font-family:'Spline Sans',sans-serif;font-size:8.5px;letter-spacing:.02em;color:var(--ink-dim);margin-top:3px;line-height:1.3;text-transform:none;}
+  .loop-tag.teal .ln{color:var(--teal);text-shadow:0 0 12px rgba(63,224,200,.55);}
+
+  /* hubs — the anastomosis junctions where loops converge; lit larger */
+  .node.hub .dot{width:11px;height:11px;top:-11px;background:#fff4e2;box-shadow:0 0 0 5px rgba(255,179,71,.16),0 0 24px 5px rgba(255,210,140,.7)}
+  .node.hub .lbl{font-size:11.5px;font-weight:600;padding:5px 11px 6px;background:rgba(22,15,8,.92);border-color:rgba(255,210,140,.8);color:#fff;box-shadow:0 0 26px rgba(255,210,140,.28);}
+  .node.hub .hubcap{display:block;font-family:'Spline Sans Mono',monospace;font-size:7px;letter-spacing:.24em;text-transform:uppercase;color:var(--amber);opacity:.8;margin-top:3px;font-weight:400;}
+
+  /* ===== NODES ===== */
+  .node{position:absolute;z-index:6;transform:translate(-50%,-50%);width:max-content;max-width:132px;cursor:pointer;text-decoration:none;
+    transition:transform .35s cubic-bezier(.2,.9,.3,1), filter .35s ease;}
+  .node .dot{position:absolute;left:50%;top:-8px;transform:translateX(-50%);width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 3px rgba(255,179,71,.14),0 0 13px 2px rgba(255,179,71,.55)}
+  .node .lbl{display:block;font-size:10px;line-height:1.16;letter-spacing:.005em;padding:4px 8px 5px;border-radius:10px;
+    background:rgba(24,18,12,.82);backdrop-filter:blur(3px);border:1px solid rgba(255,179,71,.6);color:var(--ink);
+    box-shadow:0 0 16px rgba(255,210,140,.14);font-weight:500;transition:border-color .35s,color .35s,background .35s;}
+  .node.hero .dot{width:9px;height:9px;top:-10px;box-shadow:0 0 0 4px rgba(255,179,71,.20),0 0 18px 4px rgba(255,179,71,.7)}
+  .node.hero .lbl{font-size:11.5px;font-weight:600;padding:5px 10px 6px;background:rgba(22,16,9,.9);border-color:rgba(255,179,71,.75);color:#fff4e2;box-shadow:0 0 20px rgba(255,210,140,.18);}
+  .node.sm{max-width:112px}
+  .node.sm .lbl{font-size:8.6px;padding:3px 7px 3.5px;color:var(--ink-dim);background:rgba(17,12,8,.55);border-color:rgba(255,179,71,.3)}
+  .node.sm .dot{width:5px;height:5px;top:-7px;box-shadow:0 0 0 2px rgba(255,179,71,.10),0 0 8px 1px rgba(255,179,71,.4)}
+  .node::after{content:"open ↗";position:absolute;left:50%;bottom:-12px;transform:translateX(-50%);font-family:'Spline Sans Mono',monospace;font-size:7px;letter-spacing:.2em;text-transform:uppercase;color:#fff4e2;opacity:0;white-space:nowrap;transition:opacity .25s;}
+  .node:hover::after{opacity:.8;}
+  .node:hover{transform:translate(-50%,-50%) scale(1.06);z-index:9}
+  .node:hover .lbl{border-color:var(--amber);color:#fff4e2;background:rgba(30,20,8,.85)}
+  .node:hover .dot{animation:throb .9s ease-in-out infinite}
+  @keyframes throb{50%{transform:translateX(-50%) scale(1.5)}}
+
+  .node.seed .dot{background:var(--spore);box-shadow:0 0 0 3px rgba(234,255,249,.10),0 0 12px 2px rgba(174,240,221,.5)}
+  .node.seed .lbl{border-color:rgba(174,240,221,.32);color:var(--spore);font-style:italic;background:rgba(8,15,17,.5)}
+  .node.seed{cursor:default}
+
+  .fruit{position:absolute;z-index:7;transform:translate(-50%,-50%);text-align:center;width:max-content;pointer-events:none}
+  .fruit .cap{font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:#fff;text-shadow:0 0 22px rgba(255,179,71,.55);letter-spacing:.01em;}
+  .fruit .stem{font-family:'Spline Sans Mono',monospace;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--amber-dim);margin-top:3px;}
+
+  footer.floor{z-index:20;position:relative;display:grid;grid-template-columns:1.7fr 1fr 1.1fr;gap:0;padding:9px 30px 12px;border-top:1px solid var(--hairline);background:linear-gradient(180deg,transparent,rgba(3,5,6,.7));}
+  .floor-block{padding:0 26px;}
+  .floor-block:first-child{padding-left:0;}
+  .floor-block:last-child{padding-right:0;}
+  .floor-block + .floor-block{border-left:1px solid var(--hairline);}
+  .floor-block .ftitle{font-family:'Spline Sans Mono',monospace;font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px;display:flex;align-items:center;gap:7px;}
+  .floor-block .ftitle::after{content:"";flex:1;height:1px;background:var(--hairline)}
+  .seeds{display:flex;flex-direction:column;gap:4px;}
+  .seeds span{font-size:9.3px;color:var(--ink-faint);letter-spacing:.005em;line-height:1.3;}
+  .seeds .math{font-family:'Spline Sans Mono',monospace;color:var(--ink-dim);letter-spacing:.04em;}
+  .roles span{color:var(--ink-dim)}
+
+  @media (max-height:820px){
+    .brand h1{font-size:23px}
+    .node.hero .lbl{font-size:10.5px}
+    .node .lbl{font-size:9.4px;padding:3px 7px}
+    .node.sm .lbl{font-size:8.2px}
+    footer.floor{padding:5px 30px 7px}
+  }
+
+  .teamzone{position:absolute;right:0;top:0;bottom:0;width:17%;z-index:1;pointer-events:none;
+    background:linear-gradient(90deg,transparent,rgba(63,224,200,.07));border-left:1px dashed rgba(63,224,200,.22);}
+  .teamzone .tz{position:absolute;top:5%;right:5%;font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--teal-dim,#1d8d80);}
+  .drift{position:absolute;left:3%;right:3%;bottom:1.5%;z-index:2;display:flex;justify-content:space-between;pointer-events:none;}
+  .drift span{font-family:'Spline Sans Mono',monospace;font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;opacity:.6;}
+  .drift .l{color:var(--ink-faint,#3b524e)} .drift .r{color:var(--teal-dim,#1d8d80)}
+  .jx{position:absolute;z-index:7;transform:translate(-50%,-50%);font-family:'Spline Sans Mono',monospace;font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;color:#ffe7c4;opacity:.7;pointer-events:none;text-shadow:0 0 8px rgba(0,0,0,.85);white-space:nowrap;}
+</style>
+
+<body>
+<div class="stage">
+  <header class="top">
+    <div class="brand">
+      <span class="eyebrow">The Field Guide · Business lane</span>
+      <h1>Business agents — <em>figure out what to build</em></h1>
+    </div>
+    <div class="orient">
+      <p class="headline"><strong>Figure out what's worth building — by doing.</strong> Act under uncertainty, ratchet a candidate toward great against a fixed judge, then share a slice and cross to the company.</p>
+      <a class="read-all" href="index.html">Open any card, or step back to the whole picture →</a>
+    </div>
+  </header>
+
+  <div class="canvas">
+    <div class="teamzone"><span class="tz">The company →</span></div>
+    <svg id="weave" viewBox="0 0 1440 620" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <radialGradient id="earth" cx="50%" cy="42%" r="75%"><stop offset="0%" stop-color="#1f140a"/><stop offset="55%" stop-color="#130d06"/><stop offset="100%" stop-color="#0a0703"/></radialGradient>
+        <radialGradient id="originGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffe1b0" stop-opacity=".14"/><stop offset="45%" stop-color="#ffb347" stop-opacity=".05"/><stop offset="100%" stop-color="#ffb347" stop-opacity="0"/></radialGradient>
+        <radialGradient id="ratchetGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffd27a" stop-opacity=".24"/><stop offset="50%" stop-color="#ffb347" stop-opacity=".07"/><stop offset="100%" stop-color="#ffb347" stop-opacity="0"/></radialGradient>
+        <linearGradient id="crossGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ffd99a" stop-opacity=".7"/><stop offset="55%" stop-color="#3fe0c8" stop-opacity=".7"/><stop offset="100%" stop-color="#aef0dd" stop-opacity=".85"/></linearGradient>
+        <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur in="SourceGraphic" stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect x="0" y="0" width="1440" height="620" fill="url(#earth)"/>
+      <g stroke="#41331a" stroke-width="0.7" fill="none" opacity="0.3">
+        <path d="M-20,160 C180,110 320,230 500,190 S820,110 1020,220"/>
+        <path d="M-20,330 C220,390 360,280 540,350 S840,430 1040,330"/>
+      </g>
+      <g opacity=".5"><circle cx="115" cy="190" r="42" fill="none" stroke="#ffe1b0" stroke-width=".8" opacity=".4"/><circle cx="749" cy="283" r="42" fill="none" stroke="#ffe1b0" stroke-width=".8" opacity=".4"/><circle cx="792" cy="122" r="42" fill="none" stroke="#ffe1b0" stroke-width=".8" opacity=".4"/><circle cx="1238" cy="277" r="42" fill="none" stroke="#aef0dd" stroke-width=".8" opacity=".4"/></g>
+      <ellipse cx="713" cy="305" rx="170" ry="132" fill="url(#ratchetGlow)"/>
+      <g filter="url(#glow)"><ellipse cx="1001" cy="290" rx="92" ry="38" transform="rotate(-34.6 1001 290)" stroke="#ffb347" stroke-width="1.6" fill="none" opacity="0.42"/></g>
+      <g filter="url(#glow)"><path d="M144.0,103.6 C165.6,100.5 230.4,143.9 244.8,171.8 C259.2,199.7 252.0,267.9 230.4,271.0 C208.8,274.1 129.6,218.3 115.2,190.4 C100.8,162.5 122.4,106.7 144.0,103.6 Z" stroke="#ffb347" stroke-width="1.6" fill="none" opacity="0.42"/></g>
+      <g filter="url(#glow)"><path d="M230.4,271.0 C266.4,264.8 511.2,313.4 547.2,333.0 C583.2,352.6 487.2,370.2 446.4,388.8 C405.6,407.4 321.6,447.7 302.4,444.6 C283.2,441.5 343.2,399.1 331.2,370.2 C319.2,341.3 194.4,277.2 230.4,271.0 Z" stroke="#ffb347" stroke-width="2.0" fill="none" opacity="0.56"/></g>
+      <g filter="url(#glow)"><path d="M1036.8,264.8 C1063.2,239.0 1262.4,194.5 1296.0,196.6 C1329.6,198.7 1264.8,251.4 1238.4,277.2 C1212.0,303.0 1171.2,353.7 1137.6,351.6 C1104.0,349.5 1010.4,290.6 1036.8,264.8 Z" stroke="url(#crossGrad)" stroke-width="2.4" fill="none" opacity="0.72"/></g>
+      <g filter="url(#glow)"><path d="M748.8,283.4 C804.0,265.8 890.4,212.1 878.4,227.6 C866.4,243.1 732.0,358.8 676.8,376.4 C621.6,394.0 535.2,348.5 547.2,333.0 C559.2,317.5 693.6,301.0 748.8,283.4 Z" stroke="#ffd27a" stroke-width="3.3" fill="none" opacity="0.96"/></g>
+      <g filter="url(#glow)"><path d="M792,122 C642,30 264,22 146,104" stroke="#ffb347" stroke-width="1.8" fill="none" opacity=".5" stroke-dasharray="1 7" stroke-linecap="round"/><polygon points="146,104 159,98 157,112" fill="#ffb347" opacity=".8"/></g>
+      <g>
+        <circle r="3" fill="#ffd27a"><animateMotion dur="6s" repeatCount="indefinite" path="M748.8,283.4 C804.0,265.8 890.4,212.1 878.4,227.6 C866.4,243.1 732.0,358.8 676.8,376.4 C621.6,394.0 535.2,348.5 547.2,333.0 C559.2,317.5 693.6,301.0 748.8,283.4 Z"/><animate attributeName="opacity" values="0;1;1;0" dur="6s" repeatCount="indefinite"/></circle>
+        <circle r="2.6" fill="#ffe1b0"><animateMotion dur="14s" repeatCount="indefinite" path="M792,122 C642,30 264,22 146,104"/><animate attributeName="opacity" values="0;.9;.9;0" dur="14s" repeatCount="indefinite"/></circle>
+      </g>
+    </svg>
+
+    <div class="loop-tag " style="left:7%;top:8%"><div class="ln">The competence loop</div><div class="sub">start from zero · make the output yours</div></div>
+    <div class="loop-tag " style="left:20%;top:80%"><div class="ln">The delegation loop</div><div class="sub">split it · gate it · let memory carry it</div></div>
+    <div class="loop-tag big" style="left:48%;top:74%"><div class="ln">↻ Ratchet to great</div><div class="sub">scope → earn a judge → climb the next rung → widen</div></div>
+    <div class="loop-tag " style="left:67%;top:62%"><div class="ln">The sharing loop</div><div class="sub">design the filter · share the slice</div></div>
+    <div class="loop-tag teal" style="left:86%;top:74%"><div class="ln">↻ Crossing to the company</div><div class="sub">redesign → cross → read the ROI</div></div>
+
+    <a class="node seed" style="left:2%;top:32%"><span class="dot"></span><span class="lbl">From zero ↻</span></a>
+    <a class="node hub" href="competence-first.html" style="left:8%;top:32%"><span class="dot"></span><span class="lbl">Competence first<span class="hubcap">start from zero · you're the evaluator</span></span></a>
+    <a class="node sm" href="experience-first.html" style="left:10%;top:18%"><span class="dot"></span><span class="lbl">Experience before strategy</span></a>
+    <a class="node hero" href="make-output-yours.html" style="left:17%;top:29%"><span class="dot"></span><span class="lbl">Making the output yours</span></a>
+    <a class="node sm" href="choose-the-challenge.html" style="left:16%;top:45%"><span class="dot"></span><span class="lbl">Choose the one live challenge</span></a>
+    <a class="node sm" href="split-the-work.html" style="left:23%;top:61%"><span class="dot"></span><span class="lbl">Splitting work across agents</span></a>
+    <a class="node sm" href="hybrid-beats-autonomous.html" style="left:31%;top:64%"><span class="dot"></span><span class="lbl">The validation gate</span></a>
+    <a class="node sm" href="compounding-system.html" style="left:21%;top:73%"><span class="dot"></span><span class="lbl">Agent memory</span></a>
+    <a class="node sm" href="scope-for-trust.html" style="left:38%;top:55%"><span class="dot"></span><span class="lbl">Scope an agent your org can trust</span></a>
+    <a class="node sm" href="benchmark-the-judge.html" style="left:47%;top:62%"><span class="dot"></span><span class="lbl">Earn a judge by benchmarking</span></a>
+    <a class="node hub" href="fixed-judge-loop.html" style="left:52%;top:47%"><span class="dot"></span><span class="lbl">The fixed-judge loop<span class="hubcap">the judge · the fixed yardstick</span></span></a>
+    <a class="node hero" href="earn-the-next-rung.html" style="left:61%;top:38%"><span class="dot"></span><span class="lbl">Earn the next rung</span></a>
+    <a class="node hub" href="agent-builds-agent.html" style="left:55%;top:21%"><span class="dot"></span><span class="lbl">Let the system build the next<span class="hubcap">the flywheel · the system builds the next</span></span></a>
+    <a class="node sm" href="design-the-filter.html" style="left:67%;top:52%"><span class="dot"></span><span class="lbl">Design the filter, not the review</span></a>
+    <a class="node sm" href="share-a-slice.html" style="left:72%;top:44%"><span class="dot"></span><span class="lbl">Sharing an agent</span></a>
+    <a class="node sm" href="redesign-what-ai-revealed.html" style="left:79%;top:58%"><span class="dot"></span><span class="lbl">Amplify the system, not the output</span></a>
+    <a class="node hub" href="cross-to-company.html" style="left:86%;top:46%"><span class="dot"></span><span class="lbl">Cross to the company layer<span class="hubcap">the wall · crosses to the company</span></span></a>
+    <a class="node sm" href="roi-measurement.html" style="left:90%;top:33%"><span class="dot"></span><span class="lbl">Read the ROI backwards</span></a>
+
+    <div class="jx" style="left:72%;top:40%">↳ share the slice (shared)</div>
+
+    <div class="fruit" style="left:93%;top:14%"><div class="cap">A team that compounds</div><div class="stem">crosses to the company ↗</div></div>
+    <div class="drift"><span class="l">find the right strategy</span><span class="r">engineer with agents →</span></div>
+  </div>
+
+  <footer class="floor">
+    <div class="floor-block">
+      <div class="ftitle">Why a ratchet, not a ladder</div>
+      <div class="seeds">
+        <span>You don't leap to company-scale — you <b>earn the next rung</b> by proving the last one with a fixed judge.</span>
+        <span>Each rung widens the scope you're trusted with. The <b>flywheel</b>: the system builds the next system.</span>
+      </div>
+    </div>
+    <div class="floor-block">
+      <div class="ftitle">Who it's for</div>
+      <div class="seeds roles"><span>You — a builder-leader earning trust —</span><span>and the team you forward it to.</span></div>
+    </div>
+    <div class="floor-block">
+      <div class="ftitle">The other lane</div>
+      <div class="seeds"><span><a href="sw-engine.html" style="color:var(--teal-dim,#1d8d80);text-decoration:none;border-bottom:1px solid currentColor">Software agents →</a></span><span class="math">© 2026 · free to read &amp; forward</span></div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
